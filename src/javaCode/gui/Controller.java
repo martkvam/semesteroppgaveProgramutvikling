@@ -1,5 +1,8 @@
 package javaCode.gui;
 
-public class Controller {
+import javaCode.user.User;
 
+public class Controller {
 }
+
+

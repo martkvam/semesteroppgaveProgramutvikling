@@ -1,4 +1,4 @@
-package javaCode.Gui;
+package javaCode.gui;
 
 public class Controller {
 

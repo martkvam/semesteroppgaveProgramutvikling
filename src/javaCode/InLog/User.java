@@ -1,25 +1,23 @@
 package javaCode.InLog;
 
 public class User {
-    private String name;
-    private int age;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String email;
 
-    public User(String name, int age){
-        this.name = name;
-        this.age = age;
+    public User(String firstName, String lastName, String phone, String email){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public int getAge(){
-        return age;
-    }
 
     @Override
     public String toString(){
-        return String.format("Navn: %s; alder: %s",
-                name, age);
+        String DELIMITER = ";";
+        return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
+                firstName, lastName, phone, email);
     }
 }

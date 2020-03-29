@@ -7,21 +7,16 @@ import java.nio.file.*;
 import java.util.List;
 
 public class Formatter {
+    public static String path = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Users.txt");
+    public static void addToFile(User user) throws IOException {
 
-    public static void addToFile(String person) throws IOException {
-        String path = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Users.txt");
-        Files.write(Paths.get(path), person.getBytes());
+        Files.write(Paths.get(path), (user.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
     private static int assignID() {
         //Read through database of users and check if user is already registered (check with email?)
+
         return 0;
-    }
-
-    private static String DELIMITER = ";";
-
-    public static String person(String firstName, String lastName, String email, String phone) throws IOException {
-        return (assignID() + DELIMITER + firstName + DELIMITER+ lastName + DELIMITER + email + DELIMITER + phone + DELIMITER);
     }
 
     /*public static String people(List<String> plist) {

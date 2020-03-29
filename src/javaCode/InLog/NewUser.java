@@ -28,7 +28,8 @@ public class NewUser {
 
     @FXML
     void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
-       User newUser = new User(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), txtPhone.getText());
+       User newUser = new User(Formatter.assignID(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(),
+               txtPhone.getText());
        Formatter.addToFile(newUser);
        ReadUsers.readFile();
        Stage stage = (Stage) btnRegisterUser.getScene().getWindow();

@@ -1,10 +1,14 @@
 package javaCode.InLog;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.List;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Formatter {
     public static String path = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Users.txt");
@@ -13,18 +17,22 @@ public class Formatter {
         Files.write(Paths.get(path), (user.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
-    private static int assignID() {
+    public static int assignID() throws FileNotFoundException {
         //Read through database of users and check if user is already registered (check with email?)
 
-        return 0;
-    }
+        File myObj = new File(Formatter.path);
+        Scanner myReader = new Scanner(myObj);
+        int id = 1;
 
-    /*public static String people(List<String> plist) {
-        StringBuffer str = new StringBuffer();
-        for (String p : plist) {
-            str.append(p);
-            str.append("\n");
+        for (; myReader.hasNext(); ) {
+            String u = myReader.nextLine();
+            String[] strings = u.split(";");
+            System.out.println(Arrays.toString(strings));
+            if (Integer.parseInt(strings[0])>=id){
+                id = Integer.parseInt(strings[0])+1;
+            }
         }
-        return str.toString();
-    }*/
+        myReader.close();
+        return id;
+    }
 }

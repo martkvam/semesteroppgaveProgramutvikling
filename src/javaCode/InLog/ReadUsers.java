@@ -11,8 +11,8 @@ public static void readFile() throws FileNotFoundException {
     File myObj = new File(Formatter.path);
     Scanner myReader = new Scanner(myObj);
 
-    for (Scanner it = myReader; it.hasNext(); ) {
-        String u = it.next();
+    for (; myReader.hasNext(); ) {
+        String u = myReader.next();
         String[] strings = u.split(";");
         System.out.println(Arrays.toString(strings));
     }

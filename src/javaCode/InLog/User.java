@@ -19,6 +19,6 @@ public class User {
     public String toString(){
         String DELIMITER = ";";
         return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
-                id,firstName, lastName, phone, email);
+                id, firstName, lastName, phone, email);
     }
 }

@@ -1,7 +1,6 @@
-0;Trym;wfw;wef;w2342
-1;wgwerg;sgs;144;341;erte;ert;ert;ert
-1;ew;erwr;f;frerewr
-1;wfew;fwwef;wefwe;wefew
 1;ewf;fwe;fe;fw
 2;sdf;ac;asd;sdc
 3;asdc;ascd;asdc;asdc
+4;Trym;Stenberg;stenberg.trym@gmail.com;98086042
+5;Noah;Olsen;hei@lol.no;12345678
+6;Trym;Stenerbg;sdv;98086043

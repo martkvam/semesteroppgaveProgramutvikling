@@ -1,55 +1,62 @@
 package javaCode.user;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+import java.util.Collection;
+
 public class Component {
-    private int ID;
-    private String type;
-    private int price;
+    private SimpleIntegerProperty ID;
+    private SimpleStringProperty type;
+    private SimpleIntegerProperty price;
 
     public Component(int ID, String type, int price) {
-        this.ID = ID;
-        this.type = type;
-        this.price = price;
+        this.ID = new SimpleIntegerProperty(ID);
+        this.type = new SimpleStringProperty(type);
+        this.price = new SimpleIntegerProperty(price);
     }
 
     public int getID() {
-        return ID;
+        return ID.getValue();
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.ID.set(ID);
     }
 
     public String getType() {
-        return type;
+        return type.getValue();
     }
 
+
     public void setType(String type) {
-        this.type = type;
+        this.type.set(type);
     }
 
     public int getPrice() {
-        return price;
+        return price.getValue();
     }
 
+
     public void setPrice(int price) {
-        this.price = price;
+        this.price.set(price);
     }
 }
 
-class Motor extends Component{
-    private int hk;
+class Motor extends Component {
+    private SimpleIntegerProperty hk;
 
     public Motor(int ID, String type, int price, int hk) {
         super(ID, type, price);
-        this.hk = hk;
+        this.hk = new SimpleIntegerProperty(hk);
     }
 
     public int getHk() {
-        return hk;
+        return hk.getValue();
     }
 
     public void setHk(int hk) {
-        this.hk = hk;
+        this.hk.set(hk);
     }
 }
 

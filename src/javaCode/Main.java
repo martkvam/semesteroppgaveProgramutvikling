@@ -11,12 +11,24 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Kjøp av bil");
         primaryStage.setScene(new Scene(root,900,800));
         primaryStage.show();
     }
 
     public static void main(String[] args) {
+
         launch(args);
+
+
     }
+
+    public static void superUser(Stage superUser1) throws Exception{
+        Parent root = FXMLLoader.load(Main.class.getResource("../resources/superUser.fxml"));
+        superUser1.setTitle("Funker");
+        superUser1.setScene(new Scene(root,483 ,296));
+        superUser1.show();
+    }
+
+
 }

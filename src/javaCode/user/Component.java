@@ -6,22 +6,35 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.Collection;
 
 public class Component {
-    private SimpleIntegerProperty ID;
+    private SimpleIntegerProperty carID;
+    private SimpleIntegerProperty componentID;
     private SimpleStringProperty type;
+    private SimpleStringProperty description;
     private SimpleIntegerProperty price;
 
-    public Component(int ID, String type, int price) {
-        this.ID = new SimpleIntegerProperty(ID);
+    public Component(int carID, int componentID, String type, String description, int price) {
+        this.carID = new SimpleIntegerProperty(carID);
+        this.componentID = new SimpleIntegerProperty(componentID);
         this.type = new SimpleStringProperty(type);
+        this.description = new SimpleStringProperty(description);
         this.price = new SimpleIntegerProperty(price);
     }
 
-    public int getID() {
-        return ID.getValue();
+    public int getCarID() {
+        return carID.getValue();
     }
 
-    public void setID(int ID) {
-        this.ID.set(ID);
+    public void setCarID(int ID) {
+        this.carID.set(ID);
+    }
+
+    public int getComponentID() {
+        return componentID.getValue();
+    }
+
+
+    public void setComponentID(int componentID) {
+        this.componentID.set(componentID);
     }
 
     public String getType() {

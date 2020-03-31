@@ -1,16 +1,27 @@
 package javaCode.superUser;
 
+import javaCode.Main;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+
+import java.io.IOException;
+import java.util.Optional;
 
 
 public class ControllerSuperUser {
 
     //Scene where superuser choose between two operations.
-
 
     @FXML
     private Button Components;
@@ -20,8 +31,22 @@ public class ControllerSuperUser {
 
     //navigates to scene where superuser are able to add and edit components and information
     @FXML
-    void btnEditComponents(ActionEvent event) {
+    void btnEditComponents(ActionEvent event) throws IOException {
+        //Finds new fxml file
+        Parent swapParent = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
 
+        //Sets new controller
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController("../superUser/ControllerAddEditComponents");
+
+        // Swap screen
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        try{
+            Main.superUserComponents(window);
+        }
+        catch (Exception e){
+
+        }
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.

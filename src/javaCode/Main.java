@@ -30,5 +30,12 @@ public class Main extends Application {
         superUser1.show();
     }
 
+    public static void superUserComponents(Stage superUser2) throws Exception{
+        Parent root = FXMLLoader.load(Main.class.getResource("../resources/superUserComponents.fxml"));
+        superUser2.setTitle("Funker");
+        superUser2.setScene(new Scene(root,704  ,548));
+        superUser2.show();
+    }
+
 
 }

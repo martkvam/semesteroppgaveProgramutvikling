@@ -14,9 +14,9 @@
     <children>
         <TableView fx:id="komponentTv" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
-                <TableColumn prefWidth="201.0" text="Type">
+                <TableColumn prefWidth="201.0" text="Beskrivelse">
                     <cellValueFactory>
-                        <PropertyValueFactory property="componentType" />
+                        <PropertyValueFactory property="componentDescription" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="132.0" text="Pris">
@@ -28,7 +28,7 @@
         </TableView>
         <TableView fx:id="valgTv" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
             <columns>
-                <TableColumn prefWidth="123.0" text="Komponent" />
+                <TableColumn prefWidth="123.0" text="Type" />
                 <TableColumn prefWidth="76.0" text="Pris" />
             </columns>
         </TableView>

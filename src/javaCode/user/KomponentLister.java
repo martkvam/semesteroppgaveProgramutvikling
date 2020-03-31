@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class KomponentLister {
 
     ObservableList<Component> list = FXCollections.observableArrayList();
+    ObservableList<Car> list2 = FXCollections.observableArrayList();
 
     public void attachTableView (TableView<Component> tv){
         tv.setItems(list);

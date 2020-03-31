@@ -6,47 +6,37 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.Collection;
 
 public class Component {
-    private SimpleIntegerProperty carID;
-    private SimpleIntegerProperty componentID;
-    private SimpleStringProperty carType;
+    private SimpleStringProperty carID;
+    private SimpleStringProperty componentID;
     private SimpleStringProperty componentType;
-    private SimpleStringProperty description;
+    private SimpleStringProperty componentDescription;
     private SimpleIntegerProperty price;
 
-    public Component(int carID, int componentID, String carType, String componentType, String description, int price) {
-        this.carID = new SimpleIntegerProperty(carID);
-        this.componentID = new SimpleIntegerProperty(componentID);
-        this.carType = new SimpleStringProperty(carType);
+    public Component(String carID, String componentID, String componentType, String componentDescription, int price) {
+        this.carID = new SimpleStringProperty(carID);
+        this.componentID = new SimpleStringProperty(componentID);
         this.componentType = new SimpleStringProperty(componentType);
-        this.description = new SimpleStringProperty(description);
+        this.componentDescription = new SimpleStringProperty(componentDescription);
         this.price = new SimpleIntegerProperty(price);
     }
 
-    public int getCarID() {
+    public String getCarID() {
         return carID.getValue();
     }
 
-    public void setCarID(int ID) {
+    public void setCarID(String ID) {
         this.carID.set(ID);
     }
 
-    public int getComponentID() {
+    public String getComponentID() {
         return componentID.getValue();
     }
 
 
-    public void setComponentID(int componentID) {
+    public void setComponentID(String componentID) {
         this.componentID.set(componentID);
     }
 
-    public String getCarType() {
-        return carType.getValue();
-    }
-
-
-    public void setCarType(String type) {
-        this.carType.set(type);
-    }
 
     public String getComponentType(){
         return componentType.getValue();
@@ -65,13 +55,13 @@ public class Component {
         this.price.set(price);
     }
 
-    public String getDescription() {
-        return description.getValue();
+    public String getComponentDescription() {
+        return componentDescription.getValue();
     }
 
 
-    public void setDescription(String description) {
-        this.description.set(description);
+    public void setComponentDescription(String componentDescription) {
+        this.componentDescription.set(componentDescription);
     }
 }
 

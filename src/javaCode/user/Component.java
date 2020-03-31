@@ -8,14 +8,16 @@ import java.util.Collection;
 public class Component {
     private SimpleIntegerProperty carID;
     private SimpleIntegerProperty componentID;
-    private SimpleStringProperty type;
+    private SimpleStringProperty carType;
+    private SimpleStringProperty componentType;
     private SimpleStringProperty description;
     private SimpleIntegerProperty price;
 
-    public Component(int carID, int componentID, String type, String description, int price) {
+    public Component(int carID, int componentID, String carType, String componentType, String description, int price) {
         this.carID = new SimpleIntegerProperty(carID);
         this.componentID = new SimpleIntegerProperty(componentID);
-        this.type = new SimpleStringProperty(type);
+        this.carType = new SimpleStringProperty(carType);
+        this.componentType = new SimpleStringProperty(componentType);
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleIntegerProperty(price);
     }
@@ -37,13 +39,21 @@ public class Component {
         this.componentID.set(componentID);
     }
 
-    public String getType() {
-        return type.getValue();
+    public String getCarType() {
+        return carType.getValue();
     }
 
 
-    public void setType(String type) {
-        this.type.set(type);
+    public void setCarType(String type) {
+        this.carType.set(type);
+    }
+
+    public String getComponentType(){
+        return componentType.getValue();
+    }
+
+    public void setComponentType(String type){
+        this.componentType.getValue();
     }
 
     public int getPrice() {
@@ -54,39 +64,14 @@ public class Component {
     public void setPrice(int price) {
         this.price.set(price);
     }
-}
 
-class Motor extends Component {
-    private SimpleIntegerProperty hk;
-
-    public Motor(int ID, String type, int price, int hk) {
-        super(ID, type, price);
-        this.hk = new SimpleIntegerProperty(hk);
+    public String getDescription() {
+        return description.getValue();
     }
 
-    public int getHk() {
-        return hk.getValue();
-    }
 
-    public void setHk(int hk) {
-        this.hk.set(hk);
+    public void setDescription(String description) {
+        this.description.set(description);
     }
 }
 
-class Wheel extends Component{
-    public Wheel(int ID, String type, int price) {
-        super(ID, type, price);
-    }
-}
-
-class Rims extends Component{
-    public Rims(int ID, String type, int price) {
-        super(ID, type, price);
-    }
-}
-
-class Setetrekk extends Component{
-    public Setetrekk(int ID, String type, int price) {
-        super(ID, type, price);
-    }
-}

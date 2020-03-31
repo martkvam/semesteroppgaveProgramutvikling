@@ -14,6 +14,7 @@ public class KomponentLister {
         tv.setItems(list);
     }
 
+
     public void addComponent(Component component){
         list.add(component);
     }

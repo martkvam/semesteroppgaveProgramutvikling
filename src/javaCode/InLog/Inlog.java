@@ -11,7 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.PasswordAuthentication;
+import java.util.Scanner;
 
 public class Inlog {
 
@@ -29,8 +32,25 @@ public class Inlog {
 
     @FXML
     void btnLogInOnClick(ActionEvent event) throws IOException {
+        if(ReadUsers.readFile(txtUserName.getText(), txtUserName.getText())){
+            File myObj = new File(Formatter.path);
+            Scanner myReader = new Scanner(myObj);
 
-        System.out.println("Username: " + txtUserName.getText() + "\nPassword: " + txtPassword.getText());
+            for (; myReader.hasNext(); ) {
+                String u = myReader.next();
+                String[] strings = u.split(";");
+                if((strings[3].equals(txtUserName.getText()) || strings[4].equals(txtUserName.getText())) &&
+                        strings[5].equals(txtPassword.getText())){
+                    //Open new scene here
+                    break;
+                } else {
+                    //Throw exception
+                    break;
+                }
+            }
+            myReader.close();
+        }
+
     }
 
     @FXML //Open new scene for registering user
@@ -38,7 +58,7 @@ public class Inlog {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/newUser.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Register User");
-        stage.setScene(new Scene(root, 800, 500));
+        stage.setScene(new Scene(root, 300, 500));
         stage.show();
         //((Node)(event.getSource())).getScene().getWindow().hide();
     }

@@ -1,7 +1,2 @@
-1;ewf;fwe;fe;fw
-2;sdf;ac;asd;sdc
-3;asdc;ascd;asdc;asdc
-4;Trym;Stenberg;stenberg.trym@gmail.com;98086042
-5;Noah;Olsen;hei@lol.no;12345678
-6;Trym;Stenerbg;sdv;98086043
-7;;;;
+1;Trym;Olsen;mail@mail.no;1234567;heihei
+2;Trym;Stenerg;stenberg.trym@gmail.com;98086042;passord

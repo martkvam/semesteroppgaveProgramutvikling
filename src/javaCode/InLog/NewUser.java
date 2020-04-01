@@ -5,14 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class NewUser {
 
     @FXML
-    private TextArea lblInfo;
+    private Text lblInfo;
+    //private TextArea lblInfo;
 
     @FXML
     private TextField txtPhone;
@@ -35,13 +40,13 @@ public class NewUser {
     @FXML
     void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
         if(!ReadUsers.readFile(txtEmail.getText(), txtPhone.getText())){
-        User newUser = new User(Formatter.assignID(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(),
-               txtPhone.getText(), txtPassword.getText());
+        User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
+                Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
+               Validator.phone(txtPhone.getText()), txtPassword.getText());
          Formatter.addToFile(newUser);
          Stage stage = (Stage) btnRegisterUser.getScene().getWindow();
          stage.close();
         } else {
-            lblInfo.setVisible(true);
             lblInfo.setText("User already exists");
         }
     }

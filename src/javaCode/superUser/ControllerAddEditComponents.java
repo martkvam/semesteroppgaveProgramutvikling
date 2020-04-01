@@ -1,11 +1,14 @@
 package javaCode.superUser;
+import javaCode.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -35,7 +38,18 @@ public class ControllerAddEditComponents {
 
     @FXML
     void btnBack(ActionEvent event) {
+        //Sets new controller
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController("../superUser/ControllerSuperUser");
 
+        // Swap screen
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        try{
+            Main.superUser(window);
+        }
+        catch (Exception e){
+
+        }
     }
 
     @FXML

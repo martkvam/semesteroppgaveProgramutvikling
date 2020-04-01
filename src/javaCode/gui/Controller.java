@@ -16,10 +16,7 @@ import java.io.IOException;
 public class Controller {
 
     @FXML
-    void btnBytt(ActionEvent event) throws IOException {
-
-        //Finds new fxml file
-        Parent swapParent = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+    void btnSuperUser(ActionEvent event) throws IOException {
 
         //Sets new controller
         FXMLLoader loader = new FXMLLoader();
@@ -34,6 +31,20 @@ public class Controller {
 
         }
         
+    }
+    @FXML
+    void btnUser(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController("../superUser/ControllerSuperUser");
+
+        // Swap screen
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        try{
+            Main.User(window);
+        }
+        catch (Exception e){
+
+        }
     }
 
 }

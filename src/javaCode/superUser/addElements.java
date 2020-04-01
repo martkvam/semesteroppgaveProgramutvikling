@@ -192,7 +192,7 @@ public class addElements {
                 else{
                     newComponent.add((String) chooseComponentType.getValue());
                 }
-                
+
                 newComponent.add(componentDescription.getText());
                 newComponent.add(componentPrice.getText());
                 return newComponent;

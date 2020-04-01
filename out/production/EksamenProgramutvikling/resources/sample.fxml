@@ -18,8 +18,9 @@
    <children>
       <AnchorPane prefHeight="402.0" prefWidth="452.0">
          <children>
-            <Button layoutX="200.0" layoutY="176.0" mnemonicParsing="false" onAction="#btnBytt" text="Bytt" />
+            <Button layoutX="181.0" layoutY="175.0" mnemonicParsing="false" onAction="#btnSuperUser" text="SuperUser" />
             <Label layoutX="199.0" layoutY="129.0" text="Bytt scene" />
+            <Button layoutX="193.0" layoutY="220.0" mnemonicParsing="false" onAction="#btnUser" text="User" />
          </children>
       </AnchorPane>
    </children>

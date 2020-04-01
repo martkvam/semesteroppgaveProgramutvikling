@@ -32,8 +32,6 @@ public class ControllerSuperUser {
     //navigates to scene where superuser are able to add and edit components and information
     @FXML
     void btnEditComponents(ActionEvent event) throws IOException {
-        //Finds new fxml file
-        Parent swapParent = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
 
         //Sets new controller
         FXMLLoader loader = new FXMLLoader();
@@ -57,7 +55,7 @@ public class ControllerSuperUser {
 
     //Takes superUser back to login page
     @FXML
-    void btnGoBack(ActionEvent event) {
+    void btnGoBack(ActionEvent event) throws IOException {
 
     }
 

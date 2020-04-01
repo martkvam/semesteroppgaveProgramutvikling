@@ -5,8 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.TextFieldTableCell?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -70,6 +70,48 @@
             <ComboBox fx:id="chooseFilterCarType" layoutX="56.0" layoutY="255.0" prefWidth="150.0" />
             <ComboBox fx:id="chooseFilterComponent" layoutX="260.0" layoutY="255.0" prefWidth="150.0" />
             <ComboBox fx:id="chooseFilterAdjustment" layoutX="472.0" layoutY="255.0" prefWidth="150.0" />
+
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="14.0" layoutY="322.0" prefHeight="200.0" prefWidth="669.0">
+              <columns>
+                  <TableColumn fx:id="componentID" onEditCommit="#componentIDEdited" prefWidth="100.79998779296875" text="Component-ID">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentID" />
+                      </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
+                  </TableColumn>
+                <TableColumn fx:id="componentType" onEditCommit="#componentTypeEdited" prefWidth="108.79998779296875" text="Component type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentType" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
+                </TableColumn>
+                  <TableColumn fx:id="componentDescription" onEditCommit="#componentDescriptionEdited" prefWidth="238.4000244140625" text="Component description">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentDescription" />
+                      </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="componentPrice" onEditCommit="#componentPriceEdited" prefWidth="132.0" text="Component price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="carID" onEditCommit="#carIDEdited" prefWidth="91.2000732421875" text="Car-ID">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="carID" />
+                      </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>

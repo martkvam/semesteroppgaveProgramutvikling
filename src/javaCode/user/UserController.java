@@ -22,7 +22,7 @@ public class UserController implements Initializable {
 
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
-
+    private int totalprice = 0;
 
 
     @FXML
@@ -80,31 +80,33 @@ public class UserController implements Initializable {
     @FXML
     void addComponent(ActionEvent event) {
         Component valgt = componentTV.getSelectionModel().getSelectedItem();
-        chosenComponents.add(valgt);
-        chosenTV.setItems(chosenComponents);
-        chooseCarType.setDisable(true);
+        if(valgt!=null){
+            chosenComponents.add(valgt);
+            chosenTV.setItems(chosenComponents);
+            chooseCarType.setDisable(true);
 
-        int totalprice = 0;
-        for (Component c : chosenComponents){
-            totalprice += c.getPrice();
+
+            totalprice += valgt.getComponentPrice();
+
+            lblTotalprice.setText("Total price: " + totalprice);
         }
-        lblTotalprice.setText("Total price: " + totalprice);
+
+
     }
 
     @FXML
     void removeComponent(ActionEvent event) {
         Component valgt = chosenTV.getSelectionModel().getSelectedItem();
-        chosenComponents.remove(valgt);
-        chooseComponent.getItems().remove(valgt);
-        chosenTV.refresh();
-        if(chosenComponents.isEmpty()){
-            chooseCarType.setDisable(false);
+        if(valgt!=null){
+            chosenComponents.remove(valgt);
+            chooseComponent.getItems().remove(valgt);
+            chosenTV.refresh();
+            if(chosenComponents.isEmpty()){
+                chooseCarType.setDisable(false);
+            }
+            totalprice -= valgt.getComponentPrice();
         }
 
-        int totalprice = 0;
-        for (Component c : chosenComponents){
-            totalprice += c.getPrice();
-        }
         lblTotalprice.setText("Total price: " + totalprice);
     }
 

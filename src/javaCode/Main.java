@@ -38,7 +38,7 @@ public class Main extends Application {
     }
 
     public static void User(Stage User1) throws Exception{
-        Parent root = FXMLLoader.load(Main.class.getResource("../resources/superUserComponents.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("../resources/user.fxml"));
         User1.setTitle("Funker");
         User1.setScene(new Scene(root,704  ,548));
         User1.show();

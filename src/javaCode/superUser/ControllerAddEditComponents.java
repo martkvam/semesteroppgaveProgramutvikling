@@ -107,6 +107,34 @@ public class ControllerAddEditComponents implements Initializable {
             System.out.println(newComponent.get(i));
         }
     }
+    @FXML
+    void txtCarDescriptionEdited(TableColumn.CellEditEvent<Car, String> event) {
+        event.getRowValue().setDescription(event.getNewValue());
+        System.out.println(event.getRowValue());
+    }
+
+    @FXML
+    void txtCarPriceEdited(TableColumn.CellEditEvent<Car, Integer> event) {
+        /*try {
+            if(intStrConverter.wasSuccessful())
+                event.getRowValue().setAge(event.getNewValue());
+        } catch (NumberFormatException e) {
+            Dialogs.showErrorDialog("Du må skrive inn et positivt tall.");
+        } catch (IllegalArgumentException e) {
+            Dialogs.showErrorDialog("Ugyldig alder: " + e.getMessage());
+        }
+
+         */
+
+        TableView.refresh();
+    }
+
+    @FXML
+    void txtCarTypeEdited(TableColumn.CellEditEvent<Car, String> event) {
+        event.getRowValue().setCarType(event.getNewValue());
+        TableView.refresh();
+    }
+
 }
 
 

@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javaCode.Lists;
 
@@ -44,6 +45,9 @@ public class UserController implements Initializable {
 
     @FXML
     private Button leggTill;
+
+    @FXML
+    private Label lblTotalprice;
 
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
     @FXML
@@ -79,6 +83,12 @@ public class UserController implements Initializable {
         chosenComponents.add(valgt);
         chosenTV.setItems(chosenComponents);
         chooseCarType.setDisable(true);
+
+        int totalpris = 0;
+        for (Component c : chosenComponents){
+            totalpris += c.getPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalpris);
     }
 
     @FXML
@@ -90,6 +100,12 @@ public class UserController implements Initializable {
         if(chosenComponents.isEmpty()){
             chooseCarType.setDisable(false);
         }
+
+        int totalpris = 0;
+        for (Component c : chosenComponents){
+            totalpris += c.getPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalpris);
     }
 
 

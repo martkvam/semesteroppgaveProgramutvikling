@@ -1,21 +1,22 @@
 package javaCode.superUser;
+import javaCode.Component;
+import javaCode.Lists;
 import javaCode.Main;
-import javafx.application.Platform;
+import javaCode.Car;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class ControllerAddEditComponents {
+
+public class ControllerAddEditComponents implements Initializable {
 
     addElements addcar = new addElements();
 
@@ -23,19 +24,35 @@ public class ControllerAddEditComponents {
     private Label lblUt;
 
     @FXML
-    private ChoiceBox<?> chooseFilterCarType;
+    private ComboBox<String> chooseFilterCarType;
 
     @FXML
-    private ChoiceBox<?> chooseFilterComponent;
+    private ComboBox<String> chooseFilterComponent;
 
     @FXML
-    private ChoiceBox<?> chooseFilterAdjustment;
+    private ComboBox<String> chooseFilterAdjustment;
 
+    @FXML
+    private TableView<Car> TableView;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        for(Car i : Lists.getCars()) {
+            chooseFilterCarType.getItems().add(i.getCarType());
+        }
+        chooseFilterCarType.setPromptText("Choose car");
+        for(Component i : Lists.getComponents()) {
+            chooseFilterComponent.getItems().add(i.getComponentType());
+        }
+        chooseFilterCarType.setVisible(false);
+        chooseFilterComponent.setVisible(false);
+        chooseFilterAdjustment.setVisible(false);
+        TableView.setVisible(false);
+    }
     @FXML
     void btnAddFromFile(ActionEvent event) {
 
     }
-
     @FXML
     void btnBack(ActionEvent event) {
         //Sets new controller
@@ -59,7 +76,11 @@ public class ControllerAddEditComponents {
 
     @FXML
     void btnEditCars(ActionEvent event) {
-
+        TableView.setItems(Lists.getCars());
+        for(int i = 0; i < Lists.getCars().size();i++){
+            System.out.println(Lists.getCars().get(i).getDescription());
+        }
+        TableView.setVisible(true);
     }
 
     @FXML
@@ -81,14 +102,11 @@ public class ControllerAddEditComponents {
 
     @FXML
     void btnNewComponent(ActionEvent event) {
-        ArrayList<Object> newComponent = addcar.openAddComponentsDialog();
+        ArrayList<Object> newComponent = addcar.openAddComponentsDialog(Lists.getCars(), Lists.getComponents() );
         for(int i = 0; i <newComponent.size(); i++){
             System.out.println(newComponent.get(i));
         }
-
-
     }
-
 }
 
 

@@ -1,6 +1,9 @@
 package javaCode.superUser;
 
+import javaCode.Car;
+import javaCode.Component;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -87,7 +90,7 @@ public class addElements {
     }
 
 
-    public ArrayList<Object> openAddComponentsDialog(){
+    public ArrayList<Object> openAddComponentsDialog(ObservableList<Car> carType, ObservableList<Component> componentType){
         Dialog<ArrayList<String>> dialog = new Dialog<>();
         dialog.setTitle("New Component dialog");
         dialog.setHeaderText("Add new Component");
@@ -103,11 +106,16 @@ public class addElements {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         ComboBox chooseCar = new ComboBox();
-        chooseCar.getItems().addAll("Gasoline", "Diesel", "Hybrid", "Electric");
+        for(Car i : carType){
+            chooseCar.getItems().add(i.getCarType());
+        }
         chooseCar.setPromptText("Choose car type");
 
         ComboBox chooseComponentType = new ComboBox();
-        chooseComponentType.getItems().addAll("Engine", "osv", "New component type");
+        for(Component i : componentType){
+            chooseComponentType.getItems().add(i.getComponentType());
+        }
+        chooseComponentType.getItems().add("New component type");
         chooseComponentType.setPromptText("Choose component type");
 
 

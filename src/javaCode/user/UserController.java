@@ -84,11 +84,11 @@ public class UserController implements Initializable {
         chosenTV.setItems(chosenComponents);
         chooseCarType.setDisable(true);
 
-        int totalpris = 0;
+        int totalprice = 0;
         for (Component c : chosenComponents){
-            totalpris += c.getPrice();
+            totalprice += c.getPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalpris);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
 
     @FXML
@@ -101,11 +101,11 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(false);
         }
 
-        int totalpris = 0;
+        int totalprice = 0;
         for (Component c : chosenComponents){
-            totalpris += c.getPrice();
+            totalprice += c.getPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalpris);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
 
 
@@ -114,8 +114,8 @@ public class UserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //Setter valgmuligheter i choiceboxene
-        chooseCarType.setPromptText("Velg biltype: ");
-        chooseComponent.setPromptText("Velg komponent: ");
+        chooseCarType.setPromptText("Car type: ");
+        chooseComponent.setPromptText("Component type: ");
         chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
         chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
     }

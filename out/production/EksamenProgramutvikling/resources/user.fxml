@@ -12,12 +12,12 @@
     <children>
         <TableView fx:id="componentTV" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
-                <TableColumn prefWidth="201.0" text="Beskrivelse">
+                <TableColumn prefWidth="201.0" text="Description">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentDescription" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="132.0" text="Pris">
+                <TableColumn prefWidth="132.0" text="Price">
                     <cellValueFactory>
                          <PropertyValueFactory property="price" />
                      </cellValueFactory>
@@ -31,7 +31,7 @@
                         <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="76.0" text="Pris">
+                <TableColumn prefWidth="76.0" text="Price">
                     <cellValueFactory>
                         <PropertyValueFactory property="price" />
                     </cellValueFactory>
@@ -50,11 +50,11 @@
         <Label layoutX="35.0" layoutY="363.0" prefHeight="17.0" prefWidth="247.0" text="Tidligere bestilte produkter" />
         <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefWidth="150.0" />
         <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="119.0" text="Valgt" />
-        <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Legg til" />
-        <Button fx:id="btnRemove" layoutX="447.0" layoutY="299.0" mnemonicParsing="false" onAction="#removeComponent" text="Fjern" />
-        <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Bestill" />
+        <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Add" />
+        <Button fx:id="btnRemove" layoutX="435.0" layoutY="299.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
+        <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Order" />
         <Button layoutX="345.0" layoutY="610.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Bestill fra ferdig komponerte" />
       <ComboBox fx:id="chooseComponent" layoutX="182.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="177.0" />
-      <Label fx:id="lblTotalprice" layoutX="408.0" layoutY="261.0" prefHeight="17.0" prefWidth="135.0" text="Totalpris: " />
+      <Label fx:id="lblTotalprice" layoutX="408.0" layoutY="261.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
     </children>
 </AnchorPane>

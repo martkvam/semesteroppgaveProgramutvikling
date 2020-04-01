@@ -53,7 +53,7 @@
         <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefWidth="150.0" />
         <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="119.0" text="Valgt" />
         <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Legg til" />
-        <Button layoutX="447.0" layoutY="299.0" mnemonicParsing="false" text="Fjern" />
+        <Button fx:id="btnRemove" layoutX="447.0" layoutY="299.0" mnemonicParsing="false" onAction="#removeComponent" text="Fjern" />
         <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Bestill" />
         <Button layoutX="345.0" layoutY="610.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Bestill fra ferdig komponerte" />
       <ComboBox fx:id="chooseComponent" layoutX="182.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="177.0" />

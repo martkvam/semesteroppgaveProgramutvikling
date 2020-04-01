@@ -77,6 +77,17 @@ public class UserController implements Initializable {
         chooseCarType.setDisable(true);
     }
 
+    @FXML
+    void removeComponent(ActionEvent event) {
+        Component valgt = chosenTV.getSelectionModel().getSelectedItem();
+        chosenComponents.remove(valgt);
+        chooseComponent.getItems().remove(valgt);
+        chosenTV.refresh();
+        if(chosenComponents.isEmpty()){
+            chooseCarType.setDisable(false);
+        }
+    }
+
 
 
     @Override
@@ -87,6 +98,8 @@ public class UserController implements Initializable {
         Component rim1 = new Component("3", "3-01", "Felg" ,"Dyreste", 2000);
         Component setetrekk = new Component("4", "4-01", "Setetrekk" ,"Skinn", 2000);
         Component motor2 = new Component("3", "1-02", "Motor" ,"Effektiv", 35000);
+        Component wheel2 = new Component("1", "2-02", "Ratt", "Sport", 5000);
+
 
         Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
@@ -97,6 +110,7 @@ public class UserController implements Initializable {
         lists.addComponent(rim1);
         lists.addComponent(setetrekk);
         lists.addComponent(motor2);
+        lists.addComponent(wheel2);
         lists.addCar(bensin);
         lists.addCar(diesel);
         lists.addCar(elektrisk);

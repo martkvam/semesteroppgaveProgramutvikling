@@ -12,7 +12,10 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+
+import static javaCode.user.Methods.*;
 
 public class UserController implements Initializable {
 
@@ -40,6 +43,9 @@ public class UserController implements Initializable {
 
     @FXML
     private Button leggTill;
+
+    @FXML
+    private Label lblTotalpris;
 
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
     @FXML
@@ -75,6 +81,12 @@ public class UserController implements Initializable {
         chosenComponents.add(valgt);
         chosenTV.setItems(chosenComponents);
         chooseCarType.setDisable(true);
+        int totalpris = 0;
+        for (Component component : chosenComponents){
+            totalpris += component.getPrice();
+        }
+        lblTotalpris.setText("Totalpris: " + totalpris);
+
     }
 
     @FXML
@@ -86,6 +98,12 @@ public class UserController implements Initializable {
         if(chosenComponents.isEmpty()){
             chooseCarType.setDisable(false);
         }
+        int totalpris = 0;
+        for (Component component : chosenComponents){
+            totalpris += component.getPrice();
+        }
+        lblTotalpris.setText("Totalpris: " + totalpris);
+
     }
 
 
@@ -119,8 +137,8 @@ public class UserController implements Initializable {
         //Setter valgmuligheter i choiceboxene
         chooseCarType.setPromptText("Velg biltype: ");
         chooseComponent.setPromptText("Velg komponent: ");
-        chooseCarType.getItems().setAll(Methods.typeList(lists.carList));
-        chooseComponent.getItems().setAll(Methods.componentList(lists.componentList));
+        chooseCarType.getItems().setAll(typeList(lists.carList));
+        chooseComponent.getItems().setAll(componentList(lists.componentList));
     }
 }
 

@@ -1,5 +1,7 @@
 package javaCode.user;
 
+import javaCode.Car;
+import javaCode.Component;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;

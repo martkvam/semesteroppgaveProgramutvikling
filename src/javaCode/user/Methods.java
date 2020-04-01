@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class Metoder {
+public class Methods {
     //Metode for å lage liste som skal fylle biltype-choicebox
     public static ArrayList<String> typeList(ObservableList<Car> inList) {
         ArrayList<Car> aList = new ArrayList<>();

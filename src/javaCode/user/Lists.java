@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
 
-public class Lister {
+public class Lists {
 
     ObservableList<Component> componentList = FXCollections.observableArrayList();
     ObservableList<Car> carList = FXCollections.observableArrayList();

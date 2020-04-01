@@ -16,62 +16,65 @@ import javafx.scene.control.TableView;
 
 public class UserController implements Initializable {
 
-    private Lister lister = new Lister();
-    ObservableList<Component> valgteKomponenter = FXCollections.observableArrayList();
+    private Lists lists = new Lists();
+    ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
 
 
     @FXML
-    private TableView<Component> komponentTv;
+    private TableView<Component> componentTV;
 
     @FXML
-    private TableView<Component> valgTv;
+    private TableView<Component> chosenTV;
 
     @FXML
-    private TableView<?> tidligereTv;
+    private TableView<?> previousTV;
 
     @FXML
-    private ComboBox<String> velgBilType;
+    private ComboBox<String> chooseCarType;
 
     @FXML
-    private ComboBox<String> velgKomponent;
+    private Button addBtn;
+
+    @FXML
+    private ComboBox<String> chooseComponent;
 
     @FXML
     private Button leggTill;
 
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
     @FXML
-    void settListe(ActionEvent event) {
+    void setList(ActionEvent event) {
         ObservableList<Component> outList = FXCollections.observableArrayList();
         //Finner verdiene i choiceboxene
-        String type = velgBilType.getValue();
+        String type = chooseCarType.getValue();
         String ID = "";
-        for (Car car : lister.carList){
+        for (Car car : lists.carList){
             if (type.equals(car.getCarType())){
                 ID = car.getCarID();
             }
         }
-        String component = velgKomponent.getValue();
+        String component = chooseComponent.getValue();
 
         //Hvis et element i komponentlisten matcher verdien i begge choiceboxene legges de til i en ny liste
         if(type != null && component != null) {
-            for (int i = 0; i < lister.componentList.size(); i++) {
-                if (ID.equals(lister.componentList.get(i).getCarID()) && component.equals(lister.componentList.get(i).getComponentType())) {
-                    outList.add(lister.componentList.get(i));
+            for (int i = 0; i < lists.componentList.size(); i++) {
+                if (ID.equals(lists.componentList.get(i).getCarID()) && component.equals(lists.componentList.get(i).getComponentType())) {
+                    outList.add(lists.componentList.get(i));
                 }
             }
         }
 
         //Den nye listen vises i tableviewet
-        komponentTv.setItems(outList);
-        komponentTv.refresh();
+        componentTV.setItems(outList);
+        componentTV.refresh();
     }
 
     @FXML
-    void leggTil(ActionEvent event) {
-        Component valgt = komponentTv.getSelectionModel().getSelectedItem();
-        valgteKomponenter.add(valgt);
-        valgTv.setItems(valgteKomponenter);
-        velgBilType.setDisable(true);
+    void addComponent(ActionEvent event) {
+        Component valgt = componentTV.getSelectionModel().getSelectedItem();
+        chosenComponents.add(valgt);
+        chosenTV.setItems(chosenComponents);
+        chooseCarType.setDisable(true);
     }
 
 
@@ -89,21 +92,21 @@ public class UserController implements Initializable {
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
         Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
-        lister.addComponent(motor1);
-        lister.addComponent(wheel1);
-        lister.addComponent(rim1);
-        lister.addComponent(setetrekk);
-        lister.addComponent(motor2);
-        lister.addCar(bensin);
-        lister.addCar(diesel);
-        lister.addCar(elektrisk);
-        lister.addCar(hybrid);
+        lists.addComponent(motor1);
+        lists.addComponent(wheel1);
+        lists.addComponent(rim1);
+        lists.addComponent(setetrekk);
+        lists.addComponent(motor2);
+        lists.addCar(bensin);
+        lists.addCar(diesel);
+        lists.addCar(elektrisk);
+        lists.addCar(hybrid);
 
         //Setter valgmuligheter i choiceboxene
-        velgBilType.setPromptText("Velg biltype: ");
-        velgKomponent.setPromptText("Velg komponent: ");
-        velgBilType.getItems().setAll(Metoder.typeList(lister.carList));
-        velgKomponent.getItems().setAll(Metoder.componentList(lister.componentList));
+        chooseCarType.setPromptText("Velg biltype: ");
+        chooseComponent.setPromptText("Velg komponent: ");
+        chooseCarType.getItems().setAll(Methods.typeList(lists.carList));
+        chooseComponent.getItems().setAll(Methods.componentList(lists.componentList));
     }
 }
 

@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
     <children>
-        <TableView fx:id="komponentTv" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
+        <TableView fx:id="componentTV" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
                 <TableColumn prefWidth="201.0" text="Beskrivelse">
                     <cellValueFactory>
@@ -26,7 +26,7 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="valgTv" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="chosenTV" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
             <columns>
                 <TableColumn prefWidth="123.0" text="Type">
                     <cellValueFactory>
@@ -40,7 +40,7 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="tidligereTv" layoutX="35.0" layoutY="397.0" prefHeight="200.0" prefWidth="531.0">
+        <TableView fx:id="previousTV" layoutX="35.0" layoutY="397.0" prefHeight="200.0" prefWidth="531.0">
             <columns>
                 <TableColumn prefWidth="98.0" text="Type" />
                 <TableColumn prefWidth="121.0" text="Motor" />
@@ -50,13 +50,13 @@
             </columns>
         </TableView>
         <Label layoutX="35.0" layoutY="363.0" prefHeight="17.0" prefWidth="247.0" text="Tidligere bestilte produkter" />
-        <ComboBox fx:id="velgBilType" layoutX="26.0" layoutY="23.0" onAction="#settListe" prefWidth="150.0" />
+        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefWidth="150.0" />
         <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="119.0" text="Valgt" />
-        <Button fx:id="leggTil" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#leggTil" text="Legg til" />
+        <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Legg til" />
         <Button layoutX="447.0" layoutY="299.0" mnemonicParsing="false" text="Fjern" />
         <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Bestill" />
         <Button layoutX="345.0" layoutY="610.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Bestill fra ferdig komponerte" />
-      <ComboBox fx:id="velgKomponent" layoutX="182.0" layoutY="23.0" onAction="#settListe" prefHeight="27.0" prefWidth="177.0" />
+      <ComboBox fx:id="chooseComponent" layoutX="182.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="177.0" />
       <RadioButton layoutX="416.0" layoutY="260.0" mnemonicParsing="false" text="GPS">
          <font>
             <Font size="10.0" />

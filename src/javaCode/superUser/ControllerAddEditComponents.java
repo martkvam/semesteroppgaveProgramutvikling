@@ -116,7 +116,7 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewCar(ActionEvent event) {
 
-        addcar.openAddCarDialog();
+        addcar.openAddCarDialog(Lists.getCars());
 
     }
 
@@ -155,17 +155,17 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void componentIDEdited(TableColumn.CellEditEvent<Component, String> event) {
         event.getRowValue().setComponentID(event.getNewValue());
-        TableView.refresh();
+        tableViewComponents.refresh();
     }
     @FXML
     void componentTypeEdited(TableColumn.CellEditEvent<Component, String> event) {
         event.getRowValue().setComponentType(event.getNewValue());
-        TableView.refresh();
+        tableViewComponents.refresh();
     }
     @FXML
     void componentDescriptionEdited(TableColumn.CellEditEvent<Component, String> event) {
         event.getRowValue().setComponentDescription(event.getNewValue());
-        TableView.refresh();
+        tableViewComponents.refresh();
     }
 
     @FXML
@@ -179,14 +179,14 @@ public class ControllerAddEditComponents implements Initializable {
             Dialogs.showErrorDialog("Ugyldig alder: " + e.getMessage());
         }
 
-        TableView.refresh();
+        tableViewComponents.refresh();
     }
 
 
     @FXML
     void carIDEdited(TableColumn.CellEditEvent<Component, String> event) {
         event.getRowValue().setCarID(event.getNewValue());
-        TableView.refresh();
+        tableViewComponents.refresh();
     }
 
 }

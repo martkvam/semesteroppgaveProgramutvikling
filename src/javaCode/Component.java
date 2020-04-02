@@ -43,7 +43,7 @@ public class Component {
     }
 
     public void setComponentType(String type){
-        this.componentType.getValue();
+        this.componentType.set(type);
     }
 
     public int getComponentPrice() {

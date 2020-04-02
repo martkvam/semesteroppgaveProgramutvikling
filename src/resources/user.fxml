@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
+    <children>
+        <TableView fx:id="componentTV" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
+            <columns>
+                <TableColumn prefWidth="201.0" text="Description">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentDescription" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="componentPrice" prefWidth="132.0" text="Price">
+                    <cellValueFactory>
+                         <PropertyValueFactory property="componentPrice" />
+                     </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <TableView fx:id="chosenTV" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
+            <columns>
+                <TableColumn prefWidth="123.0" text="Type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentType" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="76.0" text="Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentPrice" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <TableView fx:id="previousTV" layoutX="35.0" layoutY="397.0" prefHeight="200.0" prefWidth="531.0">
+            <columns>
+                <TableColumn prefWidth="98.0" text="Type" />
+                <TableColumn prefWidth="121.0" text="Motor" />
+                <TableColumn prefWidth="108.0" text="Felg" />
+                <TableColumn prefWidth="100.0" text="Setetrekk" />
+                <TableColumn prefWidth="103.0" text="Ratt" />
+            </columns>
+        </TableView>
+        <Label layoutX="35.0" layoutY="363.0" prefHeight="17.0" prefWidth="247.0" text="Tidligere bestilte produkter" />
+        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefWidth="150.0" />
+        <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="119.0" text="Valgt" />
+        <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Add" />
+        <Button fx:id="btnRemove" layoutX="435.0" layoutY="299.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
+        <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Order" />
+        <Button layoutX="345.0" layoutY="610.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Bestill fra ferdig komponerte" />
+      <ComboBox fx:id="chooseComponent" layoutX="182.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="177.0" />
+      <Label fx:id="lblTotalprice" layoutX="408.0" layoutY="261.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
+    </children>
+</AnchorPane>

@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class addElements {
-    private int amountOfCars = 4;
 
     //Code for a new dialog to add new cars.
     public void openAddCarDialog(ObservableList<Car> carTypeList) {

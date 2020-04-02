@@ -14,7 +14,6 @@ public static boolean readFile(String email, String phone) throws FileNotFoundEx
     for (; myReader.hasNext(); ) {
         String u = myReader.next();
         String[] strings = u.split(";");
-        System.out.println(".");
         if(strings[3].equals(email) || strings[4].equals(phone)){
             return true;
         }

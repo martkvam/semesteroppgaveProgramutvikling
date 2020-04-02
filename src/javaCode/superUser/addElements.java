@@ -16,7 +16,7 @@ public class addElements {
     private int amountOfCars = 4;
 
     //Code for a new dialog to add new cars.
-    public ArrayList<Object> openAddCarDialog() {
+    public void openAddCarDialog() {
 
         //Sets up a new dialog
         Dialog<ArrayList<String>> dialog = new Dialog<>();
@@ -86,12 +86,11 @@ public class addElements {
         result.ifPresent(newCarEntry -> {
             outArray.add(newCarEntry.get(1) + amountOfCars);
         });
-        return outArray;
     }
 
 
-    public ArrayList<Object> openAddComponentsDialog(ObservableList<Car> carType, ObservableList<Component> componentType){
-        Dialog<ArrayList<String>> dialog = new Dialog<>();
+    public void openAddComponentsDialog(ObservableList<Car> carType, ObservableList<Component> componentType){
+        Dialog<Component> dialog = new Dialog<>();
         dialog.setTitle("New Component dialog");
         dialog.setHeaderText("Add new Component");
 
@@ -188,27 +187,72 @@ public class addElements {
         // Request focus on the username field by default.
         Platform.runLater(() -> chooseCar.requestFocus());
 
-        // Convert the result to a username-password-pair when the login button is clicked.
+        // Convert the input from the textareas and comboboxes to a Component and returns it.
         dialog.setResultConverter(dialogButton -> {
 
             if (dialogButton == addButton) {
-                ArrayList<String> newComponent = new ArrayList<>();
-                newComponent.add((String) chooseCar.getValue());
-                if(chooseComponentType.getValue().toString().equals("New component type")){
-                    newComponent.add(newComponentType.getText());
-                }
-                else{
-                    newComponent.add((String) chooseComponentType.getValue());
-                }
+                String componentId = "";
+                String outComponentType = "";
+                //Loop to set new componentID
+                for (int i = 0; i < componentType.size(); i++) {
+                    if (chooseComponentType.getValue().toString().equals("New component type")) {
+                        //Loop to find highest ComponentTypeID(first number in componentID)
+                        String lastComponentID = "";
+                        int lastComponentIDchecked = 0;
+                        for (int j = 0; j < componentType.size(); j++) {
+                            String line = componentType.get(j).getComponentID();
+                            String[] split = line.split("-");
 
-                newComponent.add(componentDescription.getText());
-                newComponent.add(componentPrice.getText());
+                            if(Integer.parseInt(split[0]) > lastComponentIDchecked){
+                                lastComponentIDchecked = Integer.parseInt(split[0]);
+                            }
+                        }
+                        lastComponentID=Integer.toString(lastComponentIDchecked +1);
+                        outComponentType = newComponentType.getText();
+                        componentId=lastComponentID;
+                        componentId += "-";
+                        componentId += 1;
+                        break;
+
+                    }
+                    else if (componentType.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
+                        int lastComponentIDchecked=0;
+                        for (int j = 0; j < componentType.size(); j++) {
+                            String line = componentType.get(j).getComponentID();
+                            String[] split = line.split("-");
+
+                            if(Integer.parseInt(split[1]) > lastComponentIDchecked){
+                                lastComponentIDchecked = Integer.parseInt(split[1]);
+                            }
+                        }
+                        System.out.println(lastComponentIDchecked);
+                        String line = componentType.get(i).getComponentID();
+                        String[] split = line.split("-");
+                        componentId += split[0];
+                        componentId += "-";
+                        componentId += Integer.toString(lastComponentIDchecked + 1);
+                        outComponentType = chooseComponentType.getValue().toString();
+                        break;
+                    }
+                }
+                String outComponentDescription = componentDescription.getText();
+                int  outComponentPrice = Integer.parseInt(componentPrice.getText());
+                String outCarType = chooseCar.getValue().toString();
+                String carID ="";
+                for(int i = 0; i < carType.size(); i++){
+                    if(outCarType.equals(carType.get(i).getCarType())){
+                        carID=carType.get(i).getCarID();
+                    }
+                }
+                Component newComponent = new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
                 return newComponent;
             }
-            return null;
-        });
+            else{
+                return null;
+            }
+    });
 
-        Optional<ArrayList<String>> result = dialog.showAndWait();
+        Optional<Component> result = dialog.showAndWait();
 
         /*result.ifPresent(usernamePassword -> {
             System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
@@ -216,13 +260,9 @@ public class addElements {
 
          */
         //Handles the input values and sets new car id
-        ArrayList<Object> outArray = new ArrayList<>();
         result.ifPresent(newComponentEntry -> {
-            for(int i = 0; i < newComponentEntry.size(); i++){
-                outArray.add(newComponentEntry.get(i));
-            }
+            componentType.add(newComponentEntry);
         });
-        return outArray;
     }
 
 }

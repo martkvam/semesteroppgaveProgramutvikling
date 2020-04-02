@@ -122,10 +122,7 @@ public class ControllerAddEditComponents implements Initializable {
 
     @FXML
     void btnNewComponent(ActionEvent event) {
-        ArrayList<Object> newComponent = addcar.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
-        for (int i = 0; i < newComponent.size(); i++) {
-            System.out.println(newComponent.get(i));
-        }
+        addcar.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
     }
 
     @FXML

@@ -31,6 +31,7 @@ public class Controller implements Initializable {
         Component setetrekk = new Component("4", "4-01", "Setetrekk" ,"Skinn", 2000);
         Component motor2 = new Component("3", "1-02", "Motor" ,"Effektiv", 35000);
         Component wheel2 = new Component("1", "2-02", "Ratt", "Sport", 5000);
+        Component exhaust = new Component("1", "5-01", "Eksospotte", "Bråkete", 4000);
 
         Adjustment hitch = new Adjustment("Hengerfeste", 2000);
         Adjustment sunroof = new Adjustment("Soltak", 5000);
@@ -48,6 +49,7 @@ public class Controller implements Initializable {
         lists.addComponent(setetrekk);
         lists.addComponent(motor2);
         lists.addComponent(wheel2);
+        lists.addComponent(exhaust);
         lists.addCar(bensin);
         lists.addCar(diesel);
         lists.addCar(elektrisk);

@@ -39,12 +39,12 @@ public class ControllerSuperUser {
 
         // Swap screen
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        try{
+        /*try{
             Main.superUserComponents(window);
         }
         catch (Exception e){
 
-        }
+        }*/
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.

@@ -1,10 +1,9 @@
 package javaCode.gui;
 
 
-import javaCode.Car;
-import javaCode.Component;
-import javaCode.Lists;
-import javaCode.Main;
+import javaCode.*;
+import javaCode.user.Methods;
+import javaCode.user.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +32,11 @@ public class Controller implements Initializable {
         Component motor2 = new Component("3", "1-02", "Motor" ,"Effektiv", 35000);
         Component wheel2 = new Component("1", "2-02", "Ratt", "Sport", 5000);
 
+        Adjustment hitch = new Adjustment("Hengerfeste", 2000);
+        Adjustment sunroof = new Adjustment("Soltak", 5000);
+        Adjustment gps = new Adjustment("Integrert GPS", 7000);
+        Adjustment airCondition = new Adjustment("Air Condition", 8000);
+
 
         Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
@@ -47,6 +52,12 @@ public class Controller implements Initializable {
         lists.addCar(diesel);
         lists.addCar(elektrisk);
         lists.addCar(hybrid);
+        lists.addAdjustment(hitch);
+        lists.addAdjustment(sunroof);
+        lists.addAdjustment(gps);
+        lists.addAdjustment(airCondition);
+
+
     }
 
     @FXML

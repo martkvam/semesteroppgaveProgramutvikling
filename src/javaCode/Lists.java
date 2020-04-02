@@ -4,6 +4,7 @@ import javaCode.Car;
 import javaCode.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class Lists {
 
     private static ObservableList<Car> carList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
+    private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
 
     //Metoder for å legge til objekter i listene
     public void addComponent(Component component){
@@ -19,6 +21,10 @@ public class Lists {
 
     public void addCar (Car car){
         carList.add(car);
+    }
+
+    public void addAdjustment (Adjustment adj){
+        adjustmentList.add(adj);
     }
 
     public static ObservableList<Car> getCars(){
@@ -35,4 +41,9 @@ public class Lists {
         }
         return componentList;
     }
+
+    public static ObservableList<Adjustment> getAdjustment(){
+        return adjustmentList;
+    }
+
 }

@@ -24,7 +24,7 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="chosenTV" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="chosenCompTV" layoutX="408.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0">
             <columns>
                 <TableColumn prefWidth="123.0" text="Type">
                     <cellValueFactory>
@@ -38,23 +38,45 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="previousTV" layoutX="35.0" layoutY="397.0" prefHeight="200.0" prefWidth="531.0">
-            <columns>
-                <TableColumn prefWidth="98.0" text="Type" />
-                <TableColumn prefWidth="121.0" text="Motor" />
-                <TableColumn prefWidth="108.0" text="Felg" />
-                <TableColumn prefWidth="100.0" text="Setetrekk" />
-                <TableColumn prefWidth="103.0" text="Ratt" />
-            </columns>
-        </TableView>
-        <Label layoutX="35.0" layoutY="363.0" prefHeight="17.0" prefWidth="247.0" text="Tidligere bestilte produkter" />
-        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefWidth="150.0" />
-        <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="119.0" text="Valgt" />
-        <Button fx:id="addBtn" layoutX="257.0" layoutY="269.0" mnemonicParsing="false" onAction="#addComponent" text="Add" />
-        <Button fx:id="btnRemove" layoutX="435.0" layoutY="299.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
-        <Button layoutX="508.0" layoutY="299.0" mnemonicParsing="false" text="Order" />
-        <Button layoutX="345.0" layoutY="610.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Bestill fra ferdig komponerte" />
-      <ComboBox fx:id="chooseComponent" layoutX="182.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="177.0" />
-      <Label fx:id="lblTotalprice" layoutX="408.0" layoutY="261.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
+        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
+        <Label layoutX="408.0" layoutY="28.0" prefHeight="17.0" prefWidth="153.0" text="Chosen components" />
+        <Button fx:id="addBtn" layoutX="265.0" layoutY="270.0" mnemonicParsing="false" onAction="#addComponent" prefHeight="27.0" prefWidth="95.0" text="Add" />
+        <Button fx:id="btnRemove" layoutX="535.0" layoutY="265.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
+        <Button layoutX="548.0" layoutY="601.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="68.0" text="Order" />
+      <ComboBox fx:id="chooseComponent" layoutX="196.0" layoutY="23.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
+      <Label fx:id="lblTotalprice" layoutX="209.0" layoutY="606.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
+      <TableView fx:id="adjustmentTV" layoutX="26.0" layoutY="348.0" prefHeight="200.0" prefWidth="327.0">
+        <columns>
+            <TableColumn prefWidth="202.0" text="Type">
+                <cellValueFactory>
+                    <PropertyValueFactory property="type" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn minWidth="0.0" prefWidth="124.0" text="Price">
+                <cellValueFactory>
+                    <PropertyValueFactory property="price" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Label layoutX="26.0" layoutY="320.0" prefHeight="17.0" prefWidth="103.0" text="Adjustments" />
+      <TableView fx:id="chosenAdjustTV" layoutX="403.0" layoutY="348.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+            <TableColumn prefWidth="117.0" text="Type">
+                <cellValueFactory>
+                    <PropertyValueFactory property="type" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="82.0" text="Price">
+                <cellValueFactory>
+                    <PropertyValueFactory property="price" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Label layoutX="411.0" layoutY="320.0" text="Chosen adjustments" />
+      <Button fx:id="addAdjust" layoutX="272.0" layoutY="556.0" mnemonicParsing="false" onAction="#addAdjust" prefHeight="27.0" prefWidth="82.0" text="Add" />
+      <Button fx:id="removeAdjust" layoutX="531.0" layoutY="556.0" mnemonicParsing="false" onAction="#removeAdjust" prefHeight="27.0" prefWidth="68.0" text="Remove" />
+      <ComboBox fx:id="chooseCol" layoutX="410.0" layoutY="601.0" prefHeight="27.0" prefWidth="126.0" />
     </children>
 </AnchorPane>

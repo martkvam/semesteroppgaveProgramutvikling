@@ -4,6 +4,7 @@ import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,7 +40,7 @@ public class Inlog {
         boolean correct = false;
         if(txtUserName.getText().equals("Admin") && txtPassword.getText().equals("Admin")){
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-            OpenScene.newScene("Register User",  root, 800, 500);
+            OpenScene.newScene("Register User",  root, 800, 500, event);
         }
         if(ReadUsers.readFile(txtUserName.getText(), txtUserName.getText())){
             File myObj = new File(Formatter.path);
@@ -60,7 +61,7 @@ public class Inlog {
         }
         if(correct){
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-            OpenScene.newScene("User",  root, 800, 500);
+            OpenScene.newScene("User",  root, 800, 500, event);
         }else{
             lblInfo.setText("Username and password incorrect");
         }
@@ -69,7 +70,7 @@ public class Inlog {
     @FXML //Open new scene for registering user
     void btnNewUserOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/newUser.fxml"));
-        OpenScene.newScene("Register User",  root, 300, 500);
-        //((Node)(event.getSource())).getScene().getWindow().hide();
+        OpenScene.newScene("Register User",  root, 300, 500, event);
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 }

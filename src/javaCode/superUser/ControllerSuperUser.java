@@ -1,6 +1,7 @@
 package javaCode.superUser;
 
 import javaCode.Main;
+import javaCode.OpenScene;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -55,8 +57,9 @@ public class ControllerSuperUser {
 
     //Takes superUser back to login page
     @FXML
-    void btnGoBack(ActionEvent event) throws IOException {
-
+    void btnGoBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+        OpenScene.newScene("Log in", root, 500, 500, event);
     }
 
     //Info about components scene on hover

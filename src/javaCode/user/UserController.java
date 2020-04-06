@@ -103,7 +103,7 @@ public class UserController implements Initializable {
             totalprice += adj.getPrice();
         }
         for(Component c : chosenComponents){
-            totalprice += c.getPrice();
+            totalprice += c.getComponentPrice();
         }
         lblTotalprice.setText("Totalpris: " + totalprice);
     }
@@ -123,7 +123,7 @@ public class UserController implements Initializable {
             totalprice += adj.getPrice();
         }
         for(Component c : chosenComponents){
-            totalprice += c.getPrice();
+            totalprice += c.getComponentPrice();
         }
         lblTotalprice.setText("Totalpris: " + totalprice);
     }
@@ -156,7 +156,7 @@ public class UserController implements Initializable {
             totalprice += adj.getPrice();
         }
         for(Component c : chosenComponents){
-            totalprice += c.getPrice();
+            totalprice += c.getComponentPrice();
         }
         lblTotalprice.setText("Totalpris: " + totalprice);
 
@@ -176,7 +176,7 @@ public class UserController implements Initializable {
             totalprice += adj.getPrice();
         }
         for(Component c : chosenComponents){
-            totalprice += c.getPrice();
+            totalprice += c.getComponentPrice();
         }
         lblTotalprice.setText("Totalpris: " + totalprice);
     }

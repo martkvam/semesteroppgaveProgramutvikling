@@ -93,6 +93,7 @@ public class Inlog implements Initializable {
                         strings[5].equals(txtPassword.getText())){
                     lblInfo.setVisible(true);
                     lblInfo.setText("Correct");
+                    LoggedIn.setId(strings[0]);
                     correct = true;
                     break;
                 }

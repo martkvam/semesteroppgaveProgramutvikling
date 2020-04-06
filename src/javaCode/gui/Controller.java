@@ -71,12 +71,12 @@ public class Controller implements Initializable {
 
         // Swap screen
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        try{
+        /*try{
             Main.superUser(window);
         }
         catch (Exception e){
 
-        }
+        }*/
         
     }
     @FXML
@@ -86,12 +86,12 @@ public class Controller implements Initializable {
 
         // Swap screen
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        try{
+        /*try{
             Main.User(window);
         }
         catch (Exception e){
 
-        }
+        }*/
     }
 
 }

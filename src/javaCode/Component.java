@@ -10,14 +10,14 @@ public class Component {
     private SimpleStringProperty componentID;
     private SimpleStringProperty componentType;
     private SimpleStringProperty componentDescription;
-    private SimpleIntegerProperty price;
+    private SimpleIntegerProperty componentPrice;
 
-    public Component(String carID, String componentID, String componentType, String componentDescription, int price) {
+    public Component(String carID, String componentID, String componentType, String componentDescription, int componentPrice) {
         this.carID = new SimpleStringProperty(carID);
         this.componentID = new SimpleStringProperty(componentID);
         this.componentType = new SimpleStringProperty(componentType);
         this.componentDescription = new SimpleStringProperty(componentDescription);
-        this.price = new SimpleIntegerProperty(price);
+        this.componentPrice = new SimpleIntegerProperty(componentPrice);
     }
 
     public String getCarID() {
@@ -43,16 +43,16 @@ public class Component {
     }
 
     public void setComponentType(String type){
-        this.componentType.getValue();
+        this.componentType.set(type);
     }
 
-    public int getPrice() {
-        return price.getValue();
+    public int getComponentPrice() {
+        return componentPrice.getValue();
     }
 
 
-    public void setPrice(int price) {
-        this.price.set(price);
+    public void setComponentPrice(int componentPrice) {
+        this.componentPrice.set(componentPrice);
     }
 
     public String getComponentDescription() {

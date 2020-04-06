@@ -8,7 +8,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
     <children>
         <TableView fx:id="componentTV" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
@@ -17,9 +17,9 @@
                         <PropertyValueFactory property="componentDescription" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="132.0" text="Price">
+                <TableColumn fx:id="componentPrice" prefWidth="132.0" text="Price">
                     <cellValueFactory>
-                         <PropertyValueFactory property="price" />
+                         <PropertyValueFactory property="componentPrice" />
                      </cellValueFactory>
                 </TableColumn>
             </columns>
@@ -33,7 +33,7 @@
                 </TableColumn>
                 <TableColumn prefWidth="76.0" text="Price">
                     <cellValueFactory>
-                        <PropertyValueFactory property="price" />
+                        <PropertyValueFactory property="componentPrice" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>

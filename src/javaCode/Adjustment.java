@@ -1,7 +1,31 @@
 package javaCode;
 
-public class Adjustment extends Equipment{
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+public class Adjustment {
+    private SimpleStringProperty type;
+    private SimpleIntegerProperty price;
+
     public Adjustment(String type, int price) {
-        super(type, price);
+        this.type = new SimpleStringProperty(type);
+        this.price = new SimpleIntegerProperty(price);
+    }
+
+    public String getType() {
+        return type.getValue();
+    }
+
+    public void setType(String type) {
+        this.type.set(type);
+    }
+
+    public int getPrice() {
+        return price.getValue();
+    }
+
+    public void setPrice(int price) {
+        this.price.set(price);
     }
 }
+

@@ -10,38 +10,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/sample.fxml"));
-        primaryStage.setTitle("Kjøp av bil");
-        primaryStage.setScene(new Scene(root,900,800));
+        Parent root = FXMLLoader.load(getClass().getResource("../resources/Inlog.fxml"));
+        primaryStage.setTitle("Log in");
+        primaryStage.setScene(new Scene(root,500,500));
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-
         launch(args);
-
-
     }
-
-    public static void superUser(Stage superUser1) throws Exception{
-        Parent root = FXMLLoader.load(Main.class.getResource("../resources/superUser.fxml"));
-        superUser1.setTitle("Funker");
-        superUser1.setScene(new Scene(root,483 ,296));
-        superUser1.show();
-    }
-
-    public static void superUserComponents(Stage superUser2) throws Exception{
-        Parent root = FXMLLoader.load(Main.class.getResource("../resources/superUserComponents.fxml"));
-        superUser2.setTitle("Funker");
-        superUser2.setScene(new Scene(root,704  ,548));
-        superUser2.show();
-    }
-
-    public static void User(Stage User1) throws Exception{
-        Parent root = FXMLLoader.load(Main.class.getResource("../resources/user.fxml"));
-        User1.setTitle("Funker");
-        User1.setScene(new Scene(root,704  ,548));
-        User1.show();
-    }
-
 }

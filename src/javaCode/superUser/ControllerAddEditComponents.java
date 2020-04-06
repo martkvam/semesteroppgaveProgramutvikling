@@ -80,11 +80,11 @@ public class ControllerAddEditComponents implements Initializable {
 
         // Swap screen
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        try {
+        /*try {
             Main.superUser(window);
         } catch (Exception e) {
 
-        }
+        }*/
     }
 
     @FXML

@@ -1,24 +1,15 @@
 package javaCode.superUser;
 
-import javaCode.Main;
 import javaCode.OpenScene;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
-
 import java.io.IOException;
-import java.util.Optional;
 
 
 public class ControllerSuperUser {
@@ -33,7 +24,7 @@ public class ControllerSuperUser {
 
     //navigates to scene where superuser are able to add and edit components and information
     @FXML
-    void btnEditComponents(ActionEvent event) throws IOException {
+    void btnEditComponents(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 
         //Sets new controller
         FXMLLoader loader = new FXMLLoader();
@@ -41,12 +32,9 @@ public class ControllerSuperUser {
 
         // Swap screen
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        /*try{
-            Main.superUserComponents(window);
-        }
-        catch (Exception e){
-
-        }*/
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
+        OpenScene.
+                newScene("Edit/delete components", root, 600,600, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.

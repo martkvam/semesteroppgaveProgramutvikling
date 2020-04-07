@@ -60,8 +60,14 @@ public class ControllerOrders implements Initializable {
         System.out.println(Lists.getOrders().get(0).getCarColor());
     }
     @FXML
-    void btnBack(ActionEvent event) {
+    void btnBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController("../superUser/ControllerSuperUser");
 
+        // Swap screen
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+        OpenScene.
+                newScene("Edit orders", root, 710 ,500, event);
     }
 
 }

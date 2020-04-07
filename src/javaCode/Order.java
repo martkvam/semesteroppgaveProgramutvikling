@@ -19,9 +19,9 @@ public class Order {
     private ObservableList<Adjustment> adjustmentList;
     private SimpleIntegerProperty totPrice;
     private SimpleStringProperty carColor;
-    private SimpleBooleanProperty finishedOrdeer;
+    private SimpleBooleanProperty orderStatus;
 
-    public Order(String orderNr, int personId, int carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean finishedOrdeer) {
+    public Order(String orderNr, int personId, int carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus) {
         this.orderNr = new SimpleStringProperty(orderNr);
         this.personId = new SimpleIntegerProperty(personId);
         this.carId = new SimpleIntegerProperty(carId);
@@ -31,7 +31,7 @@ public class Order {
         this.adjustmentList = adjustmentList;
         this.totPrice = new SimpleIntegerProperty(totPrice);
         this.carColor = new SimpleStringProperty(carColor);
-        this.finishedOrdeer = new SimpleBooleanProperty(finishedOrdeer);
+        this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
 
     public String getOrderNr() {
@@ -98,7 +98,7 @@ public class Order {
     }
 
 
-    public int getTotPrice() {
+    public int getTotalPrice() {
         return totPrice.getValue();
     }
 
@@ -116,11 +116,11 @@ public class Order {
     }
 
 
-    public boolean isFinishedOrdeer() {
-        return finishedOrdeer.getValue();
+    public boolean getOrderStatus() {
+        return orderStatus.getValue();
     }
 
-    public void setFinishedOrdeer(boolean finishedOrdeer) {
-        this.finishedOrdeer.set(finishedOrdeer);
+    public void setOrderStatus(boolean orderStatus) {
+        this.orderStatus.set(orderStatus);
     }
 }

@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -58,6 +59,9 @@ public class Inlog implements Initializable {
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
         Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
+
+        Date date1 = new Date(2/2/2019);
+        Order order1 = new Order("1", 1, 1,date1, date1, Lists.getComponents(), Lists.getAdjustment(), 1000, "Blue", true );
         lists.addComponent(motor1);
         lists.addComponent(wheel1);
         lists.addComponent(rim1);
@@ -73,6 +77,7 @@ public class Inlog implements Initializable {
         lists.addAdjustment(sunroof);
         lists.addAdjustment(gps);
         lists.addAdjustment(airCondition);
+        lists.addOrder(order1);
     }
 
     @FXML

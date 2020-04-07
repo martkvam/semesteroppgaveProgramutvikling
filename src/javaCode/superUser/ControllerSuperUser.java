@@ -39,8 +39,14 @@ public class ControllerSuperUser {
 
     //Navigates to scene where superuser are able to edit/delete orders.
     @FXML
-    void btnEditOrders(ActionEvent event) {
+    void btnEditOrders(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController("../superUser/ControllerOrders");
 
+        // Swap screen
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
+        OpenScene.
+                newScene("Edit orders", root, 710 ,500, event);
     }
 
     //Takes superUser back to login page

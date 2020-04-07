@@ -44,7 +44,7 @@ public class NewUser {
         if(!ReadUsers.readFile(txtEmail.getText(), txtPhone.getText())){
             User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
                     Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
-                   Validator.phone(txtPhone.getText()), txtPassword.getText());
+                   Validator.phone(txtPhone.getText()), txtPassword.getText(), false);
             Formatter.addToFile(newUser);
             Stage stage = (Stage) btnRegisterUser.getScene().getWindow();
             stage.close();

@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -78,10 +80,8 @@ public class Inlog implements Initializable {
     @FXML
     void btnLogInOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         boolean correct = false;
-        if(txtUserName.getText().equals("Admin") && txtPassword.getText().equals("Admin")){
-            Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-            OpenScene.newScene("Register User",  root, 800, 500, event);
-        }
+        boolean superUsr = false;
+
         if(ReadUsers.readFile(txtUserName.getText(), txtUserName.getText())){
             File myObj = new File(Formatter.path);
             Scanner myReader = new Scanner(myObj);
@@ -93,15 +93,22 @@ public class Inlog implements Initializable {
                         strings[5].equals(txtPassword.getText())){
                     lblInfo.setVisible(true);
                     lblInfo.setText("Correct");
+                    LoggedIn.setId(strings[0]);
                     correct = true;
+                    superUsr = Boolean.parseBoolean(strings[6]);
                     break;
                 }
             }
             myReader.close();
         }
         if(correct){
-            Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-            OpenScene.newScene("User",  root, 800, 500, event);
+            if(superUsr) {
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+                OpenScene.newScene("Superuser",  root, 800, 500, event);
+            }else{
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                OpenScene.newScene("User", root, 800, 500, event);
+            }
         }else{
             lblInfo.setText("Username and password incorrect");
         }
@@ -112,5 +119,10 @@ public class Inlog implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/newUser.fxml"));
         OpenScene.newScene("Register User",  root, 300, 500, event);
         ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    public void enterKeyPressed(KeyEvent kEvent) {
+        if(kEvent.getCode()== KeyCode.ENTER)
+            btnLogIn.fire();
     }
 }

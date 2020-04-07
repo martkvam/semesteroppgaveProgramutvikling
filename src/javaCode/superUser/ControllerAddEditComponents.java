@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -73,10 +75,11 @@ public class ControllerAddEditComponents implements Initializable {
     }
 
     @FXML
-    void btnBack(ActionEvent event) {
+    void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         //Sets new controller
-        FXMLLoader loader = new FXMLLoader();
+        /*FXMLLoader loader = new FXMLLoader();
         loader.setController("../superUser/ControllerSuperUser");
+        //OpenScene.newScene("");
 
         // Swap screen
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,6 +88,8 @@ public class ControllerAddEditComponents implements Initializable {
         } catch (Exception e) {
 
         }*/
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+        OpenScene.newScene("Superuser",  root, 800, 500, event);
     }
 
     @FXML

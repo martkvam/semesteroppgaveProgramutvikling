@@ -13,6 +13,7 @@ public class Lists {
     private static ObservableList<Car> carList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
     private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
+    private static ObservableList<Order> orderList = FXCollections.observableArrayList();
 
     //Metoder for å legge til objekter i listene
     public void addComponent(Component component){
@@ -26,6 +27,11 @@ public class Lists {
     public void addAdjustment (Adjustment adj){
         adjustmentList.add(adj);
     }
+
+    public void addOrder(Order order){
+        orderList.add(order);
+    }
+
 
     public static ObservableList<Car> getCars(){
         ArrayList<Car> newCarList =new ArrayList<>();
@@ -41,9 +47,13 @@ public class Lists {
         }
         return componentList;
     }
-
     public static ObservableList<Adjustment> getAdjustment(){
         return adjustmentList;
     }
+    public static ObservableList<Order> getOrders(){
+        return orderList;
+    }
+
+
 
 }

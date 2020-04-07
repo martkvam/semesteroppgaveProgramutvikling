@@ -7,14 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,6 +91,7 @@ public class Inlog implements Initializable {
                         strings[5].equals(txtPassword.getText())){
                     lblInfo.setVisible(true);
                     lblInfo.setText("Correct");
+                    System.out.println(strings[0]);
                     LoggedIn.setId(strings[0]);
                     correct = true;
                     superUsr = Boolean.parseBoolean(strings[6]);

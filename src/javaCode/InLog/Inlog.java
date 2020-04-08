@@ -1,6 +1,8 @@
 package javaCode.InLog;
 
 import javaCode.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,8 +62,14 @@ public class Inlog implements Initializable {
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
         Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
 
+        ObservableList<Component> testList = FXCollections.observableArrayList();
+        testList.add(motor1);
+        ObservableList<Adjustment> testList2 = FXCollections.observableArrayList();
+        testList2.add(hitch);
+
         Date date1 = new Date(2/2/2019);
         Order order1 = new Order("1", 1, 1,date1, date1, Lists.getComponents(), Lists.getAdjustment(), 1000, "Blue", true );
+        Order order2 = new Order("2", 1, 1, date1, date1, testList, testList2, 2000, "Red", false);
         lists.addComponent(motor1);
         lists.addComponent(wheel1);
         lists.addComponent(rim1);
@@ -78,6 +86,7 @@ public class Inlog implements Initializable {
         lists.addAdjustment(gps);
         lists.addAdjustment(airCondition);
         lists.addOrder(order1);
+        lists.addOngoingOrder(order2);
     }
 
     @FXML
@@ -111,7 +120,7 @@ public class Inlog implements Initializable {
                 OpenScene.newScene("Superuser",  root, 800, 500, event);
             }else{
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("User", root, 800, 500, event);
+                OpenScene.newScene("User", root, 700, 700, event);
             }
         }else{
             lblInfo.setText("Username and password incorrect");

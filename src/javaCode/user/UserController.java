@@ -1,15 +1,20 @@
 package javaCode.user;
 
 import javaCode.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -179,6 +184,29 @@ public class UserController implements Initializable {
             totalprice += c.getComponentPrice();
         }
         lblTotalprice.setText("Totalpris: " + totalprice);
+    }
+
+    public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+        OpenScene.newScene("My profile", root, 610, 630, actionEvent);
+    }
+
+    public void saveChoices(ActionEvent actionEvent) {
+    }
+
+    public void order(ActionEvent actionEvent) {
+        Date date = new Date();
+        int price = 0;
+        for (Component c : chosenComponents){
+            price += c.getComponentPrice();
+        }
+        for (Adjustment a : chosenAdjustments){
+            price += a.getPrice();
+        }
+        String color = chooseCol.getValue();
+
+        Order order = new Order("" + Lists.getOrders().size(), 1, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
+        lists.addOrder(order);
     }
 }
 

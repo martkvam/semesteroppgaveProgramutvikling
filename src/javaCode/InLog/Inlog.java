@@ -51,10 +51,10 @@ public class Inlog implements Initializable {
         Component wheel2 = new Component("1", "2-02", "Ratt", "Sport", 5000);
         Component exhaust = new Component("1", "5-01", "Eksospotte", "Bråkete", 4000);
 
-        Adjustment hitch = new Adjustment("Hengerfeste", 2000);
-        Adjustment sunroof = new Adjustment("Soltak", 5000);
-        Adjustment gps = new Adjustment("Integrert GPS", 7000);
-        Adjustment airCondition = new Adjustment("Air Condition", 8000);
+        Adjustment hitch = new Adjustment("1", "Hengerfeste", "Universell hengerfeste", 2000);
+        Adjustment sunroof = new Adjustment("2", "Soltak", "Soltak med UV-filter", 7000);
+        Adjustment gps = new Adjustment("3", "Integrert GPS", "Integrert GPS", 6000);
+        Adjustment airCondition = new Adjustment("4", "Air Condition", "Air Condition", 8000);
 
 
         Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);

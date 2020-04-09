@@ -1,6 +1,7 @@
 package javaCode.user;
 
 import javaCode.*;
+import javaCode.InLog.LoggedIn;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -204,8 +205,10 @@ public class UserController implements Initializable {
             price += a.getPrice();
         }
         String color = chooseCol.getValue();
+        int persID = LoggedIn.getId();
 
-        Order order = new Order("" + Lists.getOrders().size(), 1, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
+
+        Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
         lists.addOrder(order);
     }
 }

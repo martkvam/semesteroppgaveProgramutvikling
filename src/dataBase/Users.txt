@@ -1,5 +1,2 @@
-1;Trym;Olsen;mail@mail.no;1234567;heihei
-2;Trym;Stenerg;stenberg.trym@gmail.com;98086042;passord
-3;Trym;Hansen;milll@olle.no;11223344;mamma
-4;Trym;Stenberg;stenberg.trym@gdmail.com;98086041;mammamia
-5;Vilde;Hanssen;vil.han@hotmail.com;18891889;vilde
+1;Donald;Trump;trump@murica.com;66699969;USA;true
+2;Erna;Solberg;erna@høyre.no;18811881;bergen;false

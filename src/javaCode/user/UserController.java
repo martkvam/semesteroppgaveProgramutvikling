@@ -1,38 +1,40 @@
 package javaCode.user;
 
-import javaCode.Car;
-import javaCode.Component;
-import javaCode.Lists;
+import javaCode.*;
+import javaCode.InLog.LoggedIn;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javaCode.Lists;
+import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
 public class UserController implements Initializable {
 
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
-    private int totalprice = 0;
+    ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
 
 
     @FXML
     private TableView<Component> componentTV;
 
     @FXML
-    private TableView<Component> chosenTV;
-
-    @FXML
-    private TableView<?> previousTV;
+    private TableView<Component> chosenCompTV;
 
     @FXML
     private ComboBox<String> chooseCarType;
@@ -41,15 +43,33 @@ public class UserController implements Initializable {
     private Button addBtn;
 
     @FXML
-    private ComboBox<String> chooseComponent;
+    private Button btnRemove;
 
     @FXML
-    private Button leggTill;
+    private ComboBox<String> chooseComponent;
 
     @FXML
     private Label lblTotalprice;
 
+    @FXML
+    private TableView<Adjustment> adjustmentTV;
+
+    @FXML
+    private TableView<Adjustment> chosenAdjustTV;
+
+    @FXML
+    private Button addAdjust;
+
+    @FXML
+    private Button removeAdjust;
+
+    @FXML
+    private ComboBox<String> chooseCol;
+
+
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
+
+
     @FXML
     void setList(ActionEvent event) {
         ObservableList<Component> outList = FXCollections.observableArrayList();
@@ -80,34 +100,38 @@ public class UserController implements Initializable {
     @FXML
     void addComponent(ActionEvent event) {
         Component valgt = componentTV.getSelectionModel().getSelectedItem();
-        if(valgt!=null){
-            chosenComponents.add(valgt);
-            chosenTV.setItems(chosenComponents);
-            chooseCarType.setDisable(true);
+        chosenComponents.add(valgt);
+        chosenCompTV.setItems(chosenComponents);
+        chooseCarType.setDisable(true);
 
-
-            totalprice += valgt.getComponentPrice();
-
-            lblTotalprice.setText("Total price: " + totalprice);
+        int totalprice = 0;
+        for (Adjustment adj : chosenAdjustments){
+            totalprice += adj.getPrice();
         }
-
-
+        for(Component c : chosenComponents){
+            totalprice += c.getComponentPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalprice);
     }
 
     @FXML
     void removeComponent(ActionEvent event) {
-        Component valgt = chosenTV.getSelectionModel().getSelectedItem();
-        if(valgt!=null){
-            chosenComponents.remove(valgt);
-            chooseComponent.getItems().remove(valgt);
-            chosenTV.refresh();
-            if(chosenComponents.isEmpty()){
-                chooseCarType.setDisable(false);
-            }
-            totalprice -= valgt.getComponentPrice();
+        Component valgt = chosenCompTV.getSelectionModel().getSelectedItem();
+        chosenComponents.remove(valgt);
+        chooseComponent.getItems().remove(valgt);
+        chosenCompTV.refresh();
+        if(chosenComponents.isEmpty()){
+            chooseCarType.setDisable(false);
         }
 
-        lblTotalprice.setText("Total price: " + totalprice);
+        int totalprice = 0;
+        for (Adjustment adj : chosenAdjustments){
+            totalprice += adj.getPrice();
+        }
+        for(Component c : chosenComponents){
+            totalprice += c.getComponentPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalprice);
     }
 
 
@@ -115,11 +139,77 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        adjustmentTV.setItems(Lists.getAdjustment());
+
+        chooseCol.setPromptText("Velg farge: ");
+        chooseCol.getItems().setAll("Rød", "Svart", "Hvit", "Grå");
+
         //Setter valgmuligheter i choiceboxene
         chooseCarType.setPromptText("Car type: ");
         chooseComponent.setPromptText("Component type: ");
         chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
         chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+    }
+
+
+    public void addAdjust(ActionEvent actionEvent) {
+        Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
+        chosenAdjustments.add(chosen);
+        chosenAdjustTV.setItems(chosenAdjustments);
+
+        int totalprice = 0;
+        for (Adjustment adj : chosenAdjustments){
+            totalprice += adj.getPrice();
+        }
+        for(Component c : chosenComponents){
+            totalprice += c.getComponentPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalprice);
+
+        for(Adjustment a : chosenAdjustments){
+            adjustmentTV.getItems().remove(a);
+        }
+
+    }
+
+    public void removeAdjust(ActionEvent actionEvent) {
+        Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
+        chosenAdjustments.remove(chosen);
+        adjustmentTV.getItems().add(chosen);
+
+        int totalprice = 0;
+        for (Adjustment adj : chosenAdjustments){
+            totalprice += adj.getPrice();
+        }
+        for(Component c : chosenComponents){
+            totalprice += c.getComponentPrice();
+        }
+        lblTotalprice.setText("Totalpris: " + totalprice);
+    }
+
+    public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+        OpenScene.newScene("My profile", root, 610, 630, actionEvent);
+    }
+
+    public void saveChoices(ActionEvent actionEvent) {
+    }
+
+    public void order(ActionEvent actionEvent) {
+        Date date = new Date();
+        int price = 0;
+        for (Component c : chosenComponents){
+            price += c.getComponentPrice();
+        }
+        for (Adjustment a : chosenAdjustments){
+            price += a.getPrice();
+        }
+        String color = chooseCol.getValue();
+        int persID = LoggedIn.getId();
+
+
+        Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
+        lists.addOrder(order);
     }
 }
 

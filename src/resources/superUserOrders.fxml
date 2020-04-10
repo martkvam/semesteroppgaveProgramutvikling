@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerOrders">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="732.0">
+         <children>
+            <TableView fx:id="tableViewOrder" editable="true" layoutX="7.0" layoutY="52.0" prefHeight="138.0" prefWidth="696.0">
+              <columns>
+                <TableColumn prefWidth="70.39999103546143" text="orderNr">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="orderNr" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="personId" prefWidth="99.20001220703125" text="Person id">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="personId" />
+                    </cellValueFactory>
+                </TableColumn>
+                  <TableColumn fx:id="carId" prefWidth="63.20001220703125" text="Car id">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="carId" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="orderStarted" prefWidth="123.20002746582031" text="Order started">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="orderStarted" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="orderFinished" prefWidth="104.79998779296875" text="Order ended">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="orderFinished" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="totalPrice" prefWidth="74.4000244140625" text="Total price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="totalPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="carColor" prefWidth="72.800048828125" text="Color">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="carColor" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="orderStatus" prefWidth="92.800048828125" text="Order status">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="orderStatus" />
+                      </cellValueFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="7.0" layoutY="209.0" prefHeight="98.0" prefWidth="696.0">
+              <columns>
+                <TableColumn fx:id="componentID" prefWidth="98.3999605178833" text="Component id">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentID" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="componentType" prefWidth="121.60003662109375" text="Component type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="componentType" />
+                    </cellValueFactory>
+                </TableColumn>
+                  <TableColumn fx:id="componentDescription" prefWidth="336.8000030517578" text="Component description">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentDescription" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="componentPrice" prefWidth="140.800048828125" text="Component price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="7.0" layoutY="351.0" prefHeight="110.0" prefWidth="696.0">
+              <columns>
+                <TableColumn prefWidth="150.39999103546143" text="Adjustment id" />
+                <TableColumn minWidth="0.0" prefWidth="232.00001525878906" text="Adjustment name" />
+                  <TableColumn prefWidth="143.20001220703125" text="Adjustment description" />
+                  <TableColumn prefWidth="168.0" text="Adjustment price" />
+              </columns>
+            </TableView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

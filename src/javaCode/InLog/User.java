@@ -7,20 +7,22 @@ public class User {
     private String phone;
     private String email;
     private String password;
+    private boolean superUser;
 
-    public User(int id, String firstName, String lastName, String phone, String email, String password){
+    public User(int id, String firstName, String lastName, String phone, String email, String password, boolean superUser){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.superUser = superUser;
     }
 
     @Override
     public String toString(){
         String DELIMITER = ";";
-        return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
-                id, firstName, lastName, phone, email, password);
+        return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
+                id, firstName, lastName, phone, email, password, superUser);
     }
 }

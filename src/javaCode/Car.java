@@ -37,7 +37,6 @@ public class Car {
         return description.getValue();
     }
 
-
     public void setDescription(String description) {
         this.description.set(description);
     }

@@ -210,8 +210,8 @@ public class addElements {
                             String line = componentType.get(j).getComponentID();
                             String[] split = line.split("-");
 
-                            if(Integer.parseInt(split[0]) > lastComponentIDchecked){
-                                lastComponentIDchecked = Integer.parseInt(split[0]);
+                            if(Integer.parseInt(split[0]) >= lastComponentIDchecked){
+                                lastComponentIDchecked = Integer.parseInt(split[0])+1;
                             }
                         }
                         lastComponentID=Integer.toString(lastComponentIDchecked+1);
@@ -227,7 +227,7 @@ public class addElements {
                         String line = componentType.get(i).getComponentID();
                         System.out.println(line);
                         String[] split = line.split("-");
-                        if(Integer.parseInt(split[1]) > highestComponentID) {
+                        if(Integer.parseInt(split[1]) >= highestComponentID) {
                             highestComponentID = Integer.parseInt(split[1]);
                             String line2 = componentType.get(i).getComponentID();
                             String[] split2 = line2.split("-");

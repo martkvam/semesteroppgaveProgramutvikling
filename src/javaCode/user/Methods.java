@@ -1,8 +1,10 @@
 package javaCode.user;
 
+import javaCode.Adjustment;
 import javaCode.Car;
 import javaCode.Component;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
 
@@ -13,8 +15,8 @@ public class Methods {
         for (Car car : inList) {
             char ID = car.getCarID().charAt(0);
             boolean found = false;
-            for(int i = 0; i<aList.size(); i++){
-                char ID2 = aList.get(i).getCarID().charAt(0);
+            for (Car value : aList) {
+                char ID2 = value.getCarID().charAt(0);
                 if (ID == ID2) {
                     found = true;
                     break;
@@ -28,7 +30,7 @@ public class Methods {
         ArrayList<String> outList = new ArrayList<>();
         for(Car car : aList){
             outList.add(car.getCarType());
-        };
+        }
         return outList;
 
     }
@@ -39,8 +41,8 @@ public class Methods {
         for (Component component : inList) {
             char ID = component.getComponentID().charAt(0);
             boolean found = false;
-            for(int i = 0; i<aList.size(); i++){
-                char ID2 = aList.get(i).getComponentID().charAt(0);
+            for (Component value : aList) {
+                char ID2 = value.getComponentID().charAt(0);
                 if (ID == ID2) {
                     found = true;
                     break;
@@ -54,7 +56,7 @@ public class Methods {
         ArrayList<String> outList = new ArrayList<>();
         for(Component component : aList){
             outList.add(component.getComponentType());
-        };
+        }
         return outList;
     }
 }

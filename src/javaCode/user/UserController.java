@@ -210,6 +210,7 @@ public class UserController implements Initializable {
 
         Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
         lists.addOrder(order);
+        Dialogs.showSuccessDialog("Your order was succesful!");
     }
 }
 

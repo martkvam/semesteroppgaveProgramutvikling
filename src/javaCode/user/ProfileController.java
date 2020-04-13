@@ -3,6 +3,9 @@ package javaCode.user;
 
 import javaCode.Adjustment;
 import javaCode.Component;
+import javaCode.InLog.Inlog;
+import javaCode.InLog.LoggedIn;
+import javaCode.InLog.User;
 import javaCode.Lists;
 import javaCode.Order;
 import javafx.collections.ObservableList;
@@ -64,6 +67,7 @@ public class ProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         finishedOrdersTV.setItems(Lists.getOrders());
         ongoingOrdersTV.setItems(Lists.getOngoingOrders());
+
     }
 
     public void updateTVfinished(MouseEvent mouseEvent) {

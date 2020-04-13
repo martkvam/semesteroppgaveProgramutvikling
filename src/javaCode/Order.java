@@ -123,4 +123,22 @@ public class Order {
     public void setOrderStatus(boolean orderStatus) {
         this.orderStatus.set(orderStatus);
     }
+
+    public String formatComponents(ObservableList<Component> list){
+        String DELIMITER = ";";
+        String formatted = "";
+        for (Component c : list){
+            formatted += c.getComponentType() + DELIMITER;
+        }
+        return formatted;
+    }
+
+    public String formatAdjustments(ObservableList<Adjustment> list){
+        String DELIMITER = ";";
+        String formatted = "";
+        for (Adjustment a : list){
+            formatted += a.getType() + DELIMITER;
+        }
+        return formatted;
+    }
 }

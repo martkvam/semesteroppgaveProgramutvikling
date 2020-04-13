@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -211,6 +213,14 @@ public class UserController implements Initializable {
         Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
         lists.addOrder(order);
         Dialogs.showSuccessDialog("Your order was succesful!");
+        Path path = Paths.get("FinishedOrders.txt");
+        String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
+        try {
+            FileWriter.WriteFile(path, formattedOrders);
+            Dialogs.showSuccessDialog("Your order was succesful!");
+        } catch (IOException e) {
+            Dialogs.showErrorDialog("Noe gikk galt.");
+        }
     }
 }
 

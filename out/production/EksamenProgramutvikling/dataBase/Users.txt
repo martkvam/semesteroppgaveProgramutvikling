@@ -1,5 +1,5 @@
 1;Donald;Trump;trump@murica.com;66699969;USA;true
-2;Errr;Solberg;erna@høyre.no;18811881;bergen;false
-3;Jens;Stoltenberg;jens@nato.eu;Arbeiderpartiet;arbeiderpartiet;false
+2;Erna;Solberg;erna@høyre.no;18811881;bergen;false
+3;Jens;Stoltenberg;jens@nato.eu;03561789;arbeiderpartiet;false
 4;Petter;Solberg;petter@rally.com;10121416;subaru;false
 5;Henning;Solberg;henning@rally.com;19181716;rally;false

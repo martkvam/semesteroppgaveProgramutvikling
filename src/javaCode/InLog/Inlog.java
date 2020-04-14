@@ -20,9 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 public class Inlog implements Initializable {
 
@@ -88,40 +86,29 @@ public class Inlog implements Initializable {
         lists.addAdjustment(airCondition);
         lists.addOrder(order1);
         lists.addOngoingOrder(order2);
-
-        try {
-            //ReadUsers.getInfo("1", "FirstName");
-            ReadUsers.changeInfo("2", "FirstName", "Erna");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
     void btnLogInOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+
         boolean correct = false;
         boolean superUsr = false;
 
-        if(ReadUsers.readFile(txtUserName.getText(), txtUserName.getText())){
-            File myObj = new File(Formatter.path);
-            Scanner myReader = new Scanner(myObj);
+        String id = Objects.requireNonNull(ReadUsers.getUserId(txtUserName.getText())).get(0);
+        int length = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).length();
+        String info = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).substring(1, length-1);
+        String [] values = info.replaceAll("\\s+","").split(",");
 
-            for (; myReader.hasNext(); ) {
-                String u = myReader.next();
-                String[] strings = u.split(";");
-                if((strings[3].equals(txtUserName.getText()) || strings[4].equals(txtUserName.getText())) &&
-                        strings[5].equals(txtPassword.getText())){
-                    lblInfo.setVisible(true);
-                    lblInfo.setText("Correct");
-                    System.out.println(strings[0]);
-                    LoggedIn.setId(strings[0]);
-                    correct = true;
-                    superUsr = Boolean.parseBoolean(strings[6]);
-                    break;
-                }
-            }
-            myReader.close();
+        if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
+                values[5].equals(txtPassword.getText())){
+            lblInfo.setVisible(true);
+            lblInfo.setText("Correct");
+            Dialogs.showSuccessDialog("Success");
+            LoggedIn.setId(id);
+            correct = true;
+            superUsr = Boolean.parseBoolean(values[6]);
         }
+
         if(correct){
             if(superUsr) {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));

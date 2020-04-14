@@ -1,27 +1,24 @@
 package javaCode.InLog;
 
 import javaCode.Dialogs;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class ReadUsers {
 
-public static boolean readFile(String email, String phone) throws FileNotFoundException, IOException {
+    public static boolean readFile(String email, String phone) throws FileNotFoundException, IOException {
     File myObj = new File(Formatter.path);
     Scanner myReader = new Scanner(myObj);
 
-    for (; myReader.hasNext(); ) {
-        String u = myReader.next();
-        String[] strings = u.split(";");
-        if(strings[3].equals(email) || strings[4].equals(phone)){
-            return true;
+        for (; myReader.hasNext(); ) {
+            String u = myReader.next();
+            String[] strings = u.split(";");
+            if(strings[3].equals(email) || strings[4].equals(phone)){
+                return true;
+            }
         }
-    }
-
-    myReader.close();
-    return false;
+        myReader.close();
+        return false;
     }
 
     public static String getInfo(String id, String type) throws FileNotFoundException {
@@ -53,6 +50,46 @@ public static boolean readFile(String email, String phone) throws FileNotFoundEx
         }
         Dialogs.showErrorDialog("User not found");
         return null;
+    }
+
+    public static void changeInfo(String id, String type, String change) throws IOException {
+        File myObj = new File(Formatter.path);
+        Scanner myReader = new Scanner(myObj);
+        StringBuilder newRegister = new StringBuilder();
+
+        for (; myReader.hasNext(); ) {
+            String line = myReader.next();
+            String[] strings = line.split(";");
+
+            if(strings[0].equals(id)) {
+                switch (type) {
+                    case "FirstName":
+                         line = line.replace(strings[1], Validator.name(change));
+                         break;
+                    case "LastName":
+                        line = line.replace(strings[2], Validator.name(change));
+                        break;
+                    case "Email":
+                        line = line.replace(strings[3], Validator.email(change));
+                        break;
+                    case "Phone":
+                        line = line.replace(strings[4], Validator.phone(change));
+                        break;
+                    case "Password":
+                        line = line.replace(strings[5], change);
+                        break;
+                    case "SuperUser":
+                        line = line.replace(strings[6], change);
+                        break;
+                }
+            }
+            newRegister.append(line).append(System.lineSeparator());
+        }
+
+        FileWriter myWriter = new FileWriter(myObj);
+        myWriter.write(String.valueOf(newRegister));
+        myReader.close();
+        myWriter.close();
     }
 
     public static  ArrayList<String> getUserId(String ... str) throws FileNotFoundException {

@@ -89,6 +89,12 @@ public class Inlog implements Initializable {
         lists.addOrder(order1);
         lists.addOngoingOrder(order2);
 
+        try {
+            //ReadUsers.getInfo("1", "FirstName");
+            ReadUsers.changeInfo("2", "FirstName", "Erna");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -112,6 +112,7 @@ public class Inlog implements Initializable {
             }
         }else{
             lblInfo.setText("Username and password incorrect");
+            Dialogs.showErrorDialog("Username and password inncorrect");
         }
     }
 

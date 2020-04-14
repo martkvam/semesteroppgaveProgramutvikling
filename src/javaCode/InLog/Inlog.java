@@ -55,7 +55,6 @@ public class Inlog implements Initializable {
         Adjustment gps = new Adjustment("3", "Integrert GPS", "Integrert GPS", 6000);
         Adjustment airCondition = new Adjustment("4", "Air Condition", "Air Condition", 8000);
 
-
         Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
@@ -86,6 +85,7 @@ public class Inlog implements Initializable {
         lists.addAdjustment(airCondition);
         lists.addOrder(order1);
         lists.addOngoingOrder(order2);
+
     }
 
     @FXML
@@ -101,8 +101,6 @@ public class Inlog implements Initializable {
 
         if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
                 values[5].equals(txtPassword.getText())){
-            lblInfo.setVisible(true);
-            lblInfo.setText("Correct");
             Dialogs.showSuccessDialog("Success");
             LoggedIn.setId(id);
             correct = true;
@@ -118,7 +116,6 @@ public class Inlog implements Initializable {
                 OpenScene.newScene("User", root, 700, 700, event);
             }
         }else{
-            lblInfo.setText("Username and password incorrect");
             Dialogs.showErrorDialog("Username and password inncorrect");
         }
     }
@@ -127,7 +124,6 @@ public class Inlog implements Initializable {
     void btnNewUserOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/newUser.fxml"));
         OpenScene.newScene("Register User",  root, 300, 500, event);
-        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     public void enterKeyPressed(KeyEvent kEvent) {

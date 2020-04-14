@@ -15,16 +15,11 @@ public class Formatter {
     public static String path = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Users.txt");
 
     public static void addToFile(User user) throws IOException {
-
         Files.write(Paths.get(path), (user.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
-   /* public static void changeFile(String change){
-        Files.write(Paths.get(path), change.getBytes(), )
-    }*/
-
     public static int assignID() throws FileNotFoundException {
-        //Read through database of users and check if user is already registered (check with email?)
+        //Read through database of users and check if user is already registered
 
         File myObj = new File(Formatter.path);
         Scanner myReader = new Scanner(myObj);

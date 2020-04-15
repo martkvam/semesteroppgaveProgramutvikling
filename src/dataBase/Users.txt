@@ -4,6 +4,3 @@
 4;Petter;Solberg;petter@rally.com;10121416;subaru;false
 5;Henning;Solberg;henning@rally.com;19181716;rally;false
 6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;false
-7;hei;hei;hei@lol.lo;fghjkl;hei;false
-8;555;555;meil@meil.no;23561343;dah;false
-9;Trym;Stenberg;542636;2345634231;234235;false

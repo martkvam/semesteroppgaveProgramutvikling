@@ -78,12 +78,12 @@
         </columns>
       </TableView>
       <Label layoutX="21.0" layoutY="228.0" prefHeight="17.0" prefWidth="330.0" text="Ongoing orders (click on an order to see content)" />
-      <Button layoutX="59.0" layoutY="606.0" mnemonicParsing="false" onAction="#changeOrder" prefHeight="27.0" prefWidth="96.0" text="Change order">
+      <Button layoutX="155.0" layoutY="606.0" mnemonicParsing="false" onAction="#changeOrder" prefHeight="27.0" prefWidth="96.0" text="Change order">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
-      <Button layoutX="230.0" layoutY="606.0" mnemonicParsing="false" onAction="#finishOrder" prefHeight="27.0" prefWidth="78.0" text="Finish order">
+      <Button layoutX="269.0" layoutY="606.0" mnemonicParsing="false" onAction="#finishOrder" prefHeight="27.0" prefWidth="78.0" text="Finish order">
          <font>
             <Font size="11.0" />
          </font>
@@ -119,5 +119,6 @@
       </TableView>
       <Label layoutX="16.0" layoutY="375.0" prefHeight="17.0" prefWidth="209.0" text="Components in selected order" />
       <Label layoutX="271.0" layoutY="375.0" prefHeight="17.0" prefWidth="190.0" text="Adjustments in selected order" />
+      <Button layoutX="27.0" layoutY="606.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </AnchorPane>

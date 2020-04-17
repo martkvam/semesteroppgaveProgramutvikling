@@ -18,10 +18,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javaCode.Lists;
 import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
@@ -198,7 +195,9 @@ public class UserController implements Initializable {
     }
 
     public void order(ActionEvent actionEvent) {
+        boolean rightInput = true;
         Date date = new Date();
+
         int price = 0;
         for (Component c : chosenComponents){
             price += c.getComponentPrice();
@@ -206,20 +205,68 @@ public class UserController implements Initializable {
         for (Adjustment a : chosenAdjustments){
             price += a.getPrice();
         }
-        String color = chooseCol.getValue();
+
         int persID = LoggedIn.getId();
 
+        int largest = 0;
+        for (Order o : Lists.getOrders()){
+            if(Integer.parseInt(o.getOrderNr()) > largest){
+                largest = Integer.parseInt(o.getOrderNr());
+            }
+        }
 
-        Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
-        lists.addOrder(order);
-        Dialogs.showSuccessDialog("Your order was succesful!");
-        Path path = Paths.get("FinishedOrders.txt");
-        String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
-        try {
-            FileWriter.WriteFile(path, formattedOrders);
-            Dialogs.showSuccessDialog("Your order was succesful!");
-        } catch (IOException e) {
-            Dialogs.showErrorDialog("Noe gikk galt.");
+        int orderNr = largest + 1;
+        String newOrderNr = "" + orderNr;
+        int carId = 0;
+        if(chooseCarType.getValue() != null) {
+            for (Car car : Lists.getCars()) {
+                if (chooseCarType.getValue().equals(car.getCarType())) {
+                    carId = Integer.parseInt(car.getCarID());
+                }
+            }
+        } else {
+            Dialogs.showErrorDialog("Choose a car type");
+            rightInput = false;
+        }
+
+        ObservableList<Component> orderedComponents = FXCollections.observableArrayList();
+        ObservableList<Adjustment> orderedAdjustments = FXCollections.observableArrayList();
+        orderedComponents.setAll(chosenComponents);
+        orderedAdjustments.setAll(chosenAdjustments);
+
+
+        if (orderedAdjustments.isEmpty() && orderedComponents.isEmpty()){
+            Dialogs.showErrorDialog("Your order is empty");
+            rightInput = false;
+        }
+
+        String color = "";
+        if(chooseCol.getValue() != null) {
+            color = chooseCol.getValue();
+        }
+        else {
+            Dialogs.showErrorDialog("Choose a color for the car!");
+            rightInput = false;
+        }
+
+        if(rightInput) {
+            Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
+            lists.addOrder(order);
+            Path path = Paths.get("FinishedOrders.txt");
+            String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
+            try {
+                FileWriter.WriteFile(path, formattedOrders);
+                Dialogs.showSuccessDialog("Your order was succesful!");
+                adjustmentTV.getItems().addAll(chosenAdjustments);
+                chosenComponents.clear();
+                chosenAdjustments.clear();
+                chosenAdjustTV.refresh();
+                adjustmentTV.refresh();
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                OpenScene.newScene("Order", root, 650, 650, actionEvent);
+            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                Dialogs.showErrorDialog("Noe gikk galt.");
+            }
         }
     }
 }

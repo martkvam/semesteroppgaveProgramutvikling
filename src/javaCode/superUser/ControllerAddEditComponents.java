@@ -10,17 +10,21 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class ControllerAddEditComponents implements Initializable {
-
+    Lists lists = new Lists();
     addElements addcar = new addElements();
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
     tableFilter tableFilter = new tableFilter();
-
+    private String selectedElement = "Car";
+    private Stage stage;
 
     @FXML
     private TextField txtFilterInn;
@@ -52,6 +56,11 @@ public class ControllerAddEditComponents implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        FileHandler filehandler = new FileHandler();
+        filehandler.saveAllFiles();
+        filehandler.readAllFiles(stage);
+
+
         chooseFilterComponent.getItems().addAll("Component ID", "Component type", "Component description","Component price", "Car ID");
         chooseFilterComponent.setPromptText("Filter list by");
         chooseFilterComponent.setVisible(false);
@@ -59,7 +68,9 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.setVisible(false);
         txtFilterInn.setVisible(false);
         TableView.setItems(Lists.getCars());
+        TableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableViewComponents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 
         price.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         componentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
@@ -74,25 +85,13 @@ public class ControllerAddEditComponents implements Initializable {
 
     @FXML
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-        //Sets new controller
-        /*FXMLLoader loader = new FXMLLoader();
-        loader.setController("../superUser/ControllerSuperUser");
-        //OpenScene.newScene("");
-
-        // Swap screen
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        /*try {
-            Main.superUser(window);
-        } catch (Exception e) {
-
-        }*/
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser",  root, 800, 500, event);
     }
 
     @FXML
     void btnEditAdjustments(ActionEvent event) {
-
+        selectedElement = "Adjustments";
     }
 
     @FXML
@@ -102,6 +101,7 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.setVisible(true);
         tableViewComponents.setVisible(false);
         txtFilterInn.setVisible(false);
+        selectedElement = "Car";
     }
 
     @FXML
@@ -111,6 +111,7 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.setVisible(false);
         chooseFilterComponent.setVisible(true);
         txtFilterInn.setVisible(true);
+        selectedElement = "Components";
 
     }
 
@@ -133,45 +134,34 @@ public class ControllerAddEditComponents implements Initializable {
 
 
     @FXML
-    void btnDeleteElement(ActionEvent event) {
+    void btnDeleteElement(ActionEvent event) throws IOException {
         //Choose to delete or not
-        boolean deleteSelectedItems = false;
-        //Generate two lists to get all components and the selected components
-        ObservableList<Component> allComponents, selectedComponents;
-
-        //Gets all components
-        allComponents = tableViewComponents.getItems();
-
-        //Gets all selected components
-        selectedComponents = tableViewComponents.getSelectionModel().getSelectedItems();
-
-        //Makes sure that a table row has been selected
-        if (tableViewComponents.getSelectionModel().getSelectedCells().size() > 0) {
-            //If one row is selected
-            if (tableViewComponents.getSelectionModel().getSelectedCells().size()==1) {
-                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected component?");
-            }
-            //If multiple rows are selected
-            else {
-                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected components?");
-            }
-            //Makes sure that the superuser wants to delete the selected node(s).
-            if(deleteSelectedItems){
-                try {
-                    //deletes all selected components
-                    for(Component comp : selectedComponents){
-                        allComponents.remove(comp);
+        DeleteElements delete = new DeleteElements();
+        ObservableList<Component> deleteComponents = null;
+        ObservableList<Car> deleteCars = null;
+        try{
+            switch (selectedElement) {
+                case "Car":
+                    //Checks if the superUser has selected a tableRow and wants to delete it
+                    if(delete.deleteCars(TableView.getSelectionModel().getSelectedItems())){
+                        //Deletes tableRow(s)
+                        TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
                     }
 
-                    //If the component could not be deleted
-                }catch(Exception e){
-                    Dialogs.showErrorDialog("Could not delete det selected component");
-                }
+                    break;
+                case "Components":
+                    //Checks if the superUser has selected a tableRow and wants to delete it
+                    if(delete.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())) {
+                        //Deletes tableRow(s)
+                        tableViewComponents.getItems().removeAll(tableViewComponents.getSelectionModel().getSelectedItems());
+                    }
+
+                    break;
+                case "Adjsutments":
+                    break;
             }
-        }
-        //If the user didnt choose a component to delete
-        else{
-            Dialogs.showErrorDialog("You have to choose a component to delete");
+        } catch (IOException e){
+            Dialogs.showErrorDialog(e.getMessage());
         }
 
         //Refresh tableview values

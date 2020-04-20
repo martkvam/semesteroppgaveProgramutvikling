@@ -116,7 +116,7 @@ public class Inlog implements Initializable {
                 OpenScene.newScene("User", root, 700, 700, event);
             }
         }else{
-            Dialogs.showErrorDialog("Username and password inncorrect");
+            Dialogs.showErrorDialog("Username and password incorrect");
         }
     }
 

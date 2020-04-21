@@ -33,7 +33,7 @@ public class ControllerSuperUser {
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
         OpenScene.
-                newScene("Edit/delete components", root, 800,800, event);
+                newScene("Edit/delete components", root, 800,700, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.

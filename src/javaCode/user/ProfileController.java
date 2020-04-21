@@ -6,19 +6,22 @@ import javaCode.InLog.Inlog;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import sun.rmi.runtime.Log;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.io.FileWriter;
 import java.net.URL;
+import java.nio.Buffer;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
@@ -52,23 +55,108 @@ public class ProfileController implements Initializable {
 
     @FXML
     void deleteOrder(ActionEvent event) {
+        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this ongoing order?"
+                    , ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+                Lists.getOngoingOrders().remove(chosen);
+                ongoingOrdersTV.getItems().remove(chosen);
+                ongoingOrdersTV.refresh();
+
+                //Updating the ongoing orders-file.
+                try {
+                    String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+                    javaCode.FileWriter.WriteFile(Paths.get("OngoingOrders.txt"), formattedOngoingOrders);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
     @FXML
     void finishOrder(ActionEvent event) {
+        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?"
+                    , ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+
+                int largest = 0;
+                for (Order o : Lists.getOrders()) {
+                    if (Integer.parseInt(o.getOrderNr()) > largest) {
+                        largest = Integer.parseInt(o.getOrderNr());
+                    }
+                }
+
+                int orderNr = largest + 1;
+                String newOrderNr = "" + orderNr;
+                chosen.setOrderNr(newOrderNr);
+                chosen.setOrderStatus(true);
+
+                Lists.getOrders().add(chosen);
+                Lists.getOngoingOrders().remove(chosen);
+
+                finishedOrdersTV.getItems().add(chosen);
+                finishedOrdersTV.refresh();
+                ongoingOrdersTV.getItems().remove(chosen);
+                ongoingOrdersTV.refresh();
+
+                //Adding the order to the finsished orders-file.
+                try {
+                    String formattedOrder = OrderFormatter.formatOrder(chosen);
+                    BufferedWriter update;
+                    update = new BufferedWriter(new FileWriter("FinishedOrders.txt", true));
+                    update.append(formattedOrder);
+                    update.newLine();
+                    update.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //Updating the ongoing orders-file.
+                try {
+                    String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+                    javaCode.FileWriter.WriteFile(Paths.get("OngoingOrders.txt"), formattedOngoingOrders);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
     @FXML
-    void updateInfo(ActionEvent event) {
-
+    void updateInfo(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/updatePersonalInfo.fxml"));
+        OpenScene.newScene("Change info", root, 300, 400, event);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        finishedOrdersTV.setItems(Lists.getOrders());
-        ongoingOrdersTV.setItems(Lists.getOngoingOrders());
+        ObservableList<Order> orders = FXCollections.observableArrayList();
+        ObservableList<Order> ongoing = FXCollections.observableArrayList();
+
+        for (Order o : Lists.getOrders()){
+            if(o.getPersonId() == LoggedIn.getId()){
+                orders.add(o);
+            }
+        }
+
+        for (Order ongoingOrder : Lists.getOngoingOrders()){
+            if (ongoingOrder.getPersonId() == LoggedIn.getId()){
+                ongoing.add(ongoingOrder);
+            }
+        }
+
+        finishedOrdersTV.setItems(orders);
+        ongoingOrdersTV.setItems(ongoing);
 
         String ID = "" + LoggedIn.getId();
         try {

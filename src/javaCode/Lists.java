@@ -19,7 +19,15 @@ public class Lists {
 
     //Metoder for å legge til objekter i listene
     public void addComponent(Component component){
-        componentList.add(component);
+        boolean found = false;
+        for(Component c : componentList){
+            if(c.getComponentID().equals(component.getComponentID())){
+                found = true;
+            }
+        }
+        if(!found) {
+            componentList.add(component);
+        }
     }
 
     public void addCar (Car car){
@@ -27,7 +35,15 @@ public class Lists {
     }
 
     public void addAdjustment (Adjustment adj){
-        adjustmentList.add(adj);
+        boolean found = false;
+        for(Adjustment a : adjustmentList) {
+            if(a.getAdjustmentID().equals(adj.getAdjustmentID())){
+                found = true;
+            }
+        }
+        if(!found) {
+            adjustmentList.add(adj);
+        }
     }
 
     public void addOrder(Order order){

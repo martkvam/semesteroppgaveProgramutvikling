@@ -192,6 +192,69 @@ public class UserController implements Initializable {
     }
 
     public void saveChoices(ActionEvent actionEvent) {
+        boolean rightInput = true;
+        Date date = new Date();
+
+        int price = 0;
+        for (Component c : chosenComponents){
+            price += c.getComponentPrice();
+        }
+        for (Adjustment a : chosenAdjustments){
+            price += a.getPrice();
+        }
+
+        int persID = LoggedIn.getId();
+
+        int carId = 0;
+        if(chooseCarType.getValue() != null) {
+            for (Car car : Lists.getCars()) {
+                if (chooseCarType.getValue().equals(car.getCarType())) {
+                    carId = Integer.parseInt(car.getCarID());
+                }
+            }
+        } else {
+            Dialogs.showErrorDialog("Choose a car type");
+            rightInput = false;
+        }
+
+        ObservableList<Component> orderedComponents = FXCollections.observableArrayList();
+        ObservableList<Adjustment> orderedAdjustments = FXCollections.observableArrayList();
+        orderedComponents.setAll(chosenComponents);
+        orderedAdjustments.setAll(chosenAdjustments);
+
+
+        if (orderedAdjustments.isEmpty() && orderedComponents.isEmpty()){
+            Dialogs.showErrorDialog("Your order is empty");
+            rightInput = false;
+        }
+
+        String color = "";
+        if(chooseCol.getValue() != null) {
+            color = chooseCol.getValue();
+        }
+        else {
+            color += "Not chosen";
+        }
+
+        if(rightInput) {
+            Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
+            lists.addOngoingOrder(order);
+            Path path = Paths.get("OngoingOrders.txt");
+            String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+            try {
+                FileWriter.WriteFile(path, formattedOrders);
+                Dialogs.showSuccessDialog("Your order was succesful!");
+                adjustmentTV.getItems().addAll(chosenAdjustments);
+                chosenComponents.clear();
+                chosenAdjustments.clear();
+                chosenAdjustTV.refresh();
+                adjustmentTV.refresh();
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                OpenScene.newScene("Order", root, 650, 650, actionEvent);
+            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                Dialogs.showErrorDialog("Noe gikk galt.");
+            }
+        }
     }
 
     public void order(ActionEvent actionEvent) {
@@ -268,6 +331,11 @@ public class UserController implements Initializable {
                 Dialogs.showErrorDialog("Noe gikk galt.");
             }
         }
+    }
+
+    public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+        OpenScene.newScene("Log in", root, 650, 650, actionEvent);
     }
 }
 

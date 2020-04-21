@@ -1,5 +1,6 @@
 package javaCode.InLog;
 
+import javaCode.Dialogs;
 import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,17 +43,19 @@ public class NewUser {
 
     @FXML
     void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        if(!ReadUsers.readFile(txtEmail.getText(), txtPhone.getText())){
-            User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
-                    Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
-                   Validator.phone(txtPhone.getText()), txtPassword.getText(), false);
-            Formatter.addToFile(newUser);
-            Stage stage = (Stage) btnRegisterUser.getScene().getWindow();
-            stage.close();
-            Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-            OpenScene.newScene("Log in", root, 500, 500, actionevent);
-        } else {
-            lblInfo.setText("User already exists");
+        if((ReadUsers.getUserId(txtEmail.getText()) == null) && ReadUsers.getUserId(txtPhone.getText()) == null) {
+            if (Validator.name(txtFirstName.getText()) != null &&
+                    Validator.name(txtLastName.getText()) != null && Validator.email(txtEmail.getText()) != null &&
+                    Validator.phone(txtPhone.getText()) != null) {
+                User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
+                        Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
+                        Validator.phone(txtPhone.getText()), txtPassword.getText(), false);
+                Formatter.addToFile(newUser);
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+                OpenScene.newScene("Log in", root, 500, 500, actionevent);
+            }
+        }else {
+            Dialogs.showErrorDialog("User already exists");
         }
     }
 

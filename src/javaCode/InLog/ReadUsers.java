@@ -49,16 +49,16 @@ public class ReadUsers {
             if(strings[0].equals(id)) {
                 switch (type) {
                     case "FirstName":
-                         line = line.replace(strings[1], Objects.requireNonNull(Validator.name(change)));
+                         line = line.replace(strings[1], Validator.name(change));
                          break;
                     case "LastName":
-                        line = line.replace(strings[2], Objects.requireNonNull(Validator.name(change)));
+                        line = line.replace(strings[2], Validator.name(change));
                         break;
                     case "Email":
-                        line = line.replace(strings[3], Objects.requireNonNull(Validator.email(change)));
+                        line = line.replace(strings[3], Validator.email(change));
                         break;
                     case "Phone":
-                        line = line.replace(strings[4], Objects.requireNonNull(Validator.phone(change)));
+                        line = line.replace(strings[4], Validator.phone(change));
                         break;
                     case "Password":
                         line = line.replace(strings[5], change);

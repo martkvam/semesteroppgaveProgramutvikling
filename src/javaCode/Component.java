@@ -3,14 +3,18 @@ package javaCode;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 
-public class Component {
-    private SimpleStringProperty carID;
-    private SimpleStringProperty componentID;
-    private SimpleStringProperty componentType;
-    private SimpleStringProperty componentDescription;
-    private SimpleIntegerProperty componentPrice;
+public class Component implements Serializable {
+    private transient SimpleStringProperty carID;
+    private transient SimpleStringProperty componentID;
+    private transient SimpleStringProperty componentType;
+    private transient SimpleStringProperty componentDescription;
+    private transient SimpleIntegerProperty componentPrice;
 
     public Component(String carID, String componentID, String componentType, String componentDescription, int componentPrice) {
         this.carID = new SimpleStringProperty(carID);
@@ -62,6 +66,28 @@ public class Component {
 
     public void setComponentDescription(String componentDescription) {
         this.componentDescription.set(componentDescription);
+    }
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
+        s.writeUTF(carID.getValue());
+        s.writeUTF(componentID.getValue());
+        s.writeUTF(componentType.getValue());
+        s.writeUTF(componentDescription.getValue());
+        s.writeInt(componentPrice.getValue());
+    }
+
+    private void readObject(ObjectInputStream s) throws IOException {
+        String carID = s.readUTF();
+        String componentID = s.readUTF();
+        String componentType = s.readUTF();
+        String componentDescription = s.readUTF();
+        int componentPrice = s.readInt();
+
+        this.carID = new SimpleStringProperty(carID);
+        this.componentID = new SimpleStringProperty(componentID);
+        this.componentType = new SimpleStringProperty(componentType);
+        this.componentDescription = new SimpleStringProperty(componentDescription);
+        this.componentPrice = new SimpleIntegerProperty(componentPrice);
     }
 }
 

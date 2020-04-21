@@ -2,7 +2,6 @@ package javaCode.user;
 
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import java.util.ResourceBundle;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javaCode.Lists;
-import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
 public class UserController implements Initializable {
 
@@ -105,7 +103,7 @@ public class UserController implements Initializable {
 
         int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getPrice();
+            totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
@@ -125,7 +123,7 @@ public class UserController implements Initializable {
 
         int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getPrice();
+            totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
@@ -158,7 +156,7 @@ public class UserController implements Initializable {
 
         int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getPrice();
+            totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
@@ -178,7 +176,7 @@ public class UserController implements Initializable {
 
         int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getPrice();
+            totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
@@ -266,7 +264,7 @@ public class UserController implements Initializable {
             price += c.getComponentPrice();
         }
         for (Adjustment a : chosenAdjustments){
-            price += a.getPrice();
+            price += a.getAdjustmentPrice();
         }
 
         int persID = LoggedIn.getId();

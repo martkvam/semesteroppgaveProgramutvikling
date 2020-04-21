@@ -7,11 +7,16 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Lists {
+public class Lists implements Serializable {
 
-    private static ObservableList<Car> carList = FXCollections.observableArrayList();
+    private static transient ObservableList<Car> carList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
     private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
     private static ObservableList<Order> orderList = FXCollections.observableArrayList();
@@ -54,6 +59,10 @@ public class Lists {
         ongoingOrderList.add(order);
     }
 
+    public void removeAllComponents(){
+        componentList.clear();
+    }
+
 
     public static ObservableList<Car> getCars(){
         ArrayList<Car> newCarList =new ArrayList<>();
@@ -78,5 +87,16 @@ public class Lists {
     public static ObservableList<Order> getOngoingOrders(){ return ongoingOrderList; }
 
 
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
+        s.writeObject(new ArrayList<>(carList));
+    }
 
+    /*private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        List<Person> list = (List<Person>) s.readObject();
+        pregister = FXCollections.observableArrayList();
+        pregister.addAll(list);
+    }
+
+     */
 }

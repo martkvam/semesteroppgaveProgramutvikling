@@ -11,10 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+//Scene where superuser choose between two operations.
 
 public class ControllerSuperUser {
-
-    //Scene where superuser choose between two operations.
 
     @FXML
     private Button Components;
@@ -22,7 +21,7 @@ public class ControllerSuperUser {
     @FXML
     private Label lblOut;
 
-    //navigates to scene where superuser are able to add and edit components and information
+    //Navigates to scene where superuser are able to add and edit components and information
     @FXML
     void btnEditComponents(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -34,7 +33,7 @@ public class ControllerSuperUser {
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
         OpenScene.
-                newScene("Edit/delete components", root, 600,600, event);
+                newScene("Edit/delete components", root, 800,700, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.

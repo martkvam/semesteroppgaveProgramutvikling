@@ -214,7 +214,7 @@ public class addElements {
                                 lastComponentIDchecked = Integer.parseInt(split[0])+1;
                             }
                         }
-                        lastComponentID=Integer.toString(lastComponentIDchecked);
+                        lastComponentID=Integer.toString(lastComponentIDchecked+1);
                         outComponentType = newComponentType.getText();
                         componentId=lastComponentID;
                         componentId += "-";
@@ -224,10 +224,7 @@ public class addElements {
                     }
                     else if (componentType.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
                         int lastComponentIDchecked=0;
-                        System.out.println(componentType.get(i).getComponentType());
-                        System.out.println(componentType.get(i).getComponentID());
                         String line = componentType.get(i).getComponentID();
-                        System.out.println(line);
                         String[] split = line.split("-");
                         if(Integer.parseInt(split[1]) >= highestComponentID) {
                             highestComponentID = Integer.parseInt(split[1]);
@@ -260,11 +257,6 @@ public class addElements {
 
         Optional<Component> result = dialog.showAndWait();
 
-        /*result.ifPresent(usernamePassword -> {
-            System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
-        });
-
-         */
         //Handles the input values and sets new car id
         result.ifPresent(newComponentEntry -> {
             componentType.add(newComponentEntry);

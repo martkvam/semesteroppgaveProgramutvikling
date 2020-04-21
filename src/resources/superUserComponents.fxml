@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="704.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerAddEditComponents">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerAddEditComponents">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -25,26 +25,26 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <Button layoutX="7.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
-            <Label layoutX="206.0" layoutY="161.0" text="Edit/delete existing elements">
+            <Label layoutX="228.0" layoutY="325.0" text="Edit/delete existing elements">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Label layoutX="243.0" layoutY="11.0" prefHeight="38.0" prefWidth="218.0" text="Add new elements">
+            <Label layoutX="291.0" layoutY="18.0" prefHeight="38.0" prefWidth="218.0" text="Add new elements">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Button layoutX="400.0" layoutY="49.0" mnemonicParsing="false" onAction="#btnAddFromFile" text="Add from file" />
-            <Button layoutX="178.0" layoutY="49.0" mnemonicParsing="false" onAction="#btnNewCar" text="Add new car" />
-            <Button layoutX="176.0" layoutY="86.0" mnemonicParsing="false" onAction="#btnNewComponent" text="Add new component" />
-            <Button layoutX="177.0" layoutY="124.0" mnemonicParsing="false" onAction="#btnNewAdjustment" text="Add new adjustment" />
-            <Button layoutX="189.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnEditCars" text="View cars" />
-            <Button layoutX="299.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnEditComponents" text="View components" />
-            <Button layoutX="443.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnEditAdjustments" text="View adjustments" />
-            <TableView fx:id="TableView" editable="true" layoutX="67.0" layoutY="302.0" prefHeight="200.0" prefWidth="563.0">
+            <Button layoutX="523.0" layoutY="114.0" mnemonicParsing="false" onAction="#btnAddFromFile" text="Add from file" />
+            <Button layoutX="130.0" layoutY="73.0" mnemonicParsing="false" onAction="#btnNewCar" text="Add new car" />
+            <Button layoutX="130.0" layoutY="114.0" mnemonicParsing="false" onAction="#btnNewComponent" text="Add new component" />
+            <Button layoutX="130.0" layoutY="154.0" mnemonicParsing="false" onAction="#btnNewAdjustment" text="Add new adjustment" />
+            <Button layoutX="54.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnEditCars" text="View cars" />
+            <Button layoutX="54.0" layoutY="436.0" mnemonicParsing="false" onAction="#btnEditComponents" text="View components" />
+            <Button layoutX="55.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnEditAdjustments" text="View adjustments" />
+            <TableView fx:id="TableView" editable="true" layoutX="55.0" layoutY="507.0" prefHeight="254.0" prefWidth="680.0">
               <columns>
-                  <TableColumn fx:id="carType" onEditCommit="#txtCarTypeEdited" prefWidth="113.0" text="Car type">
+                  <TableColumn fx:id="carType" onEditCommit="#txtCarTypeEdited" prefWidth="156.79993057250977" text="Car type">
                       <cellValueFactory>
                           <PropertyValueFactory property="carType" />
                       </cellValueFactory>
@@ -52,7 +52,7 @@
                           <TextFieldTableCell fx:factory="forTableColumn" />
                       </cellFactory>
                   </TableColumn>
-                  <TableColumn fx:id="description" onEditCommit="#txtCarDescriptionEdited" prefWidth="350.0" text="Car description">
+                  <TableColumn fx:id="description" onEditCommit="#txtCarDescriptionEdited" prefWidth="380.80003356933594" text="Car description">
                       <cellValueFactory>
                           <PropertyValueFactory property="description" />
                       </cellValueFactory>
@@ -60,17 +60,17 @@
                           <TextFieldTableCell fx:factory="forTableColumn" />
                       </cellFactory>
                   </TableColumn>
-                  <TableColumn fx:id="price" onEditCommit="#txtCarPriceEdited" prefWidth="100.0" text="Car price">
+                  <TableColumn fx:id="price" onEditCommit="#txtCarPriceEdited" prefWidth="143.19989013671875" text="Car price">
                       <cellValueFactory>
                           <PropertyValueFactory property="price" />
                       </cellValueFactory>
                   </TableColumn>
               </columns>
             </TableView>
-            <ComboBox fx:id="chooseFilterComponent" layoutX="67.0" layoutY="254.0" prefWidth="150.0" />
-            <ComboBox fx:id="chooseFilterAdjustment" layoutX="67.0" layoutY="254.0" prefWidth="150.0" />
+            <ComboBox fx:id="chooseFilterComponent" layoutX="325.0" layoutY="436.0" prefWidth="150.0" />
+            <ComboBox fx:id="chooseFilterAdjustment" layoutX="324.0" layoutY="436.0" prefWidth="150.0" />
 
-            <TableView fx:id="tableViewComponents" editable="true" layoutX="14.0" layoutY="302.0" prefHeight="200.0" prefWidth="669.0">
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="54.0" layoutY="507.0" prefHeight="254.0" prefWidth="680.0">
               <columns>
                   <TableColumn fx:id="componentID" onEditCommit="#componentIDEdited" prefWidth="100.79998779296875" text="Component-ID">
                       <cellValueFactory>
@@ -111,8 +111,42 @@
                   </TableColumn>
               </columns>
             </TableView>
-            <TextField fx:id="txtFilterInn" layoutX="229.0" layoutY="254.0" onKeyTyped="#txtFilterTyped" />
-            <Button fx:id="btnDeleteElement" layoutX="537.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnDeleteElement" text="Delete choosen element" />
+            <TextField fx:id="txtFilterInn" layoutX="326.0" layoutY="469.0" onKeyTyped="#txtFilterTyped" />
+            <Button fx:id="btnDeleteElement" layoutX="552.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnDeleteElement" text="Delete choosen element" />
+            <ComboBox fx:id="chooseElementType" layoutX="523.0" layoutY="72.0" prefHeight="26.0" prefWidth="202.0" />
+            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="54.0" layoutY="507.0" prefHeight="254.0" prefWidth="680.0">
+              <columns>
+                <TableColumn fx:id="adjustmentId" onEditCommit="#adjustmentIdEdited" prefWidth="109.60003662109375" text="Adjustment Id">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentID" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
+                </TableColumn>
+                <TableColumn fx:id="adjustmentType" onEditCommit="#adjustmentTypeEdited" prefWidth="211.20001220703125" text="Adjustment type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentType" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
+                </TableColumn>
+                  <TableColumn fx:id="adjustmentDescription" onEditCommit="#adjustmentDescriptionEdited" prefWidth="211.20001220703125" text="Adjustment description">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="adjustmentDescription" />
+                      </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="adjustmentPrice" onEditCommit="#adjustmentPriceEdited" prefWidth="144.79998779296875" text="Adjustment price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="adjustmentPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>

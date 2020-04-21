@@ -6,15 +6,10 @@ import javaCode.ReaderWriter.Car.fileWriterJobj;
 import javaCode.ReaderWriter.Car.fileWriterTxt;
 import javaCode.ReaderWriter.Reader;
 import javaCode.ReaderWriter.Writer;
-import javafx.collections.FXCollections;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class FileHandler{
 
@@ -25,6 +20,8 @@ public class FileHandler{
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
         File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
+
+
 
         Writer writeCar = null;
         Writer writeComponent = null;
@@ -69,6 +66,9 @@ public class FileHandler{
             if(readerCar != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
+                    readerComponents.read(selectedFileComponent.toPath());
+                    readerAdjustments.read(selectedFileAdjustments.toPath());
+                    //readerOrders.read(selectedFileOrders.toPath());
                     Dialogs.showSuccessDialog("Registeret ble lest inn!");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Åpning av filen feilet. Grunn: " + e.getMessage());
@@ -114,41 +114,34 @@ public class FileHandler{
             }
         }
     }
-    static void openSelectedFile(Stage stage, Lists list, String type) {
+    public static void openSelectedFile(Stage stage, String type) {
         File selectedFile = getFile(DialogMode.Open, stage);
 
         if (selectedFile != null) {
             String fileExt = getFileExt(selectedFile);
             Reader reader = null;
-            if(type.equals("Car")){
+            System.out.println(type);
+            if(type == "Car"){
                 switch (fileExt) {
                     case ".txt" : reader = new fileReaderTxt(); break;
                     case ".jobj" : reader = new fileReaderJobj(); break;
                     default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
                 }
             }
-            else if(type.equals("Components")){
+            else if(type =="Component"){
+                System.out.println("Yes");
                 switch (fileExt) {
-                    case ".txt" : reader = new fileReaderTxt(); break;
-                    case ".jobj" : reader = new fileReaderJobj(); break;
+                    case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
+                    case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
                     default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
                 }
             }
-            else if(type.equals("Adjustments")){
+            else if(type == "Adjustment"){
                 switch (fileExt) {
-                    case ".txt" : reader = new fileReaderTxt(); break;
-                    case ".jobj" : reader = new fileReaderJobj(); break;
+                    case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
+                    case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
                     default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
                 }
-            }
-            else{
-                /*switch (fileExt) { //READ ALL LISTS (INITIALIZE METHOD)
-                    case ".txt" : reader = new file(); break;
-                    case ".jobj" : reader = new FileOpenerJobj(); break;
-                    default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                }
-
-                 */
             }
 
             if(reader != null) {
@@ -164,7 +157,6 @@ public class FileHandler{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose file");
 
-        System.out.println(fileChooser.getInitialDirectory());
         fileChooser.setInitialDirectory(new File("src/dataBase"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt"),

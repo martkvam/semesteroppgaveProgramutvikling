@@ -14,15 +14,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class ControllerAddEditComponents implements Initializable {
+    //Initialize different classes
     Lists lists = new Lists();
-    addElements addcar = new addElements();
-    private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
+    addElements addElements = new addElements();
     tableFilter tableFilter = new tableFilter();
+    FileHandler filehandler = new FileHandler();
+
+    //Initialize int/String converter
+    private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
+
+    //Sets up private variables
     private String selectedElement = "Car";
     private Stage stage;
 
@@ -39,59 +44,103 @@ public class ControllerAddEditComponents implements Initializable {
     private ComboBox<String> chooseFilterAdjustment;
 
     @FXML
+    private ComboBox<String> chooseElementType;
+
+    //TableView Car
+    @FXML
     private TableView<Car> TableView;
 
     @FXML
     private TableColumn<TableView<Car>, Integer> price;
 
-
+    //TableView Component
     @FXML
     private TableView<Component> tableViewComponents;
 
     @FXML
     private TableColumn<TableView<Component>, Integer> componentPrice;
 
+    //TableView Adjustments
+    @FXML
+    private TableView<Adjustment> tableViewAdjustments;
 
+    @FXML
+    private TableColumn<TableView<Adjustment>, Integer> adjustmentPrice;
 
-
+    //Initialize method
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FileHandler filehandler = new FileHandler();
-        filehandler.saveAllFiles();
-        filehandler.readAllFiles(stage);
 
+        //Reads inn all files
+        //filehandler.readAllFiles(stage);
 
+        //Sets up combobox elements and prompt text
         chooseFilterComponent.getItems().addAll("Component ID", "Component type", "Component description","Component price", "Car ID");
         chooseFilterComponent.setPromptText("Filter list by");
+
+        chooseElementType.getItems().addAll("Car", "Component", "Adjustment");
+        chooseElementType.setPromptText("Choose element type");
+
+        //Sets visibility on different gui elements
         chooseFilterComponent.setVisible(false);
         chooseFilterAdjustment.setVisible(false);
         tableViewComponents.setVisible(false);
+        tableViewAdjustments.setVisible(false);
         txtFilterInn.setVisible(false);
+
+        //Sets items on TableView for cars
         TableView.setItems(Lists.getCars());
+
+        //Multiple selection on TableViews
         TableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableViewComponents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableViewAdjustments.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-
+        //Sets integer elements in in TableViews
         price.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         componentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
-
+        adjustmentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
 
     }
 
     @FXML
     void btnAddFromFile(ActionEvent event) {
-
+        //Have to choose a element type
+        if(chooseElementType.getValue() != null){
+            if(chooseElementType.getValue().equals("Car")) {
+                filehandler.openSelectedFile(stage, "Car");
+            }
+            else if(chooseElementType.getValue().equals("Component")) {
+                filehandler.openSelectedFile(stage, "Component");
+            }
+            else if(chooseElementType.getValue().equals("Adjustment")) {
+                filehandler.openSelectedFile(stage, "Adjustment");
+            }
+        }
+        else{
+            Dialogs.showErrorDialog("You have to choose a element to read from file");
+        }
+        TableView.refresh();
+        tableViewComponents.refresh();
+        tableViewAdjustments.refresh();
     }
 
     @FXML
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+        filehandler.saveAllFiles();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-        OpenScene.newScene("Superuser",  root, 800, 500, event);
+        OpenScene.newScene("Superuser",  root, 600, 400, event);
     }
 
     @FXML
     void btnEditAdjustments(ActionEvent event) {
-        selectedElement = "Adjustments";
+        tableViewAdjustments.setItems(Lists.getAdjustment());
+        tableViewAdjustments.setVisible(true);
+        tableViewComponents.setVisible(false);
+        TableView.setVisible(false);
+        chooseFilterComponent.setVisible(true);
+        txtFilterInn.setVisible(true);
+        selectedElement = "Adjustment";
     }
 
     @FXML
@@ -100,6 +149,7 @@ public class ControllerAddEditComponents implements Initializable {
         chooseFilterComponent.setVisible(false);
         TableView.setVisible(true);
         tableViewComponents.setVisible(false);
+        tableViewAdjustments.setVisible(false);
         txtFilterInn.setVisible(false);
         selectedElement = "Car";
     }
@@ -109,6 +159,7 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.setItems(Lists.getComponents());
         tableViewComponents.setVisible(true);
         TableView.setVisible(false);
+        tableViewAdjustments.setVisible(false);
         chooseFilterComponent.setVisible(true);
         txtFilterInn.setVisible(true);
         selectedElement = "Components";
@@ -123,13 +174,13 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewCar(ActionEvent event) {
 
-        addcar.openAddCarDialog(Lists.getCars());
+        addElements.openAddCarDialog(Lists.getCars());
 
     }
 
     @FXML
     void btnNewComponent(ActionEvent event) {
-        addcar.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
+        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
     }
 
 
@@ -239,6 +290,27 @@ public class ControllerAddEditComponents implements Initializable {
         event.getRowValue().setCarID(event.getNewValue());
         tableViewComponents.refresh();
     }
+
+    @FXML
+    void adjustmentIdEdited(ActionEvent event) {
+
+    }
+
+    @FXML
+    void adjustmentDescriptionEdited(ActionEvent event) {
+
+    }
+
+    @FXML
+    void adjustmentPriceEdited(ActionEvent event) {
+
+    }
+
+    @FXML
+    void adjustmentTypeEdited(ActionEvent event) {
+
+    }
+
 
     //Updates filter by button click
     @FXML

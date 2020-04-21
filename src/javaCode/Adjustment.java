@@ -10,33 +10,16 @@ import java.io.Serializable;
 
 public class Adjustment implements Serializable {
     private transient  SimpleStringProperty adjustmentID;
-    private transient  SimpleStringProperty type;
-    private transient  SimpleStringProperty description;
-    private transient  SimpleIntegerProperty price;
+    private transient  SimpleStringProperty adjustmentType;
+    private transient  SimpleStringProperty adjustmentDescription;
+    private transient  SimpleIntegerProperty adjustmentPrice;
 
     public Adjustment(String adjustmentID, String type, String description, int price) {
         this.adjustmentID = new SimpleStringProperty(adjustmentID);
-        this.type = new SimpleStringProperty(type);
-        this.description = new SimpleStringProperty(description);
-        this.price = new SimpleIntegerProperty(price);
+        this.adjustmentType = new SimpleStringProperty(type);
+        this.adjustmentDescription = new SimpleStringProperty(description);
+        this.adjustmentPrice = new SimpleIntegerProperty(price);
     }
-
-    public String getType() {
-        return type.getValue();
-    }
-
-    public void setType(String type) {
-        this.type.set(type);
-    }
-
-    public int getPrice() {
-        return price.getValue();
-    }
-
-    public void setPrice(int price) {
-        this.price.set(price);
-    }
-
     public String getAdjustmentID() {
         return adjustmentID.getValue();
     }
@@ -44,21 +27,35 @@ public class Adjustment implements Serializable {
     public void setAdjustmentID(String adjustmentID) {
         this.adjustmentID.set(adjustmentID);
     }
-
-    public String getDescription() {
-        return description.getValue();
+    public String getAdjustmentType() {
+        return adjustmentType.getValue();
     }
 
-    public void setDescription(String description) {
-        this.description.set(description);
+    public void setAdjustmentType(String adjustmentType) {
+        this.adjustmentType.set(adjustmentType);
     }
+
+    public String getAdjustmentDescription() {
+        return adjustmentDescription.getValue();
+    }
+
+    public void setAdjustmentDescription(String adjustmentDescription) {
+        this.adjustmentDescription.set(adjustmentDescription);
+    }
+    public int getAdjustmentPrice() {
+        return adjustmentPrice.getValue();
+    }
+    public void setAdjustmentPrice(int adjustmentPrice) {
+        this.adjustmentPrice.set(adjustmentPrice);
+    }
+
 
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
         s.writeUTF(adjustmentID.getValue());
-        s.writeUTF(type.getValue());
-        s.writeUTF(description.getValue());
-        s.writeInt(price.getValue());
+        s.writeUTF(adjustmentType.getValue());
+        s.writeUTF(adjustmentDescription.getValue());
+        s.writeInt(adjustmentPrice.getValue());
     }
 
     private void readObject(ObjectInputStream s) throws IOException {
@@ -68,9 +65,9 @@ public class Adjustment implements Serializable {
         int price = s.readInt();
 
         this.adjustmentID = new SimpleStringProperty(adjustmentID);
-        this.type = new SimpleStringProperty(type);
-        this.description = new SimpleStringProperty(description);
-        this.price = new SimpleIntegerProperty(price);
+        this.adjustmentType = new SimpleStringProperty(type);
+        this.adjustmentDescription = new SimpleStringProperty(description);
+        this.adjustmentPrice = new SimpleIntegerProperty(price);
     }
 }
 

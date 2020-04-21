@@ -161,4 +161,22 @@ public class Order implements Serializable {
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
+
+    public String formatComponents(ObservableList<Component> componentList) {
+        String out = "";
+        String DELIMITER = ";";
+        for (Component c : componentList){
+            out += c.getComponentType() + DELIMITER;
+        }
+        return out;
+    }
+
+    public String formatAdjustments(ObservableList<Adjustment> adjustmentList) {
+        String out = "";
+        String DELIMITER = ";";
+        for (Adjustment a : adjustmentList){
+            out += a.getAdjustmentType() + DELIMITER;
+        }
+        return out;
+    }
 }

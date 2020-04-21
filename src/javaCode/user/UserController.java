@@ -198,7 +198,7 @@ public class UserController implements Initializable {
             price += c.getComponentPrice();
         }
         for (Adjustment a : chosenAdjustments){
-            price += a.getPrice();
+            price += a.getAdjustmentPrice();
         }
 
         int persID = LoggedIn.getId();

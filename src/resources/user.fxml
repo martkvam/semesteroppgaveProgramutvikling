@@ -49,12 +49,12 @@
         <columns>
             <TableColumn prefWidth="202.0" text="Type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="type" />
+                    <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn minWidth="0.0" prefWidth="124.0" text="Price">
                 <cellValueFactory>
-                    <PropertyValueFactory property="price" />
+                    <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
@@ -64,12 +64,12 @@
         <columns>
             <TableColumn prefWidth="117.0" text="Type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="type" />
+                    <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn prefWidth="82.0" text="Price">
                 <cellValueFactory>
-                    <PropertyValueFactory property="price" />
+                    <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>

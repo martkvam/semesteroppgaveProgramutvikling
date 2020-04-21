@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,10 +39,13 @@ public class Inlog implements Initializable {
 
     @FXML
     private Button btnNewUser;
-
+    Stage stage = new Stage();
     Lists lists = new Lists();
+    FileHandler handler = new FileHandler();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //handler.readAllFiles(stage);
+
         Component motor1 = new Component("1", "1-01","Motor", "Rask jævel", 20000);
         Component wheel1 = new Component("2", "2-01", "Ratt" ,"Billig", 2000);
         Component rim1 = new Component("3", "3-01", "Felg" ,"Dyreste", 2000);
@@ -66,8 +70,10 @@ public class Inlog implements Initializable {
         testList2.add(hitch);
 
         Date date1 = new Date(2/2/2019);
+
         Order order1 = new Order("1", 1, 1,date1, date1, Lists.getComponents(), Lists.getAdjustment(), 1000, "Blue", true );
         Order order2 = new Order("2", 1, 1, date1, date1, testList, testList2, 2000, "Red", false);
+
         lists.addComponent(motor1);
         lists.addComponent(wheel1);
         lists.addComponent(rim1);
@@ -83,6 +89,9 @@ public class Inlog implements Initializable {
         lists.addAdjustment(sunroof);
         lists.addAdjustment(gps);
         lists.addAdjustment(airCondition);
+
+
+
         lists.addOrder(order1);
         lists.addOngoingOrder(order2);
 
@@ -110,7 +119,7 @@ public class Inlog implements Initializable {
         if(correct){
             if(superUsr) {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-                OpenScene.newScene("Superuser",  root, 800, 500, event);
+                OpenScene.newScene("Superuser",  root, 470, 300, event);
             }else{
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("User", root, 700, 700, event);

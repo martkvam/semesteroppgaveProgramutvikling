@@ -26,9 +26,6 @@ import java.util.*;
 public class Inlog implements Initializable {
 
     @FXML
-    private Text lblInfo;
-
-    @FXML
     private PasswordField txtPassword;
 
     @FXML

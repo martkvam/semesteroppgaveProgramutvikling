@@ -54,6 +54,7 @@ public class ControllerOrders implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableViewOrder.setItems(Lists.getOrders());
+        System.out.println();
 
         componentListSuperUser = Lists.getOrders().get(0).getComponentList();
         tableViewComponents.setItems(componentListSuperUser);

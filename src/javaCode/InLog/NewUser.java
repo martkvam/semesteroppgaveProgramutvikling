@@ -59,21 +59,4 @@ public class NewUser {
         }
     }
 
-    @FXML
-    void btnUpdateUserOnClick(ActionEvent event) throws IOException {
-        String id = String.valueOf(LoggedIn.getId());
-        ReadUsers.changeInfo(id, "FirstName", txtFirstName.getText());
-        ReadUsers.
-    }
-
-    @FXML
-    void updateUser() throws FileNotFoundException {
-        String id = String.valueOf(LoggedIn.getId());
-
-        txtFirstName.setText(ReadUsers.getInfo(id, "FirstName"));
-        txtLastName.setText(ReadUsers.getInfo(id, "LastName"));
-        txtEmail.setText(ReadUsers.getInfo(id, "Email"));
-        txtPhone.setText(ReadUsers.getInfo(id, "Phone"));
-    }
-
 }

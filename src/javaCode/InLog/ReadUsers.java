@@ -1,6 +1,10 @@
 package javaCode.InLog;
 
+import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.util.*;
 
@@ -49,16 +53,16 @@ public class ReadUsers {
             if(strings[0].equals(id)) {
                 switch (type) {
                     case "FirstName":
-                         line = line.replace(strings[1], Validator.name(change));
+                         line = line.replace(strings[1], Objects.requireNonNull(Validator.name(change)));
                          break;
                     case "LastName":
-                        line = line.replace(strings[2], Validator.name(change));
+                        line = line.replace(strings[2], Objects.requireNonNull(Validator.name(change)));
                         break;
                     case "Email":
-                        line = line.replace(strings[3], Validator.email(change));
+                        line = line.replace(strings[3], Objects.requireNonNull(Validator.email(change)));
                         break;
                     case "Phone":
-                        line = line.replace(strings[4], Validator.phone(change));
+                        line = line.replace(strings[4], Objects.requireNonNull(Validator.phone(change)));
                         break;
                     case "Password":
                         line = line.replace(strings[5], change);
@@ -132,5 +136,19 @@ public class ReadUsers {
             }
         }
         return foundIds;
+    }
+
+    public static ObservableList<User> getUserList() throws FileNotFoundException {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        File myObj = new File(Formatter.path);
+        Scanner myReader = new Scanner(myObj);
+        ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
+
+        for (; myReader.hasNext(); ) {
+            String line = myReader.next();
+            String[] user = line.split(";");
+            userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[4], user[3], user[5], Boolean.parseBoolean(user[6])));
+        }
+        return userList;
     }
 }

@@ -107,7 +107,6 @@ public class Inlog implements Initializable {
 
         if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
                 values[5].equals(txtPassword.getText())){
-            Dialogs.showSuccessDialog("Success");
             LoggedIn.setId(id);
             correct = true;
             superUsr = Boolean.parseBoolean(values[6]);

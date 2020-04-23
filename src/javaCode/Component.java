@@ -10,11 +10,11 @@ import java.io.Serializable;
 import java.util.Collection;
 
 public class Component implements Serializable {
-    private transient  SimpleStringProperty carID;
-    private transient  SimpleStringProperty componentID;
-    private transient  SimpleStringProperty componentType;
-    private transient  SimpleStringProperty componentDescription;
-    private transient  SimpleIntegerProperty componentPrice;
+    private transient SimpleStringProperty carID;
+    private transient SimpleStringProperty componentID;
+    private transient SimpleStringProperty componentType;
+    private transient SimpleStringProperty componentDescription;
+    private transient SimpleIntegerProperty componentPrice;
 
     public Component(String carID, String componentID, String componentType, String componentDescription, int componentPrice) {
         this.carID = new SimpleStringProperty(carID);

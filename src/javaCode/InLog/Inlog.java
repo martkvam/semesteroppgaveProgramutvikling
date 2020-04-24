@@ -45,7 +45,7 @@ public class Inlog implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //handler.readAllFiles(stage);
-        Component motor1 = new Component("1", "1-01","Motor", "Rask jævel", 20000);
+        /*Component motor1 = new Component("1", "1-01","Motor", "Rask jævel", 20000);
         Component wheel1 = new Component("2", "2-01", "Ratt" ,"Billig", 2000);
         Component rim1 = new Component("3", "3-01", "Felg" ,"Dyreste", 2000);
         Component setetrekk = new Component("4", "4-01", "Setetrekk" ,"Skinn", 2000);
@@ -93,7 +93,7 @@ public class Inlog implements Initializable {
         lists.addOrder(order1);
         lists.addOrder(order2);
         lists.addOngoingOrder(order2);
-
+*/
 
 
     }

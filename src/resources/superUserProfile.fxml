@@ -33,7 +33,7 @@
       </GridPane>
       <TableView fx:id="tvUserRegister" editable="true" layoutX="68.0" layoutY="112.0" prefHeight="201.0" prefWidth="454.0">
         <columns>
-            <TableColumn fx:id="id" prefWidth="75.0" text="User ID">
+            <TableColumn fx:id="id" prefWidth="75.0" text="User ID" editable="false">
                 <cellValueFactory>
                     <PropertyValueFactory property="id" />
                 </cellValueFactory>
@@ -41,7 +41,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-          <TableColumn fx:id="firstName" prefWidth="75.0" text="Firstname">
+          <TableColumn fx:id="firstName" prefWidth="75.0" text="Firstname" onEditCommit="#firstNameEdited">
               <cellValueFactory>
                   <PropertyValueFactory property="firstName" />
               </cellValueFactory>
@@ -49,7 +49,7 @@
                   <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-          <TableColumn fx:id="lastName" prefWidth="75.0" text="Lastname">
+          <TableColumn fx:id="lastName" prefWidth="75.0" text="Lastname" onEditCommit="#lastNameEdited">
               <cellValueFactory>
                   <PropertyValueFactory property="lastName" />
               </cellValueFactory>
@@ -57,7 +57,7 @@
                   <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-            <TableColumn fx:id="phone" prefWidth="75.0" text="Phone">
+            <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" onEditCommit="#phoneEdited">
             <cellValueFactory>
                 <PropertyValueFactory property="phone" />
             </cellValueFactory>
@@ -65,7 +65,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="email" prefWidth="75.0" text="Email">
+            <TableColumn fx:id="email" prefWidth="75.0" text="Email" onEditCommit="#emailEdited">
                 <cellValueFactory>
                     <PropertyValueFactory property="email" />
                 </cellValueFactory>
@@ -73,7 +73,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="superUser" prefWidth="75.0" text="SuperUser">
+            <TableColumn fx:id="superUser" prefWidth="75.0" text="SuperUser" onEditCommit="#superUserEdited">
                 <cellValueFactory>
                     <PropertyValueFactory property="superUser" />
                 </cellValueFactory>

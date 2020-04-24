@@ -7,6 +7,35 @@ import javafx.beans.property.SimpleStringProperty;
 public class User {
     private SimpleIntegerProperty id;
     private SimpleStringProperty firstName;
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName.set(firstName);
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName.set(lastName);
+    }
+
+    public void setPhone(String phone) {
+        this.phone.set(phone);
+    }
+
+    public void setEmail(String email) {
+        this.email.set(email);
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    public void setSuperUser(boolean superUser) {
+        this.superUser.set(superUser);
+    }
+
     private SimpleStringProperty lastName;
     private SimpleStringProperty phone;
     private SimpleStringProperty email;

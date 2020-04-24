@@ -1,2 +1,8 @@
 1;2;1;Fri Apr 24 16:58:42 CEST 2020;Fri Apr 24 16:58:42 CEST 2020;Ratt;Integrert GPS;11000;Hvit;true
 2;2;4;Fri Apr 24 17:00:58 CEST 2020;Fri Apr 24 17:00:58 CEST 2020;Integrert GPS;6000;Svart;true
+2;2;1;Fri Apr 24 17:43:02 CEST 2020;Fri Apr 24 17:43:02 CEST 2020;Motor;Soltak;27000;Black;true
+3;2;1;Fri Apr 24 17:43:43 CEST 2020;Fri Apr 24 17:43:43 CEST 2020;Motor;Hengerfeste;22000;Red;true
+2;2;1;Fri Apr 24 17:44:42 CEST 2020;Fri Apr 24 17:44:42 CEST 2020;Motor;Integrert GPS;26000;Black;true
+2;2;1;Fri Apr 24 17:54:25 CEST 2020;Fri Apr 24 17:54:25 CEST 2020;Motor;Integrert GPS;26000;Black;true
+3;2;1;Fri Apr 24 17:55:47 CEST 2020;Fri Apr 24 17:55:47 CEST 2020;Motor;Integrert GPS;26000;White;true
+2;2;1;Fri Apr 24 18:24:29 CEST 2020;Fri Apr 24 18:24:29 CEST 2020;Motor;20000;Black;true

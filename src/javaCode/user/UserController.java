@@ -66,8 +66,6 @@ public class UserController implements Initializable {
 
 
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
-
-
     @FXML
     void setList(ActionEvent event) {
         ObservableList<Component> outList = FXCollections.observableArrayList();
@@ -161,8 +159,8 @@ public class UserController implements Initializable {
 
         adjustmentTV.setItems(Lists.getAdjustment());
 
-        chooseCol.setPromptText("Velg farge: ");
-        chooseCol.getItems().setAll("Rød", "Svart", "Hvit", "Grå");
+        chooseCol.setPromptText("Choose color: ");
+        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
 
         //Setter valgmuligheter i choiceboxene
         chooseCarType.setPromptText("Car type: ");

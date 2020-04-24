@@ -1,1 +1,1 @@
-;2;4;Fri Apr 24 17:00:41 CEST 2020;Fri Apr 24 17:00:41 CEST 2020;Integrert GPS;6000;Not chosen;false
+2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Hengerfeste;2000;Red;false

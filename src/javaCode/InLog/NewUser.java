@@ -2,6 +2,7 @@ package javaCode.InLog;
 
 import javaCode.Dialogs;
 import javaCode.OpenScene;
+import javaCode.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

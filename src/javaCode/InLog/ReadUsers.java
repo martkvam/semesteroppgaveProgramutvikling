@@ -2,6 +2,7 @@ package javaCode.InLog;
 
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
+import javaCode.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

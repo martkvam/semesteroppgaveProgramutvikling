@@ -102,11 +102,19 @@ public class Inlog implements Initializable {
 
         boolean correct = false;
         boolean superUsr = false;
+        String id = "";
+        String[] values = new String[7];
 
-        String id = Objects.requireNonNull(ReadUsers.getUserId(txtUserName.getText())).get(0);
-        int length = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).length();
-        String info = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).substring(1, length-1);
-        String [] values = info.replaceAll("\\s+","").split(",");
+        try {
+            id = Objects.requireNonNull(ReadUsers.getUserId(txtUserName.getText())).get(0);
+            int length = ReadUsers.getInfo(id, "User").length();
+            String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
+            values = info.replaceAll("\\s+", "").split(",");
+        }catch (Exception e){
+            Dialogs.showErrorDialog("User don't exist");
+            txtUserName.clear();
+            txtPassword.clear();
+        }
 
         if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
                 values[5].equals(txtPassword.getText())){
@@ -135,7 +143,8 @@ public class Inlog implements Initializable {
     }
 
     public void enterKeyPressed(KeyEvent kEvent) {
-        if(kEvent.getCode()== KeyCode.ENTER)
+        if(kEvent.getCode()== KeyCode.ENTER) {
             btnLogIn.fire();
+        }
     }
 }

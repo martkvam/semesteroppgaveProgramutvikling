@@ -27,7 +27,7 @@
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Profiles" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <Button fx:id="btnClick" mnemonicParsing="false" onAction="#btnClickOnClick" text="Click" GridPane.columnIndex="2" />
+            <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#btnGoBackOnClick" text="Go back" GridPane.columnIndex="2" />
             <TextField fx:id="txtSearch" onKeyTyped="#searchFilter" promptText="Search" />
          </children>
       </GridPane>

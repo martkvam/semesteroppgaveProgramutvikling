@@ -3,11 +3,15 @@ package javaCode.superUser;
 import javaCode.ConverterErrorHandler;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
+import javaCode.OpenScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
@@ -57,18 +61,6 @@ public class ControllerEditProfile {
         }
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
-
-    public void btnClickOnClick(javafx.event.ActionEvent actionEvent) throws FileNotFoundException {
-        //User test = new User(66, "Test", "Testen", "99999999", "test.testen@test.no", "lolol", false);
-        //userRegisterList.add(test);
-        //tvUserRegister.getItems().add();
-        //tvUserRegister.setItems(userRegisterList);
-        //tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        /*userRegisterList.setAll(ReadUsers.getUserList());
-        id.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.IntegerStringConverter()));
-        superUser.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
-        tvUserRegister.setItems(userRegisterList);
-    */}
 
     public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException {
             FilteredList<User> filtered = new FilteredList<>(ReadUsers.getUserList(), b -> true);
@@ -161,6 +153,11 @@ public class ControllerEditProfile {
             tvUserRegister.getSelectionModel().clearSelection();
         }
         tvUserRegister.refresh();
+    }
+
+    public void btnGoBackOnClick(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+        OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
     }
 }
 

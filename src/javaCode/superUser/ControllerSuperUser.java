@@ -51,7 +51,7 @@ public class ControllerSuperUser {
     @FXML
     void btnEditProfiles(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserProfile.fxml"));
-        OpenScene.newScene("Edit profiles", root, 500, 500, event);
+        OpenScene.newScene("Edit profiles", root, 600, 350, event);
     }
 
     //Takes superUser back to login page

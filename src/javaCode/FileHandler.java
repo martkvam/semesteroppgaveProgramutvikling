@@ -21,32 +21,35 @@ public class FileHandler{
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
         File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
 
-
-
         Writer writeCar = null;
         Writer writeComponent = null;
         Writer writeAdjustment = null;
-        //Writer writeOrders = null;
+        Writer writeOrders = null;
 
         writeCar = new fileWriterJobj();
         writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
         writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
-        //writeOrders = new javaCode.ReaderWriter.Order.fileWriterJobj();
+        writeOrders = new javaCode.ReaderWriter.Order.fileWriterJobj();
 
 
         if(writeCar != null) {
             try {
+                selectedFileCar.delete();
+                selectedFileComponent.delete();
+                selectedFileAdjustments.delete();
+                selectedFileOrders.delete();
                 writeCar.save(selectedFileCar.toPath());
                 writeComponent.save(selectedFileComponent.toPath());
                 writeAdjustment.save(selectedFileAdjustments.toPath());
-                //writeOrders.save(selectedFileOrders.toPath());
-                Dialogs.showSuccessDialog("Registeret ble lagret!");
+                writeOrders.save(selectedFileOrders.toPath());
+                Dialogs.showSuccessDialog("The register successfully got saved");
             } catch (IOException e) {
-                Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
+                Dialogs.showErrorDialog("The saving failed because of: " + e.getMessage());
             }
         }
     }
     public static void readAllFiles(Stage stage) {
+
         File selectedFileCar = new File("src/dataBase/SuperUser/Cars.jobj");
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
@@ -63,15 +66,17 @@ public class FileHandler{
         readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
 
 
-            if(readerCar != null) {
+            if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
-                    //readerOrders.read(selectedFileOrders.toPath());
-                    Dialogs.showSuccessDialog("Registeret ble lest inn!");
+                    readerOrders.read(selectedFileOrders.toPath());
+                    Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
-                    Dialogs.showErrorDialog("Åpning av filen feilet. Grunn: " + e.getMessage());
+                    Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
+                } catch (IllegalArgumentException e){
+                    Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 }
             }
         }
@@ -83,23 +88,21 @@ public class FileHandler{
         if (selectedFile != null) {
             String fileExt = getFileExt(selectedFile);
             Writer writeCar = null;
-           // Writer writeComponent = null;
-            //Writer writeAdjustment = null;
+            Writer writeComponent = null;
+            Writer writeAdjustment = null;
 
             switch (fileExt) {
                 case ".txt" :
                     writeCar = new fileWriterTxt();
-                    /*writeComponent = new fileWriterTxt();
+                    writeComponent = new fileWriterTxt();
                     writeAdjustment = new fileWriterTxt();
 
-                     */
                 break;
                 case ".jobj" :
                     writeCar = new fileWriterJobj();
-                    /*writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
+                    writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
                     writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
 
-                     */
                     break;
                 default : Dialogs.showErrorDialog("Du kan bare lagre til enten txt eller jobj filer.");
             }

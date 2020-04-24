@@ -20,7 +20,7 @@ public class tableFilter {
 
         //if input i a number
         if(inputString.matches("[0-9]+")){
-                if(choosenFilter.equals("Component price")){
+                if(choosenFilter.equals("componentPrice")){
                     //Sets up the filtered list by a filtered stream
                     filteredList = Lists.getComponents().stream().filter(s -> s.getComponentPrice() <= Integer.parseInt(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
             }
@@ -29,19 +29,19 @@ public class tableFilter {
         //If input is a string
         else{
             switch (choosenFilter){
-                case "Component ID":
+                case "componentID":
                     filteredList = Lists.getComponents().stream().filter(s -> s.getComponentID().toLowerCase().contains(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     break;
 
-                case "Component type":
+                case "componentType":
                     filteredList = Lists.getComponents().stream().filter(s -> s.getComponentType().toLowerCase().contains(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     break;
 
-                case "Component description":
+                case "componentDescription":
                     filteredList = Lists.getComponents().stream().filter(s -> s.getComponentDescription().toLowerCase().contains(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     break;
 
-                case "Car ID":
+                case "carID":
                     System.out.println("jada");
                     filteredList = Lists.getComponents().stream().filter(s -> s.getCarID().toLowerCase().equals(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     break;

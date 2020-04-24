@@ -15,6 +15,22 @@ public class Car implements Serializable {
     private transient  SimpleIntegerProperty price;
 
     public Car(String carID, String carType, String description, int price) {
+        if(!Validator.carId(carID)){
+            throw new IllegalArgumentException("The car id is not valid");
+        }
+
+        if(!Validator.carType(carType)){
+            throw new IllegalArgumentException("The car type is not valid");
+        }
+
+        if(!Validator.carDescription(description)){
+            throw new IllegalArgumentException("The car description is invalid");
+        }
+        if(!Validator.carPrice(price)){
+            throw new NumberFormatException("The car price is invalid");
+        }
+
+
         this.carID = new SimpleStringProperty(carID);
         this.carType = new SimpleStringProperty(carType);
         this.description = new SimpleStringProperty(description);
@@ -27,6 +43,9 @@ public class Car implements Serializable {
 
 
     public void setCarID(String carID) {
+        if(!Validator.carId(carID)){
+            throw new IllegalArgumentException("The car id is not valid");
+        }
         this.carID.set(carID);
     }
 
@@ -35,6 +54,9 @@ public class Car implements Serializable {
     }
 
     public void setCarType(String carType) {
+        if(!Validator.carType(carType)){
+            throw new IllegalArgumentException("The car type is not valid");
+        }
         this.carType.set(carType);
     }
 
@@ -43,6 +65,9 @@ public class Car implements Serializable {
     }
 
     public void setDescription(String description) {
+        if(!Validator.carDescription(description)){
+            throw new IllegalArgumentException("The car description is invalid");
+        }
         this.description.set(description);
     }
 
@@ -51,6 +76,9 @@ public class Car implements Serializable {
     }
 
     public void setPrice(int price) {
+        if(!Validator.carPrice(price)){
+            throw new NumberFormatException("The car price is invalid");
+        }
         this.price.set(price);
     }
 

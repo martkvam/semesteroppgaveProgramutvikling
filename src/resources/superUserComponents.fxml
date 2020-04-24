@@ -70,7 +70,7 @@
             <ComboBox fx:id="chooseFilterComponent" layoutX="325.0" layoutY="354.0" prefWidth="150.0" />
             <ComboBox fx:id="chooseFilterAdjustment" layoutX="325.0" layoutY="354.0" prefWidth="150.0" />
 
-            <TableView fx:id="tableViewComponents" editable="true" layoutX="54.0" layoutY="507.0" prefHeight="172.0" prefWidth="680.0">
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="54.0" layoutY="425.0" prefHeight="254.0" prefWidth="680.0">
               <columns>
                   <TableColumn fx:id="componentID" onEditCommit="#componentIDEdited" prefWidth="100.79998779296875" text="Component-ID">
                       <cellValueFactory>

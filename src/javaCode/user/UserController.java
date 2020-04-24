@@ -11,22 +11,22 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javaCode.Lists;
+import javafx.stage.Stage;
 
 public class UserController implements Initializable {
-
+    FileHandler handler = new FileHandler();
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
     ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
-
+    Stage stage = new Stage();
 
     @FXML
     private TableView<Component> componentTV;
@@ -66,8 +66,6 @@ public class UserController implements Initializable {
 
 
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
-
-
     @FXML
     void setList(ActionEvent event) {
         ObservableList<Component> outList = FXCollections.observableArrayList();
@@ -137,10 +135,32 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        handler.readAllFiles(stage);
+        if(ProfileController.toBeChanged){
+            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            chosenCompTV.setItems(chosenComponents);
+            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustTV.setItems(chosenAdjustments);
+
+            String type = "";
+            String ID = chosenComponents.get(0).getCarID();
+            for (Car c : Lists.getCars()){
+                if (c.getCarID().equals(ID)){
+                    type = c.getCarType();
+                }
+            }
+            chooseCarType.getSelectionModel().select(type);
+            chooseCarType.setDisable(true);
+
+            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+                adjustmentTV.getItems().remove(a);
+            }
+        }
+
         adjustmentTV.setItems(Lists.getAdjustment());
 
-        chooseCol.setPromptText("Velg farge: ");
-        chooseCol.getItems().setAll("Rød", "Svart", "Hvit", "Grå");
+        chooseCol.setPromptText("Choose color: ");
+        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
 
         //Setter valgmuligheter i choiceboxene
         chooseCarType.setPromptText("Car type: ");
@@ -187,14 +207,13 @@ public class UserController implements Initializable {
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 630, actionEvent);
+        OpenScene.newScene("My profile", root, 610, 650, actionEvent);
     }
 
     public void saveChoices(ActionEvent actionEvent) {
-    }
-
-    public void order(ActionEvent actionEvent) {
+        boolean rightInput = true;
         Date date = new Date();
+
         int price = 0;
         for (Component c : chosenComponents){
             price += c.getComponentPrice();
@@ -202,12 +221,141 @@ public class UserController implements Initializable {
         for (Adjustment a : chosenAdjustments){
             price += a.getAdjustmentPrice();
         }
-        String color = chooseCol.getValue();
+
         int persID = LoggedIn.getId();
 
+        int carId = 0;
+        if(chooseCarType.getValue() != null) {
+            for (Car car : Lists.getCars()) {
+                if (chooseCarType.getValue().equals(car.getCarType())) {
+                    carId = Integer.parseInt(car.getCarID());
+                }
+            }
+        } else {
+            Dialogs.showErrorDialog("Choose a car type");
+            rightInput = false;
+        }
 
-        Order order = new Order("" + Lists.getOrders().size(), persID, 1, date, date, chosenComponents, chosenAdjustments, price, color,true);
-        lists.addOrder(order);
+        ObservableList<Component> orderedComponents = FXCollections.observableArrayList();
+        ObservableList<Adjustment> orderedAdjustments = FXCollections.observableArrayList();
+        orderedComponents.setAll(chosenComponents);
+        orderedAdjustments.setAll(chosenAdjustments);
+
+
+        if (orderedAdjustments.isEmpty() && orderedComponents.isEmpty()){
+            Dialogs.showErrorDialog("Your order is empty");
+            rightInput = false;
+        }
+
+        String color = "";
+        if(chooseCol.getValue() != null) {
+            color = chooseCol.getValue();
+        }
+        else {
+            color += "Not chosen";
+        }
+
+        if(rightInput) {
+            Order order = new Order("", persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, false);
+            lists.addOngoingOrder(order);
+            Path path = Paths.get("OngoingOrders.txt");
+            String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+            try {
+                FileWriter.WriteFile(path, formattedOrders);
+                Dialogs.showSuccessDialog("Your order was succesful!");
+                adjustmentTV.getItems().addAll(chosenAdjustments);
+                chosenComponents.clear();
+                chosenAdjustments.clear();
+                chosenAdjustTV.refresh();
+                adjustmentTV.refresh();
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                OpenScene.newScene("Order", root, 650, 700, actionEvent);
+            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                Dialogs.showErrorDialog("Noe gikk galt.");
+            }
+        }
+    }
+
+    public void order(ActionEvent actionEvent) {
+        boolean rightInput = true;
+        Date date = new Date();
+
+        int price = 0;
+        for (Component c : chosenComponents){
+            price += c.getComponentPrice();
+        }
+        for (Adjustment a : chosenAdjustments){
+            price += a.getAdjustmentPrice();
+        }
+
+        int persID = LoggedIn.getId();
+
+        int largest = 0;
+        for (Order o : Lists.getOrders()){
+            if(Integer.parseInt(o.getOrderNr()) > largest){
+                largest = Integer.parseInt(o.getOrderNr());
+            }
+        }
+
+        int orderNr = largest + 1;
+        String newOrderNr = "" + orderNr;
+        int carId = 0;
+        if(chooseCarType.getValue() != null) {
+            for (Car car : Lists.getCars()) {
+                if (chooseCarType.getValue().equals(car.getCarType())) {
+                    carId = Integer.parseInt(car.getCarID());
+                }
+            }
+        } else {
+            Dialogs.showErrorDialog("Choose a car type");
+            rightInput = false;
+        }
+
+        ObservableList<Component> orderedComponents = FXCollections.observableArrayList();
+        ObservableList<Adjustment> orderedAdjustments = FXCollections.observableArrayList();
+        orderedComponents.setAll(chosenComponents);
+        orderedAdjustments.setAll(chosenAdjustments);
+
+
+        if (orderedAdjustments.isEmpty() && orderedComponents.isEmpty()){
+            Dialogs.showErrorDialog("Your order is empty");
+            rightInput = false;
+        }
+
+        String color = "";
+        if(chooseCol.getValue() != null) {
+            color = chooseCol.getValue();
+        }
+        else {
+            Dialogs.showErrorDialog("Choose a color for the car!");
+            rightInput = false;
+        }
+
+        if(rightInput) {
+            Order order = new Order(newOrderNr, persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, true);
+            lists.addOrder(order);
+            Path path = Paths.get("FinishedOrders.txt");
+            String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
+            try {
+                FileWriter.WriteFile(path, formattedOrders);
+                Dialogs.showSuccessDialog("Your order was succesful!");
+                adjustmentTV.getItems().addAll(chosenAdjustments);
+                chosenComponents.clear();
+                chosenAdjustments.clear();
+                chosenAdjustTV.refresh();
+                adjustmentTV.refresh();
+                ProfileController.toBeChanged = false;
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                OpenScene.newScene("Order", root, 650, 700, actionEvent);
+            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                Dialogs.showErrorDialog("Noe gikk galt.");
+            }
+        }
+    }
+
+    public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+        OpenScene.newScene("Log in", root, 650, 650, actionEvent);
     }
 }
 

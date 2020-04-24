@@ -1,4 +1,4 @@
-package javaCode.InLog;
+package javaCode;
 
 import org.junit.Assert;
 import org.junit.Test;

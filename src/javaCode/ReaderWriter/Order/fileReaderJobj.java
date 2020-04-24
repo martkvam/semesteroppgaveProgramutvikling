@@ -1,6 +1,8 @@
 package javaCode.ReaderWriter.Order;
 
+import javaCode.Component;
 import javaCode.Lists;
+import javaCode.Order;
 import javaCode.ReaderWriter.Reader;
 
 import java.io.IOException;
@@ -8,20 +10,23 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class fileReaderJobj implements Reader{
     public void read(Path path) throws IOException {
-        /*try (InputStream fin = Files.newInputStream(path);
-             ObjectInputStream oin = new ObjectInputStream(fin))
+        Lists list = new Lists();
+
+        try (InputStream fin = Files.newInputStream(path);
+             ObjectInputStream stream = new ObjectInputStream(fin))
         {
-            Lists list = (Lists) oin.readObject();
-            elementList.removeAllComponents();
-            list.getComponents().forEach(elementList::addComponent);
+            List<Order> listeObjekt = (List<Order>) stream.readObject();
+            for(Order i : listeObjekt){
+                list.addOrder(i);
+            }
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); // debug information here
             throw new IOException("Something is wrong with the implementation. See debug information");
         }
-
-         */
     }
 }

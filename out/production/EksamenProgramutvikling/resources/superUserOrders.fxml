@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerOrders">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerOrders">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -19,7 +19,7 @@
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="732.0">
          <children>
-            <TableView fx:id="tableViewOrder" editable="true" layoutX="7.0" layoutY="52.0" prefHeight="138.0" prefWidth="696.0">
+            <TableView fx:id="tableViewOrder" editable="true" layoutX="27.0" layoutY="52.0" onMouseClicked="#onClickView" prefHeight="182.0" prefWidth="696.0">
               <columns>
                 <TableColumn prefWidth="70.39999103546143" text="orderNr">
                     <cellValueFactory>
@@ -63,7 +63,7 @@
                   </TableColumn>
               </columns>
             </TableView>
-            <TableView fx:id="tableViewComponents" editable="true" layoutX="7.0" layoutY="209.0" prefHeight="98.0" prefWidth="696.0">
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="27.0" layoutY="280.0" prefHeight="98.0" prefWidth="696.0">
               <columns>
                 <TableColumn fx:id="componentID" prefWidth="98.3999605178833" text="Component id">
                     <cellValueFactory>
@@ -87,7 +87,7 @@
                   </TableColumn>
               </columns>
             </TableView>
-            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="7.0" layoutY="351.0" prefHeight="110.0" prefWidth="696.0">
+            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="27.0" layoutY="423.0" prefHeight="110.0" prefWidth="696.0">
               <columns>
                 <TableColumn prefWidth="150.39999103546143" text="Adjustment id" />
                 <TableColumn minWidth="0.0" prefWidth="232.00001525878906" text="Adjustment name" />
@@ -96,6 +96,7 @@
               </columns>
             </TableView>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
+            <Button layoutX="27.0" layoutY="243.0" mnemonicParsing="false" text="Button" />
          </children>
       </AnchorPane>
    </children>

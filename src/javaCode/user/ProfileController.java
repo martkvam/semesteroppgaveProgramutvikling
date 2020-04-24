@@ -94,23 +94,22 @@ public class ProfileController implements Initializable {
     void finishOrder(ActionEvent event) {
         if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+            //If color is not chosen
+            String [] color = {"Red", "Black", "White", "Gray"};
+            ChoiceDialog<String> choice = new ChoiceDialog(color[1], color);
             if(ongoingOrdersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
-                /*Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not selected a color for the car, and the color will be set to black as a default. " +
-                        "If you wish to choose another color, click on 'Change order'. Are you sure you want to finish this order?"
-                        , ButtonType.YES, ButtonType.CANCEL);
-                alert.showAndWait();*/
-                alert.setContentText("You have not selected a color for the car, and the color will be set to black as a default." +
-                        "If you wish to choose another color, click on 'Change order'. Are you sure you want to finish this order?");
-                alert.showAndWait();
+                choice.setTitle("Finish order");
+                choice.setContentText("Please choose a color for the car before you finish your order: ");
+                choice.showAndWait();
+                String chosenColor = choice.getSelectedItem();
+                ongoingOrdersTV.getSelectionModel().getSelectedItem().setCarColor(chosenColor);
             }
+            //If the order is ready
             else {
-               /* Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?"
-                        , ButtonType.YES, ButtonType.CANCEL);
-                alert.showAndWait();*/
                alert.setContentText("Are you sure you want to finish this order?");
                alert.showAndWait();
             }
-            if (alert.getResult() == ButtonType.YES) {
+            if (alert.getResult() == ButtonType.YES || !choice.getResult().isEmpty()) {
                 Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
 
                 int largest = 0;

@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Order implements Serializable {
@@ -133,7 +134,7 @@ public class Order implements Serializable {
         s.writeInt(getPersonId());
         s.writeObject(getOrderStarted());
         s.writeObject(getOrderFinished());
-        s.writeObject(getComponentList());
+        writeListProp(s, (ListProperty) getComponentList());
         s.writeObject(getAdjustmentList());
         s.writeInt(getTotalPrice());
         s.writeUTF(getCarColor());
@@ -160,5 +161,13 @@ public class Order implements Serializable {
         this.totPrice = new SimpleIntegerProperty(totalPrice);
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
+    }
+    public static void writeListProp(ObjectOutputStream s, ListProperty lstProp) throws IOException {
+        if(lstProp==null || lstProp.getValue()==null) {
+            s.writeInt(0);
+            return;
+        }
+        s.writeInt(lstProp.size());
+        for(Object elt:lstProp.getValue()) s.writeObject(elt);
     }
 }

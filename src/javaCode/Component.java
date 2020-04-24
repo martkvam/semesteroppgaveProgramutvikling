@@ -1,8 +1,11 @@
 package javaCode;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import javaCode.superUser.addElements;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.xml.bind.helpers.ValidationEventLocatorImpl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,7 +31,10 @@ public class Component implements Serializable {
         return carID.getValue();
     }
 
-    public void setCarID(String ID) {
+    public void setCarID(String ID){
+        if(!Validator.carIdComponents(ID)) {
+            throw new IllegalArgumentException("This is not a valid car id");
+        }
         this.carID.set(ID);
     }
 
@@ -38,7 +44,15 @@ public class Component implements Serializable {
 
 
     public void setComponentID(String componentID) {
-        this.componentID.set(componentID);
+        if(!Validator.componentId(componentID)){
+            if(Dialogs.showChooseDialog("The id is not valid? Add new component?")){
+                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
+            }
+        }
+        else{
+            this.componentID.set(componentID);
+        }
+
     }
 
 

@@ -1,6 +1,8 @@
 package javaCode.InLog;
 
 import javaCode.Dialogs;
+import javaCode.Validator;
+
 import java.io.*;
 import java.util.*;
 

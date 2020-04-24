@@ -14,7 +14,7 @@ public class ConverterErrorHandler {
                     conversionSuccessful = true;
                     return result;
                 } catch (NumberFormatException e) {
-                    Dialogs.showErrorDialog("Du må skrive inn et gyldig tall.");
+                    Dialogs.showErrorDialog("Number input is unvalid");
                     conversionSuccessful = false;
                     return 0;
                 }

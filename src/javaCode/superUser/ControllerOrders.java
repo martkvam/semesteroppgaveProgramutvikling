@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -56,18 +57,12 @@ public class ControllerOrders implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileHandler.readAllFiles(stage);
-        for(int i =0; i < Lists.getOrders().size();i++){
-            System.out.println(Lists.getOrders().get(i).getOrderNr() + Lists.getOrders().get(i).getCarColor() + Lists.getOrders().get(i).getCarId());
-            for(int j = 0; j < Lists.getOrders().get(i).getComponentList().size(); j++){
-                System.out.println(Lists.getOrders().get(i).getComponentList().get(j).getComponentType());
-
-            }
-        }
 
         tableViewOrder.setItems(Lists.getOrders());
 
-        /*componentListSuperUser = Lists.getOrders().get(1).getComponentList();
-        tableViewComponents.setItems(componentListSuperUser);*/
+        for(Order i : Lists.getOrders()){
+            tableViewComponents.setItems(i.getComponentList());
+        }
 
     }
     @FXML
@@ -79,6 +74,16 @@ public class ControllerOrders implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.
                 newScene("Edit orders", root, 710 ,500, event);
+    }
+
+    @FXML
+    void onClickView(MouseEvent event) {
+        for(Order i : Lists.getOrders()){
+            if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                tableViewComponents.setItems(i.getComponentList());
+            }
+        }
+
     }
 
 }

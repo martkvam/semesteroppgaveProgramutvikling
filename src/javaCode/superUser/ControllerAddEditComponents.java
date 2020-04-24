@@ -205,11 +205,9 @@ public class ControllerAddEditComponents implements Initializable {
 
 
     @FXML
-    void btnDeleteElement(ActionEvent event) throws IOException {
+    void btnDeleteElement(ActionEvent event) {
         //Choose to delete or not
         DeleteElements delete = new DeleteElements();
-        ObservableList<Component> deleteComponents = null;
-        ObservableList<Car> deleteCars = null;
         try{
             switch (selectedElement) {
                 case "Car":

@@ -19,13 +19,14 @@ import java.util.ResourceBundle;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javaCode.Lists;
+import javafx.stage.Stage;
 
 public class UserController implements Initializable {
-
+    FileHandler handler = new FileHandler();
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
     ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
-
+    Stage stage = new Stage();
 
     @FXML
     private TableView<Component> componentTV;
@@ -136,6 +137,7 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        handler.readAllFiles(stage);
         if(ProfileController.toBeChanged){
             chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
             chosenCompTV.setItems(chosenComponents);

@@ -163,12 +163,13 @@ public class Order implements Serializable {
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
     public static void writeListProp(ObjectOutputStream s, ListProperty lstProp) throws IOException {
-        if(lstProp==null || lstProp.getValue()==null) {
+        if (lstProp == null || lstProp.getValue() == null) {
             s.writeInt(0);
             return;
         }
         s.writeInt(lstProp.size());
-        for(Object elt:lstProp.getValue()) s.writeObject(elt);
+        for (Object elt : lstProp.getValue()) s.writeObject(elt);
+    }
 
     public String formatComponents(ObservableList<Component> componentList) {
         String out = "";

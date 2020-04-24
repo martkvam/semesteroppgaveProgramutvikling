@@ -1,0 +1,1 @@
+;2;4;Fri Apr 24 17:00:41 CEST 2020;Fri Apr 24 17:00:41 CEST 2020;Integrert GPS;6000;Not chosen;false

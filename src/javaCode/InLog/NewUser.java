@@ -11,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class NewUser {

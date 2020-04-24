@@ -1,0 +1,7 @@
+1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;1000;Blue;true
+2;3;1;Thu Apr 23 13:59:46 CEST 2020;Thu Apr 23 13:59:46 CEST 2020;Motor;Soltak;Integrert GPS;33000;Svart;true
+3;3;3;Thu Apr 23 14:00:24 CEST 2020;Thu Apr 23 14:00:24 CEST 2020;Motor;Integrert GPS;Air Condition;49000;Svart;true
+2;3;1;Thu Apr 23 14:21:50 CEST 2020;Thu Apr 23 14:21:50 CEST 2020;Motor;Soltak;27000;Not chosen;true
+3;3;3;Thu Apr 23 14:22:03 CEST 2020;Thu Apr 23 14:22:03 CEST 2020;Motor;Integrert GPS;41000;Svart;true
+2;3;1;Thu Apr 23 14:23:07 CEST 2020;Thu Apr 23 14:23:07 CEST 2020;Motor;Hengerfeste;22000;Not chosen;true
+3;3;3;Thu Apr 23 14:23:19 CEST 2020;Thu Apr 23 14:23:19 CEST 2020;Motor;Soltak;42000;Rød;true

@@ -49,12 +49,12 @@
         <columns>
             <TableColumn prefWidth="202.0" text="Type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="type" />
+                    <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn minWidth="0.0" prefWidth="124.0" text="Price">
                 <cellValueFactory>
-                    <PropertyValueFactory property="price" />
+                    <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
@@ -64,12 +64,12 @@
         <columns>
             <TableColumn prefWidth="117.0" text="Type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="type" />
+                    <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn prefWidth="82.0" text="Price">
                 <cellValueFactory>
-                    <PropertyValueFactory property="price" />
+                    <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
@@ -80,5 +80,6 @@
       <ComboBox fx:id="chooseCol" layoutX="410.0" layoutY="601.0" prefHeight="27.0" prefWidth="126.0" />
       <Button fx:id="btnProfile" layoutX="26.0" layoutY="601.0" mnemonicParsing="false" onAction="#myProfile" prefHeight="27.0" prefWidth="119.0" text="My profile" />
       <Button fx:id="btnSave" layoutX="513.0" layoutY="637.0" mnemonicParsing="false" onAction="#saveChoices" prefHeight="27.0" prefWidth="103.0" text="Save choices" />
+      <Button fx:id="btnLogout" layoutX="33.0" layoutY="637.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="103.0" text="Log out" />
     </children>
 </AnchorPane>

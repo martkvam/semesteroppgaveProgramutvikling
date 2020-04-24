@@ -5,12 +5,12 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.cell.TextFieldTableCell?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerEditProfile">
    <children>
@@ -33,7 +33,7 @@
       </GridPane>
       <TableView fx:id="tvUserRegister" editable="true" layoutX="68.0" layoutY="112.0" prefHeight="201.0" prefWidth="454.0">
         <columns>
-            <TableColumn fx:id="id" prefWidth="75.0" text="User ID" editable="false">
+            <TableColumn fx:id="id" editable="false" prefWidth="75.0" text="User ID">
                 <cellValueFactory>
                     <PropertyValueFactory property="id" />
                 </cellValueFactory>
@@ -41,7 +41,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-          <TableColumn fx:id="firstName" prefWidth="75.0" text="Firstname" onEditCommit="#firstNameEdited">
+          <TableColumn fx:id="firstName" onEditCommit="#firstNameEdited" prefWidth="75.0" text="Firstname">
               <cellValueFactory>
                   <PropertyValueFactory property="firstName" />
               </cellValueFactory>
@@ -49,7 +49,7 @@
                   <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-          <TableColumn fx:id="lastName" prefWidth="75.0" text="Lastname" onEditCommit="#lastNameEdited">
+          <TableColumn fx:id="lastName" onEditCommit="#lastNameEdited" prefWidth="75.0" text="Lastname">
               <cellValueFactory>
                   <PropertyValueFactory property="lastName" />
               </cellValueFactory>
@@ -57,7 +57,7 @@
                   <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-            <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" onEditCommit="#phoneEdited">
+            <TableColumn fx:id="phone" onEditCommit="#phoneEdited" prefWidth="75.0" text="Phone">
             <cellValueFactory>
                 <PropertyValueFactory property="phone" />
             </cellValueFactory>
@@ -65,7 +65,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="email" prefWidth="75.0" text="Email" onEditCommit="#emailEdited">
+            <TableColumn fx:id="email" onEditCommit="#emailEdited" prefWidth="75.0" text="Email">
                 <cellValueFactory>
                     <PropertyValueFactory property="email" />
                 </cellValueFactory>
@@ -73,7 +73,7 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="superUser" prefWidth="75.0" text="SuperUser" onEditCommit="#superUserEdited">
+            <TableColumn fx:id="superUser" onEditStart="#superUserEdited" prefWidth="75.0" text="SuperUser">
                 <cellValueFactory>
                     <PropertyValueFactory property="superUser" />
                 </cellValueFactory>

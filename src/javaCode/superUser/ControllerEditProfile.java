@@ -152,6 +152,15 @@ public class ControllerEditProfile {
     }
 
     public void superUserEdited(TableColumn.CellEditEvent<TableView<User>, Boolean> tableViewBooleanCellEditEvent) {
+        User u = tvUserRegister.getSelectionModel().getSelectedItem();
+        boolean newSuperUser = !tableViewBooleanCellEditEvent.getOldValue();//tableViewBooleanCellEditEvent.getNewValue();
+        try {
+            ReadUsers.changeInfo(String.valueOf(u.getId()), "SuperUser", String.valueOf(newSuperUser));
+            u.setSuperUser(newSuperUser);
+        } catch (Exception e){
+            tvUserRegister.getSelectionModel().clearSelection();
+        }
+        tvUserRegister.refresh();
     }
 }
 

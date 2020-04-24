@@ -26,6 +26,10 @@ import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
 
+    //Using these to change an ongoing order
+    public static Order changeOrder;
+    public static boolean toBeChanged;
+
     @FXML
     private Label lblName;
 
@@ -47,10 +51,18 @@ public class ProfileController implements Initializable {
     @FXML
     private TableView<Adjustment> orderedAdjustmentsTV;
 
+    @FXML
+    public Button btnChange;
+
 
     @FXML
-    void changeOrder(ActionEvent event) {
-
+    void changeOrder(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+        changeOrder = chosen;
+        toBeChanged = true;
+        Lists.getOngoingOrders().remove(chosen);
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+        OpenScene.newScene("Order", root, 650, 700, event);
     }
 
     @FXML
@@ -81,10 +93,23 @@ public class ProfileController implements Initializable {
     @FXML
     void finishOrder(ActionEvent event) {
         if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?"
-                    , ButtonType.YES, ButtonType.CANCEL);
-            alert.showAndWait();
-
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+            if(ongoingOrdersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
+                /*Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not selected a color for the car, and the color will be set to black as a default. " +
+                        "If you wish to choose another color, click on 'Change order'. Are you sure you want to finish this order?"
+                        , ButtonType.YES, ButtonType.CANCEL);
+                alert.showAndWait();*/
+                alert.setContentText("You have not selected a color for the car, and the color will be set to black as a default." +
+                        "If you wish to choose another color, click on 'Change order'. Are you sure you want to finish this order?");
+                alert.showAndWait();
+            }
+            else {
+               /* Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?"
+                        , ButtonType.YES, ButtonType.CANCEL);
+                alert.showAndWait();*/
+               alert.setContentText("Are you sure you want to finish this order?");
+               alert.showAndWait();
+            }
             if (alert.getResult() == ButtonType.YES) {
                 Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
 
@@ -170,7 +195,7 @@ public class ProfileController implements Initializable {
             e.printStackTrace();
         }
 
-
+    toBeChanged = false;
     }
 
     public void updateTVfinished(MouseEvent mouseEvent) {
@@ -195,6 +220,6 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 650, 650, actionEvent);
+        OpenScene.newScene("Order", root, 650, 700, actionEvent);
     }
 }

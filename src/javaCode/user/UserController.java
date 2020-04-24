@@ -136,6 +136,27 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        if(ProfileController.toBeChanged){
+            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            chosenCompTV.setItems(chosenComponents);
+            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustTV.setItems(chosenAdjustments);
+
+            String type = "";
+            String ID = chosenComponents.get(0).getCarID();
+            for (Car c : Lists.getCars()){
+                if (c.getCarID().equals(ID)){
+                    type = c.getCarType();
+                }
+            }
+            chooseCarType.getSelectionModel().select(type);
+            chooseCarType.setDisable(true);
+
+            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+                adjustmentTV.getItems().remove(a);
+            }
+        }
+
         adjustmentTV.setItems(Lists.getAdjustment());
 
         chooseCol.setPromptText("Velg farge: ");
@@ -186,7 +207,7 @@ public class UserController implements Initializable {
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 630, actionEvent);
+        OpenScene.newScene("My profile", root, 610, 650, actionEvent);
     }
 
     public void saveChoices(ActionEvent actionEvent) {
@@ -248,7 +269,7 @@ public class UserController implements Initializable {
                 chosenAdjustTV.refresh();
                 adjustmentTV.refresh();
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 650, actionEvent);
+                OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Noe gikk galt.");
             }
@@ -323,8 +344,9 @@ public class UserController implements Initializable {
                 chosenAdjustments.clear();
                 chosenAdjustTV.refresh();
                 adjustmentTV.refresh();
+                ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 650, actionEvent);
+                OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Noe gikk galt.");
             }

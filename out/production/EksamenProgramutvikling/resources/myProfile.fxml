@@ -78,7 +78,7 @@
         </columns>
       </TableView>
       <Label layoutX="21.0" layoutY="228.0" prefHeight="17.0" prefWidth="330.0" text="Ongoing orders (click on an order to see content)" />
-      <Button layoutX="155.0" layoutY="606.0" mnemonicParsing="false" onAction="#changeOrder" prefHeight="27.0" prefWidth="96.0" text="Change order">
+      <Button fx:id="btnChange" layoutX="155.0" layoutY="606.0" mnemonicParsing="false" onAction="#changeOrder" prefHeight="27.0" prefWidth="96.0" text="Change order">
          <font>
             <Font size="11.0" />
          </font>
@@ -107,12 +107,12 @@
         <columns>
             <TableColumn prefWidth="102.0" text="Type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="type" />
+                    <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn prefWidth="97.0" text="Price">
                 <cellValueFactory>
-                    <PropertyValueFactory property="price" />
+                    <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>

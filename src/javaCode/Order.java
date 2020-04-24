@@ -16,7 +16,7 @@ import java.util.List;
 public class Order implements Serializable {
     private transient SimpleStringProperty orderNr;
     private transient SimpleIntegerProperty personId;
-    private transient SimpleIntegerProperty carId;
+    private transient SimpleStringProperty carId;
     private transient SimpleObjectProperty<Date> orderStarted;
     private transient SimpleObjectProperty<Date> orderFinished;
     private transient SimpleListProperty<Component> componentList;
@@ -25,14 +25,14 @@ public class Order implements Serializable {
     private transient SimpleStringProperty carColor;
     private transient SimpleBooleanProperty orderStatus;
 
-    public Order(String orderNr, int personId, int carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus) {
+    public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus) {
         this.orderNr = new SimpleStringProperty(orderNr);
         this.personId = new SimpleIntegerProperty(personId);
-        this.carId = new SimpleIntegerProperty(carId);
+        this.carId = new SimpleStringProperty(carId);
         this.orderStarted = new SimpleObjectProperty<>(orderStarted);
         this.orderFinished = new SimpleObjectProperty<>(orderFinished);
-        this.componentList = new SimpleListProperty<>(FXCollections.observableArrayList(componentList));
-        this.adjustmentList = new SimpleListProperty<>(FXCollections.observableArrayList(adjustmentList));
+        this.componentList = new SimpleListProperty<Component>(componentList);
+        this.adjustmentList = new SimpleListProperty<Adjustment>(adjustmentList);
         this.totPrice = new SimpleIntegerProperty(totPrice);
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
@@ -56,12 +56,12 @@ public class Order implements Serializable {
     }
 
 
-    public int getCarId() {
+    public String getCarId() {
         return carId.getValue();
     }
 
 
-    public void setCarId(int carId) {
+    public void setCarId(String carId) {
         this.carId.set(carId);
     }
 
@@ -132,10 +132,11 @@ public class Order implements Serializable {
         s.defaultWriteObject();
         s.writeUTF(getOrderNr());
         s.writeInt(getPersonId());
+        s.writeUTF(getCarId());
         s.writeObject(getOrderStarted());
         s.writeObject(getOrderFinished());
-        writeListProp(s, (ListProperty) getComponentList());
-        s.writeObject(getAdjustmentList());
+        writeListProp(s,componentList);
+        writeListProp(s,adjustmentList);
         s.writeInt(getTotalPrice());
         s.writeUTF(getCarColor());
         s.writeBoolean(getOrderStatus());
@@ -144,31 +145,45 @@ public class Order implements Serializable {
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         String orderNr = s.readUTF();
         int personId = s.readInt();
+        String carId = s.readUTF();
         Date orderStarted =(Date) s.readObject();
         Date orderFinished = (Date) s.readObject();
-        ObservableList<Component> componentList = (ObservableList<Component>) s.readObject();
-        ObservableList<Adjustment> adjustmentList = (ObservableList<Adjustment>) s.readObject();
+        ListProperty<Component> componentList = readListProp(s);
+        ListProperty<Adjustment> adjustmentList = readListProp(s);
         int totalPrice = s.readInt();
         String carColor = s.readUTF();
         boolean orderStatus = s.readBoolean();
 
         this.orderNr = new SimpleStringProperty(orderNr);
         this.personId = new SimpleIntegerProperty(personId);
+        this.carId = new SimpleStringProperty(carId);
         this.orderStarted = new SimpleObjectProperty<>(orderStarted);
         this.orderFinished = new SimpleObjectProperty<>(orderFinished);
-        this.componentList = new SimpleListProperty<>(componentList);
-        this.adjustmentList = new SimpleListProperty<>(adjustmentList);
+        this.componentList = new SimpleListProperty<>(FXCollections.observableArrayList(componentList));
+        this.adjustmentList = new SimpleListProperty<>(FXCollections.observableArrayList(adjustmentList));
         this.totPrice = new SimpleIntegerProperty(totalPrice);
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
-    public static void writeListProp(ObjectOutputStream s, ListProperty lstProp) throws IOException {
+    public static void writeListProp(ObjectOutputStream s, SimpleListProperty lstProp) throws IOException {
         if (lstProp == null || lstProp.getValue() == null) {
             s.writeInt(0);
             return;
         }
         s.writeInt(lstProp.size());
-        for (Object elt : lstProp.getValue()) s.writeObject(elt);
+        for (Object elt : lstProp.getValue()){
+            s.writeObject(elt);
+        }
+    }
+
+    public static ListProperty readListProp(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        ListProperty lst=new SimpleListProperty(FXCollections.observableArrayList());
+        int loop=s.readInt();
+        for(int i = 0;i<loop;i++) {
+            lst.add(s.readObject());
+        }
+
+        return lst;
     }
 
     public String formatComponents(ObservableList<Component> componentList) {

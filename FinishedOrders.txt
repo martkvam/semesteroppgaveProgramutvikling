@@ -1,2 +1,3 @@
-1;2;1;Fri Apr 24 16:58:42 CEST 2020;Fri Apr 24 16:58:42 CEST 2020;Ratt;Integrert GPS;11000;Hvit;true
-2;2;4;Fri Apr 24 17:00:58 CEST 2020;Fri Apr 24 17:00:58 CEST 2020;Integrert GPS;6000;Svart;true
+1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
+2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;2000;Red;false
+3;2;1;Fri Apr 24 21:04:35 CEST 2020;Fri Apr 24 21:04:35 CEST 2020;Motor;Soltak;27000;Svart;true

@@ -73,7 +73,7 @@ public class ControllerAddEditComponents implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //Reads inn all files
-        filehandler.readAllFiles(stage);
+        //filehandler.readAllFiles(stage);
 
         //Sets up combobox elements and prompt text
 

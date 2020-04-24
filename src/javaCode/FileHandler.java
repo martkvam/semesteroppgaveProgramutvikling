@@ -37,6 +37,7 @@ public class FileHandler{
                 selectedFileCar.delete();
                 selectedFileComponent.delete();
                 selectedFileAdjustments.delete();
+                selectedFileOrders.delete();
                 writeCar.save(selectedFileCar.toPath());
                 writeComponent.save(selectedFileComponent.toPath());
                 writeAdjustment.save(selectedFileAdjustments.toPath());
@@ -62,7 +63,7 @@ public class FileHandler{
         readerCar = new fileReaderJobj();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-        //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
 
 
             if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
@@ -70,14 +71,13 @@ public class FileHandler{
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
-                    //readerOrders.read(selectedFileOrders.toPath());
+                    readerOrders.read(selectedFileOrders.toPath());
                     Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 } catch (IllegalArgumentException e){
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 }
-
             }
         }
 
@@ -88,23 +88,21 @@ public class FileHandler{
         if (selectedFile != null) {
             String fileExt = getFileExt(selectedFile);
             Writer writeCar = null;
-           // Writer writeComponent = null;
-            //Writer writeAdjustment = null;
+            Writer writeComponent = null;
+            Writer writeAdjustment = null;
 
             switch (fileExt) {
                 case ".txt" :
                     writeCar = new fileWriterTxt();
-                    /*writeComponent = new fileWriterTxt();
+                    writeComponent = new fileWriterTxt();
                     writeAdjustment = new fileWriterTxt();
 
-                     */
                 break;
                 case ".jobj" :
                     writeCar = new fileWriterJobj();
-                    /*writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
+                    writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
                     writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
 
-                     */
                     break;
                 default : Dialogs.showErrorDialog("Du kan bare lagre til enten txt eller jobj filer.");
             }

@@ -258,7 +258,7 @@ public class UserController implements Initializable {
         }
 
         if(rightInput) {
-            Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
+            Order order = new Order("", persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
             Path path = Paths.get("OngoingOrders.txt");
             String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
@@ -334,7 +334,7 @@ public class UserController implements Initializable {
         }
 
         if(rightInput) {
-            Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
+            Order order = new Order(newOrderNr, persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, true);
             lists.addOrder(order);
             Path path = Paths.get("FinishedOrders.txt");
             String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());

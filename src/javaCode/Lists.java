@@ -87,7 +87,7 @@ public class Lists implements Serializable {
     public static ObservableList<Order> getOngoingOrders(){ return ongoingOrderList; }
 
 
-    private void writeObject(ObjectOutputStream s) throws IOException {
+    /*private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
         s.writeObject(new ArrayList<>(carList));
     }

@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -19,8 +20,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerOrders implements Initializable {
+    Stage stage = new Stage();
     private static ObservableList<Component> componentListSuperUser = FXCollections.observableArrayList();
-
+    FileHandler fileHandler = new FileHandler();
     @FXML
     private TableView<Order> tableViewOrder;
 
@@ -34,7 +36,7 @@ public class ControllerOrders implements Initializable {
     private TableColumn<TableView<Order>, Integer> personId;
 
     @FXML
-    private TableColumn<TableView<Order>, Integer> carId;
+    private TableColumn<TableView<Order>, String> carId;
 
     @FXML
     private TableColumn<TableView<Order>, Date> orderStarted;
@@ -53,12 +55,20 @@ public class ControllerOrders implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tableViewOrder.setItems(Lists.getOrders());
-        System.out.println();
+        fileHandler.readAllFiles(stage);
+        for(int i =0; i < Lists.getOrders().size();i++){
+            System.out.println(Lists.getOrders().get(i).getOrderNr() + Lists.getOrders().get(i).getCarColor() + Lists.getOrders().get(i).getCarId());
+            for(int j = 0; j < Lists.getOrders().get(i).getComponentList().size(); j++){
+                System.out.println(Lists.getOrders().get(i).getComponentList().get(j).getComponentType());
 
-        componentListSuperUser = Lists.getOrders().get(0).getComponentList();
-        tableViewComponents.setItems(componentListSuperUser);
-        System.out.println(Lists.getOrders().get(0).getCarColor());
+            }
+        }
+
+        tableViewOrder.setItems(Lists.getOrders());
+
+        /*componentListSuperUser = Lists.getOrders().get(1).getComponentList();
+        tableViewComponents.setItems(componentListSuperUser);*/
+
     }
     @FXML
     void btnBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {

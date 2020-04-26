@@ -107,7 +107,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Totalprice: " + totalprice);
     }
 
     @FXML
@@ -127,7 +127,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Totalprice: " + totalprice);
     }
 
 
@@ -182,7 +182,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Totalprice: " + totalprice);
 
         for(Adjustment a : chosenAdjustments){
             adjustmentTV.getItems().remove(a);
@@ -202,7 +202,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Totalprice: " + totalprice);
     }
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
@@ -271,7 +271,7 @@ public class UserController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Noe gikk galt.");
+                Dialogs.showErrorDialog("Something whent wrong.");
             }
         }
     }
@@ -348,7 +348,7 @@ public class UserController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Noe gikk galt.");
+                Dialogs.showErrorDialog("Something went wrong.");
             }
         }
     }

@@ -328,6 +328,9 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.refresh();
     }
 
+
+
+//Adjustments edited
     @FXML
     void adjustmentIdEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
         event.getRowValue().setAdjustmentID(event.getNewValue());
@@ -373,8 +376,6 @@ public class ControllerAddEditComponents implements Initializable {
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
-
-
 
 }
 

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerOrders">
   <columnConstraints>
@@ -25,6 +26,9 @@
                     <cellValueFactory>
                         <PropertyValueFactory property="orderNr" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
                 <TableColumn fx:id="personId" prefWidth="99.20001220703125" text="Person id">
                     <cellValueFactory>
@@ -65,22 +69,31 @@
             </TableView>
             <TableView fx:id="tableViewComponents" editable="true" layoutX="27.0" layoutY="280.0" prefHeight="98.0" prefWidth="696.0">
               <columns>
-                <TableColumn fx:id="componentID" prefWidth="98.3999605178833" text="Component id">
+                <TableColumn fx:id="componentID" onEditCommit="#componentIdEdited" prefWidth="98.3999605178833" text="Component id">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentID" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
-                <TableColumn fx:id="componentType" prefWidth="121.60003662109375" text="Component type">
+                <TableColumn fx:id="componentType" onEditCommit="#componentTypeEdited" prefWidth="121.60003662109375" text="Component type">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
-                  <TableColumn fx:id="componentDescription" prefWidth="336.8000030517578" text="Component description">
+                  <TableColumn fx:id="componentDescription" onEditCommit="#componentDescriptionEdited" prefWidth="336.8000030517578" text="Component description">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentDescription" />
                       </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
                   </TableColumn>
-                  <TableColumn fx:id="componentPrice" prefWidth="140.800048828125" text="Component price">
+                  <TableColumn fx:id="componentPrice" onEditCommit="#componentPriceEdited" prefWidth="140.800048828125" text="Component price">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentPrice" />
                       </cellValueFactory>

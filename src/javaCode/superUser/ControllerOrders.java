@@ -86,6 +86,35 @@ public class ControllerOrders implements Initializable {
 
     }
 
+    
+    @FXML
+    void componentIdEdited(TableColumn.CellEditEvent<Component, String> event) {
+        try{
+            event.getRowValue().setComponentID(event.getNewValue());
+        }
+        catch (IllegalArgumentException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+        tableViewComponents.refresh();
+    }
+
+    @FXML
+    void componentTypeEdited(TableColumn.CellEditEvent<Component, String> event) {
+
+    }
+
+    @FXML
+    void componentDescriptionEdited(TableColumn.CellEditEvent<Component, String> event) {
+
+    }
+
+    @FXML
+    void componentPriceEdited(TableColumn.CellEditEvent<Component, String> event) {
+
+    }
+
+
+
 }
 
 

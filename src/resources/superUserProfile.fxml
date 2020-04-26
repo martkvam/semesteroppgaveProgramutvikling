@@ -29,6 +29,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Profiles" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#btnGoBackOnClick" text="Go back" GridPane.columnIndex="2" />
             <TextField fx:id="txtSearch" onKeyTyped="#searchFilter" promptText="Search" />
+            <Button fx:id="btnExportToExcel" alignment="CENTER" mnemonicParsing="false" onAction="#btnExportToExcelOnClick" text="Export to Excel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <TableView fx:id="tvUserRegister" editable="true" layoutX="68.0" layoutY="112.0" prefHeight="201.0" prefWidth="454.0">

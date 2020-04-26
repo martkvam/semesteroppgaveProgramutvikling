@@ -159,5 +159,8 @@ public class ControllerEditProfile {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
     }
+
+    public void btnExportToExcelOnClick(ActionEvent actionEvent) {
+    }
 }
 

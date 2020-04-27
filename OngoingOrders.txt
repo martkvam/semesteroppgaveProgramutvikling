@@ -1,1 +1,2 @@
 2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Hengerfeste;2000;Red;false
+;3;1;Mon Apr 27 15:18:08 CEST 2020;Mon Apr 27 15:18:08 CEST 2020;Motor;Hengerfeste;22000;Not chosen;false

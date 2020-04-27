@@ -65,6 +65,43 @@ public class UserController implements Initializable {
     private ComboBox<String> chooseCol;
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        handler.readAllFiles(stage);
+        if(ProfileController.toBeChanged){
+            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            chosenCompTV.setItems(chosenComponents);
+            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustTV.setItems(chosenAdjustments);
+
+            String type = "";
+            String ID = chosenComponents.get(0).getCarID();
+            for (Car c : Lists.getCars()){
+                if (c.getCarID().equals(ID)){
+                    type = c.getCarType();
+                }
+            }
+            chooseCarType.getSelectionModel().select(type);
+            chooseCarType.setDisable(true);
+
+            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+                adjustmentTV.getItems().remove(a);
+            }
+        }
+
+        adjustmentTV.setItems(Lists.getAdjustment());
+
+        chooseCol.setPromptText("Color: ");
+        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
+
+        //Setter valgmuligheter i choiceboxene
+        chooseCarType.setPromptText("Car type: ");
+        chooseComponent.setPromptText("Component type: ");
+        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
+        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+    }
+
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
     @FXML
     void setList(ActionEvent event) {
@@ -96,18 +133,30 @@ public class UserController implements Initializable {
     @FXML
     void addComponent(ActionEvent event) {
         Component valgt = componentTV.getSelectionModel().getSelectedItem();
-        chosenComponents.add(valgt);
-        chosenCompTV.setItems(chosenComponents);
-        chooseCarType.setDisable(true);
+        boolean funnet = false;
+        for (Component c : chosenComponents){
+            if(valgt.getComponentType().equals(c.getComponentType())){
+                funnet = true;
+            }
+        }
+        if(!funnet) {
+            chosenComponents.add(valgt);
+            chosenCompTV.setItems(chosenComponents);
+            chooseCarType.setDisable(true);
 
-        int totalprice = 0;
-        for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getAdjustmentPrice();
+            int totalprice = 0;
+            for (Adjustment adj : chosenAdjustments) {
+                totalprice += adj.getAdjustmentPrice();
+            }
+            for (Component c : chosenComponents) {
+                totalprice += c.getComponentPrice();
+            }
+            lblTotalprice.setText("Total price: " + totalprice);
         }
-        for(Component c : chosenComponents){
-            totalprice += c.getComponentPrice();
+        else{
+            Dialogs.showErrorDialog("You have already added a " + valgt.getComponentType() + ". If you wish to select this" +
+                    " component you will first have to remove the previously chosen " + valgt.getComponentType() + ".");
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
     }
 
     @FXML
@@ -127,48 +176,8 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
-
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        handler.readAllFiles(stage);
-        if(ProfileController.toBeChanged){
-            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
-            chosenCompTV.setItems(chosenComponents);
-            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
-            chosenAdjustTV.setItems(chosenAdjustments);
-
-            String type = "";
-            String ID = chosenComponents.get(0).getCarID();
-            for (Car c : Lists.getCars()){
-                if (c.getCarID().equals(ID)){
-                    type = c.getCarType();
-                }
-            }
-            chooseCarType.getSelectionModel().select(type);
-            chooseCarType.setDisable(true);
-
-            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
-                adjustmentTV.getItems().remove(a);
-            }
-        }
-
-        adjustmentTV.setItems(Lists.getAdjustment());
-
-        chooseCol.setPromptText("Choose color: ");
-        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
-
-        //Setter valgmuligheter i choiceboxene
-        chooseCarType.setPromptText("Car type: ");
-        chooseComponent.setPromptText("Component type: ");
-        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
-        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
-    }
-
 
     public void addAdjust(ActionEvent actionEvent) {
         Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
@@ -182,7 +191,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
 
         for(Adjustment a : chosenAdjustments){
             adjustmentTV.getItems().remove(a);
@@ -202,7 +211,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalpris: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
@@ -271,7 +280,7 @@ public class UserController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Noe gikk galt.");
+                Dialogs.showErrorDialog("Something went wrong.");
             }
         }
     }
@@ -348,7 +357,7 @@ public class UserController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Noe gikk galt.");
+                Dialogs.showErrorDialog("Something went wrong.");
             }
         }
     }

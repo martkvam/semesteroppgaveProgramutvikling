@@ -85,13 +85,14 @@ public class UserController implements Initializable {
             chooseCarType.getSelectionModel().select(type);
             chooseCarType.setDisable(true);
 
+            adjustmentTV.setItems(Lists.getAdjustment());
             for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
                 adjustmentTV.getItems().remove(a);
             }
         }
-
-        adjustmentTV.setItems(Lists.getAdjustment());
-
+        else {
+            adjustmentTV.setItems(Lists.getAdjustment());
+        }
         chooseCol.setPromptText("Color: ");
         chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
 
@@ -154,8 +155,8 @@ public class UserController implements Initializable {
             lblTotalprice.setText("Total price: " + totalprice);
         }
         else{
-            Dialogs.showErrorDialog("You have already added a " + valgt.getComponentType() + ". If you wish to select this" +
-                    " component you will first have to remove the previously chosen " + valgt.getComponentType() + ".");
+            Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
+                    " component you will first have to remove the previously chosen " + valgt.getComponentType());
         }
     }
 
@@ -215,8 +216,19 @@ public class UserController implements Initializable {
     }
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+        if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+            OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not saved your choices, and if you continue your progress will be lost." +
+                    " If you wish to continue this order at a later time, you will have to go back and click on 'save order'.",
+                    ButtonType.CANCEL, ButtonType.OK);
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.OK)){
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+                OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+            }
+        }
     }
 
     public void saveChoices(ActionEvent actionEvent) {
@@ -279,6 +291,7 @@ public class UserController implements Initializable {
                 adjustmentTV.refresh();
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                ProfileController.toBeChanged = false;
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
@@ -341,23 +354,27 @@ public class UserController implements Initializable {
         }
 
         if(rightInput) {
-            Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
-            lists.addOrder(order);
-            Path path = Paths.get("FinishedOrders.txt");
-            String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
-            try {
-                FileWriter.WriteFile(path, formattedOrders);
-                Dialogs.showSuccessDialog("Your order was succesful!");
-                adjustmentTV.getItems().addAll(chosenAdjustments);
-                chosenComponents.clear();
-                chosenAdjustments.clear();
-                chosenAdjustTV.refresh();
-                adjustmentTV.refresh();
-                ProfileController.toBeChanged = false;
-                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 700, actionEvent);
-            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Something went wrong.");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?", ButtonType.OK, ButtonType.CANCEL);
+            alert.showAndWait();
+            if(alert.getResult().equals(ButtonType.OK)) {
+                Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
+                lists.addOrder(order);
+                Path path = Paths.get("FinishedOrders.txt");
+                String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
+                try {
+                    FileWriter.WriteFile(path, formattedOrders);
+                    Dialogs.showSuccessDialog("Your order was succesful!");
+                    adjustmentTV.getItems().addAll(chosenAdjustments);
+                    chosenComponents.clear();
+                    chosenAdjustments.clear();
+                    chosenAdjustTV.refresh();
+                    adjustmentTV.refresh();
+                    ProfileController.toBeChanged = false;
+                    Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                    OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    Dialogs.showErrorDialog("Something went wrong.");
+                }
             }
         }
     }
@@ -367,5 +384,3 @@ public class UserController implements Initializable {
         OpenScene.newScene("Log in", root, 650, 650, actionEvent);
     }
 }
-
-

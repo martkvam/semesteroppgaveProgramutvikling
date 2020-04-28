@@ -1,2 +1,2 @@
 1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;1000;Blue;true
-2;3;1;Mon Apr 27 15:26:34 CEST 2020;Mon Apr 27 15:26:34 CEST 2020;Motor;Eksospotte;Ratt;Hengerfeste;Integrert GPS;37000;Black;true
+2;3;2;Mon Apr 27 18:21:48 CEST 2020;Mon Apr 27 18:21:48 CEST 2020;Ratt;Soltak;9000;Red;true

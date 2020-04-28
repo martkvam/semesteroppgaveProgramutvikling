@@ -75,7 +75,5 @@ public class UpdateInfoController {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 610, 630, event);
         }
-
     }
-
 }

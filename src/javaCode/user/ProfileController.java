@@ -57,12 +57,14 @@ public class ProfileController implements Initializable {
 
     @FXML
     void changeOrder(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
-        changeOrder = chosen;
-        toBeChanged = true;
-        Lists.getOngoingOrders().remove(chosen);
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 650, 700, event);
+        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
+            Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+            changeOrder = chosen;
+            toBeChanged = true;
+            Lists.getOngoingOrders().remove(chosen);
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+            OpenScene.newScene("Order", root, 650, 700, event);
+        }
     }
 
     @FXML
@@ -179,8 +181,9 @@ public class ProfileController implements Initializable {
             }
         }
 
-        finishedOrdersTV.setItems(orders);
-        ongoingOrdersTV.setItems(ongoing);
+
+            finishedOrdersTV.setItems(orders);
+            ongoingOrdersTV.setItems(ongoing);
 
         String ID = "" + LoggedIn.getId();
         try {
@@ -198,16 +201,18 @@ public class ProfileController implements Initializable {
     }
 
     public void updateTVfinished(MouseEvent mouseEvent) {
+        if(!finishedOrdersTV.getSelectionModel().isEmpty()) {
             ObservableList<Component> componentList = finishedOrdersTV.getSelectionModel().getSelectedItem().getComponentList();
             ObservableList<Adjustment> adjustmentList = finishedOrdersTV.getSelectionModel().getSelectedItem().getAdjustmentList();
             orderedComponentsTV.setItems(componentList);
             orderedAdjustmentsTV.setItems(adjustmentList);
             orderedComponentsTV.refresh();
             orderedAdjustmentsTV.refresh();
+        };
     }
 
     public void updateTVongoing(MouseEvent mouseEvent) {
-        if(Lists.getOngoingOrders() != null) {
+        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
             ObservableList<Component> componentList = ongoingOrdersTV.getSelectionModel().getSelectedItem().getComponentList();
             ObservableList<Adjustment> adjustmentList = ongoingOrdersTV.getSelectionModel().getSelectedItem().getAdjustmentList();
             orderedComponentsTV.setItems(componentList);

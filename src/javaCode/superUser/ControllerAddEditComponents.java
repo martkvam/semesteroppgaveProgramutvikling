@@ -1,7 +1,11 @@
 package javaCode.superUser;
 
 import javaCode.*;
+import javaCode.InLog.ReadUsers;
+import javaCode.InLog.User;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,20 +75,24 @@ public class ControllerAddEditComponents implements Initializable {
     //Initialize method
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        TableView.getItems().clear();
+        tableViewComponents.getItems().clear();
+        tableViewAdjustments.getItems().clear();
         //Reads inn all files
         filehandler.readAllFiles(stage);
 
         //Sets up combobox elements and prompt text
 
         Field[] componentFields = Component.class.getDeclaredFields();
-
+        chooseFilterComponent.getItems().add("--");
         for(Field i : componentFields){
             chooseFilterComponent.getItems().add(i.getName());
         }
         chooseFilterComponent.setPromptText("Filter list by");
 
+
         Field[] adjustmentFields = Adjustment.class.getDeclaredFields();
+        chooseFilterAdjustment.getItems().add("--");
         for(Field i : adjustmentFields){
             chooseFilterAdjustment.getItems().add(i.getName());
         }
@@ -159,6 +167,7 @@ public class ControllerAddEditComponents implements Initializable {
         selectedElement = "Adjustment";
         chooseFilterAdjustment.setVisible(true);
         chooseFilterComponent.setVisible(false);
+        txtFilterInn.setText("");
     }
 
     @FXML
@@ -171,7 +180,6 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.setVisible(false);
         txtFilterInn.setVisible(false);
         selectedElement = "Car";
-
     }
 
     @FXML
@@ -181,26 +189,30 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.setVisible(false);
         tableViewAdjustments.setVisible(false);
         chooseFilterComponent.setVisible(true);
+        chooseFilterAdjustment.setVisible(false);
         txtFilterInn.setVisible(true);
         selectedElement = "Components";
-
+        txtFilterInn.setText("");
     }
 
     @FXML
     void btnNewAdjustment(ActionEvent event) {
-
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
     }
 
     @FXML
     void btnNewCar(ActionEvent event) {
-
-        addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
+        try{
+            addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
+        }catch (NumberFormatException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
 
     }
 
     @FXML
     void btnNewComponent(ActionEvent event) {
-        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
+        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
     }
 
 
@@ -241,6 +253,8 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.refresh();
     }
 
+
+    //Edit car from tableview
     //Edit car type
     @FXML
     void txtCarTypeEdited(TableColumn.CellEditEvent<Car, String> event) {
@@ -277,7 +291,8 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.refresh();
     }
 
-//Edit component id
+    //Edit component from tableview
+    //Edit component id
     @FXML
     void componentIDEdited(TableColumn.CellEditEvent<Component, String> event) {
         try{
@@ -292,7 +307,11 @@ public class ControllerAddEditComponents implements Initializable {
     //Edit component type
     @FXML
     void componentTypeEdited(TableColumn.CellEditEvent<Component, String> event) {
-        event.getRowValue().setComponentType(event.getNewValue());
+        try{
+            event.getRowValue().setComponentType(event.getNewValue());
+        }catch (IllegalArgumentException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
         tableViewComponents.refresh();
     }
 
@@ -328,26 +347,35 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.refresh();
     }
 
-
-
-//Adjustments edited
+    //Edit adjustments from tableview
+    //Adjustment id edited
     @FXML
     void adjustmentIdEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
-        event.getRowValue().setAdjustmentID(event.getNewValue());
+        try{
+            event.getRowValue().setAdjustmentID(event.getNewValue());
+        }catch (IllegalArgumentException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
         tableViewAdjustments.refresh();
     }
-
+    //Adjustment type edited
     @FXML
     void adjustmentTypeEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
-        event.getRowValue().setAdjustmentType(event.getNewValue());
+        try{
+            event.getRowValue().setAdjustmentType(event.getNewValue());
+        }catch (IllegalArgumentException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
         tableViewAdjustments.refresh();
     }
-
+    //Adjustment description editer
     @FXML
     void adjustmentDescriptionEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
         event.getRowValue().setAdjustmentDescription(event.getNewValue());
         tableViewAdjustments.refresh();
     }
+
+    //Adjustment price editer
     @FXML
     void adjustmentPriceEdited(TableColumn.CellEditEvent<Adjustment, Integer> event) {
         try {
@@ -362,21 +390,90 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.refresh();
     }
 
-
-
-    //Updates filter by button click
+    //Updates filter for tableview by button click
     @FXML
     void txtFilterTyped(KeyEvent event) {
+        if(selectedElement.equals("Components")){
+            if(chooseFilterComponent.getSelectionModel().getSelectedItem() == null || chooseFilterComponent.getSelectionModel().getSelectedItem().equals("--")){
+                FilteredList<Component> filtered = new FilteredList<>(Lists.getComponents(), b -> true);
 
-        try{
-            String txtInn = txtFilterInn.getText();
-            String choosenFilter = chooseFilterComponent.getValue();
-            tableViewComponents.setItems(tableFilter.filterComponents(txtInn, choosenFilter));
-        }catch (IOException e){
-            Dialogs.showErrorDialog(e.getMessage());
+                txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filtered.setPredicate(component -> {
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+
+                        String lowerCase = newValue.toLowerCase();
+
+                        if(String.valueOf(component.getComponentID()).toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (component.getComponentType().toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (component.getComponentDescription().toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (Integer.toString(component.getComponentPrice()).toLowerCase().contains(lowerCase)) {
+                            return true;
+                        } else if (component.getCarID().toLowerCase().contains(lowerCase)){
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    SortedList<Component> sorted = new SortedList<>(filtered);
+                    sorted.comparatorProperty().bind(tableViewComponents.comparatorProperty());
+                    tableViewComponents.setItems(sorted);
+                });
+            }
+            else{
+                try{
+                    String txtInn = txtFilterInn.getText();
+                    String choosenFilter = chooseFilterComponent.getValue();
+                    tableViewComponents.setItems(tableFilter.filterComponents(txtInn, choosenFilter));
+                }catch (IOException e){
+                    Dialogs.showErrorDialog(e.getMessage());
+                }
+            }
+        }
+        else{
+            if(chooseFilterAdjustment.getSelectionModel().getSelectedItem() == null || chooseFilterAdjustment.getSelectionModel().getSelectedItem().equals("--")){
+                FilteredList<Adjustment> filtered = new FilteredList<>(Lists.getAdjustment(), b -> true);
+
+                txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filtered.setPredicate(adjustment -> {
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+
+                        String lowerCase = newValue.toLowerCase();
+
+                        if(String.valueOf(adjustment.getAdjustmentID()).toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (adjustment.getAdjustmentType().toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (adjustment.getAdjustmentDescription().toLowerCase().contains(lowerCase)){
+                            return true;
+                        } else if (Integer.toString(adjustment.getAdjustmentPrice()).toLowerCase().contains(lowerCase)) {
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    SortedList<Adjustment> sorted = new SortedList<>(filtered);
+                    sorted.comparatorProperty().bind(tableViewAdjustments.comparatorProperty());
+                    tableViewAdjustments.setItems(sorted);
+                });
+            }
+            else{
+                try{
+                    String txtInn = txtFilterInn.getText();
+                    String choosenFilter = chooseFilterComponent.getValue();
+                    tableViewComponents.setItems(tableFilter.filterComponents(txtInn, choosenFilter));
+                }catch (IOException e){
+                    Dialogs.showErrorDialog(e.getMessage());
+                }
+            }
         }
     }
-
 }
 
 

@@ -16,17 +16,14 @@ public class tableFilter {
 
     //Method to make the filtered list
     public ObservableList<Component> filterComponents(String inputString, String choosenFilter) throws IOException {
+
         inputString.toLowerCase();
 
-        //if input i a number
-        if(inputString.matches("[0-9]+")){
-                if(choosenFilter.equals("componentPrice")){
-                    //Sets up the filtered list by a filtered stream
-                    filteredList = Lists.getComponents().stream().filter(s -> s.getComponentPrice() <= Integer.parseInt(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
-            }
+        //if input is null
+        if(inputString.length()==0){
+            return Lists.getComponents();
         }
-
-        //If input is a string
+        //Valid input
         else{
             switch (choosenFilter){
                 case "componentID":
@@ -42,9 +39,10 @@ public class tableFilter {
                     break;
 
                 case "carID":
-                    System.out.println("jada");
                     filteredList = Lists.getComponents().stream().filter(s -> s.getCarID().toLowerCase().equals(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     break;
+                case "componentPrice":
+                    filteredList = Lists.getComponents().stream().filter(s -> s.getComponentPrice() <= Integer.parseInt(inputString)).collect(Collectors.toCollection(FXCollections::observableArrayList));
             }
 
         }

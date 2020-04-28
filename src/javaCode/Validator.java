@@ -78,7 +78,7 @@ public class Validator {
     }
 
     public static boolean carPrice(int price){
-        return price>0 && price<10_000_000;
+        return price>0 && price<1_000_000;
     }
 
 
@@ -109,19 +109,41 @@ public class Validator {
                 if(splitInnId[0].equals(splitExistingId[0])){
                     //Finds highest componentId after "-" in component id-number
                     for(int j = 0; j <Lists.getComponents().size();j++){
-                        if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
-                            highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
+                        if(splitInnId[0].equals(Lists.getComponents().get(j).getComponentID().charAt(0))){
+                            if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
+                                highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
+                            }
                         }
                     }
-                    if(splitInnId[1].equals(splitExistingId[1])){
-                        return false;
+                    if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
+                        return true;
                     }
-                    else if(Integer.parseInt(splitInnId[1])>highestcomponentTypeId){
+                    else {
                         return false;
                     }
                 }
             }
         }
         return true;
+    }
+    public static boolean componentType(String type){
+        if(type.length()==0){
+            throw new IllegalArgumentException("The components type is not defined");
+        }
+        else{
+            for(Component i : Lists.getComponents()){
+                if(i.getComponentType().equals(type)){
+                    return true;
+                }
+            }
+            if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
+                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean componentPrice(int price){
+        return price>0;
     }
 }

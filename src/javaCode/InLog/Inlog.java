@@ -90,14 +90,8 @@ public class Inlog implements Initializable {
         lists.addAdjustment(gps);
         lists.addAdjustment(airCondition);
 
-
-
         lists.addOrder(order1);
         lists.addOngoingOrder(order2);
-
-
-
-
     }
 
     @FXML

@@ -23,6 +23,19 @@ public class Lists implements Serializable {
     private static ObservableList<Order> ongoingOrderList = FXCollections.observableArrayList();
 
     //Metoder for å legge til objekter i listene
+
+    public void addCar (Car car){
+        for(Car i : carList){
+            if(i.getCarID().equals(car.getCarID())){
+                Dialogs.showErrorDialog("This car already exists");
+            }
+        }
+        carList.add(car);
+    }
+    public static void deleteCars(){
+        carList.clear();
+    }
+
     public void addComponent(Component component){
         boolean found = false;
         for(Component c : componentList){
@@ -34,10 +47,11 @@ public class Lists implements Serializable {
             componentList.add(component);
         }
     }
-
-    public void addCar (Car car){
-        carList.add(car);
+    public static void deleteComponents(){
+        componentList.clear();
     }
+
+
 
     public void addAdjustment (Adjustment adj){
         boolean found = false;
@@ -50,6 +64,9 @@ public class Lists implements Serializable {
             adjustmentList.add(adj);
         }
     }
+    public static void deleteAdjustments(){
+        adjustmentList.clear();
+    }
 
     public void addOrder(Order order){
         orderList.add(order);
@@ -58,10 +75,11 @@ public class Lists implements Serializable {
     public void addOngoingOrder (Order order){
         ongoingOrderList.add(order);
     }
-
-    public void removeAllComponents(){
-        componentList.clear();
+    public static void deleteOrders(){
+        orderList.clear();
     }
+
+
 
 
     public static ObservableList<Car> getCars(){
@@ -87,7 +105,7 @@ public class Lists implements Serializable {
     public static ObservableList<Order> getOngoingOrders(){ return ongoingOrderList; }
 
 
-    private void writeObject(ObjectOutputStream s) throws IOException {
+    /*private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
         s.writeObject(new ArrayList<>(carList));
     }

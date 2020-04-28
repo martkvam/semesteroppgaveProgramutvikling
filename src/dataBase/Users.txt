@@ -3,4 +3,4 @@
 3;Jens;Stoltenberg;jens@nato.eu;03561789;arbeiderpartiet;false
 4;Petter;Solberg;petter@rally.com;10121416;subaru;false
 5;Henning;Solberg;henning@rally.com;19181716;rally;false
-6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;false
+6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;true

@@ -2,6 +2,7 @@ package javaCode.ReaderWriter.Component;
 
 import javaCode.Car;
 import javaCode.Component;
+import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 
@@ -27,6 +28,8 @@ public class fileReaderJobj implements Reader{
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); // debug information here
             throw new IOException("Something is wrong with the implementation. See debug information");
+        }catch (IllegalArgumentException e){
+            Dialogs.showErrorDialog("File has already existing id's");
         }
     }
 }

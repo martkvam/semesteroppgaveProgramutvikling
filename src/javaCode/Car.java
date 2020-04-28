@@ -26,6 +26,7 @@ public class Car implements Serializable {
         if(!Validator.carDescription(description)){
             throw new IllegalArgumentException("The car description is invalid");
         }
+
         if(!Validator.carPrice(price)){
             throw new NumberFormatException("The car price is invalid");
         }

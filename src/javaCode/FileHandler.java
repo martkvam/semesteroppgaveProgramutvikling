@@ -9,6 +9,7 @@ import javaCode.ReaderWriter.Writer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class FileHandler{
@@ -19,17 +20,14 @@ public class FileHandler{
         File selectedFileCar = new File("src/dataBase/SuperUser/Cars.jobj");
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
-        File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
 
         Writer writeCar = null;
         Writer writeComponent = null;
         Writer writeAdjustment = null;
-        Writer writeOrders = null;
 
         writeCar = new fileWriterJobj();
         writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
         writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
-        writeOrders = new javaCode.ReaderWriter.Order.fileWriterJobj();
 
 
         if(writeCar != null) {
@@ -40,12 +38,26 @@ public class FileHandler{
                 writeCar.save(selectedFileCar.toPath());
                 writeComponent.save(selectedFileComponent.toPath());
                 writeAdjustment.save(selectedFileAdjustments.toPath());
-                writeOrders.save(selectedFileOrders.toPath());
                 Dialogs.showSuccessDialog("The register successfully got saved");
             } catch (IOException e) {
                 Dialogs.showErrorDialog("The saving failed because of: " + e.getMessage());
             }
         }
+    }
+
+    public static void saveSelectedFile(Stage stage) throws IOException {
+        File selectedFile = new File("src/dataBase/SuperUser/Orders.jobj");
+
+        if (selectedFile != null) {
+           try{
+                Writer writeOrder = new javaCode.ReaderWriter.Order.fileWriterJobj();
+                selectedFile.delete();
+                writeOrder.save(selectedFile.toPath());
+                Dialogs.showSuccessDialog("The register got saved");
+                } catch (IOException e) {
+                    Dialogs.showErrorDialog("Saving to file did not work because of: " + e.getMessage());
+                }
+            }
     }
     public static void readAllFiles(Stage stage) {
 
@@ -62,22 +74,24 @@ public class FileHandler{
         readerCar = new fileReaderJobj();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-        //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
 
-
+        Lists.deleteCars();
+        Lists.deleteComponents();
+        Lists.deleteAdjustments();
+        Lists.deleteOrders();
             if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
-                    //readerOrders.read(selectedFileOrders.toPath());
+                    readerOrders.read(selectedFileOrders.toPath());
                     Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 } catch (IllegalArgumentException e){
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 }
-
             }
         }
 
@@ -88,23 +102,21 @@ public class FileHandler{
         if (selectedFile != null) {
             String fileExt = getFileExt(selectedFile);
             Writer writeCar = null;
-           // Writer writeComponent = null;
-            //Writer writeAdjustment = null;
+            Writer writeComponent = null;
+            Writer writeAdjustment = null;
 
             switch (fileExt) {
                 case ".txt" :
                     writeCar = new fileWriterTxt();
-                    /*writeComponent = new fileWriterTxt();
+                    writeComponent = new fileWriterTxt();
                     writeAdjustment = new fileWriterTxt();
 
-                     */
                 break;
                 case ".jobj" :
                     writeCar = new fileWriterJobj();
-                    /*writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
+                    writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
                     writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
 
-                     */
                     break;
                 default : Dialogs.showErrorDialog("Du kan bare lagre til enten txt eller jobj filer.");
             }
@@ -121,42 +133,47 @@ public class FileHandler{
     }
     public static void openSelectedFile(Stage stage, String type) {
         File selectedFile = getFile(DialogMode.Open, stage);
+        try{
+            if (selectedFile != null) {
+                String fileExt = getFileExt(selectedFile);
+                Reader reader = null;
+                if(type == "Car"){
+                    switch (fileExt) {
+                        case ".txt" : reader = new fileReaderTxt(); break;
+                        case ".jobj" : reader = new fileReaderJobj(); break;
+                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                    }
+                }
+                else if(type =="Component"){
+                    switch (fileExt) {
+                        case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
+                        case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
+                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                    }
+                }
+                else if(type == "Adjustment"){
+                    switch (fileExt) {
+                        case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
+                        case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
+                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                    }
+                }
 
-        if (selectedFile != null) {
-            String fileExt = getFileExt(selectedFile);
-            Reader reader = null;
-            System.out.println(type);
-            if(type == "Car"){
-                switch (fileExt) {
-                    case ".txt" : reader = new fileReaderTxt(); break;
-                    case ".jobj" : reader = new fileReaderJobj(); break;
-                    default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                if(reader != null) {
+                    try {
+                        reader.read(selectedFile.toPath());
+                    } catch (IOException e) {
+                        Dialogs.showErrorDialog("This file could not open because of: " + e.getMessage());
+                    }
+                }
+                else{
+                    Dialogs.showErrorDialog("Thisfile could not be opened");
                 }
             }
-            else if(type =="Component"){
-                System.out.println("Yes");
-                switch (fileExt) {
-                    case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
-                    case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
-                    default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                }
-            }
-            else if(type == "Adjustment"){
-                switch (fileExt) {
-                    case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
-                    case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
-                    default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                }
-            }
-
-            if(reader != null) {
-                try {
-                    reader.read(selectedFile.toPath());
-                } catch (IOException e) {
-                    Dialogs.showErrorDialog("Åpning av filen feilet. Grunn: " + e.getMessage());
-                }
-            }
+        }catch (Exception e){
+            Dialogs.showErrorDialog("This file could not get loaded");
         }
+
     }
     static File getFile(DialogMode mode, Stage stage){
         FileChooser fileChooser = new FileChooser();

@@ -9,17 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class NewUser {
-
-    @FXML
-    private Text lblInfo;
 
     @FXML
     private TextField txtPhone;

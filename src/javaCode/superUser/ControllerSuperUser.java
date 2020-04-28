@@ -45,7 +45,13 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 710 ,500, event);
+                newScene("Edit orders", root, 900 ,730, event);
+    }
+
+    @FXML
+    void btnEditProfiles(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserProfile.fxml"));
+        OpenScene.newScene("Edit profiles", root, 600, 350, event);
     }
 
     //Takes superUser back to login page

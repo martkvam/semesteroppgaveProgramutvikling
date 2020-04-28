@@ -20,6 +20,19 @@ public class Component implements Serializable {
     private transient SimpleIntegerProperty componentPrice;
 
     public Component(String carID, String componentID, String componentType, String componentDescription, int componentPrice) {
+        if(!Validator.carIdComponents(carID)){
+            throw new IllegalArgumentException("The car-id is not valid");
+        }
+
+        if(!Validator.componentId(componentID)){
+            throw new IllegalArgumentException("The component-id is not valid");
+        }
+        if(componentType.length() == 0){
+            throw new IllegalArgumentException("The components have to have a component type");
+        }
+        if(!Validator.componentPrice(componentPrice)){
+            throw new IllegalArgumentException("The component price is not valid");
+        }
         this.carID = new SimpleStringProperty(carID);
         this.componentID = new SimpleStringProperty(componentID);
         this.componentType = new SimpleStringProperty(componentType);
@@ -46,7 +59,7 @@ public class Component implements Serializable {
     public void setComponentID(String componentID) {
         if(!Validator.componentId(componentID)){
             if(Dialogs.showChooseDialog("The id is not valid? Add new component?")){
-                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents());
+                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
             }
         }
         else{
@@ -61,7 +74,20 @@ public class Component implements Serializable {
     }
 
     public void setComponentType(String type){
-        this.componentType.set(type);
+        if(!Validator.componentType(type)){
+            return;
+        }
+        else{
+            this.componentType.set(type);
+        }
+    }
+
+    public String getComponentDescription() {
+        return componentDescription.getValue();
+    }
+
+    public void setComponentDescription(String componentDescription) {
+        this.componentDescription.set(componentDescription);
     }
 
     public int getComponentPrice() {
@@ -70,17 +96,14 @@ public class Component implements Serializable {
 
 
     public void setComponentPrice(int componentPrice) {
-        this.componentPrice.set(componentPrice);
+        if(!Validator.componentPrice(componentPrice)){
+            Dialogs.showErrorDialog("The input price is not valid");
+        }
+        else{
+            this.componentPrice.set(componentPrice);
+        }
     }
 
-    public String getComponentDescription() {
-        return componentDescription.getValue();
-    }
-
-
-    public void setComponentDescription(String componentDescription) {
-        this.componentDescription.set(componentDescription);
-    }
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
         s.writeUTF(carID.getValue());

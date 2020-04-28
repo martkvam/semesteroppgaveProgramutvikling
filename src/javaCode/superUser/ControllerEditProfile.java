@@ -1,6 +1,7 @@
 package javaCode.superUser;
 
 import javaCode.ConverterErrorHandler;
+import javaCode.Excel;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javaCode.OpenScene;
@@ -160,7 +161,8 @@ public class ControllerEditProfile {
         OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
     }
 
-    public void btnExportToExcelOnClick(ActionEvent actionEvent) {
+    public void btnExportToExcelOnClick(ActionEvent actionEvent) throws FileNotFoundException {
+        Excel.writeExcel(ReadUsers.getUserList());
     }
 }
 

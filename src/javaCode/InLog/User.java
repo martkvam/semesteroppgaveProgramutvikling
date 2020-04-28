@@ -84,6 +84,6 @@ public class User {
     public String toString(){
         String DELIMITER = ";";
         return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
-                id, firstName, lastName, phone, email, password, superUser);
+                id.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), email.getValue(), password.getValue(), superUser.getValue());
     }
 }

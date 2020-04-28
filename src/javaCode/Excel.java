@@ -1,53 +1,58 @@
 package javaCode;
 
 
+import javaCode.InLog.ReadUsers;
+import javaCode.InLog.User;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.commons.collections4.ListValuedMap;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Excel {
-
-
-    public static void main(String[] args) throws IOException {
+    public static <E> void writeExcel(ObservableList<E> list) throws FileNotFoundException {
         XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Register");
 
-        XSSFSheet sheet = workbook.createSheet("Java Books");
+        for(int rowCount = 0; rowCount < list.size(); rowCount++){
+            Row row = sheet.createRow(rowCount);
+            String [] user = list.get(rowCount).toString().split(";");
 
-        Object[][] bookData = {
-                {"Head First Java", "Kathy Serria", 79},
-                {"Effective Java", "Joshua Bloch", 36},
-                {"Clean Code", "Robert martin", 42},
-                {"Thinking in Java", "Bruce Eckel", 35},
-        };
-
-        int rowCount = 0;
-
-        for (Object[] aBook : bookData) {
-            Row row = sheet.createRow(++rowCount);
-
-            int columnCount = 0;
-
-            for (Object field : aBook) {
-                Cell cell = row.createCell(++columnCount);
-                if (field instanceof String) {
-                    cell.setCellValue((String) field);
-                } else if (field instanceof Integer) {
-                    cell.setCellValue((Integer) field);
-                }
+            for(int columnCount = 0; columnCount<user.length; columnCount++) {
+                Cell cell = row.createCell(columnCount);
+                cell.setCellValue(user[columnCount]);
             }
-
         }
 
-        //System.out.println("Test");
-        try (FileOutputStream outputStream = new FileOutputStream("JavaBooks.xlsx")) {
-            workbook.write(outputStream);
+
+        if (new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks.xlsx").exists()){
+            int version = 1;
+            while (new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks"+ "(" + version + ")" +".xlsx").exists()){
+                version++;
+            }
+            try (FileOutputStream outputStream = new FileOutputStream(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks"+ "(" + version + ")" +".xlsx")) {
+                workbook.write(outputStream);
+            } catch (IOException e) {
+                Dialogs.showErrorDialog("Couldnt save file");
+            }
+        } else{
+            try (FileOutputStream outputStream = new FileOutputStream(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks.xlsx")) {
+                workbook.write(outputStream);
+            } catch (IOException e) {
+                Dialogs.showErrorDialog("Couldnt save file");
+            }
         }
+
+
     }
-
 }
-

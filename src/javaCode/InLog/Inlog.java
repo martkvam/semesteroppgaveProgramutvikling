@@ -92,9 +92,6 @@ public class Inlog implements Initializable {
         lists.addOrder(order1);
         lists.addOrder(order2);
         lists.addOngoingOrder(order2);
-
-
-
     }
 
     @FXML

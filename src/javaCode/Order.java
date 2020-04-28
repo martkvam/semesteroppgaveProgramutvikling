@@ -14,6 +14,7 @@ import java.util.List;
 
 
 public class Order implements Serializable {
+    private static final String DELIMITER = ";" ;
     private transient SimpleStringProperty orderNr;
     private transient SimpleIntegerProperty personId;
     private transient SimpleStringProperty carId;
@@ -202,5 +203,12 @@ public class Order implements Serializable {
             out += a.getAdjustmentType() + DELIMITER;
         }
         return out;
+    }
+
+    @Override
+    public String toString() {
+        return getOrderNr() + DELIMITER + getPersonId() + DELIMITER + getCarId() + DELIMITER + getOrderStarted()
+                + DELIMITER + getOrderFinished() + DELIMITER + formatComponents(getComponentList()) + formatAdjustments(getAdjustmentList())
+                + getTotalPrice() + DELIMITER + getCarColor() + DELIMITER + getOrderStatus();
     }
 }

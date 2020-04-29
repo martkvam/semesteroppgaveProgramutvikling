@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -19,12 +21,15 @@
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="732.0">
          <children>
-            <TableView fx:id="tableViewOrder" editable="true" layoutX="27.0" layoutY="52.0" onMouseClicked="#onClickView" prefHeight="182.0" prefWidth="696.0">
+            <TableView fx:id="tableViewOrder" editable="true" layoutX="21.0" layoutY="150.0" onMouseClicked="#onClickView" prefHeight="167.0" prefWidth="696.0">
               <columns>
-                <TableColumn prefWidth="70.39999103546143" text="orderNr">
+                <TableColumn prefWidth="70.39999103546143" text="orderNr" >
                     <cellValueFactory>
                         <PropertyValueFactory property="orderNr" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
                 <TableColumn fx:id="personId" prefWidth="99.20001220703125" text="Person id">
                     <cellValueFactory>
@@ -63,31 +68,40 @@
                   </TableColumn>
               </columns>
             </TableView>
-            <TableView fx:id="tableViewComponents" editable="true" layoutX="27.0" layoutY="280.0" prefHeight="98.0" prefWidth="696.0">
+            <TableView fx:id="tableViewComponents" editable="true" layoutX="21.0" layoutY="335.0" prefHeight="110.0" prefWidth="696.0">
               <columns>
-                <TableColumn fx:id="componentID" prefWidth="98.3999605178833" text="Component id">
+                <TableColumn fx:id="componentID" onEditCommit="#componentIdEdited" prefWidth="98.3999605178833" text="Component id">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentID" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
-                <TableColumn fx:id="componentType" prefWidth="121.60003662109375" text="Component type">
+                <TableColumn fx:id="componentType" onEditCommit="#componentTypeEdited" prefWidth="121.60003662109375" text="Component type">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
+                    <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                    </cellFactory>
                 </TableColumn>
-                  <TableColumn fx:id="componentDescription" prefWidth="336.8000030517578" text="Component description">
+                  <TableColumn fx:id="componentDescription" onEditCommit="#componentDescriptionEdited" prefWidth="336.8000030517578" text="Component description">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentDescription" />
                       </cellValueFactory>
+                      <cellFactory>
+                          <TextFieldTableCell fx:factory="forTableColumn" />
+                      </cellFactory>
                   </TableColumn>
-                  <TableColumn fx:id="componentPrice" prefWidth="140.800048828125" text="Component price">
+                  <TableColumn fx:id="componentPrice" onEditCommit="#componentPriceEdited" prefWidth="140.800048828125" text="Component price">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentPrice" />
                       </cellValueFactory>
                   </TableColumn>
               </columns>
             </TableView>
-            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="27.0" layoutY="423.0" prefHeight="110.0" prefWidth="696.0">
+            <TableView fx:id="tableViewAdjustments" editable="true" layoutX="21.0" layoutY="468.0" prefHeight="110.0" prefWidth="696.0">
               <columns>
                 <TableColumn prefWidth="150.39999103546143" text="Adjustment id" />
                 <TableColumn minWidth="0.0" prefWidth="232.00001525878906" text="Adjustment name" />
@@ -96,7 +110,13 @@
               </columns>
             </TableView>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
-            <Button layoutX="27.0" layoutY="243.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="21.0" layoutY="117.0" mnemonicParsing="false" text="Button" />
+            <Label fx:id="lblOutName" layoutX="74.0" layoutY="59.0" prefHeight="26.0" prefWidth="164.0" />
+            <Label fx:id="lblOutPhone" layoutX="339.0" layoutY="59.0" prefHeight="26.0" prefWidth="138.0" />
+            <Label fx:id="lblMailOut" layoutX="562.0" layoutY="58.0" prefHeight="26.0" prefWidth="164.0" />
+            <Label layoutX="21.0" layoutY="63.0" prefHeight="18.0" prefWidth="46.0" text="Name:" />
+            <Label layoutX="238.0" layoutY="63.0" text="Phone number:" />
+            <Label layoutX="502.0" layoutY="63.0" text="Mail:" />
          </children>
       </AnchorPane>
    </children>

@@ -34,7 +34,7 @@
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username (phone/email)" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="3" />
-             <TextField fx:id="txtUserName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField fx:id="txtUserName" onKeyReleased="#enterKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <PasswordField fx:id="txtPassword" onKeyReleased="#enterKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#btnLogInOnClick" text="Log in" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#btnNewUserOnClick" text="New User" GridPane.columnIndex="1" GridPane.rowIndex="5" />

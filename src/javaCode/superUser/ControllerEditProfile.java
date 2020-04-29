@@ -161,8 +161,9 @@ public class ControllerEditProfile {
         OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
     }
 
-    public void btnExportToExcelOnClick(ActionEvent actionEvent) throws FileNotFoundException {
+    public void btnExportToExcelOnClick(ActionEvent actionEvent) throws IOException {
         Excel.writeExcel(ReadUsers.getUserList());
+        Excel.readExcel();
     }
 }
 

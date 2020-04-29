@@ -1,10 +1,13 @@
 1;Donald;Trump;trump@murica.com;66699969;USA;true
 2;Erna;Solberg;erna@høyre.no;18811881;bergen;false
-3;Jens;Stoltenberg;jens@nato.eu;03561789;arbeiderpartiet;false
+3;Jens;Stoltenberg;jens@nato.eu;127865863;arbeiderpartiet;false
 4;Petter;Solberg;petter@rally.com;10121416;subaru;false
 5;Henning;Solberg;henning@rally.com;1111112222;rally;true
 6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;true
 7;Truls;Berg;truls@berg.no;19991999;berg;false
 8;Vidle;Dalstø;vilde@daltso.no;97622121;heihei;false
 9;Omar;Jensen;lolol@lol.no;5678234920;jacco;false
-44;vill;lærr;vill@mail.se;11659724;moll;true69;
+44;vill;lærr;vill@mail.se;11659724;moll;false
+69;988;Hansen;rolfern@spenn.it;14141414;hahaha;false
+101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;true
+102;Test;Tester;testt@tst.no;431236373;ttteest;false

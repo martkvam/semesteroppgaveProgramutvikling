@@ -150,15 +150,22 @@ public class ReadUsers {
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
             String[] user = line.split(";");
-            userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5], Boolean.parseBoolean(user[6])));
+            try {
+                userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5], Boolean.parseBoolean(user[6])));
+            }catch (Exception e){
+                Dialogs.showErrorDialog(e.getMessage());
+            }
         }
         return userList;
     }
 
     public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
-        if(ReadUsers.getUserId(email) == null && ReadUsers.getUserId(phone) == null){
-            return false;
+
+        if(Objects.equals(ReadUsers.getUserId(email), null) &&
+        Objects.equals(ReadUsers.getUserId(phone), null)){
+            return true;
+        } else{
+            throw new UserAlreadyExistException("User already exists");
         }
-        throw new UserAlreadyExistException("User already exists");
     }
 }

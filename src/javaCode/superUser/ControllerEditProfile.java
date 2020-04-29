@@ -54,14 +54,10 @@ public class ControllerEditProfile {
     @FXML
     private TextField txtSearch;
 
-    public void initialize(){
+    public void initialize() throws FileNotFoundException, UserAlreadyExistException {
         id.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.IntegerStringConverter()));
         superUser.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
-        try {
-            tvUserRegister.setItems(ReadUsers.getUserList());
-        } catch (FileNotFoundException | UserAlreadyExistException e) {
-            Dialogs.showErrorDialog(e.getMessage());
-        }
+        tvUserRegister.setItems(ReadUsers.getUserList());
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
@@ -119,6 +115,7 @@ public class ControllerEditProfile {
             u.setLastName(newLastName);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -128,9 +125,10 @@ public class ControllerEditProfile {
         String newPhone = cellEditEvent.getNewValue();
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Phone", newPhone);
-            u.setLastName(newPhone);
+            u.setPhone(newPhone);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -140,9 +138,10 @@ public class ControllerEditProfile {
         String newEmail = cellEditEvent.getNewValue();
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Email", newEmail);
-            u.setLastName(newEmail);
+            u.setEmail(newEmail);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -155,6 +154,7 @@ public class ControllerEditProfile {
             u.setSuperUser(newSuperUser);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }

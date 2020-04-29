@@ -1,6 +1,6 @@
 package javaCode;
 
-
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.Formatter;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
@@ -79,38 +79,26 @@ public class Excel {
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet firstSheet = workbook.getSheetAt(0);
 
-
-        Object[] list = new Object[0];
-        switch (type) {
-            case "Finished":
-                list = new Object[10];
-                break;
-            case "Ongoing":
-                list = new Object[10];
-                break;
-            case "User":
-                list = new Object[7];
-        }
-
+        String[] list = new String[0];
         DataFormatter formatter = new DataFormatter();
 
         for (Row nextRow : firstSheet) {
+
+            switch (type) {
+                case "Finished":
+                    list = new String[10];
+                    break;
+                case "Ongoing":
+                    list = new String[10];
+                    break;
+                case "User":
+                    list = new String[7];
+            }
+
             Iterator<Cell> cellIterator = nextRow.cellIterator();
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
-                formatter.formatCellValue(cell);
-
-                switch (cell.getCellType()) {
-                    case STRING:
-                        list[cell.getColumnIndex()] = cell.getStringCellValue();
-                        break;
-                    case BOOLEAN:
-                        list[cell.getColumnIndex()] = cell.getBooleanCellValue();
-                        break;
-                    case NUMERIC:
-                        list[cell.getColumnIndex()] = formatter.formatCellValue(cell);
-                        break;
-                }
+                list[cell.getColumnIndex()] = formatter.formatCellValue(cell);
             }
             try{
                 switch (type) {
@@ -119,13 +107,17 @@ public class Excel {
                     case "Ongoing":
                         break;
                     case "User":
-                        ReadUsers.checkIfUserExists(list[3].toString(), list[4].toString());
-                        Formatter.addToFile(new User(intStrConv.fromString(list[0].toString()), list[1].toString(), list[2].toString(), list[3].toString(), list[4].toString(), list[5].toString(), Boolean.parseBoolean(list[6].toString())));
+                        ReadUsers.checkIfUserExists(list[3], list[4]);
+                        Formatter.addToFile(new User(intStrConv.fromString(list[0]),
+                                list[1], list[2], list[3], list[4],
+                                list[5], Boolean.parseBoolean(list[6])));
                         break;
                 }
-            }catch (Exception e){
+            }catch (UserAlreadyExistException e){
                 Dialogs.showErrorDialog(e.getMessage());
-                System.out.println(e.getMessage());
+                break;
+            }catch (NullPointerException e){
+                //Do something with NullPointerException
             }
         }
         workbook.close();

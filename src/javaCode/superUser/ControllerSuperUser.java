@@ -86,5 +86,9 @@ public class ControllerSuperUser {
         lblOut.setText("");
     }
 
+    public void btnInfoProfile(MouseEvent mouseEvent) {
+        lblOut.setText("The Profile scene is where you as a Superuser can view, edit and delete users from the register. " +
+                "This is also where users are declared as superusers");
+    }
 }
 

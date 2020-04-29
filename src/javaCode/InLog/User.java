@@ -1,6 +1,5 @@
 package javaCode.InLog;
 
-import javaCode.Dialogs;
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.Validator;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,6 +29,9 @@ public class User {
         }
         if(!Validator.email(email)){
             throw new IllegalArgumentException("Invalid email");
+        }
+        if(id <= 0){
+            throw new IllegalArgumentException("Id cant be 0 or less");
         }
         this.id = new SimpleIntegerProperty(id);
         this.firstName = new SimpleStringProperty(firstName);

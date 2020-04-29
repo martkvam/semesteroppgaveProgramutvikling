@@ -1,7 +1,6 @@
 
 package javaCode.user;
 
-import com.sun.deploy.security.SelectableSecurityManager;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;

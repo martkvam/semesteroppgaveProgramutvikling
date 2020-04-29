@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
@@ -45,5 +47,11 @@ public class NewUser {
             } catch (Exception e){
                 Dialogs.showErrorDialog("Could register user due to:\n" + e.getMessage());
             }
+    }
+
+    public void enterKeyPressed(KeyEvent kEvent) {
+        if(kEvent.getCode()== KeyCode.ENTER) {
+            btnRegisterUser.fire();
+        }
     }
 }

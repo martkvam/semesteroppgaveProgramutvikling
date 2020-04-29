@@ -1,14 +1,22 @@
 package javaCode;
 
 
+import javaCode.InLog.Formatter;
+import javaCode.InLog.ReadUsers;
+import javaCode.InLog.User;
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.Iterator;
 
@@ -61,33 +69,64 @@ public class Excel {
         workbook.close();
     }
 
-    public static void readExcel() throws IOException {
+    public static void readExcel(String type) throws IOException {
 
-        FileInputStream inputStream = new FileInputStream(new File(filePath()));
+        FileChooser openFile = new FileChooser();
+        File chosenFile = openFile.showOpenDialog(null);
+        ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
 
+        FileInputStream inputStream = new FileInputStream(chosenFile);
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet firstSheet = workbook.getSheetAt(0);
 
+
+        Object[] list = new Object[0];
+        switch (type) {
+            case "Finished":
+                list = new Object[10];
+                break;
+            case "Ongoing":
+                list = new Object[10];
+                break;
+            case "User":
+                list = new Object[7];
+        }
+
+        DataFormatter formatter = new DataFormatter();
+
         for (Row nextRow : firstSheet) {
             Iterator<Cell> cellIterator = nextRow.cellIterator();
-
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
+                formatter.formatCellValue(cell);
 
                 switch (cell.getCellType()) {
                     case STRING:
-                        System.out.print(cell.getStringCellValue());
+                        list[cell.getColumnIndex()] = cell.getStringCellValue();
                         break;
                     case BOOLEAN:
-                        System.out.print(cell.getBooleanCellValue());
+                        list[cell.getColumnIndex()] = cell.getBooleanCellValue();
                         break;
                     case NUMERIC:
-                        System.out.print(cell.getNumericCellValue());
+                        list[cell.getColumnIndex()] = formatter.formatCellValue(cell);
                         break;
                 }
-                System.out.print(";");
             }
-            System.out.println();
+            try{
+                switch (type) {
+                    case "Finished":
+                        break;
+                    case "Ongoing":
+                        break;
+                    case "User":
+                        ReadUsers.checkIfUserExists(list[3].toString(), list[4].toString());
+                        Formatter.addToFile(new User(intStrConv.fromString(list[0].toString()), list[1].toString(), list[2].toString(), list[3].toString(), list[4].toString(), list[5].toString(), Boolean.parseBoolean(list[6].toString())));
+                        break;
+                }
+            }catch (Exception e){
+                Dialogs.showErrorDialog(e.getMessage());
+                System.out.println(e.getMessage());
+            }
         }
         workbook.close();
         inputStream.close();

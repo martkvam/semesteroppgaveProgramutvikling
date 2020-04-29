@@ -1,13 +1,2 @@
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Motor;Felg;Hengerfeste;1000;Blue;true
-2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;Ratt;Hengerfeste;2000;Red;false
-3;2;1;Mon Apr 27 12:07:46 CEST 2020;Mon Apr 27 12:07:46 CEST 2020;Ratt;Motor;Hengerfeste;27000;Black;true
+1;2;3;Wed Apr 29 11:47:41 CEST 2020;Wed Apr 29 11:47:41 CEST 2020;Felg;Motor;Hengerfeste;Air Condition;47000;Black;true
+1;2;2;Wed Apr 29 11:48:29 CEST 2020;Wed Apr 29 11:48:29 CEST 2020;Ratt;Soltak;9000;Black;true

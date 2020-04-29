@@ -2,13 +2,13 @@ package javaCode.InLog;
 
 import javaCode.Dialogs;
 import javaCode.OpenScene;
-import javaCode.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
 import java.io.IOException;
 
 public class NewUser {
@@ -32,21 +32,18 @@ public class NewUser {
     private Button btnRegisterUser;
 
     @FXML
-    void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        if((ReadUsers.getUserId(txtEmail.getText()) == null) && ReadUsers.getUserId(txtPhone.getText()) == null) {
-            if (Validator.name(txtFirstName.getText()) != null &&
-                    Validator.name(txtLastName.getText()) != null && Validator.email(txtEmail.getText()) != null &&
-                    Validator.phone(txtPhone.getText()) != null) {
-                User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
-                        Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
-                        Validator.phone(txtPhone.getText()), txtPassword.getText(), false);
+    void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
+            try {
+                ReadUsers.checkIfUserExists(txtEmail.getText(), txtPhone.getText());
+
+                User newUser = new User(Formatter.assignID(), txtFirstName.getText(),
+                        txtLastName.getText(), txtEmail.getText(), txtPhone.getText(),
+                         txtPassword.getText(), false);
                 Formatter.addToFile(newUser);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
                 OpenScene.newScene("Log in", root, 500, 500, actionevent);
+            } catch (Exception e){
+                Dialogs.showErrorDialog("Could register user due to:\n" + e.getMessage());
             }
-        }else {
-            Dialogs.showErrorDialog("User already exists");
-        }
     }
-
 }

@@ -1,11 +1,10 @@
 
 package javaCode.user;
 
+import com.sun.deploy.security.SelectableSecurityManager;
 import javaCode.*;
-import javaCode.InLog.Inlog;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
-import javaCode.InLog.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,12 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import sun.rmi.runtime.Log;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
@@ -53,6 +52,12 @@ public class ProfileController implements Initializable {
 
     @FXML
     public Button btnChange;
+
+    @FXML
+    private Button btnExportFinished;
+
+    @FXML
+    private Button btnExportOngoing;
 
 
     @FXML
@@ -220,5 +225,22 @@ public class ProfileController implements Initializable {
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
         OpenScene.newScene("Order", root, 650, 700, actionEvent);
+    }
+
+    public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
+        if(finishedOrdersTV.getItems().size() != 0) {
+            Excel.writeExcel(finishedOrdersTV.getItems());
+        } else{
+            Dialogs.showErrorDialog("List is empty");
+        }
+
+    }
+
+    public void btnExportOngoingOnClick(ActionEvent actionEvent) throws IOException {
+        if (!ongoingOrdersTV.getItems().isEmpty()){
+        Excel.writeExcel(ongoingOrdersTV.getItems());
+        }else {
+            Dialogs.showErrorDialog("List is empty");
+        }
     }
 }

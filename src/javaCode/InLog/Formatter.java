@@ -1,5 +1,7 @@
 package javaCode.InLog;
 
+import javaCode.Exception.UserAlreadyExistException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class Formatter {
         Files.write(Paths.get(path), (user.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
-    public static int assignID() throws FileNotFoundException {
+    public static int assignID() throws FileNotFoundException, UserAlreadyExistException {
         //Read through database of users and check if user is already registered
 
         File myObj = new File(Formatter.path);

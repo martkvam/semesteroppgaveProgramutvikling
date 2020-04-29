@@ -2,6 +2,7 @@ package javaCode.InLog;
 
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,34 +47,35 @@ public class ReadUsers {
         File myObj = new File(Formatter.path);
         Scanner myReader = new Scanner(myObj);
         StringBuilder newRegister = new StringBuilder();
+        ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
 
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
-            String[] strings = line.split(";");
-
-            if(strings[0].equals(id)) {
+            String[] currentUser = line.split(";");
+            if(currentUser[0].equals(id)) {
                 switch (type) {
                     case "FirstName":
-                         line = line.replace(strings[1], Objects.requireNonNull(Validator.name(change)));
-                         break;
-                    case "LastName":
-                        line = line.replace(strings[2], Objects.requireNonNull(Validator.name(change)));
+                        currentUser[1] = change;
                         break;
-                    case "Email":
-                        line = line.replace(strings[3], Objects.requireNonNull(Validator.email(change)));
+                    case "LastName":
+                        currentUser[2] = change;
                         break;
                     case "Phone":
-                        line = line.replace(strings[4], Objects.requireNonNull(Validator.phone(change)));
+                        currentUser[3] = change;
+                        break;
+                    case "Email":
+                        currentUser[4] = change;
                         break;
                     case "Password":
-                        line = line.replace(strings[5], change);
+                        currentUser[5] = change;
                         break;
                     case "SuperUser":
-                        line = line.replace(strings[6], change);
+                        currentUser[6] = change;
                         break;
                 }
             }
-            newRegister.append(line).append(System.lineSeparator());
+            newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
+                    currentUser[3], currentUser[4], currentUser[5], Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
         }
 
         FileWriter myWriter = new FileWriter(myObj);
@@ -139,7 +141,7 @@ public class ReadUsers {
         return foundIds;
     }
 
-    public static ObservableList<User> getUserList() throws FileNotFoundException {
+    public static ObservableList<User> getUserList() throws FileNotFoundException, UserAlreadyExistException {
         ObservableList<User> userList = FXCollections.observableArrayList();
         File myObj = new File(Formatter.path);
         Scanner myReader = new Scanner(myObj);
@@ -148,8 +150,15 @@ public class ReadUsers {
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
             String[] user = line.split(";");
-            userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[4], user[3], user[5], Boolean.parseBoolean(user[6])));
+            userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5], Boolean.parseBoolean(user[6])));
         }
         return userList;
+    }
+
+    public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
+        if(ReadUsers.getUserId(email) == null && ReadUsers.getUserId(phone) == null){
+            return false;
+        }
+        throw new UserAlreadyExistException("User already exists");
     }
 }

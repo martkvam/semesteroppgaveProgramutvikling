@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-/*
-public class ValidatorTest {
 
+public class ValidatorTest {
+/*
     @Test
     public void name(){
         //Correct names
@@ -21,16 +21,17 @@ public class ValidatorTest {
 
 
     }
-
+*/
     @Test
     public void phone() {
         //Correct numbers
-        assertEquals(Validator.phone("98086042"), "98086042");
+        assertTrue(Validator.phone("98086042"));
+        assertTrue(Validator.phone("19991999"));
 
         //Incorrect numbers
-        assertEquals(Validator.phone("Hei"), "Hei");
+        assertFalse(Validator.phone("hei"));
     }
-
+/*
     @Test
     public void email() {
         //Correct email
@@ -46,7 +47,6 @@ public class ValidatorTest {
         assertNotEquals(Validator.email("@gmail.com"), "@gmail.com");
         assertNotEquals(Validator.email("trym@post"), "trym@post");
         assertNotEquals(Validator.email("test@"), "test@");
-    }
+    } */
 }
 
- */

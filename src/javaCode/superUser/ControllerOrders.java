@@ -1,5 +1,6 @@
 package javaCode.superUser;
 import javaCode.*;
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javafx.collections.FXCollections;
@@ -94,8 +95,8 @@ public class ControllerOrders implements Initializable {
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | UserAlreadyExistException e) {
+            Dialogs.showErrorDialog(e.getMessage());
         }
 
 
@@ -120,7 +121,7 @@ public class ControllerOrders implements Initializable {
     }
 
     @FXML
-    void onClickView(MouseEvent event) throws FileNotFoundException {
+    void onClickView(MouseEvent event) throws FileNotFoundException, UserAlreadyExistException {
         int outPersonId = 0;
         for(Order i : Lists.getOrders()){
             if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){

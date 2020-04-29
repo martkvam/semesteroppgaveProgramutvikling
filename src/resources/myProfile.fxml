@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="656.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.ProfileController">
+<AnchorPane prefHeight="656.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.ProfileController">
    <children>
       <Label fx:id="lblName" layoutX="12.0" layoutY="22.0" prefHeight="17.0" prefWidth="133.0" text="Name:">
          <font>
@@ -120,5 +120,7 @@
       <Label layoutX="16.0" layoutY="375.0" prefHeight="17.0" prefWidth="209.0" text="Components in selected order" />
       <Label layoutX="271.0" layoutY="375.0" prefHeight="17.0" prefWidth="190.0" text="Adjustments in selected order" />
       <Button layoutX="27.0" layoutY="606.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="btnExportFinished" layoutX="500.0" layoutY="147.0" mnemonicParsing="false" onAction="#btnExportFinishedOnClick" text="Export to Excel" />
+      <Button fx:id="btnExportOngoing" layoutX="500.0" layoutY="293.0" mnemonicParsing="false" onAction="#btnExportOngoingOnClick" text="Export to Excel" />
    </children>
 </AnchorPane>

@@ -1,7 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.ConverterErrorHandler;
+import javaCode.Dialogs;
 import javaCode.Excel;
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javaCode.OpenScene;
@@ -57,13 +59,13 @@ public class ControllerEditProfile {
         superUser.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         try {
             tvUserRegister.setItems(ReadUsers.getUserList());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | UserAlreadyExistException e) {
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-    public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException {
+    public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException, UserAlreadyExistException {
             FilteredList<User> filtered = new FilteredList<>(ReadUsers.getUserList(), b -> true);
 
             txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -103,7 +105,8 @@ public class ControllerEditProfile {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "FirstName", newFirstName);
             u.setFirstName(newFirstName);
         } catch (Exception e){
-           tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
+            tvUserRegister.getSelectionModel().clearSelection();
         }
         tvUserRegister.refresh();
     }
@@ -163,7 +166,12 @@ public class ControllerEditProfile {
 
     public void btnExportToExcelOnClick(ActionEvent actionEvent) throws IOException {
         Excel.writeExcel(ReadUsers.getUserList());
-        Excel.readExcel();
+    }
+
+    public void btnImportFromExcelOnClick(ActionEvent actionEvent) throws IOException {
+        Excel.readExcel("User");
+        initialize();
+        tvUserRegister.refresh();
     }
 }
 

@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -68,7 +72,8 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        handler.readAllFiles(stage);
+        //handler.readAllFiles(stage);
+
         if(ProfileController.toBeChanged){
             chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
             chosenCompTV.setItems(chosenComponents);
@@ -217,6 +222,7 @@ public class UserController implements Initializable {
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
+            System.out.println(Lists.getOrders().size());
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 610, 650, actionEvent);
         } else {
@@ -245,11 +251,11 @@ public class UserController implements Initializable {
 
         int persID = LoggedIn.getId();
 
-        int carId = 0;
+        String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
                 if (chooseCarType.getValue().equals(car.getCarType())) {
-                    carId = Integer.parseInt(car.getCarID());
+                    carId = car.getCarID();
                 }
             }
         } else {
@@ -298,8 +304,9 @@ public class UserController implements Initializable {
         }
     }
 
-    public void order(ActionEvent actionEvent) {
+    public void order(ActionEvent actionEvent) throws ParseException {
         boolean rightInput = true;
+
         Date date = new Date();
 
         int price = 0;
@@ -321,11 +328,11 @@ public class UserController implements Initializable {
 
         int orderNr = largest + 1;
         String newOrderNr = "" + orderNr;
-        int carId = 0;
+        String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
                 if (chooseCarType.getValue().equals(car.getCarType())) {
-                    carId = Integer.parseInt(car.getCarID());
+                    carId = car.getCarID();
                 }
             }
         } else {
@@ -359,7 +366,8 @@ public class UserController implements Initializable {
             if(alert.getResult().equals(ButtonType.OK)) {
                 Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
                 lists.addOrder(order);
-                Path path = Paths.get("FinishedOrders.txt");
+                System.out.println(Lists.getOrders().size());
+                Path path = Paths.get("src/dataBase/FinishedOrders.txt");
                 String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
                 try {
                     FileWriter.WriteFile(path, formattedOrders);

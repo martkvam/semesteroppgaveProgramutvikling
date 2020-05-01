@@ -1,5 +1,6 @@
 package javaCode.InLog;
 
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import javaCode.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,8 +42,10 @@ public class Inlog implements Initializable {
     FileHandler handler = new FileHandler();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //handler.readAllFiles(stage);
-       /* Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
+        handler.readAllFiles(stage);
+
+        /*
+        Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
         Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
@@ -95,9 +98,8 @@ public class Inlog implements Initializable {
         lists.addOrder(order1);
         lists.addOrder(order2);
         lists.addOngoingOrder(order2);
-*/
 
-
+         */
     }
 
     @FXML

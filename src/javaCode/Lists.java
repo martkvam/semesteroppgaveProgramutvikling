@@ -51,8 +51,6 @@ public class Lists implements Serializable {
         componentList.clear();
     }
 
-
-
     public void addAdjustment (Adjustment adj){
         boolean found = false;
         for(Adjustment a : adjustmentList) {
@@ -78,9 +76,6 @@ public class Lists implements Serializable {
     public static void deleteOrders(){
         orderList.clear();
     }
-
-
-
 
     public static ObservableList<Car> getCars(){
         ArrayList<Car> newCarList =new ArrayList<>();

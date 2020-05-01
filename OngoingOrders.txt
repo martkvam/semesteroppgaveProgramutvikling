@@ -1,0 +1,2 @@
+2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;2-2;1;2000;Red;false
+;3;1;Wed Apr 29 22:26:07 CEST 2020;Wed Apr 29 22:26:07 CEST 2020;1-1;2;27000;Not chosen;false

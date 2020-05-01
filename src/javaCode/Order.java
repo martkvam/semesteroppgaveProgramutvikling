@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +68,7 @@ public class Order implements Serializable {
     }
 
 
-    public Date getOrderStarted() {
+    public Date getOrderStarted(){
         return orderStarted.getValue();
     }
 
@@ -189,18 +190,24 @@ public class Order implements Serializable {
 
     public String formatComponents(ObservableList<Component> componentList) {
         String out = "";
-        String DELIMITER = ";";
-        for (Component c : componentList){
-            out += c.getComponentType() + DELIMITER;
+        String DELIMITER = ",";
+        for (int i = 0; i < componentList.size(); i++){
+            out += componentList.get(i).getComponentID();
+            if(i < componentList.size() - 1){
+                out += DELIMITER;
+            }
         }
         return out;
     }
 
     public String formatAdjustments(ObservableList<Adjustment> adjustmentList) {
         String out = "";
-        String DELIMITER = ";";
-        for (Adjustment a : adjustmentList){
-            out += a.getAdjustmentType() + DELIMITER;
+        String DELIMITER = ",";
+        for (int i = 0; i < adjustmentList.size(); i++){
+            out += adjustmentList.get(i).getAdjustmentID();
+            if (i < adjustmentList.size() - 1){
+                out += DELIMITER;
+            }
         }
         return out;
     }

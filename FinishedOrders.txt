@@ -1,2 +1,4 @@
-1;2;3;Wed Apr 29 11:47:41 CEST 2020;Wed Apr 29 11:47:41 CEST 2020;Felg;Motor;Hengerfeste;Air Condition;47000;Black;true
-1;2;2;Wed Apr 29 11:48:29 CEST 2020;Wed Apr 29 11:48:29 CEST 2020;Ratt;Soltak;9000;Black;true
+1;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;1-1,3-1;1;1000;Blue;true
+2;1;1;Thu Jan 01 01:00:00 CET 1970;Thu Jan 01 01:00:00 CET 1970;2-2;1;2000;Red;false
+3;3;1;Thu Apr 30 11:57:12 CEST 2020;Thu Apr 30 11:57:12 CEST 2020;2-2;2;12000;Red;true
+4;3;3;Thu Apr 30 11:57:27 CEST 2020;Thu Apr 30 11:57:27 CEST 2020;1-2;4;43000;Black;true

@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -65,6 +69,45 @@ public class UserController implements Initializable {
     private ComboBox<String> chooseCol;
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        //handler.readAllFiles(stage);
+
+        if(ProfileController.toBeChanged){
+            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            chosenCompTV.setItems(chosenComponents);
+            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustTV.setItems(chosenAdjustments);
+
+            String type = "";
+            String ID = chosenComponents.get(0).getCarID();
+            for (Car c : Lists.getCars()){
+                if (c.getCarID().equals(ID)){
+                    type = c.getCarType();
+                }
+            }
+            chooseCarType.getSelectionModel().select(type);
+            chooseCarType.setDisable(true);
+
+            adjustmentTV.setItems(Lists.getAdjustment());
+            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+                adjustmentTV.getItems().remove(a);
+            }
+        }
+        else {
+            adjustmentTV.setItems(Lists.getAdjustment());
+        }
+        chooseCol.setPromptText("Color: ");
+        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
+
+        //Setter valgmuligheter i choiceboxene
+        chooseCarType.setPromptText("Car type: ");
+        chooseComponent.setPromptText("Component type: ");
+        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
+        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+    }
+
     //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
     @FXML
     void setList(ActionEvent event) {
@@ -96,18 +139,30 @@ public class UserController implements Initializable {
     @FXML
     void addComponent(ActionEvent event) {
         Component valgt = componentTV.getSelectionModel().getSelectedItem();
-        chosenComponents.add(valgt);
-        chosenCompTV.setItems(chosenComponents);
-        chooseCarType.setDisable(true);
+        boolean funnet = false;
+        for (Component c : chosenComponents){
+            if(valgt.getComponentType().equals(c.getComponentType())){
+                funnet = true;
+            }
+        }
+        if(!funnet) {
+            chosenComponents.add(valgt);
+            chosenCompTV.setItems(chosenComponents);
+            chooseCarType.setDisable(true);
 
-        int totalprice = 0;
-        for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getAdjustmentPrice();
+            int totalprice = 0;
+            for (Adjustment adj : chosenAdjustments) {
+                totalprice += adj.getAdjustmentPrice();
+            }
+            for (Component c : chosenComponents) {
+                totalprice += c.getComponentPrice();
+            }
+            lblTotalprice.setText("Total price: " + totalprice);
         }
-        for(Component c : chosenComponents){
-            totalprice += c.getComponentPrice();
+        else{
+            Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
+                    " component you will first have to remove the previously chosen " + valgt.getComponentType());
         }
-        lblTotalprice.setText("Totalprice: " + totalprice);
     }
 
     @FXML
@@ -127,48 +182,8 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalprice: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
-
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        handler.readAllFiles(stage);
-        if(ProfileController.toBeChanged){
-            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
-            chosenCompTV.setItems(chosenComponents);
-            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
-            chosenAdjustTV.setItems(chosenAdjustments);
-
-            String type = "";
-            String ID = chosenComponents.get(0).getCarID();
-            for (Car c : Lists.getCars()){
-                if (c.getCarID().equals(ID)){
-                    type = c.getCarType();
-                }
-            }
-            chooseCarType.getSelectionModel().select(type);
-            chooseCarType.setDisable(true);
-
-            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
-                adjustmentTV.getItems().remove(a);
-            }
-        }
-
-        adjustmentTV.setItems(Lists.getAdjustment());
-
-        chooseCol.setPromptText("Choose color: ");
-        chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
-
-        //Setter valgmuligheter i choiceboxene
-        chooseCarType.setPromptText("Car type: ");
-        chooseComponent.setPromptText("Component type: ");
-        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
-        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
-    }
-
 
     public void addAdjust(ActionEvent actionEvent) {
         Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
@@ -182,7 +197,7 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalprice: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
 
         for(Adjustment a : chosenAdjustments){
             adjustmentTV.getItems().remove(a);
@@ -202,12 +217,24 @@ public class UserController implements Initializable {
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Totalprice: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);
     }
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+        if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
+            System.out.println(Lists.getOrders().size());
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+            OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not saved your choices, and if you continue your progress will be lost." +
+                    " If you wish to continue this order at a later time, you will have to go back and click on 'save order'.",
+                    ButtonType.CANCEL, ButtonType.OK);
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.OK)){
+                Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
+                OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+            }
+        }
     }
 
     public void saveChoices(ActionEvent actionEvent) {
@@ -224,11 +251,11 @@ public class UserController implements Initializable {
 
         int persID = LoggedIn.getId();
 
-        int carId = 0;
+        String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
                 if (chooseCarType.getValue().equals(car.getCarType())) {
-                    carId = Integer.parseInt(car.getCarID());
+                    carId = car.getCarID();
                 }
             }
         } else {
@@ -256,7 +283,7 @@ public class UserController implements Initializable {
         }
 
         if(rightInput) {
-            Order order = new Order("", persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, false);
+            Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
             Path path = Paths.get("OngoingOrders.txt");
             String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
@@ -270,14 +297,16 @@ public class UserController implements Initializable {
                 adjustmentTV.refresh();
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                ProfileController.toBeChanged = false;
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Something whent wrong.");
+                Dialogs.showErrorDialog("Something went wrong.");
             }
         }
     }
 
-    public void order(ActionEvent actionEvent) {
+    public void order(ActionEvent actionEvent) throws ParseException {
         boolean rightInput = true;
+
         Date date = new Date();
 
         int price = 0;
@@ -299,11 +328,11 @@ public class UserController implements Initializable {
 
         int orderNr = largest + 1;
         String newOrderNr = "" + orderNr;
-        int carId = 0;
+        String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
                 if (chooseCarType.getValue().equals(car.getCarType())) {
-                    carId = Integer.parseInt(car.getCarID());
+                    carId = car.getCarID();
                 }
             }
         } else {
@@ -332,23 +361,28 @@ public class UserController implements Initializable {
         }
 
         if(rightInput) {
-            Order order = new Order(newOrderNr, persID, Integer.toString(carId), date, date, orderedComponents, orderedAdjustments, price, color, true);
-            lists.addOrder(order);
-            Path path = Paths.get("FinishedOrders.txt");
-            String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
-            try {
-                FileWriter.WriteFile(path, formattedOrders);
-                Dialogs.showSuccessDialog("Your order was succesful!");
-                adjustmentTV.getItems().addAll(chosenAdjustments);
-                chosenComponents.clear();
-                chosenAdjustments.clear();
-                chosenAdjustTV.refresh();
-                adjustmentTV.refresh();
-                ProfileController.toBeChanged = false;
-                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 700, actionEvent);
-            } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                Dialogs.showErrorDialog("Something went wrong.");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?", ButtonType.OK, ButtonType.CANCEL);
+            alert.showAndWait();
+            if(alert.getResult().equals(ButtonType.OK)) {
+                Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
+                lists.addOrder(order);
+                System.out.println(Lists.getOrders().size());
+                Path path = Paths.get("src/dataBase/FinishedOrders.txt");
+                String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
+                try {
+                    FileWriter.WriteFile(path, formattedOrders);
+                    Dialogs.showSuccessDialog("Your order was succesful!");
+                    adjustmentTV.getItems().addAll(chosenAdjustments);
+                    chosenComponents.clear();
+                    chosenAdjustments.clear();
+                    chosenAdjustTV.refresh();
+                    adjustmentTV.refresh();
+                    ProfileController.toBeChanged = false;
+                    Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                    OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    Dialogs.showErrorDialog("Something went wrong.");
+                }
             }
         }
     }
@@ -358,5 +392,3 @@ public class UserController implements Initializable {
         OpenScene.newScene("Log in", root, 650, 650, actionEvent);
     }
 }
-
-

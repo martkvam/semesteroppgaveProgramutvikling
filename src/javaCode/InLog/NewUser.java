@@ -31,13 +31,16 @@ public class NewUser {
     private TextField txtPassword;
 
     @FXML
+    private TextField txtRepeatPassword;
+
+    @FXML
     private Button btnRegisterUser;
 
     @FXML
     void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
             try {
                 ReadUsers.checkIfUserExists(txtEmail.getText(), txtPhone.getText());
-
+                passwordMatches();
                 User newUser = new User(Formatter.assignID(), txtFirstName.getText(),
                         txtLastName.getText(), txtEmail.getText(), txtPhone.getText(),
                          txtPassword.getText(), false);
@@ -52,6 +55,13 @@ public class NewUser {
     public void enterKeyPressed(KeyEvent kEvent) {
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnRegisterUser.fire();
+        }
+    }
+
+    @FXML
+    private void passwordMatches(){
+        if(!txtPassword.getText().matches(txtRepeatPassword.getText())){
+            throw new IllegalArgumentException("Password dont match");
         }
     }
 }

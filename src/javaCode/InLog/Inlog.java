@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -24,10 +25,16 @@ import java.util.ResourceBundle;
 public class Inlog implements Initializable {
 
     @FXML
+    public TextField txtVisiblePassword;
+
+    @FXML
     private PasswordField txtPassword;
 
     @FXML
     private TextField txtUserName;
+
+    @FXML
+    private CheckBox chkBoxPassword;
 
     @FXML
     private Button btnLogIn;
@@ -39,7 +46,9 @@ public class Inlog implements Initializable {
     FileHandler handler = new FileHandler();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         handler.readAllFiles(stage);
+
 
         /*
         Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
@@ -148,5 +157,24 @@ public class Inlog implements Initializable {
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnLogIn.fire();
         }
+    }
+
+    public void checkBoxShowPasswordClicked(ActionEvent actionEvent) {
+        boolean checked = chkBoxPassword.isSelected();
+        if(checked){
+            txtVisiblePassword.setText(txtPassword.getText());
+            txtPassword.setOpacity(0);
+            txtVisiblePassword.setOpacity(1);
+        } else{
+            txtPassword.setText(txtVisiblePassword.getText());
+            txtPassword.setOpacity(1);
+            txtVisiblePassword.setOpacity(0);
+        }
+
+        txtVisiblePassword.setDisable(checked);
+        txtVisiblePassword.setVisible(checked);
+        txtPassword.setDisable(!checked);
+        txtPassword.setVisible(!checked);
+
     }
 }

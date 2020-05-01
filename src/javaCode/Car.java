@@ -10,9 +10,9 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
     private transient SimpleStringProperty carID;
-    private transient  SimpleStringProperty carType;
-    private transient  SimpleStringProperty description;
-    private transient  SimpleIntegerProperty price;
+    private transient SimpleStringProperty carType;
+    private transient SimpleStringProperty description;
+    private transient SimpleIntegerProperty price;
 
     public Car(String carID, String carType, String description, int price) {
         if(!Validator.carId(carID)){

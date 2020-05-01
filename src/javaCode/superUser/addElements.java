@@ -147,7 +147,6 @@ public class addElements {
         chooseComponentType.getItems().add("New component type");
         chooseComponentType.setPromptText("Choose component type");
 
-
         TextField newComponentType = new TextField();
         newComponentType.setPromptText("Add new component type");
         newComponentType.setVisible(false);

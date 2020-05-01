@@ -45,7 +45,7 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 900 ,730, event);
+                newScene("Edit orders", root, 1000 ,730, event);
     }
 
     @FXML

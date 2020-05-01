@@ -1,5 +1,6 @@
 package javaCode.InLog;
 
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import javaCode.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,9 +98,8 @@ public class Inlog implements Initializable {
         lists.addOrder(order1);
         lists.addOrder(order2);
         lists.addOngoingOrder(order2);
-*/
 
-
+         */
     }
 
     @FXML

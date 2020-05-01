@@ -7,8 +7,8 @@ public class OrderFormatter {
 
     public static String formatOrder(Order order){
         return order.getOrderNr() + DELIMITER + order.getPersonId() + DELIMITER + order.getCarId() + DELIMITER + order.getOrderStarted()
-                + DELIMITER + order.getOrderFinished() + DELIMITER + order.formatComponents(order.getComponentList()) + order.formatAdjustments(order.getAdjustmentList())
-                + order.getTotalPrice() + DELIMITER + order.getCarColor() + DELIMITER + order.getOrderStatus();
+                + DELIMITER + order.getOrderFinished() + DELIMITER + order.formatComponents(order.getComponentList()) + DELIMITER + order.formatAdjustments(order.getAdjustmentList())
+                + DELIMITER + order.getTotalPrice() + DELIMITER + order.getCarColor() + DELIMITER + order.getOrderStatus();
     }
 
     public static String formatOrders (List<Order> orderlist){

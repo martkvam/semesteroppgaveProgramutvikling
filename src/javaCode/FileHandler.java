@@ -65,16 +65,21 @@ public class FileHandler{
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
         File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
+        File selectedFileOrdersTxt = new File("src/dataBase/FinishedOrders.txt");
 
         Reader readerCar = null;
         Reader readerComponents = null;
         Reader readerAdjustments=null;
         Reader readerOrders = null;
+        Reader readerTxtOrders = null;
+
 
         readerCar = new fileReaderJobj();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
         readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        readerTxtOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
+
 
         Lists.deleteCars();
         Lists.deleteComponents();
@@ -86,6 +91,7 @@ public class FileHandler{
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
                     readerOrders.read(selectedFileOrders.toPath());
+                    readerTxtOrders.read(selectedFileOrdersTxt.toPath());
                     Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());

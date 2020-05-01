@@ -1,10 +1,8 @@
 package javaCode.user;
 
-import javaCode.Adjustment;
 import javaCode.Car;
 import javaCode.Component;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
 

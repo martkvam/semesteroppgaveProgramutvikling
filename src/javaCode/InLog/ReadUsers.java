@@ -3,11 +3,13 @@ package javaCode.InLog;
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.Exception.UserAlreadyExistException;
-import javaCode.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class ReadUsers {

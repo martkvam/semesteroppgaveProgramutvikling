@@ -8,8 +8,9 @@ import javaCode.ReaderWriter.Reader;
 import javaCode.ReaderWriter.Writer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class FileHandler{

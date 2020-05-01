@@ -1,28 +1,25 @@
 package javaCode.InLog;
 
-import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
-import javaCode.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javaCode.Dialogs;
+import javaCode.FileHandler;
+import javaCode.Lists;
+import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Inlog implements Initializable {
 

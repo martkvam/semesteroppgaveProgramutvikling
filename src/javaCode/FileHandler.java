@@ -3,7 +3,7 @@ package javaCode;
 import javaCode.ReaderWriter.Car.fileReaderJobj;
 import javaCode.ReaderWriter.Car.fileReaderTxt;
 import javaCode.ReaderWriter.Car.fileWriterJobj;
-import javaCode.ReaderWriter.Car.fileWriterTxt;
+import javaCode.ReaderWriter.Order.fileWriterTxt;
 import javaCode.ReaderWriter.Reader;
 import javaCode.ReaderWriter.Writer;
 import javafx.stage.FileChooser;
@@ -46,11 +46,11 @@ public class FileHandler{
     }
 
     public static void saveSelectedFile(Stage stage) throws IOException {
-        File selectedFile = new File("src/dataBase/SuperUser/Orders.jobj");
+        File selectedFile = new File("src/dataBase/FinishedOrders.txt");
 
         if (selectedFile != null) {
            try{
-                Writer writeOrder = new javaCode.ReaderWriter.Order.fileWriterJobj();
+                Writer writeOrder = new fileWriterTxt();
                 selectedFile.delete();
                 writeOrder.save(selectedFile.toPath());
                 Dialogs.showSuccessDialog("The register got saved");
@@ -115,12 +115,11 @@ public class FileHandler{
             Writer writeCar = null;
             Writer writeComponent = null;
             Writer writeAdjustment = null;
+            Writer writeOrder = null;
 
             switch (fileExt) {
                 case ".txt" :
-                    writeCar = new fileWriterTxt();
-                    writeComponent = new fileWriterTxt();
-                    writeAdjustment = new fileWriterTxt();
+                   writeOrder = new fileWriterTxt();
 
                 break;
                 case ".jobj" :
@@ -132,14 +131,24 @@ public class FileHandler{
                 default : Dialogs.showErrorDialog("Du kan bare lagre til enten txt eller jobj filer.");
             }
 
-            if(writeCar != null) {
-                try {
-                    writeCar.save(selectedFile.toPath());
-                    Dialogs.showSuccessDialog("Registeret ble lagret!");
-                } catch (IOException e) {
-                    Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
+            if(fileExt.equals(".txt")){
+                if(writeOrder != null) {
+                    try {
+                        writeOrder.save(selectedFile.toPath());
+                        Dialogs.showSuccessDialog("Registeret ble lagret!");
+                    } catch (IOException e) {
+                        Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
+                    }
                 }
             }
+            else if(fileExt.equals(".jobj")){
+                try{
+                    writeCar.save(selectedFile.toPath());
+                }catch(IOException e){
+
+                }
+            }
+
         }
     }
     public static void openSelectedFile(Stage stage, String type) {

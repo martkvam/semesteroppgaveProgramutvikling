@@ -2,6 +2,7 @@ package javaCode.user;
 
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
+import javaCode.superUser.ControllerOrdersAddComponent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,7 +73,7 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //handler.readAllFiles(stage);
+        handler.readAllFiles(stage);
 
         if(ProfileController.toBeChanged){
             chosenComponents.addAll(ProfileController.changeOrder.getComponentList());

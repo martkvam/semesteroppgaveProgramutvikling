@@ -112,7 +112,7 @@ public class addElements {
     }
 
 
-    public static void openAddComponentsDialog(ObservableList<Car> carList, ObservableList<Component> componentList, Object selectedCarType, Object componentType, String description, int price){
+    public static boolean openAddComponentsDialog(ObservableList<Car> carList, ObservableList<Component> componentList, Object selectedCarType, Object componentType, String description, int price){
         Dialog<Component> dialog = new Dialog<>();
         dialog.setTitle("New Component dialog");
         dialog.setHeaderText("Add new Component");
@@ -146,7 +146,6 @@ public class addElements {
 
         chooseComponentType.getItems().add("New component type");
         chooseComponentType.setPromptText("Choose component type");
-
 
         TextField newComponentType = new TextField();
         newComponentType.setPromptText("Add new component type");
@@ -345,6 +344,10 @@ public class addElements {
         result.ifPresent(newComponentEntry -> {
             componentList.add(newComponentEntry);
         });
+        if(result.isPresent()){
+            return true;
+        }
+        return false;
     }
 
     public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList){

@@ -1,6 +1,7 @@
 package javaCode.ReaderWriter.Order;
 
 import javaCode.Lists;
+import javaCode.OrderFormatter;
 import javaCode.ReaderWriter.Writer;
 
 import java.io.IOException;
@@ -10,6 +11,6 @@ import java.nio.file.Path;
 public class fileWriterTxt implements Writer {
     @Override
     public void save(Path filePath) throws IOException {
-        Files.write(filePath, Lists.getOrders().toString().getBytes());
+        Files.write(filePath, OrderFormatter.formatOrders(Lists.getOrders()).getBytes());
     }
 }

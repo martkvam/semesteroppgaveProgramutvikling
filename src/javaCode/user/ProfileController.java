@@ -77,6 +77,15 @@ public class ProfileController implements Initializable {
             changeOrder = chosen;
             toBeChanged = true;
             Lists.getOngoingOrders().remove(chosen);
+
+            //Updating the ongoing orders-file.
+            try {
+                String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+                javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
             OpenScene.newScene("Order", root, 650, 700, event);
         }

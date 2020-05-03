@@ -24,7 +24,7 @@ public class Order implements Serializable {
 
     public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus){
 
-        if(!Validator.orderNr(orderNr)){
+        if(!orderNr.isEmpty() && !Validator.orderNr(orderNr)){
             throw new IllegalArgumentException("The order number is not valid");
         }
         /*if(!Validator.orderPersonId(personId)){

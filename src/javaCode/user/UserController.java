@@ -73,12 +73,14 @@ public class UserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        handler.readAllFiles(stage);
+        //handler.readAllFiles(stage);
 
         if(ProfileController.toBeChanged){
-            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            ObservableList<Adjustment> adjustmenlist = ProfileController.changeOrder.getAdjustmentList();
+            ObservableList<Component> componentlist = ProfileController.changeOrder.getComponentList();
+            chosenComponents.addAll(componentlist);
             chosenCompTV.setItems(chosenComponents);
-            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustments.addAll(adjustmenlist);
             chosenAdjustTV.setItems(chosenAdjustments);
 
             String type = "";
@@ -92,7 +94,7 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(true);
 
             adjustmentTV.setItems(Lists.getAdjustment());
-            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+            for (Adjustment a : chosenAdjustments){
                 adjustmentTV.getItems().remove(a);
             }
         }

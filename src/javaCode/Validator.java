@@ -141,16 +141,17 @@ public class Validator {
                 }
             }
             if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
-                return false;
+                boolean newComponent = addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+                if(newComponent){
+                    Dialogs.showSuccessDialog("A new component has been added");
+                }
             }
         }
-        return true;
+        return false;
     }
     public static boolean componentPrice(int price){
         return price>0;
     }
-
 
     //Orders
     public static boolean orderNr(String nr){

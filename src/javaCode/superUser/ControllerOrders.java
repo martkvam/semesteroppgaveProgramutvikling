@@ -26,9 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 public class ControllerOrders implements Initializable {
     Stage stage = new Stage();
@@ -129,6 +129,16 @@ public class ControllerOrders implements Initializable {
             tableViewOrder.getItems().clear();
             tableViewComponents.getItems().clear();
             tableViewAdjustments.getItems().clear();
+
+            Thread delayThread = new Thread(new newThread());
+
+            delayThread.start();
+            try{
+                delayThread.join();
+            }catch (InterruptedException e){
+                System.out.println("Nei");
+            }
+
             FileHandler.readAllFiles(stage);
 
             tableViewOrder.setItems(Lists.getOrders());
@@ -170,7 +180,7 @@ public class ControllerOrders implements Initializable {
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
         FXMLLoader loader = new FXMLLoader();
-        ProfileController.toBeChanged = false;
+        ControllerOrdersAddComponent.toBeChanged = false;
 
         loader.setController("../superUser/ControllerSuperUser");
         // Swap screen

@@ -74,10 +74,7 @@ public class Component implements Serializable {
     }
 
     public void setComponentType(String type){
-        if(!Validator.componentType(type)){
-            return;
-        }
-        else{
+        if(Validator.componentType(type)){
             this.componentType.set(type);
         }
     }

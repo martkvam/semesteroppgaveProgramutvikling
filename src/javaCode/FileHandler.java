@@ -85,7 +85,7 @@ public class FileHandler{
         Lists.deleteComponents();
         Lists.deleteAdjustments();
         Lists.deleteOrders();
-            if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
+            if(readerCar != null && readerComponents != null && readerAdjustments !=null && readerTxtOrders != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());

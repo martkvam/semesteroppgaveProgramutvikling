@@ -25,22 +25,27 @@ public class fileReaderTxt implements Reader {
     @Override
     public void read(Path path) throws IOException {
         Lists lists = new Lists();
-
-         try(BufferedReader reader = Files.newBufferedReader(path)){
-             String line;
-             while ((line = reader.readLine()) != null){
-                 lists.addOrder(parseOrder(line));
-             }
+        try(BufferedReader reader = Files.newBufferedReader(path)){
+            String line;
+            while ((line = reader.readLine()) != null){
+                String [] split = line.split(";");
+                if (!split[0].isEmpty()) {
+                    lists.addOrder(parseOrder(line));
+                }
+                else lists.addOngoingOrder(parseOrder(line));
+            }
         } catch (Exception e) {
-             e.printStackTrace();
-         }
+            e.printStackTrace();
+        }
     }
+
 
     private Order parseOrder (String line) throws Exception{
         String[] split = line.split(";");
         if(split.length != 10) {
             throw new Exception("There is an error in the file containing the orders.");
         }
+
 
         String orderNr = split[0];
         int personId = parseNumber(split[1], "Person ID is incorrect");

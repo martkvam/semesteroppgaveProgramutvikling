@@ -9,6 +9,7 @@ import javaCode.InLog.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,10 +41,10 @@ public class ProfileController implements Initializable {
     private Label lblEmail;
 
     @FXML
-    private TableView<Order> finishedOrdersTV;
+    private Label lblHeader;
 
     @FXML
-    private TableView<Order> ongoingOrdersTV;
+    private TableView<Order> finishedOrdersTV;
 
     @FXML
     private TableView<Component> orderedComponentsTV;
@@ -52,13 +53,27 @@ public class ProfileController implements Initializable {
     private TableView<Adjustment> orderedAdjustmentsTV;
 
     @FXML
-    public Button btnChange;
+    private Button btnChange;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnFinish;
+
+    @FXML
+    private Button btnShowFinished;
+
+    @FXML
+    private Button btnShowOngoing;
+
+
 
 
     @FXML
     void changeOrder(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
-            Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+        if(!finishedOrdersTV.getSelectionModel().isEmpty()) {
+            Order chosen = finishedOrdersTV.getSelectionModel().getSelectedItem();
             changeOrder = chosen;
             toBeChanged = true;
             Lists.getOngoingOrders().remove(chosen);
@@ -69,21 +84,21 @@ public class ProfileController implements Initializable {
 
     @FXML
     void deleteOrder(ActionEvent event) {
-        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
+        if(!finishedOrdersTV.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this ongoing order?"
                     , ButtonType.YES, ButtonType.CANCEL);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
-                Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+                Order chosen = finishedOrdersTV.getSelectionModel().getSelectedItem();
                 Lists.getOngoingOrders().remove(chosen);
-                ongoingOrdersTV.getItems().remove(chosen);
-                ongoingOrdersTV.refresh();
+                finishedOrdersTV.getItems().remove(chosen);
+                finishedOrdersTV.refresh();
 
                 //Updating the ongoing orders-file.
                 try {
                     String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                    javaCode.FileWriter.WriteFile(Paths.get("OngoingOrders.txt"), formattedOngoingOrders);
+                    javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -93,18 +108,18 @@ public class ProfileController implements Initializable {
     }
 
     @FXML
-    void finishOrder(ActionEvent event) {
-        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
+    void finishOrder(Event event) {
+        if(!finishedOrdersTV.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
             //If color is not chosen
             String [] color = {"Red", "Black", "White", "Gray"};
             ChoiceDialog<String> choice = new ChoiceDialog(color[1], color);
-            if(ongoingOrdersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
+            if(finishedOrdersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
                 choice.setTitle("Finish order");
                 choice.setContentText("Please choose a color for the car before you finish your order: ");
                 choice.showAndWait();
                 String chosenColor = choice.getSelectedItem();
-                ongoingOrdersTV.getSelectionModel().getSelectedItem().setCarColor(chosenColor);
+                finishedOrdersTV.getSelectionModel().getSelectedItem().setCarColor(chosenColor);
             }
             //If the order is ready
             else {
@@ -112,7 +127,7 @@ public class ProfileController implements Initializable {
                alert.showAndWait();
             }
             if (alert.getResult() == ButtonType.YES || !choice.getResult().isEmpty()) {
-                Order chosen = ongoingOrdersTV.getSelectionModel().getSelectedItem();
+                Order chosen = finishedOrdersTV.getSelectionModel().getSelectedItem();
 
                 int largest = 0;
                 for (Order o : Lists.getOrders()) {
@@ -129,16 +144,16 @@ public class ProfileController implements Initializable {
                 Lists.getOrders().add(chosen);
                 Lists.getOngoingOrders().remove(chosen);
 
-                finishedOrdersTV.getItems().add(chosen);
+               // finishedOrdersTV.getItems().add(chosen);
                 finishedOrdersTV.refresh();
-                ongoingOrdersTV.getItems().remove(chosen);
-                ongoingOrdersTV.refresh();
+                finishedOrdersTV.getItems().remove(chosen);
+               // ongoingOrdersTV.refresh();
 
                 //Adding the order to the finsished orders-file.
                 try {
                     String formattedOrder = OrderFormatter.formatOrder(chosen);
                     BufferedWriter update;
-                    update = new BufferedWriter(new FileWriter("FinishedOrders.txt", true));
+                    update = new BufferedWriter(new FileWriter("src/dataBase/FinishedOrders.txt", true));
                     update.append(formattedOrder);
                     update.newLine();
                     update.close();
@@ -149,10 +164,11 @@ public class ProfileController implements Initializable {
                 //Updating the ongoing orders-file.
                 try {
                     String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                    javaCode.FileWriter.WriteFile(Paths.get("OngoingOrders.txt"), formattedOngoingOrders);
+                    javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                updateTVfinished(event);
             }
         }
 
@@ -166,8 +182,9 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         ObservableList<Order> orders = FXCollections.observableArrayList();
-        ObservableList<Order> ongoing = FXCollections.observableArrayList();
+        //ObservableList<Order> ongoing = FXCollections.observableArrayList();
 
         for (Order o : Lists.getOrders()){
             if(o.getPersonId() == LoggedIn.getId()){
@@ -175,15 +192,16 @@ public class ProfileController implements Initializable {
             }
         }
 
-        for (Order ongoingOrder : Lists.getOngoingOrders()){
+        /*for (Order ongoingOrder : Lists.getOngoingOrders()){
             if (ongoingOrder.getPersonId() == LoggedIn.getId()){
                 ongoing.add(ongoingOrder);
             }
-        }
+        }*/
 
 
             finishedOrdersTV.setItems(orders);
-            ongoingOrdersTV.setItems(ongoing);
+            //ongoingOrdersTV.setItems(ongoing);
+
 
         String ID = "" + LoggedIn.getId();
         try {
@@ -200,7 +218,7 @@ public class ProfileController implements Initializable {
     toBeChanged = false;
     }
 
-    public void updateTVfinished(MouseEvent mouseEvent) {
+    public void updateTVfinished(Event mouseEvent) {
         if(!finishedOrdersTV.getSelectionModel().isEmpty()) {
             ObservableList<Component> componentList = finishedOrdersTV.getSelectionModel().getSelectedItem().getComponentList();
             ObservableList<Adjustment> adjustmentList = finishedOrdersTV.getSelectionModel().getSelectedItem().getAdjustmentList();
@@ -208,15 +226,12 @@ public class ProfileController implements Initializable {
             orderedAdjustmentsTV.setItems(adjustmentList);
             orderedComponentsTV.refresh();
             orderedAdjustmentsTV.refresh();
-        };
-    }
-
-    public void updateTVongoing(MouseEvent mouseEvent) {
-        if(!ongoingOrdersTV.getSelectionModel().isEmpty()) {
-            ObservableList<Component> componentList = ongoingOrdersTV.getSelectionModel().getSelectedItem().getComponentList();
-            ObservableList<Adjustment> adjustmentList = ongoingOrdersTV.getSelectionModel().getSelectedItem().getAdjustmentList();
-            orderedComponentsTV.setItems(componentList);
-            orderedAdjustmentsTV.setItems(adjustmentList);
+        }
+        if(finishedOrdersTV.getSelectionModel().isEmpty()){
+            ObservableList<Component> components = FXCollections.observableArrayList();
+            ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
+            orderedComponentsTV.setItems(components);
+            orderedAdjustmentsTV.setItems(adjustments);
             orderedComponentsTV.refresh();
             orderedAdjustmentsTV.refresh();
         }
@@ -225,5 +240,49 @@ public class ProfileController implements Initializable {
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
         OpenScene.newScene("Order", root, 650, 700, actionEvent);
+    }
+
+    public void showFinsihed(Event event) {
+        ObservableList<Order> orders = FXCollections.observableArrayList();
+
+        for (Order o : Lists.getOrders()){
+            if(o.getPersonId() == LoggedIn.getId()){
+                orders.add(o);
+            }
+        }
+        finishedOrdersTV.setItems(orders);
+        btnChange.setVisible(false);
+        btnFinish.setVisible(false);
+        btnDelete.setVisible(false);
+        btnShowFinished.setVisible(false);
+        btnShowOngoing.setVisible(true);
+
+        //orderedAdjustmentsTV.getItems().clear();
+       // orderedComponentsTV.getItems().clear();
+
+        lblHeader.setText("Finished orders (click on an order to see content)");
+        updateTVfinished(event);
+    }
+
+    public void showOngoing(Event event) {
+        ObservableList<Order> ongoing = FXCollections.observableArrayList();
+
+        for (Order ongoingOrder : Lists.getOngoingOrders()){
+            if (ongoingOrder.getPersonId() == LoggedIn.getId()){
+                ongoing.add(ongoingOrder);
+            }
+        }
+        finishedOrdersTV.setItems(ongoing);
+        btnDelete.setVisible(true);
+        btnFinish.setVisible(true);
+        btnChange.setVisible(true);
+        btnShowFinished.setVisible(true);
+        btnShowOngoing.setVisible(false);
+
+       // orderedComponentsTV.getItems().clear();
+       // orderedAdjustmentsTV.getItems().clear();
+
+        lblHeader.setText("Ongoing orders (click on an order to see content)");
+        updateTVfinished(event);
     }
 }

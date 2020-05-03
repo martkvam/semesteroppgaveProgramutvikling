@@ -76,6 +76,7 @@ public class Lists implements Serializable {
     public static void deleteOrders(){
         orderList.clear();
     }
+    public static void deleteOngoing(){ ongoingOrderList.clear();}
 
     public static ObservableList<Car> getCars(){
         ArrayList<Car> newCarList =new ArrayList<>();

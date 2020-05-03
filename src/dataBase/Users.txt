@@ -7,6 +7,7 @@
 7;Truls;Berg;truls@berg.no;19991999;berg;false
 8;Vidle;Dalstø;vilde@daltso.no;97622121;heihei;false
 9;Omar;Jensen;lolol@lol.no;5678234920;jacco;false
-44;vill;lærr;vill@mail.se;11659724;moll;falset
+44;vill;lærr;vill@mail.se;11659724;moll;false
 69;Geir;Hansen;rolfern@spenn.it;14141414;hahaha;false
-101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;lol
+101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;false
+102;Pølsemannen;Grilstad;august_grilstad@hotmail.com;45252226;august123;false

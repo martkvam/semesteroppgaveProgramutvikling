@@ -48,10 +48,7 @@ public class Inlog implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         handler.readAllFiles(stage);
-
-
-        /*
-        Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
+       /*Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
         Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
@@ -79,13 +76,15 @@ public class Inlog implements Initializable {
         testList.add(rim1);
         ObservableList<Component> testListComp = FXCollections.observableArrayList();
         testListComp.add(wheel2);
-        ObservableList<Adjustment> testList2 = FXCollections.observableArrayList();
-        testList2.add(hitch);
+        ObservableList<Adjustment> testListAdjustment = FXCollections.observableArrayList();
+        testListAdjustment.add(hitch);
+        ObservableList<Adjustment> testlistAdjustment2 = FXCollections.observableArrayList();
+        testlistAdjustment2.addAll(sunroof, gps);
 
         Date date1 = new Date(2/2/2019);
 
-        Order order1 = new Order("1", 1, "1",date1, date1, testList, testList2, 1000, "Blue", true );
-        Order order2 = new Order("2", 1, "1", date1, date1, testListComp, testList2, 2000, "Red", false);
+        Order order1 = new Order("1", 1, "1",date1, date1, testList, testListAdjustment, 1000, "Blue", true );
+        Order order2 = new Order("2", 2, "1", date1, date1, testListComp, testlistAdjustment2, 2000, "Red", false);
 
         lists.addComponent(motor1);
         lists.addComponent(wheel1);

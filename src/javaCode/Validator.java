@@ -1,6 +1,15 @@
 package javaCode;
 
+import javaCode.Dialogs;
+import javaCode.Exception.UserAlreadyExistException;
+import javaCode.InLog.ReadUsers;
+import javaCode.InLog.User;
+import javaCode.Lists;
 import javaCode.superUser.addElements;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.IllegalFormatException;
 //If new user is incorrect, e.g. name is numbers the Exception will be thrown but the user still registers.
 //Need to stop the user from registering and "try again"
 public class Validator {
@@ -17,6 +26,8 @@ public class Validator {
     public static boolean email(String email){
         return email.matches(".[\\S]+@.[\\S]+[.].[\\S]+");
     }
+
+
     //Input validation for car objects
     public static boolean carId(String id){
         int idCounter = 0;
@@ -106,13 +117,53 @@ public class Validator {
                 }
             }
             if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+                boolean newComponent = addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+                if(newComponent){
+                    Dialogs.showSuccessDialog("A new component has been added");
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean componentPrice(int price){
+        return price>0;
+    }
+
+    //Orders
+    public static boolean orderNr(String nr){
+        if(Integer.parseInt(nr) <= 0){
+            return false;
+        }
+        for (Order i : Lists.getOrders()){
+            if(i.getOrderNr().equals(nr)){
                 return false;
             }
         }
         return true;
     }
-    public static boolean componentPrice(int price){
+    public static boolean orderPersonId(int id) throws FileNotFoundException, UserAlreadyExistException {
+        for(User i : ReadUsers.getUserList()){
+            if(i.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean orderCarID(String carId){
+        for(int i = 0; i < Lists.getCars().size(); i++){
+            if(Lists.getCars().get(i).getCarID().equals(carId)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean orderTotalPrice(int price){
         return price>0;
+    }
+
+    public static boolean orderCarColor(String color){
+        return true;
     }
 }

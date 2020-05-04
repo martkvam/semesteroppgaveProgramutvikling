@@ -4,6 +4,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +26,27 @@ public class Order implements Serializable {
     private transient SimpleStringProperty carColor;
     private transient SimpleBooleanProperty orderStatus;
 
-    public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus) {
+    public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus){
+
+        if(!orderNr.isEmpty() && !Validator.orderNr(orderNr)){
+            throw new IllegalArgumentException("The order number is not valid");
+        }
+        /*if(!Validator.orderPersonId(personId)){
+            throw new IllegalArgumentException("The person number is not valid");
+        }
+
+         */
+        if(!Validator.orderCarID(carId)){
+            throw new IllegalArgumentException("The car id is not valid");
+        }
+        if(!Validator.orderTotalPrice(totPrice)){
+            throw new IllegalArgumentException("The total price is not valid");
+        }
+        if(!Validator.orderCarColor(carColor)){
+            throw new IllegalArgumentException("The car color is not valid");
+        }
+
+
         this.orderNr = new SimpleStringProperty(orderNr);
         this.personId = new SimpleIntegerProperty(personId);
         this.carId = new SimpleStringProperty(carId);
@@ -42,6 +64,9 @@ public class Order implements Serializable {
     }
 
     public void setOrderNr(String orderNr) {
+        if(!Validator.orderNr(orderNr)){
+            throw new IllegalArgumentException("The order number is not valid");
+        }
         this.orderNr.set(orderNr);
     }
 
@@ -51,6 +76,11 @@ public class Order implements Serializable {
     }
 
     public void setPersonId(int personId) {
+        /*if(!Validator.orderPersonId(personId)){
+            throw new IllegalArgumentException("The person number is not valid");
+        }
+
+         */
         this.personId.set(personId);
     }
 
@@ -61,6 +91,9 @@ public class Order implements Serializable {
 
 
     public void setCarId(String carId) {
+        if(!Validator.orderCarID(carId)){
+            throw new IllegalArgumentException("The car id is not valid");
+        }
         this.carId.set(carId);
     }
 
@@ -106,6 +139,9 @@ public class Order implements Serializable {
     }
 
     public void setTotPrice(int totPrice) {
+        if(!Validator.orderTotalPrice(totPrice)){
+            throw new IllegalArgumentException("The total price is not valid");
+        }
         this.totPrice.set(totPrice);
     }
 
@@ -115,6 +151,9 @@ public class Order implements Serializable {
     }
 
     public void setCarColor(String carColor) {
+        if(!Validator.orderCarColor(carColor)){
+            throw new IllegalArgumentException("The car color is not valid");
+        }
         this.carColor.set(carColor);
     }
 

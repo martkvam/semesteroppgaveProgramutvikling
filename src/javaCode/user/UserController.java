@@ -2,6 +2,7 @@ package javaCode.user;
 
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
+import javaCode.superUser.ControllerOrdersAddComponent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,9 +71,11 @@ public class UserController implements Initializable {
         //handler.readAllFiles(stage);
 
         if(ProfileController.toBeChanged){
-            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            ObservableList<Adjustment> adjustmenlist = ProfileController.changeOrder.getAdjustmentList();
+            ObservableList<Component> componentlist = ProfileController.changeOrder.getComponentList();
+            chosenComponents.addAll(componentlist);
             chosenCompTV.setItems(chosenComponents);
-            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustments.addAll(adjustmenlist);
             chosenAdjustTV.setItems(chosenAdjustments);
 
             String type = "";
@@ -86,7 +89,7 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(true);
 
             adjustmentTV.setItems(Lists.getAdjustment());
-            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+            for (Adjustment a : chosenAdjustments){
                 adjustmentTV.getItems().remove(a);
             }
         }
@@ -217,7 +220,6 @@ public class UserController implements Initializable {
 
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
-            System.out.println(Lists.getOrders().size());
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 610, 650, actionEvent);
         } else {
@@ -226,6 +228,7 @@ public class UserController implements Initializable {
                     ButtonType.CANCEL, ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)){
+                adjustmentTV.getItems().addAll(chosenAdjustments);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
                 OpenScene.newScene("My profile", root, 610, 650, actionEvent);
             }
@@ -280,19 +283,19 @@ public class UserController implements Initializable {
         if(rightInput) {
             Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
-            Path path = Paths.get("OngoingOrders.txt");
+            Path path = Paths.get("src/dataBase/OngoingOrders.txt");
             String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
             try {
                 FileWriter.WriteFile(path, formattedOrders);
-                Dialogs.showSuccessDialog("Your order was succesful!");
+                Dialogs.showSuccessDialog("Your order has been saved!");
                 adjustmentTV.getItems().addAll(chosenAdjustments);
                 chosenComponents.clear();
                 chosenAdjustments.clear();
                 chosenAdjustTV.refresh();
                 adjustmentTV.refresh();
+                ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
-                ProfileController.toBeChanged = false;
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
@@ -361,7 +364,6 @@ public class UserController implements Initializable {
             if(alert.getResult().equals(ButtonType.OK)) {
                 Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
                 lists.addOrder(order);
-                System.out.println(Lists.getOrders().size());
                 Path path = Paths.get("src/dataBase/FinishedOrders.txt");
                 String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
                 try {

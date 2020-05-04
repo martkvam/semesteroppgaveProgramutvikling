@@ -3,7 +3,7 @@ package javaCode;
 import javaCode.ReaderWriter.Car.fileReaderJobj;
 import javaCode.ReaderWriter.Car.fileReaderTxt;
 import javaCode.ReaderWriter.Car.fileWriterJobj;
-import javaCode.ReaderWriter.Car.fileWriterTxt;
+import javaCode.ReaderWriter.Order.fileWriterTxt;
 import javaCode.ReaderWriter.Reader;
 import javaCode.ReaderWriter.Writer;
 import javafx.stage.FileChooser;
@@ -47,11 +47,11 @@ public class FileHandler{
     }
 
     public static void saveSelectedFile(Stage stage) throws IOException {
-        File selectedFile = new File("src/dataBase/SuperUser/Orders.jobj");
+        File selectedFile = new File("src/dataBase/FinishedOrders.txt");
 
         if (selectedFile != null) {
            try{
-                Writer writeOrder = new javaCode.ReaderWriter.Order.fileWriterJobj();
+                Writer writeOrder = new fileWriterTxt();
                 selectedFile.delete();
                 writeOrder.save(selectedFile.toPath());
                 Dialogs.showSuccessDialog("The register got saved");
@@ -65,34 +65,39 @@ public class FileHandler{
         File selectedFileCar = new File("src/dataBase/SuperUser/Cars.jobj");
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
-        File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
+        //File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
         File selectedFileOrdersTxt = new File("src/dataBase/FinishedOrders.txt");
+        File selectedFileOngoingOrders = new File("src/dataBase/OngoingOrders.txt");
 
         Reader readerCar = null;
         Reader readerComponents = null;
         Reader readerAdjustments=null;
-        Reader readerOrders = null;
+        //Reader readerOrders = null;
         Reader readerTxtOrders = null;
+        Reader readerOngoingOrders = null;
 
 
         readerCar = new fileReaderJobj();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-        readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
         readerTxtOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
+        readerOngoingOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
 
 
         Lists.deleteCars();
         Lists.deleteComponents();
         Lists.deleteAdjustments();
         Lists.deleteOrders();
-            if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
+        Lists.deleteOngoing();
+            if(readerCar != null && readerComponents != null && readerAdjustments !=null && readerTxtOrders != null && readerOngoingOrders != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
-                    readerOrders.read(selectedFileOrders.toPath());
+                    //readerOrders.read(selectedFileOrders.toPath());
                     readerTxtOrders.read(selectedFileOrdersTxt.toPath());
+                    readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
                     Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
@@ -111,12 +116,11 @@ public class FileHandler{
             Writer writeCar = null;
             Writer writeComponent = null;
             Writer writeAdjustment = null;
+            Writer writeOrder = null;
 
             switch (fileExt) {
                 case ".txt" :
-                    writeCar = new fileWriterTxt();
-                    writeComponent = new fileWriterTxt();
-                    writeAdjustment = new fileWriterTxt();
+                   writeOrder = new fileWriterTxt();
 
                 break;
                 case ".jobj" :
@@ -128,14 +132,24 @@ public class FileHandler{
                 default : Dialogs.showErrorDialog("Du kan bare lagre til enten txt eller jobj filer.");
             }
 
-            if(writeCar != null) {
-                try {
-                    writeCar.save(selectedFile.toPath());
-                    Dialogs.showSuccessDialog("Registeret ble lagret!");
-                } catch (IOException e) {
-                    Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
+            if(fileExt.equals(".txt")){
+                if(writeOrder != null) {
+                    try {
+                        writeOrder.save(selectedFile.toPath());
+                        Dialogs.showSuccessDialog("Registeret ble lagret!");
+                    } catch (IOException e) {
+                        Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
+                    }
                 }
             }
+            else if(fileExt.equals(".jobj")){
+                try{
+                    writeCar.save(selectedFile.toPath());
+                }catch(IOException e){
+
+                }
+            }
+
         }
     }
     public static void openSelectedFile(Stage stage, String type) {

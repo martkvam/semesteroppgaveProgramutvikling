@@ -24,12 +24,12 @@ public class Excel {
 
     //Variables for paths to save Excel file
     private static String filePath (){
-        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks.xlsx";
+        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/UserRegister.xlsx";
     }
 
     //With version controll so files dont get overwritten
     private static String filePathVersion (int version){
-        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/JavaBooks"+ "(" + version + ")" +".xlsx";
+        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/UserRegister"+ "(" + version + ")" +".xlsx";
     }
 
 

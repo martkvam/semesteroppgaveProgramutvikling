@@ -323,6 +323,10 @@ public class addElements {
                         Dialogs.showErrorDialog("The price has to be a number");
                         openAddComponentsDialog(carList, componentList, chooseCar.getSelectionModel().getSelectedItem(), chooseComponentType.getSelectionModel().getSelectedItem(),outComponentDescription, 1);
                         return null;
+                    }catch (IllegalArgumentException e){
+                        Dialogs.showErrorDialog(e.getMessage());
+                        openAddComponentsDialog(carList, componentList, chooseCar.getSelectionModel().getSelectedItem(), chooseComponentType.getSelectionModel().getSelectedItem(),outComponentDescription, 1);
+                        return null;
                     }
 
                 }

@@ -30,10 +30,9 @@ public class ControllerSuperUser {
         loader.setController("../superUser/ControllerAddEditComponents");
 
         // Swap screen
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
         OpenScene.
-                newScene("Edit/delete components", root, 800,700, event);
+                newScene("Edit/delete components", root, 800,702, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.
@@ -45,16 +44,17 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 1000 ,730, event);
+                newScene("Edit orders", root, 1100 ,730, event);
     }
 
+    //Navigates to scene where superuser are able to edit/delete profiles.
     @FXML
     void btnEditProfiles(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserProfile.fxml"));
         OpenScene.newScene("Edit profiles", root, 600, 350, event);
     }
 
-    //Takes superUser back to login page
+    //Logging out superUser
     @FXML
     void btnGoBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));

@@ -64,11 +64,11 @@ public class DeleteElements{
         if (selectedElements.size() > 0) {
             //If one row is selected
             if (selectedElements.size()==1) {
-                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected component?");
+                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected adjustment?");
             }
             //If multiple rows are selected
             else {
-                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected components?");
+                deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected adjustments?");
             }
             //Makes sure that the superuser wants to delete the selected node(s).
             if(!deleteSelectedItems){

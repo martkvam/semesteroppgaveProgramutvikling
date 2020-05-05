@@ -1,11 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.*;
-import javaCode.InLog.ReadUsers;
-import javaCode.InLog.User;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,22 +12,22 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 public class ControllerAddEditComponents implements Initializable {
-    //Initialize different classes
+
+    //Sets up different classes
     Lists lists = new Lists();
     addElements addElements = new addElements();
-    tableFilter tableFilter = new tableFilter();
     FileHandler filehandler = new FileHandler();
+    private newThread delayThread;
 
-    //Initialize int/String converter
+    //Sets up int/String converter
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
 
     //Sets up private variables
@@ -40,13 +38,10 @@ public class ControllerAddEditComponents implements Initializable {
     private TextField txtFilterInn;
 
     @FXML
+    private AnchorPane mainPane;
+
+    @FXML
     private Button btnDeleteElement;
-
-    @FXML
-    private ComboBox<String> chooseFilterComponent;
-
-    @FXML
-    private ComboBox<String> chooseFilterAdjustment;
 
     @FXML
     private ComboBox<String> chooseElementType;
@@ -78,38 +73,19 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.getItems().clear();
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
-        //Reads inn all files
-        filehandler.readAllFiles(stage);
-
-        //Sets up combobox elements and prompt text
-
-        Field[] componentFields = Component.class.getDeclaredFields();
-        chooseFilterComponent.getItems().add("--");
-        for(Field i : componentFields){
-            chooseFilterComponent.getItems().add(i.getName());
-        }
-        chooseFilterComponent.setPromptText("Filter list by");
+        mainPane.setDisable(true);
 
 
-        Field[] adjustmentFields = Adjustment.class.getDeclaredFields();
-        chooseFilterAdjustment.getItems().add("--");
-        for(Field i : adjustmentFields){
-            chooseFilterAdjustment.getItems().add(i.getName());
-        }
-        chooseFilterAdjustment.setPromptText("Filter list by");
-
-        chooseElementType.getItems().addAll("Car", "Component", "Adjustment");
-        chooseElementType.setPromptText("Choose element type");
-
-        //Sets visibility on different gui elements
-        chooseFilterComponent.setVisible(false);
-        chooseFilterAdjustment.setVisible(false);
         tableViewComponents.setVisible(false);
         tableViewAdjustments.setVisible(false);
         txtFilterInn.setVisible(false);
 
-        //Sets items on TableView for cars
-        TableView.setItems(Lists.getCars());
+        //Sets up delay thread
+        delayThread = new newThread();
+        delayThread.setOnSucceeded(this::threadSucceded);
+        delayThread.setOnFailed(this::threadFailed);
+        Thread thread = new Thread(delayThread);
+
 
         //Multiple selection on TableViews
         TableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -121,11 +97,52 @@ public class ControllerAddEditComponents implements Initializable {
         price.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         componentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         adjustmentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
+
+        //Starts delayThread
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    //Method that starts when thread is done and succeeded
+    private void threadSucceded(WorkerStateEvent e) {
+
+        //Reads inn all files
+        filehandler.readAllFiles(stage);
+
+        //Enables the elements in the window
+        mainPane.setDisable(false);
+
+        //Sets items on TableView for cars
+        TableView.setItems(Lists.getCars());
+
+        //Sets up combobox elements and prompt text
+        chooseElementType.getItems().addAll("Car", "Component", "Adjustment");
+        chooseElementType.setPromptText("Choose element type");
+
+        //Sets items in tableview
+        TableView.setItems(Lists.getCars());
+    }
+
+    //Method that starts when thread is done and failed
+    private void threadFailed(WorkerStateEvent e) {
+        Dialogs.showErrorDialog("The loading did not succeed");
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+            OpenScene.newScene("Superuser",  root, 600, 400, null);
+        }catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     void btnAddFromFile(ActionEvent event) {
-        //Have to choose a element type
+        //The user has to choose an element type before reading from file
 
         if(chooseElementType.getValue() != null){
             if(chooseElementType.getValue().equals("Car")) {
@@ -162,19 +179,15 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.setVisible(true);
         tableViewComponents.setVisible(false);
         TableView.setVisible(false);
-        chooseFilterComponent.setVisible(true);
         txtFilterInn.setVisible(true);
         selectedElement = "Adjustment";
-        chooseFilterAdjustment.setVisible(true);
-        chooseFilterComponent.setVisible(false);
         txtFilterInn.setText("");
     }
 
     @FXML
     void btnEditCars(ActionEvent event) {
         TableView.setItems(Lists.getCars());
-        chooseFilterComponent.setVisible(false);
-        chooseFilterAdjustment.setVisible(false);
+
         TableView.setVisible(true);
         tableViewComponents.setVisible(false);
         tableViewAdjustments.setVisible(false);
@@ -188,20 +201,15 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewComponents.setVisible(true);
         TableView.setVisible(false);
         tableViewAdjustments.setVisible(false);
-        chooseFilterComponent.setVisible(true);
-        chooseFilterAdjustment.setVisible(false);
+
         txtFilterInn.setVisible(true);
         selectedElement = "Components";
         txtFilterInn.setText("");
     }
 
     @FXML
-    void btnNewAdjustment(ActionEvent event) {
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
-    }
-
-    @FXML
     void btnNewCar(ActionEvent event) {
+        //Directs user to dialog window to add a new car
         try{
             addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
         }catch (NumberFormatException e){
@@ -212,9 +220,15 @@ public class ControllerAddEditComponents implements Initializable {
 
     @FXML
     void btnNewComponent(ActionEvent event) {
+        //Directs user to dialog window to add a new component
         addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
     }
 
+    @FXML
+    void btnNewAdjustment(ActionEvent event) {
+        //Directs user to dialog window to add a new adjustment
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
+    }
 
     @FXML
     void btnDeleteElement(ActionEvent event) {
@@ -255,6 +269,7 @@ public class ControllerAddEditComponents implements Initializable {
 
 
     //Edit car from tableview
+
     //Edit car type
     @FXML
     void txtCarTypeEdited(TableColumn.CellEditEvent<Car, String> event) {
@@ -292,6 +307,7 @@ public class ControllerAddEditComponents implements Initializable {
     }
 
     //Edit component from tableview
+
     //Edit component id
     @FXML
     void componentIDEdited(TableColumn.CellEditEvent<Component, String> event) {
@@ -348,6 +364,7 @@ public class ControllerAddEditComponents implements Initializable {
     }
 
     //Edit adjustments from tableview
+
     //Adjustment id edited
     @FXML
     void adjustmentIdEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
@@ -383,8 +400,7 @@ public class ControllerAddEditComponents implements Initializable {
                 event.getRowValue().setAdjustmentPrice(event.getNewValue());
             }
         } catch (NumberFormatException e) {
-            Dialogs.showErrorDialog(e.getMessage()
-            );
+            Dialogs.showErrorDialog(e.getMessage());
         }
 
         tableViewAdjustments.refresh();
@@ -394,89 +410,27 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void txtFilterTyped(KeyEvent event) {
         if(selectedElement.equals("Components")){
-            if(chooseFilterComponent.getSelectionModel().getSelectedItem() == null || chooseFilterComponent.getSelectionModel().getSelectedItem().equals("--")){
-                FilteredList<Component> filtered = new FilteredList<>(Lists.getComponents(), b -> true);
+            FilteredList<Component> filtered = new FilteredList<>(Lists.getComponents(), b -> true);
 
-                txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
-                    filtered.setPredicate(component -> {
-                        if(newValue == null || newValue.isEmpty()){
-                            return true;
-                        }
+            txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
+                filtered.setPredicate(component -> lists.filterComponentList(component, newValue));
 
-                        String lowerCase = newValue.toLowerCase();
+                SortedList<Component> sorted = new SortedList<>(filtered);
+                sorted.comparatorProperty().bind(tableViewComponents.comparatorProperty());
+                tableViewComponents.setItems(sorted);
+            });
 
-                        if(String.valueOf(component.getComponentID()).toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (component.getComponentType().toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (component.getComponentDescription().toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (Integer.toString(component.getComponentPrice()).toLowerCase().contains(lowerCase)) {
-                            return true;
-                        } else if (component.getCarID().toLowerCase().contains(lowerCase)){
-                            return true;
-                        }
-                        return false;
-                    });
-
-                    SortedList<Component> sorted = new SortedList<>(filtered);
-                    sorted.comparatorProperty().bind(tableViewComponents.comparatorProperty());
-                    tableViewComponents.setItems(sorted);
-                });
-            }
-            else{
-                try{
-                    String txtInn = txtFilterInn.getText();
-                    String choosenFilter = chooseFilterComponent.getValue();
-                    tableViewComponents.setItems(tableFilter.filterComponents(txtInn, choosenFilter));
-                }catch (IOException e){
-                    Dialogs.showErrorDialog(e.getMessage());
-                }
-            }
         }
         else{
-            if(chooseFilterAdjustment.getSelectionModel().getSelectedItem() == null || chooseFilterAdjustment.getSelectionModel().getSelectedItem().equals("--")){
-                FilteredList<Adjustment> filtered = new FilteredList<>(Lists.getAdjustment(), b -> true);
+            FilteredList<Adjustment> filtered = new FilteredList<>(Lists.getAdjustment(), b -> true);
 
-                txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
-                    filtered.setPredicate(adjustment -> {
-                        if(newValue == null || newValue.isEmpty()){
-                            return true;
-                        }
+            txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
+                filtered.setPredicate(adjustment -> lists.filterAdjustmentList(adjustment, newValue));
 
-                        String lowerCase = newValue.toLowerCase();
-
-                        if(String.valueOf(adjustment.getAdjustmentID()).toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (adjustment.getAdjustmentType().toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (adjustment.getAdjustmentDescription().toLowerCase().contains(lowerCase)){
-                            return true;
-                        } else if (Integer.toString(adjustment.getAdjustmentPrice()).toLowerCase().contains(lowerCase)) {
-                            return true;
-                        }
-                        return false;
-                    });
-
-                    SortedList<Adjustment> sorted = new SortedList<>(filtered);
-                    sorted.comparatorProperty().bind(tableViewAdjustments.comparatorProperty());
-                    tableViewAdjustments.setItems(sorted);
-                });
-            }
-            else{
-                try{
-                    String txtInn = txtFilterInn.getText();
-                    String choosenFilter = chooseFilterComponent.getValue();
-                    tableViewComponents.setItems(tableFilter.filterComponents(txtInn, choosenFilter));
-                }catch (IOException e){
-                    Dialogs.showErrorDialog(e.getMessage());
-                }
-            }
+                SortedList<Adjustment> sorted = new SortedList<>(filtered);
+                sorted.comparatorProperty().bind(tableViewAdjustments.comparatorProperty());
+                tableViewAdjustments.setItems(sorted);
+            });
         }
     }
 }
-
-
-
-
-

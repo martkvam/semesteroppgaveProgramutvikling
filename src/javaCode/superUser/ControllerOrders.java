@@ -5,6 +5,9 @@ import javaCode.InLog.User;
 import javaCode.user.ProfileController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -31,12 +33,16 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class ControllerOrders implements Initializable {
+    private static int firstInlog;
     Stage stage = new Stage();
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
-    private static ObservableList<Order> orderList = FXCollections.observableArrayList();
+
     private static Order selectedOrder;
     FileHandler fileHandler = new FileHandler();
     DeleteElements deleteElements = new DeleteElements();
+    Lists list = new Lists();
+
+    private newThread delayThread;
 
     @FXML
     private Label lblOutName;
@@ -48,7 +54,34 @@ public class ControllerOrders implements Initializable {
     private Label lblMailOut;
 
     @FXML
+    private TextField txtFilterOrders;
+
+    @FXML
+    private Button buttonBack;
+
+    @FXML
+    private Button newOrder;
+
+    @FXML
     private Button deleteOrder;
+
+    @FXML
+    private Button addComponent;
+
+    @FXML
+    private Button deleteComponent;
+
+    @FXML
+    private Button newComponent;
+
+    @FXML
+    private Button addAdjustment;
+
+    @FXML
+    private Button deleteAdjustrment;
+
+    @FXML
+    private Button newAdjustment;
 
     @FXML
     private TableView<Order> tableViewOrder;
@@ -87,9 +120,9 @@ public class ControllerOrders implements Initializable {
     private TableColumn<TableView<Adjustment>, Integer> adjustmentPrice;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         if(ControllerOrdersAddComponent.toBeChanged){
             Order editedOrder = ControllerOrdersAddComponent.getNewComponents();
 
@@ -120,65 +153,156 @@ public class ControllerOrders implements Initializable {
             for(Order i : Lists.getOrders()){
                 tableViewComponents.setItems(i.getComponentList());
             }
+            for(Order i : Lists.getOrders()){
+                tableViewAdjustments.setItems(i.getAdjustmentList());
+                    if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                        tableViewComponents.setItems(i.getComponentList());
+                        tableViewAdjustments.setItems(i.getAdjustmentList());
+                        outPersonId = i.getPersonId();
+                    }
+            }
+
             Date dateNow = new Date();
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
 
         }
         else{
+            if(firstInlog == 0){
+                //Starts delay thread
+                delayThread = new newThread();
+                delayThread.setOnSucceeded(this::threadDone);
+                delayThread.setOnFailed(this::threadFailed);
+                Thread th = new Thread(delayThread);
 
-            tableViewOrder.getItems().clear();
-            tableViewComponents.getItems().clear();
-            tableViewAdjustments.getItems().clear();
+                tableViewOrder.setDisable(true);
+                tableViewComponents.setDisable(true);
+                tableViewAdjustments.setDisable(true);
 
-            Thread delayThread = new Thread(new newThread());
+                buttonBack.setDisable(true);
+                txtFilterOrders.setDisable(true);
+                newOrder.setDisable(true);
+                deleteOrder.setDisable(true);
 
-            delayThread.start();
-            try{
-                delayThread.join();
-            }catch (InterruptedException e){
-                System.out.println("Nei");
+                deleteComponent.setDisable(true);
+                addComponent.setDisable(true);
+                newComponent.setDisable(true);
+                addAdjustment.setDisable(true);
+                deleteAdjustrment.setDisable(true);
+                newAdjustment.setDisable(true);
+
+
+                th.setDaemon(true);
+                th.start();
+                firstInlog = 1;
             }
+            else{
+                tableViewOrder.getItems().clear();
+                tableViewComponents.getItems().clear();
+                tableViewAdjustments.getItems().clear();
 
-            FileHandler.readAllFiles(stage);
+                fileHandler.readAllFiles(stage);
 
-            tableViewOrder.setItems(Lists.getOrders());
-            //Finds person in first order
-            int outPersonId = 0;
 
-            tableViewOrder.getSelectionModel().select(tableViewOrder.getItems().get(0));
-            selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
-            outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
+                tableViewOrder.setItems(Lists.getOrders());
+                //Finds person in first order
+                int outPersonId = 0;
+                tableViewOrder.requestFocus();
+                tableViewOrder.getSelectionModel().select(0);
+                tableViewOrder.getFocusModel().focus(0);
+                tableViewOrder.scrollTo(0);
+                //tableViewOrder.getSelectionModel().select(tableViewOrder.getItems().get(1));
+                //tableViewOrder.getFocusModel().focus(2);
+                System.out.println();
 
-            try {
-                for(User i : ReadUsers.getUserList()){
-                    if(i.getId() == outPersonId){
-                        lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
-                        lblOutPhone.setText((i.getPhone()));
-                        lblMailOut.setText(i.getEmail());
+                //tableViewOrder.getSelectionModel().selectFirst();
+                selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
+                outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
+
+                try {
+                    for(User i : ReadUsers.getUserList()){
+                        if(i.getId() == outPersonId){
+                            lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                            lblOutPhone.setText((i.getPhone()));
+                            lblMailOut.setText(i.getEmail());
+                        }
                     }
+                } catch (FileNotFoundException f) {
+                    f.printStackTrace();
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
 
-            for(Order i : Lists.getOrders()){
-                tableViewComponents.setItems(i.getComponentList());
-                tableViewAdjustments.setItems(i.getAdjustmentList());
+                tableViewComponents.setItems(tableViewOrder.getItems().get(0).getComponentList());
+                tableViewAdjustments.setItems(tableViewOrder.getItems().get(0).getAdjustmentList());
             }
 
         }
+        tableViewOrder.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableViewComponents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableViewAdjustments.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         personId.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         totalPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         componentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         adjustmentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
 
     }
-    @FXML
-    void btnBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        FileHandler.saveSelectedFile(stage);
+
+    private void threadDone(WorkerStateEvent e) {
+
         tableViewOrder.getItems().clear();
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
+
+        fileHandler.readAllFiles(stage);
+
+
+        tableViewOrder.setItems(Lists.getOrders());
+        //Finds person in first order
+        int outPersonId = 0;
+
+        tableViewOrder.getSelectionModel().select(tableViewOrder.getItems().get(0));
+        selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
+        outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
+
+        try {
+            for(User i : ReadUsers.getUserList()){
+                if(i.getId() == outPersonId){
+                    lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                    lblOutPhone.setText((i.getPhone()));
+                    lblMailOut.setText(i.getEmail());
+                }
+            }
+        } catch (FileNotFoundException f) {
+            f.printStackTrace();
+        }
+
+        tableViewComponents.setItems(tableViewOrder.getItems().get(0).getComponentList());
+        tableViewAdjustments.setItems(tableViewOrder.getItems().get(0).getAdjustmentList());
+
+        tableViewOrder.setDisable(false);
+        tableViewComponents.setDisable(false);
+        tableViewAdjustments.setDisable(false);
+
+        buttonBack.setDisable(false);
+        txtFilterOrders.setDisable(false);
+        newOrder.setDisable(false);
+        deleteOrder.setDisable(false);
+
+        deleteComponent.setDisable(false);
+        addComponent.setDisable(false);
+        newComponent.setDisable(false);
+        addAdjustment.setDisable(false);
+        deleteAdjustrment.setDisable(false);
+        newAdjustment.setDisable(false);
+    }
+
+    private void threadFailed(WorkerStateEvent event) {
+        Exception e = (Exception) event.getSource().getException();
+        lblMailOut.setText("Avviket sier: " + e.getMessage());
+    }
+
+    @FXML
+    void btnBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        FileHandler.saveSelectedFile(stage);
         FXMLLoader loader = new FXMLLoader();
         ControllerOrdersAddComponent.toBeChanged = false;
 
@@ -192,24 +316,32 @@ public class ControllerOrders implements Initializable {
     @FXML
     void onClickView(MouseEvent event) throws FileNotFoundException {
         int outPersonId = 0;
-        selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
-        for(Order i : Lists.getOrders()){
-            if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
-                tableViewComponents.setItems(i.getComponentList());
-                tableViewAdjustments.setItems(i.getAdjustmentList());
-                outPersonId = i.getPersonId();
+        try{
+            selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
+            for(Order i : Lists.getOrders()){
+                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                    tableViewComponents.setItems(i.getComponentList());
+                    tableViewAdjustments.setItems(i.getAdjustmentList());
+                    outPersonId = i.getPersonId();
+                }
             }
-        }
-        for(User i : ReadUsers.getUserList()){
-            if(i.getId() == outPersonId){
-                lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
-                lblOutPhone.setText((i.getPhone()));
-                lblMailOut.setText(i.getEmail());
+            for(User i : ReadUsers.getUserList()){
+                if(i.getId() == outPersonId){
+                    lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                    lblOutPhone.setText((i.getPhone()));
+                    lblMailOut.setText(i.getEmail());
+                }
             }
+        }catch (NullPointerException e){
+
         }
+
 
     }
+    @FXML
+    void btnNewOrder(ActionEvent event) {
 
+    }
     @FXML
     void deleteOrder(ActionEvent event) {
         try{
@@ -253,6 +385,26 @@ public class ControllerOrders implements Initializable {
 
     }
 
+    @FXML
+    void btnAddAdjustment(ActionEvent event) {
+
+    }
+    @FXML
+    void btnNewAdjustment(ActionEvent event) {
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
+    }
+    @FXML
+    void btnDeleteAdjustment(ActionEvent event) {
+        try{
+            if(deleteElements.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())){
+                //Deletes tableRow(s)
+                tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
+            }
+        }catch (IOException e){
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+        tableViewAdjustments.refresh();
+    }
 
     @FXML
     void carIdEdited(TableColumn.CellEditEvent<Order, String> event) {
@@ -298,8 +450,26 @@ public class ControllerOrders implements Initializable {
     }
 
     @FXML
-    void orderStatusEdited(ActionEvent event) {
+    void orderStatusEdited(TableColumn.CellEditEvent<TableView<Order>, Boolean> tableViewBooleanCellEditEvent) {
+        Order o = tableViewOrder.getSelectionModel().getSelectedItem();
+        boolean newOrderStatus = !tableViewBooleanCellEditEvent.getOldValue();
+        try {
+            if(newOrderStatus){
+                if(Dialogs.showChooseDialog("Edit order status to finished?")){
+                    o.setOrderStatus(newOrderStatus);
+                }
+            }
+            else{
+                if(Dialogs.showChooseDialog("Edit order status to not finished?")){
+                    o.setOrderStatus(newOrderStatus);
+                }
+            }
 
+
+        } catch (Exception e){
+            tableViewOrder.getSelectionModel().clearSelection();
+        }
+        tableViewOrder.refresh();
     }
 
 
@@ -384,6 +554,22 @@ public class ControllerOrders implements Initializable {
         tableViewAdjustments.refresh();
         tableViewOrder.refresh();
     }
+
+    @FXML
+    void txtFilterTyped(KeyEvent event) {
+            FilteredList<Order> filtered = new FilteredList<>(Lists.getOrders(), b -> true);
+
+            txtFilterOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+
+                filtered.setPredicate(order -> list.filterOrderList(order, newValue));
+
+                SortedList<Order> sorted = new SortedList<>(filtered);
+                sorted.comparatorProperty().bind(tableViewOrder.comparatorProperty());
+                tableViewOrder.setItems(sorted);
+            });
+        }
+
+
 }
 
 

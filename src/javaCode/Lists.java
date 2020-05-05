@@ -4,8 +4,10 @@ import javaCode.Car;
 import javaCode.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lists implements Serializable {
+public class Lists<E> implements Serializable {
 
     private static transient ObservableList<Car> carList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
@@ -99,17 +101,89 @@ public class Lists implements Serializable {
     }
     public static ObservableList<Order> getOngoingOrders(){ return ongoingOrderList; }
 
+    public boolean filterComponentList(Component component, String newValue ){
+        if(newValue == null || newValue.isEmpty()){
+            return true;
+        }
 
-    /*private void writeObject(ObjectOutputStream s) throws IOException {
-        s.defaultWriteObject();
-        s.writeObject(new ArrayList<>(carList));
+        String lowerCase = newValue.toLowerCase();
+
+        if(String.valueOf(component.getComponentID()).toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (component.getComponentType().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (component.getComponentDescription().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (Integer.toString(component.getComponentPrice()).toLowerCase().contains(lowerCase)) {
+            return true;
+        } else if (component.getCarID().toLowerCase().contains(lowerCase)){
+            return true;
+        }
+        return false;
     }
 
-    /*private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-        List<Person> list = (List<Person>) s.readObject();
-        pregister = FXCollections.observableArrayList();
-        pregister.addAll(list);
+    public boolean filterAdjustmentList(Adjustment adjustment, String newValue){
+        if(newValue == null || newValue.isEmpty()){
+            return true;
+        }
+
+        String lowerCase = newValue.toLowerCase();
+
+        if(String.valueOf(adjustment.getAdjustmentID()).toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (adjustment.getAdjustmentType().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (adjustment.getAdjustmentDescription().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (Integer.toString(adjustment.getAdjustmentPrice()).toLowerCase().contains(lowerCase)) {
+            return true;
+        }
+        return false;
     }
 
-     */
+
+    public boolean filterOrderList(Order order, String newValue ){
+
+        if(newValue == null || newValue.isEmpty()){
+            return true;
+        }
+
+        String lowerCase = newValue.toLowerCase();
+
+        if(String.valueOf(order.getOrderNr()).toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (Integer.toString(order.getPersonId()).toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (order.getCarId().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (Integer.toString(order.getTotalPrice()).toLowerCase().contains(lowerCase)) {
+            return true;
+        } else if (order.getCarColor().toLowerCase().contains(lowerCase)){
+            return true;
+        } else if (Boolean.toString(order.getOrderStatus()).toLowerCase().contains(lowerCase)) {
+            return true;
+        }
+        for(Component i : order.getComponentList()){
+            if(i.getComponentID().toLowerCase().contains(lowerCase)){
+                return true;
+            }
+            else if(i.getComponentType().toLowerCase().contains(lowerCase)){
+                return true;
+            }
+            else if(i.getComponentDescription().toLowerCase().contains(lowerCase)){
+                return true;
+            }
+
+        }
+        for(Adjustment i : order.getAdjustmentList()){
+            if(i.getAdjustmentID().toLowerCase().contains(lowerCase)){
+                return true;
+            }
+            else if(i.getAdjustmentType().toLowerCase().contains(lowerCase)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

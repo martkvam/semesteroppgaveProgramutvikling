@@ -1,14 +1,21 @@
 package javaCode.superUser;
 
-public class newThread implements Runnable{
+import javaCode.Dialogs;
+import javafx.concurrent.Task;
+
+
+public class newThread extends Task<Integer> {
 
     @Override
-    public void run() {
+    protected Integer call() {
+        //Uses sleep to simulate loading of bigger data
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
-            // gjør ikke noe her, men hvis hvis du er i en løkke
-            // burde løkkes stoppes med break hvis isCancelled() er true...
+           Dialogs.showErrorDialog("The thread failed because of: " + e.getMessage());
         }
+
+        return 0;
     }
+
 }

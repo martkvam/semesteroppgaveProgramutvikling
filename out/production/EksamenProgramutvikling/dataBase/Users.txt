@@ -11,3 +11,6 @@
 69;Geir;Hansen;rolfern@spenn.it;14141414;hahaha;false
 101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;false
 102;Pølsemannen;Grilstad;august_grilstad@hotmail.com;45252226;august123;false
+14;Ole;Olesen;ole@olesen.loe;123445566;olel;false
+15;Jorunn;Heggernes;joheg@gmail.com;885577342;heggernes;false
+10;Ole;olsen;olesen@mail.no;8573258104;ole;false

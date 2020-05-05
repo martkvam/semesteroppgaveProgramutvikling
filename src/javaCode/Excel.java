@@ -6,6 +6,8 @@ import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -22,46 +24,61 @@ import java.util.Iterator;
 
 public class Excel {
 
-    //Variables for paths to save Excel file
-    private static String filePath (){
-        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/UserRegister.xlsx";
-    }
-
     //With version controll so files dont get overwritten
-    private static String filePathVersion (int version){
-        return FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Excel/UserRegister"+ "(" + version + ")" +".xlsx";
+    private static String filePathVersion (String filepath, int version, String fileEnding){
+        return filepath + "(" + version + ")" + fileEnding;
     }
 
-
-    public static <E> void writeExcel(ObservableList<E> list) throws IOException {
+    public static <E> void writeExcel(ObservableList<E> list, String type) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Register");
+        String filePath = new FileChooser().showSaveDialog(Main.getPrimaryStage()).getAbsolutePath();
+        String fileEnding = ".xlsx";
+
+       /* String[] header=null;
+        switch (type){
+            case "User":
+                header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+                //String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+                break;
+            case "Order":
+                break;
+        }*/
 
         for(int rowCount = 0; rowCount < list.size(); rowCount++){
+            String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+
             Row row = sheet.createRow(rowCount);
             String [] user = list.get(rowCount).toString().split(";");
+            user[5] = "Unavailable";
+
 
             for(int columnCount = 0; columnCount<user.length; columnCount++) {
-                Cell cell = row.createCell(columnCount);
-                cell.setCellValue(user[columnCount]);
+                Cell headers = row.createCell(columnCount);
+                if (rowCount==0){
+                    assert header != null;
+                    headers.setCellValue(header[columnCount]);
+                } else {
+                    headers.setCellValue(user[columnCount]);
+                }
             }
         }
 
-        if (new File(filePath()).exists()){
+        if (new File(filePath + fileEnding).exists()){
             int version = 1;
-            while (new File(filePathVersion(version)).exists()){
+            while (new File(filePathVersion(filePath, version, fileEnding)).exists()){
                 version++;
             }
-            try (FileOutputStream outputStream = new FileOutputStream(filePathVersion(version))) {
+            try (FileOutputStream outputStream = new FileOutputStream(filePathVersion(filePath, version, fileEnding))) {
                 workbook.write(outputStream);
-                Desktop.getDesktop().open(new File(filePathVersion(version)));
+                Desktop.getDesktop().open(new File(filePathVersion(filePath, version, fileEnding)));
             } catch (IOException e) {
                 Dialogs.showErrorDialog("Couldnt save file");
             }
         } else{
-            try (FileOutputStream outputStream = new FileOutputStream(filePath())) {
+            try (FileOutputStream outputStream = new FileOutputStream(filePath + fileEnding)) {
                 workbook.write(outputStream);
-                Desktop.getDesktop().open(new File(filePath()));
+                Desktop.getDesktop().open(new File(filePath + fileEnding));
             } catch (IOException e) {
                 Dialogs.showErrorDialog("Couldnt save file");
             }
@@ -77,7 +94,7 @@ public class Excel {
 
         FileInputStream inputStream = new FileInputStream(chosenFile);
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        XSSFSheet firstSheet = workbook.getSheetAt(0);
+        XSSFSheet firstSheet = workbook.getSheetAt(1);
 
         String[] list = new String[0];
         DataFormatter formatter = new DataFormatter();
@@ -93,6 +110,7 @@ public class Excel {
                     break;
                 case "User":
                     list = new String[7];
+                    break;
             }
 
             Iterator<Cell> cellIterator = nextRow.cellIterator();

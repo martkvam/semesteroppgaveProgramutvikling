@@ -15,7 +15,7 @@ import java.util.*;
 public class ReadUsers {
 
     public static String getInfo(String id, String type) throws FileNotFoundException {
-        File myObj = new File(Formatter.path);
+        File myObj = new File(Formatter.registerPath);
         try (Scanner myReader = new Scanner(myObj)) {
             for (; myReader.hasNext(); ) {
                 String u = myReader.next();
@@ -46,7 +46,7 @@ public class ReadUsers {
     }
 
     public static void changeInfo(String id, String type, String change) throws IOException {
-        File myObj = new File(Formatter.path);
+        File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
         StringBuilder newRegister = new StringBuilder();
         ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
@@ -87,7 +87,7 @@ public class ReadUsers {
     }
 
     public static ArrayList<String> getUserId(String ... str) throws FileNotFoundException {
-        File myObj = new File(Formatter.path);
+        File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
         ArrayList<String> userId = new ArrayList<>();
 
@@ -145,7 +145,7 @@ public class ReadUsers {
 
     public static ObservableList<User> getUserList() throws FileNotFoundException, UserAlreadyExistException {
         ObservableList<User> userList = FXCollections.observableArrayList();
-        File myObj = new File(Formatter.path);
+        File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
         ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
 

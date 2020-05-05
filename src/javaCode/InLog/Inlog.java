@@ -160,20 +160,23 @@ public class Inlog implements Initializable {
 
     public void checkBoxShowPasswordClicked(ActionEvent actionEvent) {
         boolean checked = chkBoxPassword.isSelected();
+        txtVisiblePassword.setEditable(checked);
+        txtVisiblePassword.setDisable(!checked);
+        txtPassword.setEditable(!checked);
+        txtPassword.setDisable(checked);
+
         if(checked){
             txtVisiblePassword.setText(txtPassword.getText());
-            txtPassword.setOpacity(0);
+            txtVisiblePassword.toFront();
             txtVisiblePassword.setOpacity(1);
+            txtPassword.toBack();
+            txtPassword.setOpacity(0);
         } else{
             txtPassword.setText(txtVisiblePassword.getText());
+            txtPassword.toFront();
             txtPassword.setOpacity(1);
+            txtVisiblePassword.toBack();
             txtVisiblePassword.setOpacity(0);
         }
-
-        txtVisiblePassword.setDisable(checked);
-        txtVisiblePassword.setVisible(checked);
-        txtPassword.setDisable(!checked);
-        txtPassword.setVisible(!checked);
-
     }
 }

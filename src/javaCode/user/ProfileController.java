@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -301,7 +302,7 @@ public class ProfileController implements Initializable {
 
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(finishedOrdersTV.getItems().size() != 0) {
-            Excel.writeExcel(finishedOrdersTV.getItems());
+            Excel.writeExcel(finishedOrdersTV.getItems(), "User");
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

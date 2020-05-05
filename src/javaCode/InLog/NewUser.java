@@ -46,15 +46,24 @@ public class NewUser {
                          txtPassword.getText(), false);
                 Formatter.addToFile(newUser);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-                OpenScene.newScene("Log in", root, 500, 500, actionevent);
+                OpenScene.newScene("Log in", root, 600, 450, actionevent);
             } catch (Exception e){
                 Dialogs.showErrorDialog("Could register user due to:\n" + e.getMessage());
             }
     }
 
     public void enterKeyPressed(KeyEvent kEvent) {
+        allFieldsWritten(kEvent);
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnRegisterUser.fire();
+        }
+    }
+
+    private void allFieldsWritten(KeyEvent keyEvent){
+        if(!(txtFirstName.getText().isEmpty() || txtLastName.getText().isEmpty() ||
+                txtPassword.getText().isEmpty() || txtPhone.getText().isEmpty() ||
+                txtEmail.getText().isEmpty() || txtRepeatPassword.getText().isEmpty())){
+            btnRegisterUser.setDisable(false);
         }
     }
 
@@ -63,5 +72,10 @@ public class NewUser {
         if(!txtPassword.getText().matches(txtRepeatPassword.getText())){
             throw new IllegalArgumentException("Password dont match");
         }
+    }
+
+    public void btnBackOnClick(ActionEvent actionEvent) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+        OpenScene.newScene("Log in", root, 600, 450, actionEvent);
     }
 }

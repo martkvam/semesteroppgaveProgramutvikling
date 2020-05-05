@@ -165,7 +165,7 @@ public class ControllerEditProfile {
     }
 
     public void btnExportToExcelOnClick(ActionEvent actionEvent) throws IOException {
-        Excel.writeExcel(ReadUsers.getUserList());
+        Excel.writeExcel(ReadUsers.getUserList(), "Order");
     }
 
     public void btnImportFromExcelOnClick(ActionEvent actionEvent) throws IOException {

@@ -302,7 +302,7 @@ public class ProfileController implements Initializable {
 
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(finishedOrdersTV.getItems().size() != 0) {
-            Excel.writeExcel(finishedOrdersTV.getItems(), "User");
+            Excel.writeExcel(finishedOrdersTV.getItems(), "Order");
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

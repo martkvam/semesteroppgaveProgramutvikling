@@ -29,34 +29,48 @@ public class Excel {
         return filepath + "(" + version + ")" + fileEnding;
     }
 
+    private static String[] header (String type){
+
+        switch (type){
+            case "User":
+                return new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+                //String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+            case "Order":
+                return new String[]{"Order nr.", "Person nr.", "Car id", "Order Started", "Order finished",
+                        "Component list", "adjustment list", "Total price", "Car color", "order statur"};
+            default:
+                return null;
+        }
+    }
+
     public static <E> void writeExcel(ObservableList<E> list, String type) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Register");
         String filePath = new FileChooser().showSaveDialog(Main.getPrimaryStage()).getAbsolutePath();
         String fileEnding = ".xlsx";
 
-       /* String[] header=null;
-        switch (type){
-            case "User":
-                header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
-                //String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
-                break;
-            case "Order":
-                break;
-        }*/
+
 
         for(int rowCount = 0; rowCount < list.size(); rowCount++){
-            String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+            String[] header = header(type);//new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
 
             Row row = sheet.createRow(rowCount);
             String [] user = list.get(rowCount).toString().split(";");
-            user[5] = "Unavailable";
+
+            switch (type) {
+                case("User"):
+                    user[5] = "Unavailable";
+                    //header = header(type);
+                case("Order"):
+
+
+            }
 
 
             for(int columnCount = 0; columnCount<user.length; columnCount++) {
                 Cell headers = row.createCell(columnCount);
                 if (rowCount==0){
-                    assert header != null;
+                    //assert header != null;
                     headers.setCellValue(header[columnCount]);
                 } else {
                     headers.setCellValue(user[columnCount]);

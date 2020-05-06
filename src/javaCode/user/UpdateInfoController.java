@@ -36,7 +36,7 @@ public class UpdateInfoController {
         OpenScene.newScene("My profile", root, 610, 650, event);
     }
 
-    @FXML
+    @FXML //Method for changing personal info
     void changeInfo(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         String ID = "" + LoggedIn.getId();
 

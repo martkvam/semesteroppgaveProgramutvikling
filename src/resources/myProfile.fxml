@@ -23,7 +23,7 @@
             <Font size="11.0" />
          </font></Label>
       <Button layoutX="385.0" layoutY="55.0" mnemonicParsing="false" onAction="#updateInfo" prefHeight="27.0" prefWidth="96.0" text="Update info" />
-      <TableView fx:id="finishedOrdersTV" layoutX="17.0" layoutY="130.0" onMouseClicked="#updateTVfinished" prefHeight="237.0" prefWidth="520.0">
+      <TableView fx:id="ordersTV" layoutX="17.0" layoutY="130.0" onMouseClicked="#updateTVfinished" prefHeight="237.0" prefWidth="520.0">
         <columns>
             <TableColumn prefWidth="153.0" text="Date">
                 <cellValueFactory>
@@ -37,7 +37,7 @@
             </TableColumn>
             <TableColumn prefWidth="79.0" text="Car type">
                 <cellValueFactory>
-                    <PropertyValueFactory property="carId" />
+                    <PropertyValueFactory property="carType" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn prefWidth="94.0" text="Color">

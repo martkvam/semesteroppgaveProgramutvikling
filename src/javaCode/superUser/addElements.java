@@ -53,17 +53,14 @@ public class addElements {
         Node addDisableButton = dialog.getDialogPane().lookupButton(addButton);
         addDisableButton.setDisable(true);
 
-        // Do some validation (using the Java 8 lambda syntax).  OBS! Legge til støtte for at alle feltene må være fyllt ut.
+        //The price field has to be filled before the new car can be added
         carPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             addDisableButton.setDisable(newValue.trim().isEmpty());
         });
 
         dialog.getDialogPane().setContent(grid);
 
-        // Request focus on the username field by default.
-        Platform.runLater(() -> carType.requestFocus());
-
-        // Convert the result to a username-password-pair when the login button is clicked.
+        //Validates all input when add button is pushed. Returns new car and adds to list
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == addButton) {
                 int lastCarIndex = 0;
@@ -102,6 +99,8 @@ public class addElements {
             return null;
         });
 
+        //Starts dialog window, and waits for return.
+
         Optional<Car> result = dialog.showAndWait();
 
         //Handles the input values and sets new car id
@@ -111,7 +110,7 @@ public class addElements {
         });
     }
 
-
+    //Code for a new dialog to add new components.
     public static boolean openAddComponentsDialog(ObservableList<Car> carList, ObservableList<Component> componentList, Object selectedCarType, Object componentType, String description, int price){
         Dialog<Component> dialog = new Dialog<>();
         dialog.setTitle("New Component dialog");
@@ -121,7 +120,7 @@ public class addElements {
         ButtonType addButton = new ButtonType("Add component", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
 
-        // Create the input labels and fields.
+        // Create the input labels, fields, comboboxes and gridpane.
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -159,15 +158,17 @@ public class addElements {
 
         TextField componentPrice = new TextField();
         componentPrice.setPromptText("New component price");
-        if(selectedCarType.toString().length()!=0 || componentType.toString().length()!=0 || description.length()!= 0 || price ==1){
+
+        //Sets comboboxes and text field if validation was no good last time
+        if(selectedCarType.toString().length()!=0 || componentType.toString().length()!=0 || description.length()!= 0){
             chooseCar.getSelectionModel().select(selectedCarType);
             chooseComponentType.getSelectionModel().select(componentType);
             componentDescription.setText(description);
         }
 
-
-
+        //Makes shure that componenttype is selected
         if(!chooseComponentType.getSelectionModel().isEmpty()){
+            //Sets special grid for input of new component type
             if(chooseComponentType.getSelectionModel().getSelectedItem().toString().equals("New component type")){
                 grid.getChildren().clear();
                 grid.add(new Label("Choose car type for your new component"), 0, 0);
@@ -206,7 +207,7 @@ public class addElements {
         }
 
 
-
+        //If chooseComponenttype is choosen, the viewed grid is altered
         chooseComponentType.valueProperty().addListener((observable, oldValue, newValue) -> {
 
             if(newValue.toString().equals("New component type")){
@@ -240,7 +241,7 @@ public class addElements {
         Node addDisableButton = dialog.getDialogPane().lookupButton(addButton);
         addDisableButton.setDisable(true);
 
-        // Do some validation (using the Java 8 lambda syntax).  OBS! Legge til støtte for at alle feltene må være fyllt ut.
+        //Validates price input with a input listener
         componentPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             addDisableButton.setDisable(true);
             if(newValue.length()!=0){
@@ -250,6 +251,8 @@ public class addElements {
                 }catch (NumberFormatException e){
                     Dialogs.showErrorDialog(e.getMessage());
                     componentPrice.clear();
+                }catch (IllegalArgumentException e){
+
                 }
             }
         });
@@ -259,7 +262,7 @@ public class addElements {
         // Request focus on the username field by default.
         Platform.runLater(() -> chooseCar.requestFocus());
 
-        // Convert the input from the textareas and comboboxes to a Component and returns it.
+        // Validates an converts the input from the textareas and comboboxes to a Component and returns a new component.
         dialog.setResultConverter(dialogButton -> {
 
             if (dialogButton == addButton) {
@@ -270,28 +273,26 @@ public class addElements {
                 String outComponentDescription="";
                 //Loop to set new componentID
                 if(!chooseComponentType.getSelectionModel().isEmpty() && !chooseCar.getSelectionModel().isEmpty()){
-                    for (int i = 0; i < componentList.size(); i++) {
-                        if (chooseComponentType.getValue().toString().equals("New component type")) {
-                            //Loop to find highest ComponentTypeID(first number in componentID)
-                            String lastComponentID = "";
-                            int lastComponentIDchecked = 0;
-                            for (int j = 0; j < componentList.size(); j++) {
-                                String line = componentList.get(j).getComponentID();
-                                String[] split = line.split("-");
+                    if (chooseComponentType.getValue().toString().equals("New component type")) {
+                        //Loop to find highest ComponentTypeID(first number in componentID)
+                        String lastComponentID = "";
+                        int lastComponentIDchecked = 0;
+                        for (int j = 0; j < componentList.size(); j++) {
+                            String line = componentList.get(j).getComponentID();
+                            String[] split = line.split("-");
 
-                                if (Integer.parseInt(split[0]) >= lastComponentIDchecked) {
-                                    lastComponentIDchecked = Integer.parseInt(split[0]);
-                                }
+                            if (Integer.parseInt(split[0]) >= lastComponentIDchecked) {
+                                lastComponentIDchecked = Integer.parseInt(split[0]);
                             }
+                        }
 
-                            lastComponentID = Integer.toString(lastComponentIDchecked + 1);
-                            outComponentType = newComponentType.getText();
-                            componentId = lastComponentID;
-                            componentId += "-";
-                            componentId += 1;
-                            break;
-
-                        } else if (componentList.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
+                        lastComponentID = Integer.toString(lastComponentIDchecked + 1);
+                        outComponentType = newComponentType.getText();
+                        componentId = lastComponentID;
+                        componentId += "-";
+                        componentId += 1;
+                    }for (int i = 0; i < componentList.size(); i++) {
+                         if (componentList.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
                             int lastComponentIDchecked = 0;
                             String line = componentList.get(i).getComponentID();
                             String[] split = line.split("-");
@@ -354,7 +355,7 @@ public class addElements {
         return false;
     }
 
-    public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList){
+    public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList, Object adjustmentType, String description, int price){
         Dialog<Adjustment> dialog = new Dialog<>();
         dialog.setTitle("New adjustment dialog");
         dialog.setHeaderText("Add new adjustment");
@@ -385,27 +386,55 @@ public class addElements {
 
 
         TextField newAdjustmentType = new TextField();
-        newAdjustmentType.setPromptText("Add new component type");
+        newAdjustmentType.setPromptText("Add new adjustment type");
         newAdjustmentType.setVisible(false);
 
         TextField adjustmentTypeName = new TextField();
-        adjustmentTypeName.setPromptText("New component name");
+        adjustmentTypeName.setPromptText("New adjustment name");
 
         TextArea adjustmentDescription = new TextArea();
-        adjustmentDescription.setPromptText("New component description");
+        adjustmentDescription.setPromptText("New adjustment description");
 
         TextField adjustmentPrice = new TextField();
-        adjustmentPrice.setPromptText("New component price");
+        adjustmentPrice.setPromptText("New adjustment price");
 
+        if(adjustmentType.toString().length()!=0 || description.length()!= 0 || price ==1){
+            chooseAdjustmentType.getSelectionModel().select(adjustmentType);
+            adjustmentDescription.setText(description);
+        }
 
+        if(!chooseAdjustmentType.getSelectionModel().isEmpty()){
+            if(chooseAdjustmentType.getSelectionModel().getSelectedItem().toString().equals("New adjustment type")){
+                grid.getChildren().clear();
+                grid.add(new Label("Choose adjustment type for your new adjustment"), 0, 0);
+                grid.add(chooseAdjustmentType, 1, 0);
+                grid.add(new Label("New adjustment type"), 0, 1);
+                grid.add(newAdjustmentType, 1, 1);
+                grid.add(new Label("Component description"), 0, 2);
+                grid.add(adjustmentDescription, 1, 2);
+                grid.add(new Label("Car Price"), 0, 3);
+                grid.add(adjustmentPrice, 1, 3);
+                newAdjustmentType.setVisible(true);
+            }else{
+                grid.add(new Label("Choose adjustment type for your new adjustment"), 0, 0);
+                grid.add(chooseAdjustmentType, 1, 0);
 
-        grid.add(new Label("Choose adjustment type for your new adjustment"), 0, 0);
-        grid.add(chooseAdjustmentType, 1, 0);
+                grid.add(new Label("Adjustment description"), 0, 1);
+                grid.add(adjustmentDescription, 1, 1);
+                grid.add(new Label("Adjustment price"), 0, 2);
+                grid.add(adjustmentPrice, 1, 2);
+            }
 
-        grid.add(new Label("Adjustment description"), 0, 1);
-        grid.add(adjustmentDescription, 1, 1);
-        grid.add(new Label("Adjustment price"), 0, 2);
-        grid.add(adjustmentPrice, 1, 2);
+        }else{
+            grid.add(new Label("Choose adjustment type for your new adjustment"), 0, 0);
+            grid.add(chooseAdjustmentType, 1, 0);
+
+            grid.add(new Label("Adjustment description"), 0, 1);
+            grid.add(adjustmentDescription, 1, 1);
+            grid.add(new Label("Adjustment price"), 0, 2);
+            grid.add(adjustmentPrice, 1, 2);
+        }
+
 
         boolean newType = false;
         chooseAdjustmentType.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -439,7 +468,16 @@ public class addElements {
 
         // Do some validation (using the Java 8 lambda syntax).  OBS! Legge til støtte for at alle feltene må være fyllt ut.
         adjustmentPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-            addDisableButton.setDisable(newValue.trim().isEmpty());
+            addDisableButton.setDisable(true);
+            if(newValue.length()!=0){
+                try{
+                    int testAdjsutment = Integer.parseInt(newValue);
+                    addDisableButton.setDisable(newValue.trim().isEmpty());
+                }catch (NumberFormatException e){
+                    Dialogs.showErrorDialog(e.getMessage());
+                    adjustmentPrice.clear();
+                }
+            }
         });
 
         dialog.getDialogPane().setContent(grid);
@@ -448,29 +486,48 @@ public class addElements {
         dialog.setResultConverter(dialogButton -> {
 
             if (dialogButton == addButton) {
-                String adjustmentId = "";
-                String outAdjustmentType = "";
-                //Loop to set new componentID
-                for (int i = 0; i < adjustmentList.size(); i++) {
+                if(!chooseAdjustmentType.getSelectionModel().isEmpty()){
+                    String adjustmentId = "";
+                    String outAdjustmentType = "";
+                    //Loop to set new componentID
+                    for (int i = 0; i < adjustmentList.size(); i++) {
 
-                    //Loop to find highest ComponentTypeID(first number in componentID)
-                    String lastAdjustmentId = "";
-                    int lastAdjustmentIdChecked = 0;
-                    for (int j = 0; j < adjustmentList.size(); j++) {
-                        if(lastAdjustmentIdChecked < Integer.parseInt(adjustmentList.get(j).getAdjustmentID())){
-                            lastAdjustmentIdChecked = Integer.parseInt(adjustmentList.get(j).getAdjustmentID());
+                        //Loop to find highest ComponentTypeID(first number in componentID)
+                        String lastAdjustmentId = "";
+                        int lastAdjustmentIdChecked = 0;
+                        for (Adjustment adjustment : adjustmentList) {
+                            if (lastAdjustmentIdChecked < Integer.parseInt(adjustment.getAdjustmentID())) {
+                                lastAdjustmentIdChecked = Integer.parseInt(adjustment.getAdjustmentID());
+                            }
                         }
+                        lastAdjustmentId=Integer.toString(lastAdjustmentIdChecked+1);
+                        if(chooseAdjustmentType.getSelectionModel().getSelectedItem().equals("New adjustment type")){
+                            outAdjustmentType = newAdjustmentType.getText();
+                        }
+                        else{
+                            outAdjustmentType = chooseAdjustmentType.getSelectionModel().getSelectedItem().toString();
+                        }
+
+                        adjustmentId=lastAdjustmentId;
                     }
-                    lastAdjustmentId=Integer.toString(lastAdjustmentIdChecked+1);
-                    outAdjustmentType = newAdjustmentType.getText();
-                    adjustmentId=lastAdjustmentId;
+                    try{
+                        String outAdjustmentDescription = adjustmentDescription.getText();
+                        int outAdjustmentPrice = Integer.parseInt(adjustmentPrice.getText());
+
+                        return new Adjustment(adjustmentId, outAdjustmentType, outAdjustmentDescription, outAdjustmentPrice);
+                    } catch (NumberFormatException e) {
+                        Dialogs.showErrorDialog("Adjustment price must be a number");
+                        openAddAdjustmentDialog(adjustmentList,adjustmentType,description,price);
+                        return null;
+                    }catch (IllegalArgumentException e){
+                        return null;
+                    }
+                }else{
+                    Dialogs.showErrorDialog("You have to choose a adjustment type");
+                    openAddAdjustmentDialog(adjustmentList, adjustmentType, description, price);
+                    return null;
                 }
 
-                String outAdjustmentDescription = adjustmentDescription.getText();
-                int outAdjustmentPrice = Integer.parseInt(adjustmentPrice.getText());
-
-                Adjustment newAdjusment = new Adjustment(adjustmentId, outAdjustmentType, outAdjustmentDescription, outAdjustmentPrice);
-                return newAdjusment;
             }
             else{
                 return null;
@@ -480,8 +537,6 @@ public class addElements {
         Optional<Adjustment> result = dialog.showAndWait();
 
         //Handles the input values and sets new car id
-        result.ifPresent(newAdjustmentEntry -> {
-            adjustmentList.add(newAdjustmentEntry);
-        });
+        result.ifPresent(adjustmentList::add);
     }
 }

@@ -36,6 +36,7 @@ public class ControllerOrders implements Initializable {
     private static int firstInlog;
     Stage stage = new Stage();
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
+    private ConverterErrorHandler.BooleanStringConverter booleanStringConverter = new ConverterErrorHandler.BooleanStringConverter();
 
     private static Order selectedOrder;
     FileHandler fileHandler = new FileHandler();
@@ -243,6 +244,7 @@ public class ControllerOrders implements Initializable {
         totalPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         componentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
         adjustmentPrice.setCellFactory(TextFieldTableCell.forTableColumn(intStrConverter));
+        orderStatus.setCellFactory(TextFieldTableCell.forTableColumn(booleanStringConverter));
 
     }
 
@@ -391,7 +393,7 @@ public class ControllerOrders implements Initializable {
     }
     @FXML
     void btnNewAdjustment(ActionEvent event) {
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment(),"", "", 0);
     }
     @FXML
     void btnDeleteAdjustment(ActionEvent event) {

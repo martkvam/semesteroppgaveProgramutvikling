@@ -30,6 +30,7 @@ public class ControllerAddEditComponents implements Initializable {
     //Sets up int/String converter
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
 
+
     //Sets up private variables
     private String selectedElement = "Car";
     private Stage stage;
@@ -227,7 +228,7 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewAdjustment(ActionEvent event) {
         //Directs user to dialog window to add a new adjustment
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment());
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment(),"", "", 0);
     }
 
     @FXML

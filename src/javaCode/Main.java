@@ -7,12 +7,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private static Stage primaryStage;
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        Main.primaryStage = primaryStage;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/Inlog.fxml"));
         primaryStage.setTitle("Log in");
-        primaryStage.setScene(new Scene(root,500,500));
+        primaryStage.setScene(new Scene(root,600,450));
         primaryStage.show();
     }
 

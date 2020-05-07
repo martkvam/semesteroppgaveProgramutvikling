@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.InLog.NewUser">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.InLog.NewUser">
    <children>
       <GridPane layoutX="1.0" prefHeight="400.0" prefWidth="300.0">
         <columnConstraints>
@@ -26,12 +26,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="txtFirstName" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtLastName" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtPhone" promptText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtEmail" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <PasswordField fx:id="txtPassword" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button fx:id="btnRegisterUser" mnemonicParsing="false" onAction="#btnRegisterUserOnClick" text="Register" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtFirstName" onKeyReleased="#enterKeyPressed"  promptText="First Name" GridPane.columnIndex="1" />
+            <TextField fx:id="txtLastName" onKeyReleased="#enterKeyPressed" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPhone" onKeyReleased="#enterKeyPressed" promptText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtEmail" onKeyReleased="#enterKeyPressed" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="txtPassword" onKeyReleased="#enterKeyPressed" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="txtRepeatPassword" onKeyReleased="#enterKeyPressed" promptText="Repeat password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="btnRegisterUser" disable="true" mnemonicParsing="false" onAction="#btnRegisterUserOnClick" text="Register" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" onAction="#btnBackOnClick" text="Go back" GridPane.columnIndex="2" GridPane.rowIndex="6" />
          </children>
       </GridPane>
    </children>

@@ -1,6 +1,7 @@
 package javaCode;
 
 import javaCode.Dialogs;
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javaCode.Lists;
@@ -12,43 +13,18 @@ import java.util.IllegalFormatException;
 //If new user is incorrect, e.g. name is numbers the Exception will be thrown but the user still registers.
 //Need to stop the user from registering and "try again"
 public class Validator {
-    public static String name(String name) {
-        try{
-            if (!name.matches("([a-zA-ZæøåÆØÅ]+['\\-,. ]?)+")){
-                throw new IllegalArgumentException("Invalid name");
-            } else {
-                return name;
-            }
-        } catch (IllegalArgumentException e){
-            Dialogs.showErrorDialog(e.getMessage());
-            return null;
-        }
+    addElements addelements= new addElements();
+
+    public static boolean name(String name){
+        return name.matches("([a-zA-ZæøåÆØÅ]+['\\-,. ]?)+");
     }
 
-    public static String phone(String phone){
-        try{
-            if (!phone.matches("(([(][+]{0,1})|([+]?))[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*")){
-                throw new IllegalArgumentException("Invalid phone number");
-            } else{
-                return phone;
-            }
-        }catch (IllegalArgumentException e){
-            Dialogs.showErrorDialog(e.getMessage());
-            return null;
-        }
+    public static boolean phone(String phone){
+        return phone.matches("(([(][+]{0,1})|([+]?))[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*");
     }
 
-    public static String email(String email){
-        try{
-            if(!email.matches(".[\\S]+@.[\\S]+[.].[\\S]+")){
-                throw new IllegalArgumentException("Invalid email");
-            } else {
-                return email;
-            }
-        }catch (IllegalArgumentException e){
-            Dialogs.showErrorDialog(e.getMessage());
-            return null;
-        }
+    public static boolean email(String email){
+        return email.matches(".[\\S]+@.[\\S]+[.].[\\S]+");
     }
 
 
@@ -165,7 +141,7 @@ public class Validator {
         }
         return true;
     }
-    public static boolean orderPersonId(int id) throws FileNotFoundException {
+    public static boolean orderPersonId(int id) throws FileNotFoundException, UserAlreadyExistException {
         for(User i : ReadUsers.getUserList()){
             if(i.getId() == id){
                 return true;

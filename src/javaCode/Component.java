@@ -1,16 +1,13 @@
 package javaCode;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import javaCode.superUser.addElements;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import javax.xml.bind.helpers.ValidationEventLocatorImpl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Collection;
 
 public class Component implements Serializable {
     private transient SimpleStringProperty carID;

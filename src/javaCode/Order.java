@@ -6,11 +6,15 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 
 public class Order implements Serializable {
+    private static final String DELIMITER = ";" ;
     private transient SimpleStringProperty orderNr;
     private transient SimpleIntegerProperty personId;
     private transient SimpleStringProperty carId;
@@ -254,5 +258,12 @@ public class Order implements Serializable {
             }
         }
         return out;
+    }
+
+    @Override
+    public String toString() {
+        return getOrderNr() + DELIMITER + getPersonId() + DELIMITER + getCarId() + DELIMITER + getOrderStarted()
+                + DELIMITER + getOrderFinished() + DELIMITER + formatComponents(getComponentList()) + DELIMITER + formatAdjustments(getAdjustmentList())
+                + DELIMITER + getTotalPrice() + DELIMITER + getCarColor() + DELIMITER + getOrderStatus();
     }
 }

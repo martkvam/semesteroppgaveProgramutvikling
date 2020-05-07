@@ -2,13 +2,15 @@ package javaCode.InLog;
 
 import javaCode.Dialogs;
 import javaCode.OpenScene;
-import javaCode.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 import java.io.IOException;
 
 public class NewUser {
@@ -29,24 +31,51 @@ public class NewUser {
     private TextField txtPassword;
 
     @FXML
+    private TextField txtRepeatPassword;
+
+    @FXML
     private Button btnRegisterUser;
 
     @FXML
-    void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        if((ReadUsers.getUserId(txtEmail.getText()) == null) && ReadUsers.getUserId(txtPhone.getText()) == null) {
-            if (Validator.name(txtFirstName.getText()) != null &&
-                    Validator.name(txtLastName.getText()) != null && Validator.email(txtEmail.getText()) != null &&
-                    Validator.phone(txtPhone.getText()) != null) {
-                User newUser = new User(Formatter.assignID(), Validator.name(txtFirstName.getText()),
-                        Validator.name(txtLastName.getText()), Validator.email(txtEmail.getText()),
-                        Validator.phone(txtPhone.getText()), txtPassword.getText(), false);
+    void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
+            try {
+                ReadUsers.checkIfUserExists(txtEmail.getText(), txtPhone.getText());
+                passwordMatches();
+                User newUser = new User(Formatter.assignID(), txtFirstName.getText(),
+                        txtLastName.getText(), txtEmail.getText(), txtPhone.getText(),
+                         txtPassword.getText(), false);
                 Formatter.addToFile(newUser);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-                OpenScene.newScene("Log in", root, 500, 500, actionevent);
+                OpenScene.newScene("Log in", root, 600, 450, actionevent);
+            } catch (Exception e){
+                Dialogs.showErrorDialog("Could register user due to:\n" + e.getMessage());
             }
-        }else {
-            Dialogs.showErrorDialog("User already exists");
+    }
+
+    public void enterKeyPressed(KeyEvent kEvent) {
+        allFieldsWritten(kEvent);
+        if(kEvent.getCode()== KeyCode.ENTER) {
+            btnRegisterUser.fire();
         }
     }
 
+    private void allFieldsWritten(KeyEvent keyEvent){
+        if(!(txtFirstName.getText().isEmpty() || txtLastName.getText().isEmpty() ||
+                txtPassword.getText().isEmpty() || txtPhone.getText().isEmpty() ||
+                txtEmail.getText().isEmpty() || txtRepeatPassword.getText().isEmpty())){
+            btnRegisterUser.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void passwordMatches(){
+        if(!txtPassword.getText().matches(txtRepeatPassword.getText())){
+            throw new IllegalArgumentException("Password dont match");
+        }
+    }
+
+    public void btnBackOnClick(ActionEvent actionEvent) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+        OpenScene.newScene("Log in", root, 600, 450, actionEvent);
+    }
 }

@@ -1,36 +1,40 @@
 package javaCode.InLog;
 
-import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
-import javaCode.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javaCode.Dialogs;
+import javaCode.FileHandler;
+import javaCode.Lists;
+import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Inlog implements Initializable {
+
+    @FXML
+    public TextField txtVisiblePassword;
 
     @FXML
     private PasswordField txtPassword;
 
     @FXML
     private TextField txtUserName;
+
+    @FXML
+    private CheckBox chkBoxPassword;
 
     @FXML
     private Button btnLogIn;
@@ -42,6 +46,7 @@ public class Inlog implements Initializable {
     FileHandler handler = new FileHandler();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         handler.readAllFiles(stage);
        /*Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
@@ -150,6 +155,28 @@ public class Inlog implements Initializable {
     public void enterKeyPressed(KeyEvent kEvent) {
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnLogIn.fire();
+        }
+    }
+
+    public void checkBoxShowPasswordClicked(ActionEvent actionEvent) {
+        boolean checked = chkBoxPassword.isSelected();
+        txtVisiblePassword.setEditable(checked);
+        txtVisiblePassword.setDisable(!checked);
+        txtPassword.setEditable(!checked);
+        txtPassword.setDisable(checked);
+
+        if(checked){
+            txtVisiblePassword.setText(txtPassword.getText());
+            txtVisiblePassword.toFront();
+            txtVisiblePassword.setOpacity(1);
+            txtPassword.toBack();
+            txtPassword.setOpacity(0);
+        } else{
+            txtPassword.setText(txtVisiblePassword.getText());
+            txtPassword.toFront();
+            txtPassword.setOpacity(1);
+            txtVisiblePassword.toBack();
+            txtVisiblePassword.setOpacity(0);
         }
     }
 }

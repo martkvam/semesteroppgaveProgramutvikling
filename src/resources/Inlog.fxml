@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,8 +35,10 @@
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username (phone/email)" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="3" />
-             <TextField fx:id="txtUserName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField fx:id="txtUserName" onKeyReleased="#enterKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <PasswordField fx:id="txtPassword" onKeyReleased="#enterKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtVisiblePassword" disable="true" opacity="0" onKeyReleased="#enterKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <CheckBox fx:id="chkBoxPassword" mnemonicParsing="false" onAction="#checkBoxShowPasswordClicked" text="Show password" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#btnLogInOnClick" text="Log in" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#btnNewUserOnClick" text="New User" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="dnsns">
+    <CLASSES>
+      <root url="file:///Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib/ext" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file:///Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib/ext" recursive="false" />
+  </library>
+</component>

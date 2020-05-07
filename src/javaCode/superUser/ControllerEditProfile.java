@@ -1,6 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.ConverterErrorHandler;
+import javaCode.Dialogs;
+import javaCode.Excel;
+import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javaCode.OpenScene;
@@ -51,18 +54,14 @@ public class ControllerEditProfile {
     @FXML
     private TextField txtSearch;
 
-    public void initialize(){
+    public void initialize() throws FileNotFoundException, UserAlreadyExistException {
         id.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.IntegerStringConverter()));
         superUser.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
-        try {
-            tvUserRegister.setItems(ReadUsers.getUserList());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        tvUserRegister.setItems(ReadUsers.getUserList());
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-    public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException {
+    public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException, UserAlreadyExistException {
             FilteredList<User> filtered = new FilteredList<>(ReadUsers.getUserList(), b -> true);
 
             txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -102,7 +101,8 @@ public class ControllerEditProfile {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "FirstName", newFirstName);
             u.setFirstName(newFirstName);
         } catch (Exception e){
-           tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
+            tvUserRegister.getSelectionModel().clearSelection();
         }
         tvUserRegister.refresh();
     }
@@ -115,6 +115,7 @@ public class ControllerEditProfile {
             u.setLastName(newLastName);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -124,9 +125,10 @@ public class ControllerEditProfile {
         String newPhone = cellEditEvent.getNewValue();
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Phone", newPhone);
-            u.setLastName(newPhone);
+            u.setPhone(newPhone);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -136,9 +138,10 @@ public class ControllerEditProfile {
         String newEmail = cellEditEvent.getNewValue();
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Email", newEmail);
-            u.setLastName(newEmail);
+            u.setEmail(newEmail);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -151,6 +154,7 @@ public class ControllerEditProfile {
             u.setSuperUser(newSuperUser);
         } catch (Exception e){
             tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -158,6 +162,16 @@ public class ControllerEditProfile {
     public void btnGoBackOnClick(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
+    }
+
+    public void btnExportToExcelOnClick(ActionEvent actionEvent) throws IOException {
+        Excel.writeExcel(ReadUsers.getUserList(), "User");
+    }
+
+    public void btnImportFromExcelOnClick(ActionEvent actionEvent) throws IOException {
+        Excel.readExcel("User");
+        initialize();
+        tvUserRegister.refresh();
     }
 }
 

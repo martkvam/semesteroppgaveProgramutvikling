@@ -95,6 +95,7 @@
       <Label layoutX="16.0" layoutY="375.0" prefHeight="17.0" prefWidth="209.0" text="Components in selected order" />
       <Label layoutX="282.0" layoutY="375.0" prefHeight="17.0" prefWidth="190.0" text="Adjustments in selected order" />
       <Button layoutX="27.0" layoutY="606.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="btnExportFinished" layoutX="550.0" layoutY="148.0" mnemonicParsing="false" onAction="#btnExportFinishedOnClick" text="Export to Excel" />
       <Button fx:id="btnShowFinished" layoutX="381.0" layoutY="96.0" mnemonicParsing="false" onAction="#showFinsihed" prefHeight="27.0" prefWidth="143.0" text="Show finished orders" visible="false">
          <font>
             <Font size="11.0" />

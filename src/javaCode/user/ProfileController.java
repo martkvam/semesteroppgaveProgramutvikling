@@ -13,9 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
@@ -62,6 +66,11 @@ public class ProfileController implements Initializable {
     @FXML
     private Button btnShowOngoing;
 
+    @FXML
+    private Button btnExportFinished;
+
+    @FXML
+    private Button btnExportOngoing;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,6 +84,10 @@ public class ProfileController implements Initializable {
         }
 
         ordersTV.setItems(orders);
+
+
+
+
 
         //Fills out the personal info section
         String ID = "" + LoggedIn.getId();
@@ -108,7 +121,7 @@ public class ProfileController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
             OpenScene.newScene("Order", root, 650, 700, event);
         }
@@ -277,5 +290,13 @@ public class ProfileController implements Initializable {
 
         lblHeader.setText("Ongoing orders (click on an order to see content)");
         updateTVfinished(event);
+    }
+
+    public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
+        if(ordersTV.getItems().size() != 0) {
+            Excel.writeExcel(ordersTV.getItems(), "Order");
+        } else{
+            Dialogs.showErrorDialog("List is empty");
+        }
     }
 }

@@ -66,6 +66,11 @@ public class ProfileController implements Initializable {
     @FXML
     private Button btnShowOngoing;
 
+    @FXML
+    private Button btnExportFinished;
+
+    @FXML
+    private Button btnExportOngoing;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -80,11 +85,9 @@ public class ProfileController implements Initializable {
 
         ordersTV.setItems(orders);
 
-    @FXML
-    private Button btnExportFinished;
 
-    @FXML
-    private Button btnExportOngoing;
+
+
 
         //Fills out the personal info section
         String ID = "" + LoggedIn.getId();
@@ -290,8 +293,8 @@ public class ProfileController implements Initializable {
     }
 
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
-        if(finishedOrdersTV.getItems().size() != 0) {
-            Excel.writeExcel(finishedOrdersTV.getItems(), "Order");
+        if(ordersTV.getItems().size() != 0) {
+            Excel.writeExcel(ordersTV.getItems(), "Order");
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

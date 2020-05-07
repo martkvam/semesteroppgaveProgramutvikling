@@ -228,7 +228,7 @@ public class ControllerOrders implements Initializable {
                             lblMailOut.setText(i.getEmail());
                         }
                     }
-                } catch (FileNotFoundException f) {
+                } catch (FileNotFoundException | UserAlreadyExistException f) {
                     f.printStackTrace();
                 }
 
@@ -274,7 +274,7 @@ public class ControllerOrders implements Initializable {
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        } catch (FileNotFoundException f) {
+        } catch (FileNotFoundException | UserAlreadyExistException f) {
             f.printStackTrace();
         }
 

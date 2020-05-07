@@ -166,6 +166,18 @@ public class Order implements Serializable {
         this.orderStatus.set(orderStatus);
     }
 
+    //Used for displaying car type in the tableview for orders
+    public String getCarType(){
+        String carType = "";
+        String carID = getCarId();
+        for (Car c : Lists.getCars()){
+            if(c.getCarID().equals(carID)){
+                carType += c.getCarType();
+            }
+        }
+        return carType;
+    }
+
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
         s.writeUTF(getOrderNr());

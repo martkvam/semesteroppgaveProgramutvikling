@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class Methods {
-    //Metode for å lage liste som skal fylle biltype-choicebox
+    //Method that makes a list to fill the "choose cartype"-choicebox
     public static ArrayList<String> typeList(ObservableList<Car> inList) {
         ArrayList<Car> aList = new ArrayList<>();
         for (Car car : inList) {
@@ -33,7 +33,7 @@ public class Methods {
 
     }
 
-    //Metode for å lage liste som skal fylle komponent-choicebox
+    //Method that makes a list to fill the component-choicebox
     public static ArrayList<String> componentList(ObservableList<Component> inList){
         ArrayList<Component> aList = new ArrayList<>();
         for (Component component : inList) {

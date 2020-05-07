@@ -306,7 +306,6 @@ public class ProfileController implements Initializable {
         } else{
             Dialogs.showErrorDialog("List is empty");
         }
-
     }
 
     public void btnExportOngoingOnClick(ActionEvent actionEvent) throws IOException {

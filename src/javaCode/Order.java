@@ -251,7 +251,7 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return getOrderNr() + DELIMITER + getPersonId() + DELIMITER + getCarId() + DELIMITER + getOrderStarted()
-                + DELIMITER + getOrderFinished() + DELIMITER + formatComponents(getComponentList()) + formatAdjustments(getAdjustmentList())
-                + getTotalPrice() + DELIMITER + getCarColor() + DELIMITER + getOrderStatus();
+                + DELIMITER + getOrderFinished() + DELIMITER + formatComponents(getComponentList()) + DELIMITER + formatAdjustments(getAdjustmentList())
+                + DELIMITER + getTotalPrice() + DELIMITER + getCarColor() + DELIMITER + getOrderStatus();
     }
 }

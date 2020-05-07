@@ -30,14 +30,12 @@ public class Excel {
     }
 
     private static String[] header (String type){
-
         switch (type){
             case "User":
                 return new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
-                //String[] header = new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
             case "Order":
                 return new String[]{"Order nr.", "Person nr.", "Car id", "Order Started", "Order finished",
-                        "Component list", "adjustment list", "Total price", "Car color", "order statur"};
+                        "Component list", "Adjustment list", "Total price", "Car color", "Order status"};
             default:
                 return null;
         }
@@ -49,12 +47,18 @@ public class Excel {
         String filePath = new FileChooser().showSaveDialog(Main.getPrimaryStage()).getAbsolutePath();
         String fileEnding = ".xlsx";
 
-
-
         for(int rowCount = 0; rowCount < list.size(); rowCount++){
-            String[] header = header(type);//new String[]{"Id", "Firstname", "Lastname", "Email", "Phone", "Password", "Superuser"};
+            String[] header = header(type);
+            if (rowCount==0){
+                Row headerRow = sheet.createRow(rowCount);
+                for(int headerCount = 0; headerCount<header.length; headerCount++) {
+                    Cell headers = headerRow.createCell(headerCount);
+                    //assert header != null;
+                    headers.setCellValue(header[headerCount]);
+                }
+            }
 
-            Row row = sheet.createRow(rowCount);
+            Row row = sheet.createRow(rowCount+1);
             String [] user = list.get(rowCount).toString().split(";");
 
             switch (type) {
@@ -62,19 +66,12 @@ public class Excel {
                     user[5] = "Unavailable";
                     //header = header(type);
                 case("Order"):
-
-
+                    break;
             }
 
-
             for(int columnCount = 0; columnCount<user.length; columnCount++) {
-                Cell headers = row.createCell(columnCount);
-                if (rowCount==0){
-                    //assert header != null;
-                    headers.setCellValue(header[columnCount]);
-                } else {
-                    headers.setCellValue(user[columnCount]);
-                }
+                Cell cell = row.createCell(columnCount);
+                cell.setCellValue(user[columnCount]);
             }
         }
 
@@ -108,13 +105,13 @@ public class Excel {
 
         FileInputStream inputStream = new FileInputStream(chosenFile);
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        XSSFSheet firstSheet = workbook.getSheetAt(1);
+        XSSFSheet firstSheet = workbook.getSheetAt(0);
 
         String[] list = new String[0];
         DataFormatter formatter = new DataFormatter();
 
         for (Row nextRow : firstSheet) {
-
+            System.out.println(nextRow);
             switch (type) {
                 case "Finished":
                     list = new String[10];
@@ -149,6 +146,7 @@ public class Excel {
                 Dialogs.showErrorDialog(e.getMessage());
                 break;
             }catch (NullPointerException e){
+                Dialogs.showErrorDialog(e.getMessage());
                 //Do something with NullPointerException
             }
         }

@@ -66,32 +66,37 @@ public class FileHandler{
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
         //File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
         File selectedFileOrdersTxt = new File("src/dataBase/FinishedOrders.txt");
+        File selectedFileOngoingOrders = new File("src/dataBase/OngoingOrders.txt");
 
         Reader readerCar = null;
         Reader readerComponents = null;
         Reader readerAdjustments=null;
-        Reader readerOrders = null;
+        //Reader readerOrders = null;
         Reader readerTxtOrders = null;
+        Reader readerOngoingOrders = null;
 
 
         readerCar = new fileReaderJobj();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-        readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
         readerTxtOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
+        readerOngoingOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
 
 
         Lists.deleteCars();
         Lists.deleteComponents();
         Lists.deleteAdjustments();
         Lists.deleteOrders();
-            if(readerCar != null && readerComponents != null && readerAdjustments !=null) {
+        Lists.deleteOngoing();
+            if(readerCar != null && readerComponents != null && readerAdjustments !=null && readerTxtOrders != null && readerOngoingOrders != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
                     //readerOrders.read(selectedFileOrders.toPath());
                     readerTxtOrders.read(selectedFileOrdersTxt.toPath());
+                    readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
                     Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());

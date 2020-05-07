@@ -27,11 +27,9 @@ import javaCode.Lists;
 import javafx.stage.Stage;
 
 public class UserController implements Initializable {
-    FileHandler handler = new FileHandler();
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
     ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
-    Stage stage = new Stage();
 
     @FXML
     private TableView<Component> componentTV;
@@ -72,13 +70,13 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        handler.readAllFiles(stage);
-
+        //If the GUI is opened in order to change an ongoing order
         if(ProfileController.toBeChanged){
-            chosenComponents.addAll(ProfileController.changeOrder.getComponentList());
+            ObservableList<Adjustment> adjustmenlist = ProfileController.changeOrder.getAdjustmentList();
+            ObservableList<Component> componentlist = ProfileController.changeOrder.getComponentList();
+            chosenComponents.addAll(componentlist);
             chosenCompTV.setItems(chosenComponents);
-            chosenAdjustments.addAll(ProfileController.changeOrder.getAdjustmentList());
+            chosenAdjustments.addAll(adjustmenlist);
             chosenAdjustTV.setItems(chosenAdjustments);
 
             String type = "";
@@ -92,28 +90,34 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(true);
 
             adjustmentTV.setItems(Lists.getAdjustment());
-            for (Adjustment a : ProfileController.changeOrder.getAdjustmentList()){
+            for (Adjustment a : chosenAdjustments){
                 adjustmentTV.getItems().remove(a);
             }
         }
+
         else {
             adjustmentTV.setItems(Lists.getAdjustment());
         }
+
         chooseCol.setPromptText("Color: ");
         chooseCol.getItems().setAll("Red", "Black", "White", "Gray");
 
-        //Setter valgmuligheter i choiceboxene
+        //Setting options in the choiceboxes for car type and component type.
         chooseCarType.setPromptText("Car type: ");
         chooseComponent.setPromptText("Component type: ");
         chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
         chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
     }
 
-    //Metode for å sette verdiene i tableviewet for komponenter. Denne kalles på når choiceboxene endres.
+
+    //Method that sets a list in the tableview for components.
+    //Is called upon when car type and component type is selected.
     @FXML
     void setList(ActionEvent event) {
+        //List that is diplayed in the tableview for components
         ObservableList<Component> outList = FXCollections.observableArrayList();
-        //Finner verdiene i choiceboxene
+
+        //Gets the values from the choiceboxes
         String type = chooseCarType.getValue();
         String ID = "";
         for (Car car : lists.getCars()){
@@ -123,7 +127,8 @@ public class UserController implements Initializable {
         }
         String component = chooseComponent.getValue();
 
-        //Hvis et element i komponentlisten matcher verdien i begge choiceboxene legges de til i en ny liste
+        //If an element in the list of components matches the value of both choiceboxes they are added
+        //to the outlist.
         if(type != null && component != null) {
             for (int i = 0; i < lists.getComponents().size(); i++) {
                 if (ID.equals(lists.getComponents().get(i).getCarID()) && component.equals(lists.getComponents().get(i).getComponentType())) {
@@ -132,24 +137,28 @@ public class UserController implements Initializable {
             }
         }
 
-        //Den nye listen vises i tableviewet
+        //The outlist is displayed in the tableview
         componentTV.setItems(outList);
         componentTV.refresh();
     }
 
+    //Method for adding a component to the order.
     @FXML
     void addComponent(ActionEvent event) {
-        Component valgt = componentTV.getSelectionModel().getSelectedItem();
-        boolean funnet = false;
+        Component chosen = componentTV.getSelectionModel().getSelectedItem();
+        //Checking if a component of the same type is already chosen
+        boolean found = false;
         for (Component c : chosenComponents){
-            if(valgt.getComponentType().equals(c.getComponentType())){
-                funnet = true;
+            if(chosen.getComponentType().equals(c.getComponentType())){
+                found = true;
             }
         }
-        if(!funnet) {
-            chosenComponents.add(valgt);
+
+        if(!found) {
+            chosenComponents.add(chosen);
             chosenCompTV.setItems(chosenComponents);
-            chooseCarType.setDisable(true);
+            chooseCarType.setDisable(true); //Disabling the car type choice-box to prevent the user from choosing
+            //components that belong to different car types.
 
             int totalprice = 0;
             for (Adjustment adj : chosenAdjustments) {
@@ -162,16 +171,17 @@ public class UserController implements Initializable {
         }
         else{
             Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
-                    " component you will first have to remove the previously chosen " + valgt.getComponentType());
+                    " component you will first have to remove the previously chosen " + chosen.getComponentType());
         }
     }
 
     @FXML
     void removeComponent(ActionEvent event) {
-        Component valgt = chosenCompTV.getSelectionModel().getSelectedItem();
-        chosenComponents.remove(valgt);
-        chooseComponent.getItems().remove(valgt);
+        Component chosen = chosenCompTV.getSelectionModel().getSelectedItem();
+        chosenComponents.remove(chosen);
+        chooseComponent.getItems().remove(chosen);
         chosenCompTV.refresh();
+
         if(chosenComponents.isEmpty()){
             chooseCarType.setDisable(false);
         }
@@ -201,7 +211,8 @@ public class UserController implements Initializable {
         lblTotalprice.setText("Total price: " + totalprice);
 
         for(Adjustment a : chosenAdjustments){
-            adjustmentTV.getItems().remove(a);
+            adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
+            //to prevent the user from selecting the same adjustment several times.
         }
 
     }
@@ -221,23 +232,27 @@ public class UserController implements Initializable {
         lblTotalprice.setText("Total price: " + totalprice);
     }
 
+    //Method that opens the My Profile-GUI.
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
-            System.out.println(Lists.getOrders().size());
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 610, 650, actionEvent);
-        } else {
+        }
+        //If there is an ongoing order that has not been saved, the user will be informed of this.
+        else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not saved your choices, and if you continue your progress will be lost." +
                     " If you wish to continue this order at a later time, you will have to go back and click on 'save order'.",
                     ButtonType.CANCEL, ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)){
+                adjustmentTV.getItems().addAll(chosenAdjustments);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
                 OpenScene.newScene("My profile", root, 610, 650, actionEvent);
             }
         }
     }
 
+    //Method that saves the ongoing order, so the user can access it at a later time
     public void saveChoices(ActionEvent actionEvent) {
         boolean rightInput = true;
         Date date = new Date();
@@ -269,7 +284,7 @@ public class UserController implements Initializable {
         orderedComponents.setAll(chosenComponents);
         orderedAdjustments.setAll(chosenAdjustments);
 
-
+        //Makes sure the order is not empty
         if (orderedAdjustments.isEmpty() && orderedComponents.isEmpty()){
             Dialogs.showErrorDialog("Your order is empty");
             rightInput = false;
@@ -283,29 +298,31 @@ public class UserController implements Initializable {
             color += "Not chosen";
         }
 
+        //Creates a new order-object, and adds it to the list of ongoing orders.
         if(rightInput) {
             Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
-            Path path = Paths.get("OngoingOrders.txt");
+            Path path = Paths.get("src/dataBase/OngoingOrders.txt");
             String formattedOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+            //Adds the ongoing order to the txt-file, and resets the GUI.
             try {
                 FileWriter.WriteFile(path, formattedOrders);
-                Dialogs.showSuccessDialog("Your order was succesful!");
+                Dialogs.showSuccessDialog("Your order has been saved! You can view your ongoing orders on your profile");
                 adjustmentTV.getItems().addAll(chosenAdjustments);
                 chosenComponents.clear();
                 chosenAdjustments.clear();
                 chosenAdjustTV.refresh();
                 adjustmentTV.refresh();
+                ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
                 OpenScene.newScene("Order", root, 650, 700, actionEvent);
-                ProfileController.toBeChanged = false;
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
         }
     }
 
-    public void order(ActionEvent actionEvent) throws ParseException {
+    public void order(ActionEvent actionEvent){
         boolean rightInput = true;
 
         Date date = new Date();
@@ -361,13 +378,13 @@ public class UserController implements Initializable {
             rightInput = false;
         }
 
+        //If the input is correct, the order will be added to the list of finished orders and to the txt-file.
         if(rightInput) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?", ButtonType.OK, ButtonType.CANCEL);
             alert.showAndWait();
             if(alert.getResult().equals(ButtonType.OK)) {
                 Order order = new Order(newOrderNr, persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, true);
                 lists.addOrder(order);
-                System.out.println(Lists.getOrders().size());
                 Path path = Paths.get("src/dataBase/FinishedOrders.txt");
                 String formattedOrders = OrderFormatter.formatOrders(Lists.getOrders());
                 try {

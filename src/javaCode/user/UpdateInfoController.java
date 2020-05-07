@@ -33,10 +33,10 @@ public class UpdateInfoController {
     @FXML
     void cancel(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 630, event);
+        OpenScene.newScene("My profile", root, 610, 650, event);
     }
 
-    @FXML
+    @FXML //Method for changing personal info
     void changeInfo(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         String ID = "" + LoggedIn.getId();
 
@@ -73,7 +73,7 @@ public class UpdateInfoController {
 
         if(correctInfo){
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-            OpenScene.newScene("My profile", root, 610, 630, event);
+            OpenScene.newScene("My profile", root, 610, 650, event);
         }
     }
 }

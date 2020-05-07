@@ -42,7 +42,7 @@ public class Inlog implements Initializable {
     FileHandler handler = new FileHandler();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //handler.readAllFiles(stage);
+        handler.readAllFiles(stage);
        /*Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
         Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
         Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);

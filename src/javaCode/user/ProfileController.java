@@ -299,12 +299,4 @@ public class ProfileController implements Initializable {
             Dialogs.showErrorDialog("List is empty");
         }
     }
-
-    public void btnExportOngoingOnClick(ActionEvent actionEvent) throws IOException {
-        /*if (!ongoingOrdersTV.getItems().isEmpty()){
-        Excel.writeExcel(ongoingOrdersTV.getItems());
-        }else {
-            Dialogs.showErrorDialog("List is empty");
-        }*/
-    }
 }

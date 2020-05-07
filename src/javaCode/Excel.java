@@ -111,7 +111,9 @@ public class Excel {
         DataFormatter formatter = new DataFormatter();
 
         for (Row nextRow : firstSheet) {
-            System.out.println(nextRow);
+            if(nextRow.getRowNum()==0){
+                break;
+            }
             switch (type) {
                 case "Finished":
                     list = new String[10];

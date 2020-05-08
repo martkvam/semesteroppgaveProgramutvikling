@@ -1,6 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.*;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;

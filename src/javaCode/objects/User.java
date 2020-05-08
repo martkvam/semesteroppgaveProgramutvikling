@@ -1,4 +1,4 @@
-package javaCode.InLog;
+package javaCode.objects;
 
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.Validator;

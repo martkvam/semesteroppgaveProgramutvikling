@@ -1,11 +1,9 @@
 package javaCode.ReaderWriter.Car;
 
-import javaCode.Car;
-import javaCode.FileHandler;
+import javaCode.objects.Car;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;

@@ -3,6 +3,7 @@ package javaCode.InLog;
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.Exception.UserAlreadyExistException;
+import javaCode.objects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

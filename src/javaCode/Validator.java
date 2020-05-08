@@ -2,7 +2,9 @@ package javaCode;
 
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
-import javaCode.InLog.User;
+import javaCode.objects.User;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javaCode.superUser.addElements;
 
 import java.io.FileNotFoundException;

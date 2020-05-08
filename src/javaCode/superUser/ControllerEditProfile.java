@@ -3,7 +3,7 @@ package javaCode.superUser;
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.InLog.ReadUsers;
-import javaCode.InLog.User;
+import javaCode.objects.User;
 import javaCode.OpenScene;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;

@@ -58,7 +58,7 @@ public class ControllerSuperUser {
     @FXML
     void btnGoBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-        OpenScene.newScene("Log in", root, 500, 500, event);
+        OpenScene.newScene("Log in", root, 600,450, event);
     }
 
     //Info about components scene on hover

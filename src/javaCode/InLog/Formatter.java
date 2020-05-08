@@ -1,6 +1,7 @@
 package javaCode.InLog;
 
 import javaCode.ConverterErrorHandler;
+import javaCode.objects.User;
 
 import java.io.File;
 import java.io.IOException;

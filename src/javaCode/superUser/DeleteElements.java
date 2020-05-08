@@ -1,11 +1,9 @@
 package javaCode.superUser;
 
-import javaCode.Adjustment;
-import javaCode.Car;
-import javaCode.Component;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
 import javaCode.Dialogs;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TablePosition;
 
 import java.io.IOException;
 

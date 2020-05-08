@@ -1,5 +1,7 @@
-package javaCode;
+package javaCode.ReaderWriter.Order;
 
+import javaCode.Dialogs;
+import javaCode.Main;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.Cell;
@@ -12,7 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class Excel {
+public class fileWriterExcel {
 
     //With version controll so files dont get overwritten
     private static String filePathVersion (String filepath, int version, String fileEnding){

@@ -4,6 +4,10 @@ package javaCode.user;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
+import javaCode.ReaderWriter.Order.fileWriterExcel;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -245,7 +249,7 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 650, 700, actionEvent);
+        OpenScene.newScene("Order", root, 600,450, actionEvent);
     }
 
     //Shows finished orders
@@ -290,9 +294,10 @@ public class ProfileController implements Initializable {
         updateTVfinished(event);
     }
 
+    //Method for button calling methods for exporting register to excel
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
-            Excel.writeExcel(ordersTV.getItems());
+            fileWriterExcel.writeExcel(ordersTV.getItems());
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

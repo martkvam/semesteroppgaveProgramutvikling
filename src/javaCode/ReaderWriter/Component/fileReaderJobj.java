@@ -1,7 +1,6 @@
 package javaCode.ReaderWriter.Component;
 
-import javaCode.Car;
-import javaCode.Component;
+import javaCode.objects.Component;
 import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;

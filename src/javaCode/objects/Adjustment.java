@@ -1,4 +1,4 @@
-package javaCode;
+package javaCode.objects;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

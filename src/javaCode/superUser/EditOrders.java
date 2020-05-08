@@ -1,10 +1,7 @@
 package javaCode.superUser;
 
-import javaCode.Adjustment;
-import javaCode.Component;
-import javaCode.Dialogs;
+import javaCode.*;
 
-import javaCode.Order;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -146,6 +143,11 @@ public class EditOrders {
         }
         for(Adjustment i : order.getAdjustmentList()){
             totPrice += i.getAdjustmentPrice();
+        }
+        for(Car i : Lists.getCars()){
+            if(i.getCarID().equals(order.getCarId())){
+                totPrice += i.getPrice();
+            }
         }
         return totPrice;
     }

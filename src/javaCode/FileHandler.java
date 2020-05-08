@@ -1,6 +1,5 @@
 package javaCode;
 
-import javaCode.Exception.ReadOrdersException;
 import javaCode.ReaderWriter.Car.fileReaderJobj;
 import javaCode.ReaderWriter.Car.fileReaderTxt;
 import javaCode.ReaderWriter.Car.fileWriterJobj;
@@ -99,13 +98,15 @@ public class FileHandler{
                     //readerOrders.read(selectedFileOrders.toPath());
                     readerTxtOrders.read(selectedFileOrdersTxt.toPath());
                     readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
-                    Dialogs.showSuccessDialog("The register got loaded");
-                } catch (ReadOrdersException e){
-                    Dialogs.showErrorDialog(e.getMessage());
+                    //Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 } catch (IllegalArgumentException e){
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
+                }
+                catch (Exception e){
+                    Dialogs.showErrorDialog("There is an error in the file containig the finished orders." +
+                            "The order-register might not be complete.");
                 }
             }
         }

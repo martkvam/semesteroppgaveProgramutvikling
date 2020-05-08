@@ -36,7 +36,7 @@ public class NewUser {
     @FXML
     private Button btnRegisterUser;
 
-    @FXML
+    @FXML   //Button for validating new user input, registering new user or handle exception
     void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
             try {
                 ReadUsers.checkIfUserExists(txtEmail.getText(), txtPhone.getText());
@@ -52,6 +52,7 @@ public class NewUser {
             }
     }
 
+    //Method for user to register by pressing enter, as well calling allFieldsWritten to check if all fields are filled
     public void enterKeyPressed(KeyEvent kEvent) {
         allFieldsWritten(kEvent);
         if(kEvent.getCode()== KeyCode.ENTER) {
@@ -59,21 +60,25 @@ public class NewUser {
         }
     }
 
+    //Checking if all fields are filled and enable the register button after
     private void allFieldsWritten(KeyEvent keyEvent){
         if(!(txtFirstName.getText().isEmpty() || txtLastName.getText().isEmpty() ||
                 txtPassword.getText().isEmpty() || txtPhone.getText().isEmpty() ||
                 txtEmail.getText().isEmpty() || txtRepeatPassword.getText().isEmpty())){
             btnRegisterUser.setDisable(false);
+        } else{
+            btnRegisterUser.setDisable(true);
         }
     }
 
-    @FXML
+    @FXML //Checking if the passwords in the two password fields match
     private void passwordMatches(){
         if(!txtPassword.getText().matches(txtRepeatPassword.getText())){
             throw new IllegalArgumentException("Password dont match");
         }
     }
 
+    //Opens the inlog scene when the "back" button is pressed
     public void btnBackOnClick(ActionEvent actionEvent) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
         OpenScene.newScene("Log in", root, 600, 450, actionEvent);

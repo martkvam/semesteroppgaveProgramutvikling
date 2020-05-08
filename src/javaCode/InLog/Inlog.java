@@ -39,74 +39,15 @@ public class Inlog implements Initializable {
     @FXML
     private Button btnLogIn;
 
-    @FXML
-    private Button btnNewUser;
     Stage stage = new Stage();
-    Lists lists = new Lists();
-    FileHandler handler = new FileHandler();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        handler.readAllFiles(stage);
-       /*Car bensin = new Car("1", "Bensin", "Bensinbil", 150000);
-        Car diesel = new Car("2", "Diesel", "Dieselbil", 150000);
-        Car elektrisk = new Car("3", "Elektrisk", "Elektrisk bil", 150000);
-        Car hybrid = new Car("4", "Hybrid", "Hybridbil", 150000);
-
-        lists.addCar(bensin);
-        lists.addCar(diesel);
-        lists.addCar(elektrisk);
-        lists.addCar(hybrid);
-
-        Component motor1 = new Component("1", "1-1","Motor", "Rask jævel", 20000);
-        Component wheel1 = new Component("2", "2-1", "Ratt" ,"Billig", 2000);
-        Component rim1 = new Component("3", "3-1", "Felg" ,"Dyreste", 2000);
-        Component setetrekk = new Component("4", "4-1", "Setetrekk" ,"Skinn", 2000);
-        Component motor2 = new Component("3", "1-2", "Motor" ,"Effektiv", 35000);
-        Component wheel2 = new Component("1", "2-2", "Ratt", "Sport", 5000);
-        Component exhaust = new Component("1", "5-1", "Eksospotte", "Bråkete", 4000);
-
-        Adjustment hitch = new Adjustment("1", "Hengerfeste", "Universell hengerfeste", 2000);
-        Adjustment sunroof = new Adjustment("2", "Soltak", "Soltak med UV-filter", 7000);
-        Adjustment gps = new Adjustment("3", "Integrert GPS", "Integrert GPS", 6000);
-        Adjustment airCondition = new Adjustment("4", "Air Condition", "Air Condition", 8000);
-
-        ObservableList<Component> testList = FXCollections.observableArrayList();
-        testList.add(motor1);
-        testList.add(rim1);
-        ObservableList<Component> testListComp = FXCollections.observableArrayList();
-        testListComp.add(wheel2);
-        ObservableList<Adjustment> testListAdjustment = FXCollections.observableArrayList();
-        testListAdjustment.add(hitch);
-        ObservableList<Adjustment> testlistAdjustment2 = FXCollections.observableArrayList();
-        testlistAdjustment2.addAll(sunroof, gps);
-
-        Date date1 = new Date(2/2/2019);
-
-        Order order1 = new Order("1", 1, "1",date1, date1, testList, testListAdjustment, 1000, "Blue", true );
-        Order order2 = new Order("2", 2, "1", date1, date1, testListComp, testlistAdjustment2, 2000, "Red", false);
-
-        lists.addComponent(motor1);
-        lists.addComponent(wheel1);
-        lists.addComponent(rim1);
-        lists.addComponent(setetrekk);
-        lists.addComponent(motor2);
-        lists.addComponent(wheel2);
-        lists.addComponent(exhaust);
-
-        lists.addAdjustment(hitch);
-        lists.addAdjustment(sunroof);
-        lists.addAdjustment(gps);
-        lists.addAdjustment(airCondition);
-
-
-        lists.addOrder(order1);
-        lists.addOrder(order2);
-        lists.addOngoingOrder(order2);
-
-         */
+        FileHandler.readAllFiles(stage);
     }
 
+    //Checks and validates input values for logging in and handel exceptions
     @FXML
     void btnLogInOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -132,7 +73,6 @@ public class Inlog implements Initializable {
         }
 
         if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))){
-
             if(!isShowPasswordFieldActive() && values[5].equals(txtPassword.getText())){
                 LoggedIn.setId(id);
                 correct = true;
@@ -163,12 +103,14 @@ public class Inlog implements Initializable {
         OpenScene.newScene("Register User",  root, 300, 500, event);
     }
 
+    //Enables users to log in with pressing ENTER
     public void enterKeyPressed(KeyEvent kEvent) {
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnLogIn.fire();
         }
     }
 
+    //Makes it possible to visualize the password
     public void checkBoxShowPasswordClicked(ActionEvent actionEvent) {
         boolean checked = chkBoxPassword.isSelected();
         txtVisiblePassword.setEditable(checked);
@@ -193,6 +135,7 @@ public class Inlog implements Initializable {
         }
     }
 
+    //Variable for passwordfields, if the text or the dot one i visible
     private static boolean isShowPasswordFieldActive() {
         return showPasswordFieldActive;
     }

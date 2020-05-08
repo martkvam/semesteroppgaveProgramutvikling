@@ -12,8 +12,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+//Class for getting and changing info in the user register
 public class ReadUsers {
 
+    //Method for receiving information about a user
     public static String getInfo(String id, String type) throws FileNotFoundException {
         File myObj = new File(Formatter.registerPath);
         try (Scanner myReader = new Scanner(myObj)) {
@@ -45,6 +47,7 @@ public class ReadUsers {
         }
     }
 
+    //Method for changing info of a specific user
     public static void changeInfo(String id, String type, String change) throws IOException {
         File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
@@ -77,15 +80,16 @@ public class ReadUsers {
                 }
             }
             newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
-                    currentUser[3], currentUser[4], currentUser[5], Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
+                    currentUser[3], currentUser[4], currentUser[5],
+                    Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
         }
-
         FileWriter myWriter = new FileWriter(myObj);
         myWriter.write(String.valueOf(newRegister));
         myReader.close();
         myWriter.close();
     }
 
+    //Method for getting id of a user based on input info
     public static ArrayList<String> getUserId(String ... str) throws FileNotFoundException {
         File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
@@ -114,6 +118,7 @@ public class ReadUsers {
         }
     }
 
+    //Method returning a list of id's based in the input of getUserId
     private static ArrayList<String> findId(ArrayList <String> foundUsers){
         Map<String, Integer> idAndCount = new HashMap<>();
 
@@ -143,7 +148,8 @@ public class ReadUsers {
         return foundIds;
     }
 
-    public static ObservableList<User> getUserList() throws FileNotFoundException, UserAlreadyExistException {
+    //Returning list of all the user in the register
+    public static ObservableList<User> getUserList() throws FileNotFoundException {
         ObservableList<User> userList = FXCollections.observableArrayList();
         File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
@@ -161,11 +167,10 @@ public class ReadUsers {
         return userList;
     }
 
-    public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
-
+    //Method for checking if user of input values exists already in the register
+    public static void checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
         if(Objects.equals(ReadUsers.getUserId(email), null) &&
         Objects.equals(ReadUsers.getUserId(phone), null)){
-            return true;
         } else{
             throw new UserAlreadyExistException("User already exists");
         }

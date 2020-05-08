@@ -12,16 +12,18 @@ import java.util.Scanner;
 
 public class Formatter {
 
+    //Paths of files for user register and next available id
     public static String registerPath = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/Users.txt");
 
     private static String nextIdPath = (FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/dataBase/NextUserNr.txt");
 
+    //Write user object to file
     public static void addToFile(User user) throws IOException {
         Files.write(Paths.get(registerPath), (user.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
+    //Read through database of users and check if user is already registered
     public static int assignID() throws IOException {
-        //Read through database of users and check if user is already registered
         ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
         File ids = new File(Formatter.nextIdPath);
         Scanner scanIds = new Scanner(ids);

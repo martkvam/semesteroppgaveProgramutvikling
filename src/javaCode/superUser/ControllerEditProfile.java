@@ -2,8 +2,6 @@ package javaCode.superUser;
 
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
-import javaCode.Excel;
-import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.InLog.User;
 import javaCode.OpenScene;
@@ -16,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.util.converter.BooleanStringConverter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -151,17 +148,6 @@ public class ControllerEditProfile {
     public void btnGoBackOnClick(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
-    }
-
-
-    public void btnExportToExcelOnClick(ActionEvent actionEvent) throws IOException {
-        Excel.writeExcel(ReadUsers.getUserList(), "User");
-    }
-
-    public void btnImportFromExcelOnClick(ActionEvent actionEvent) throws IOException {
-        Excel.readExcel("User");
-        initialize();
-        tvUserRegister.refresh();
     }
 }
 

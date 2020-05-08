@@ -85,10 +85,6 @@ public class ProfileController implements Initializable {
 
         ordersTV.setItems(orders);
 
-
-
-
-
         //Fills out the personal info section
         String ID = "" + LoggedIn.getId();
         try {
@@ -247,7 +243,7 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 650, 700, actionEvent);
+        OpenScene.newScene("Order", root, 1000, 700, actionEvent);
     }
 
     //Shows finished orders

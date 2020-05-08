@@ -23,6 +23,8 @@ public class Lists<E> implements Serializable {
     private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
     private static ObservableList<Order> orderList = FXCollections.observableArrayList();
     private static ObservableList<Order> ongoingOrderList = FXCollections.observableArrayList();
+    private static ObservableList<Component> basePackageComponents = FXCollections.observableArrayList();
+    private static ObservableList<Adjustment> basePackageAdjustments = FXCollections.observableArrayList();
 
     //Metoder for å legge til objekter i listene
 
@@ -101,6 +103,21 @@ public class Lists<E> implements Serializable {
         return orderList;
     }
     public static ObservableList<Order> getOngoingOrders(){ return ongoingOrderList; }
+
+    public static ObservableList<Component> getBasePackageComponents(){
+        return basePackageComponents;
+    }
+    public static ObservableList<Adjustment> getBasePackageAdjustments(){
+        return basePackageAdjustments;
+    }
+    public static void deleteBasePackageComponents(){
+        basePackageComponents.clear();
+    }
+    public static void deleteBasePackageAdjustments(){
+        basePackageAdjustments.clear();
+    }
+
+
 
     public boolean filterComponentList(Component component, String newValue ){
         if(newValue == null || newValue.isEmpty()){

@@ -64,6 +64,9 @@ public class UserController implements Initializable {
     @FXML
     private ComboBox<String> chooseCol;
 
+    @FXML
+    private ComboBox<String> choosePackage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +108,8 @@ public class UserController implements Initializable {
         chooseComponent.setPromptText("Component type: ");
         chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
         chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+        choosePackage.getItems().setAll("Basic+", "Sport", "Premium");
+        choosePackage.setPromptText("Choose a base package: ");
     }
 
 
@@ -186,16 +191,35 @@ public class UserController implements Initializable {
     }
 
     public void addAdjust(ActionEvent actionEvent) {
-        if(!adjustmentTV.getSelectionModel().isEmpty()) {
-            Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
-            chosenAdjustments.add(chosen);
-            chosenAdjustTV.setItems(chosenAdjustments);
+        if(chooseCarType.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please choose a car type before you add any adjustments");
+            alert.showAndWait();
+        }
+        else {
+            if (!adjustmentTV.getSelectionModel().isEmpty()) {
+                Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
+                boolean found = false;
+                for (Adjustment a : chosenAdjustments) {
+                    if (a.getAdjustmentType().equals(chosen.getAdjustmentType())) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    chosenAdjustments.add(chosen);
+                    chosenAdjustTV.setItems(chosenAdjustments);
 
-            for (Adjustment a : chosenAdjustments) {
-                adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
-                //to prevent the user from selecting the same adjustment several times.
+                    for (Adjustment a : chosenAdjustments) {
+                        adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
+                        //to prevent the user from selecting the same adjustment several times.
+                    }
+                    updatePrice();
+                }
+                else{
+                    Dialogs.showErrorDialog("You have already chosen an adjustment of the same type. " +
+                            "If you wish to select this adjustment you will first have to remove the previously " +
+                            "chosen " + chosen.getAdjustmentType());
+                }
             }
-            updatePrice();
         }
 
     }
@@ -286,7 +310,7 @@ public class UserController implements Initializable {
                 adjustmentTV.refresh();
                 ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                OpenScene.newScene("Order", root, 1000, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
@@ -364,7 +388,7 @@ public class UserController implements Initializable {
                     adjustmentTV.refresh();
                     ProfileController.toBeChanged = false;
                     Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                    OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                    OpenScene.newScene("Order", root, 1000, 700, actionEvent);
                 } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                     Dialogs.showErrorDialog("Something went wrong.");
                 }
@@ -394,5 +418,54 @@ public class UserController implements Initializable {
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
         OpenScene.newScene("Log in", root, 650, 650, actionEvent);
+    }
+
+    public void setPackage(ActionEvent actionEvent){
+        Path path = Paths.get("src/dataBase/CarPackages.txt");
+        ReadPackages read = new ReadPackages();
+        String carID = "";
+        String packageID = "";
+        String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
+        String chosenPackage = choosePackage.getSelectionModel().getSelectedItem();
+
+        switch (chosenPackage){
+            case "Basic+":
+                packageID += "1";
+                break;
+            case "Sport":
+                packageID += "2";
+                break;
+            case "Premium":
+                packageID += "3";
+                break;
+        }
+        switch (chosenCar){
+            case "Petrol":
+                carID += "1";
+                break;
+            case "Diesel":
+                carID += "2";
+                break;
+            case "Electric":
+                carID += "3";
+                break;
+            case "Hybrid":
+                carID += "4";
+                break;
+        }
+        try {
+            read.read(path, carID, packageID);
+            chosenAdjustments.setAll(Lists.getBasePackageAdjustments());
+            chosenComponents.setAll(Lists.getBasePackageComponents());
+            chosenCompTV.setItems(chosenComponents);
+            chosenAdjustTV.setItems(chosenAdjustments);
+            updatePrice();
+            chooseCarType.setDisable(true);
+            for (Adjustment a : chosenAdjustments){
+                adjustmentTV.getItems().remove(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

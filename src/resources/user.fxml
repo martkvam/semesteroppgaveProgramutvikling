@@ -7,8 +7,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
     <children>
         <TableView fx:id="componentTV" layoutX="24.0" layoutY="99.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
@@ -24,14 +25,15 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="chosenCompTV" layoutX="403.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="chosenCompTV" layoutX="538.0" layoutY="99.0" prefHeight="200.0" prefWidth="327.0">
             <columns>
                 <TableColumn prefWidth="123.0" text="Type">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="76.0" text="Price">
+            <TableColumn prefWidth="113.0" text="Descritpiton" />
+                <TableColumn prefWidth="90.0" text="Price">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentPrice" />
                     </cellValueFactory>
@@ -39,9 +41,12 @@
             </columns>
         </TableView>
         <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="64.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
-        <Label layoutX="403.0" layoutY="78.0" prefHeight="17.0" prefWidth="153.0" text="Chosen components" />
-        <Button fx:id="addBtn" layoutX="266.0" layoutY="306.0" mnemonicParsing="false" onAction="#addComponent" prefHeight="27.0" prefWidth="95.0" text="Add" />
-        <Button fx:id="btnRemove" layoutX="541.0" layoutY="306.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
+        <Label layoutX="539.0" layoutY="69.0" prefHeight="19.0" prefWidth="179.0" text="Chosen components">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+        <Button fx:id="addBtn" layoutX="259.0" layoutY="306.0" mnemonicParsing="false" onAction="#addComponent" prefHeight="27.0" prefWidth="95.0" text="Add" />
+        <Button fx:id="btnRemove" layoutX="757.0" layoutY="306.0" mnemonicParsing="false" onAction="#removeComponent" prefHeight="27.0" prefWidth="103.0" text="Remove" />
         <Button fx:id="btnOrder" layoutX="411.0" layoutY="624.0" mnemonicParsing="false" onAction="#order" prefHeight="27.0" prefWidth="68.0" text="Order" />
       <ComboBox fx:id="chooseComponent" layoutX="192.0" layoutY="64.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
       <Label fx:id="lblTotalprice" layoutX="39.0" layoutY="629.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
@@ -60,28 +65,34 @@
         </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="337.0" prefHeight="17.0" prefWidth="103.0" text="Adjustments" />
-      <TableView fx:id="chosenAdjustTV" layoutX="403.0" layoutY="362.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="chosenAdjustTV" layoutX="538.0" layoutY="362.0" prefHeight="200.0" prefWidth="327.0">
         <columns>
-            <TableColumn prefWidth="117.0" text="Type">
+            <TableColumn prefWidth="129.0" text="Type">
                 <cellValueFactory>
                     <PropertyValueFactory property="adjustmentType" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="82.0" text="Price">
+            <TableColumn prefWidth="117.0" text="Description" />
+            <TableColumn text="Price">
                 <cellValueFactory>
                     <PropertyValueFactory property="adjustmentPrice" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
       </TableView>
-      <Label layoutX="403.0" layoutY="337.0" text="Chosen adjustments" />
+      <Label layoutX="539.0" layoutY="337.0" prefHeight="19.0" prefWidth="172.0" text="Chosen adjustments">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
       <Button fx:id="addAdjust" layoutX="272.0" layoutY="570.0" mnemonicParsing="false" onAction="#addAdjust" prefHeight="27.0" prefWidth="82.0" text="Add" />
-      <Button fx:id="removeAdjust" layoutX="529.0" layoutY="570.0" mnemonicParsing="false" onAction="#removeAdjust" prefHeight="27.0" prefWidth="68.0" text="Remove" />
+      <Button fx:id="removeAdjust" layoutX="757.0" layoutY="570.0" mnemonicParsing="false" onAction="#removeAdjust" prefHeight="27.0" prefWidth="103.0" text="Remove" />
       <ComboBox fx:id="chooseCol" layoutX="250.0" layoutY="624.0" prefHeight="27.0" prefWidth="126.0" />
-      <Button fx:id="btnProfile" layoutX="397.0" layoutY="14.0" mnemonicParsing="false" onAction="#myProfile" prefHeight="27.0" prefWidth="119.0" text="My profile" />
+      <Button fx:id="btnProfile" layoutX="625.0" layoutY="18.0" mnemonicParsing="false" onAction="#myProfile" prefHeight="27.0" prefWidth="119.0" text="My profile" />
       <Button fx:id="btnSave" layoutX="486.0" layoutY="624.0" mnemonicParsing="false" onAction="#saveChoices" prefHeight="27.0" prefWidth="103.0" text="Save choices" />
-      <Button fx:id="btnLogout" layoutX="523.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="103.0" text="Log out" />
-      <Label layoutX="24.0" layoutY="14.0" prefHeight="17.0" prefWidth="327.0" text="Start your order by choosing a car type. Each car" />
-      <Label layoutX="22.0" layoutY="33.0" prefHeight="17.0" prefWidth="334.0" text="comes with default settings." />
+      <Button fx:id="btnLogout" layoutX="757.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="103.0" text="Log out" />
+      <Label layoutX="24.0" layoutY="14.0" prefHeight="17.0" prefWidth="553.0" text="Start your order by choosing a car type. Each car comes with default settings, and you" />
+      <Label layoutX="22.0" layoutY="33.0" prefHeight="17.0" prefWidth="570.0" text="can modify your own car, or choose one of the base packages from the list" />
+      <ComboBox layoutX="370.0" layoutY="143.0" prefWidth="150.0" />
+      <Button layoutX="370.0" layoutY="186.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="150.0" text="Select package" />
     </children>
 </AnchorPane>

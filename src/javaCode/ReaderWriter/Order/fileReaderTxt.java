@@ -1,9 +1,7 @@
 package javaCode.ReaderWriter.Order;
 
-import javaCode.Adjustment;
-import javaCode.Component;
-import javaCode.Lists;
-import javaCode.Order;
+import javaCode.*;
+import javaCode.Exception.ReadOrdersException;
 import javaCode.ReaderWriter.Reader;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -40,12 +38,11 @@ public class fileReaderTxt implements Reader {
     }
 
 
-    private Order parseOrder (String line) throws Exception{
+    private Order parseOrder (String line) throws Exception {
         String[] split = line.split(";");
         if(split.length != 10) {
-            throw new Exception("There is an error in the file containing the orders.");
+            throw new ReadOrdersException("There is an error in the orders-file. The order register might not be complete");
         }
-
 
         String orderNr = split[0];
         int personId = parseNumber(split[1], "Person ID is incorrect");

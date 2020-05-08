@@ -121,10 +121,14 @@ public class Inlog implements Initializable {
             String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
             values = info.replaceAll("\\s+", "").split(",");
         }catch (Exception e){
-            //if(txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty())
-            Dialogs.showErrorDialog("User don't exist");
-            txtUserName.clear();
-            txtPassword.clear();
+            if(txtUserName.getText().isEmpty() || (isShowPasswordFieldActive() && txtVisiblePassword.getText().isEmpty())
+                    || (!isShowPasswordFieldActive() && txtPassword.getText().isEmpty())){
+                Dialogs.showErrorDialog("All fields have to be filled");
+            } else {
+                Dialogs.showErrorDialog("User don't exist");
+                txtUserName.clear();
+                txtPassword.clear();
+            }
         }
 
         if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))){

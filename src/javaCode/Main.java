@@ -13,6 +13,10 @@ public class Main extends Application {
         return primaryStage;
     }
 
+    public static void setPrimaryStage(Stage primaryStage) {
+        Main.primaryStage = primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/Inlog.fxml"));

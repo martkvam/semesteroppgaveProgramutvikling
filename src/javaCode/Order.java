@@ -60,7 +60,7 @@ public class Order implements Serializable {
     }
 
     public String getOrderNr() {
-        return orderNr.getValue();
+            return orderNr.getValue();
     }
 
     public void setOrderNr(String orderNr) {

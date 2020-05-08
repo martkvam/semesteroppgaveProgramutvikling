@@ -72,34 +72,4 @@ public class Methods {
         }
         return list;
     }
-
-    /*public static ObservableList<Adjustment> setBasicAdjustmentList(){
-        ObservableList<Adjustment> list = FXCollections.observableArrayList();
-        for(Adjustment a : Lists.getAdjustment()){
-           if(a.getAdjustmentID().equals("1") || a.getAdjustmentID().equals("4") || a.getAdjustmentID().equals("5")
-                   || a.getAdjustmentID().equals("7") || a.getAdjustmentID().equals("9") || a.getAdjustmentID().equals("11")){
-               list.add(a);
-            }
-        }
-        return list;
-    }
-
-
-    public static ObservableList<Component> setPremiumComponentList(String carID){
-
-
-    }
-
-    public static ObservableList<Adjustment> setPremiumAdjustmentList(String carID){
-
-
-    }
-
-    public static ObservableList<Component> setSportComponentList(String carID){
-
-    }
-
-    public static ObservableList<Adjustment> setSportAdjustmentList(String carID){
-
-    }*/
 }

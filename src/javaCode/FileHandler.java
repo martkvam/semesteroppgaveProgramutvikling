@@ -98,7 +98,7 @@ public class FileHandler{
                     //readerOrders.read(selectedFileOrders.toPath());
                     readerTxtOrders.read(selectedFileOrdersTxt.toPath());
                     readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
-                    //Dialogs.showSuccessDialog("The register got loaded");
+                    Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 } catch (IllegalArgumentException e){

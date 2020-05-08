@@ -121,16 +121,23 @@ public class Inlog implements Initializable {
             String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
             values = info.replaceAll("\\s+", "").split(",");
         }catch (Exception e){
+            //if(txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty())
             Dialogs.showErrorDialog("User don't exist");
             txtUserName.clear();
             txtPassword.clear();
         }
 
-        if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
-                values[5].equals(txtPassword.getText())){
-            LoggedIn.setId(id);
-            correct = true;
-            superUsr = Boolean.parseBoolean(values[6]);
+        if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))){
+
+            if(!isShowPasswordFieldActive() && values[5].equals(txtPassword.getText())){
+                LoggedIn.setId(id);
+                correct = true;
+                superUsr = Boolean.parseBoolean(values[6]);
+            } else if (isShowPasswordFieldActive() && values[5].equals(txtVisiblePassword.getText())){
+                LoggedIn.setId(id);
+                correct = true;
+                superUsr = Boolean.parseBoolean(values[6]);
+            }
         }
 
         if(correct){
@@ -171,12 +178,25 @@ public class Inlog implements Initializable {
             txtVisiblePassword.setOpacity(1);
             txtPassword.toBack();
             txtPassword.setOpacity(0);
+            setShowPasswordFieldActive(true);
         } else{
             txtPassword.setText(txtVisiblePassword.getText());
             txtPassword.toFront();
             txtPassword.setOpacity(1);
             txtVisiblePassword.toBack();
             txtVisiblePassword.setOpacity(0);
+            setShowPasswordFieldActive(false);
         }
     }
+
+    private static boolean isShowPasswordFieldActive() {
+        return showPasswordFieldActive;
+    }
+
+    private static void setShowPasswordFieldActive(boolean showPasswordFieldActive) {
+        Inlog.showPasswordFieldActive = showPasswordFieldActive;
+    }
+
+    private static boolean showPasswordFieldActive;
+
 }

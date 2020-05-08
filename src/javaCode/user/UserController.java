@@ -146,61 +146,67 @@ public class UserController implements Initializable {
     //Method for adding a component to the order.
     @FXML
     void addComponent(ActionEvent event) {
-        Component chosen = componentTV.getSelectionModel().getSelectedItem();
-        //Checking if a component of the same type is already chosen
-        boolean found = false;
-        for (Component c : chosenComponents){
-            if(chosen.getComponentType().equals(c.getComponentType())){
-                found = true;
+        if(!componentTV.getSelectionModel().isEmpty()) {
+            Component chosen = componentTV.getSelectionModel().getSelectedItem();
+            //Checking if a component of the same type is already chosen
+            boolean found = false;
+            for (Component c : chosenComponents) {
+                if (chosen.getComponentType().equals(c.getComponentType())) {
+                    found = true;
+                }
             }
-        }
 
-        if(!found) {
-            chosenComponents.add(chosen);
-            chosenCompTV.setItems(chosenComponents);
-            chooseCarType.setDisable(true); //Disabling the car type choice-box to prevent the user from choosing
-            //components that belong to different car types.
+            if (!found) {
+                chosenComponents.add(chosen);
+                chosenCompTV.setItems(chosenComponents);
+                chooseCarType.setDisable(true); //Disabling the car type choice-box to prevent the user from choosing
+                //components that belong to different car types.
 
-           updatePrice();
-        }
-        else{
-            Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
-                    " component you will first have to remove the previously chosen " + chosen.getComponentType());
+                updatePrice();
+            } else {
+                Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
+                        " component you will first have to remove the previously chosen " + chosen.getComponentType());
+            }
         }
     }
 
     @FXML
     void removeComponent(ActionEvent event) {
-        Component chosen = chosenCompTV.getSelectionModel().getSelectedItem();
-        chosenComponents.remove(chosen);
-        chooseComponent.getItems().remove(chosen);
-        chosenCompTV.refresh();
+        if(!chosenCompTV.getSelectionModel().isEmpty()) {
+            Component chosen = chosenCompTV.getSelectionModel().getSelectedItem();
+            chosenComponents.remove(chosen);
+            chooseComponent.getItems().remove(chosen);
+            chosenCompTV.refresh();
 
-        if(chosenComponents.isEmpty()){
-            chooseCarType.setDisable(false);
+            if (chosenComponents.isEmpty()) {
+                chooseCarType.setDisable(false);
+            }
+            updatePrice();
         }
-        updatePrice();
     }
 
     public void addAdjust(ActionEvent actionEvent) {
-        Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
-        chosenAdjustments.add(chosen);
-        chosenAdjustTV.setItems(chosenAdjustments);
+        if(!adjustmentTV.getSelectionModel().isEmpty()) {
+            Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
+            chosenAdjustments.add(chosen);
+            chosenAdjustTV.setItems(chosenAdjustments);
 
-        for(Adjustment a : chosenAdjustments){
-            adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
-            //to prevent the user from selecting the same adjustment several times.
+            for (Adjustment a : chosenAdjustments) {
+                adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
+                //to prevent the user from selecting the same adjustment several times.
+            }
+            updatePrice();
         }
-        updatePrice();
 
     }
 
     public void removeAdjust(ActionEvent actionEvent) {
-        Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
-        int price = chosen.getAdjustmentPrice();
-        chosenAdjustments.remove(chosen);
-        adjustmentTV.getItems().add(chosen);
-        updatePrice();
+        if(!chosenAdjustTV.getSelectionModel().isEmpty()) {
+            Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
+            chosenAdjustments.remove(chosen);
+            adjustmentTV.getItems().add(chosen);
+            updatePrice();
+        }
     }
 
     //Method that opens the My Profile-GUI.
@@ -287,13 +293,12 @@ public class UserController implements Initializable {
         }
     }
 
+    //Method for ordering a car
     public void order(ActionEvent actionEvent){
         boolean rightInput = true;
 
         Date date = new Date();
-
         int price = totalprice;
-
         int persID = LoggedIn.getId();
 
         int largest = 0;
@@ -303,8 +308,11 @@ public class UserController implements Initializable {
             }
         }
 
+        //Finding the largest taken orderNr, and setting the new OrderNr to one larger.
         int orderNr = largest + 1;
         String newOrderNr = "" + orderNr;
+
+        //Finding the ID that belongs to the chosen car type
         String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
@@ -364,6 +372,7 @@ public class UserController implements Initializable {
         }
     }
 
+    //Method that updates the price when a component or adjustment is chosen/removed.
     public void updatePrice (){
         totalprice = 0;
         for (Component c : chosenComponents){
@@ -379,7 +388,7 @@ public class UserController implements Initializable {
                 totalprice += c.getPrice();
             }
         }
-        lblTotalprice.setText("Total price: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice + " kr");
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {

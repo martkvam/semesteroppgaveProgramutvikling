@@ -104,6 +104,10 @@ public class FileHandler{
                 } catch (IllegalArgumentException e){
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 }
+                catch (Exception e){
+                    Dialogs.showErrorDialog("There is an error in the file containig the finished orders." +
+                            "The order-register might not be complete.");
+                }
             }
         }
 

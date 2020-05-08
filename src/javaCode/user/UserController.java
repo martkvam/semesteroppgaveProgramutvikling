@@ -114,14 +114,6 @@ public class UserController implements Initializable {
     void setList(ActionEvent event) {
         String chosen = chooseCarType.getSelectionModel().getSelectedItem();
 
-       /* int totalprice = 0;
-        for (Car car : Lists.getCars()){
-            if(chosen.contains(car.getCarType())){
-                totalprice += car.getPrice();
-            }
-        }
-        lblTotalprice.setText("Total price: " + totalprice);*/
-
         //List that is diplayed in the tableview for components
         ObservableList<Component> outList = FXCollections.observableArrayList();
 
@@ -169,15 +161,6 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(true); //Disabling the car type choice-box to prevent the user from choosing
             //components that belong to different car types.
 
-           /* int totalprice = 0;
-            for (Adjustment adj : chosenAdjustments) {
-                totalprice += adj.getAdjustmentPrice();
-            }
-            for (Component c : chosenComponents) {
-                totalprice += c.getComponentPrice();
-            }
-
-            lblTotalprice.setText("Total price: " + totalprice);*/
            updatePrice();
         }
         else{
@@ -196,16 +179,6 @@ public class UserController implements Initializable {
         if(chosenComponents.isEmpty()){
             chooseCarType.setDisable(false);
         }
-
-        /*int totalprice = 0;
-        for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getAdjustmentPrice();
-        }
-        for(Component c : chosenComponents){
-            totalprice += c.getComponentPrice();
-        }
-        lblTotalprice.setText("Total price: " + totalprice);*/
-
         updatePrice();
     }
 
@@ -213,15 +186,6 @@ public class UserController implements Initializable {
         Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
         chosenAdjustments.add(chosen);
         chosenAdjustTV.setItems(chosenAdjustments);
-
-        /*int totalprice = 0;
-        for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getAdjustmentPrice();
-        }
-        for(Component c : chosenComponents){
-            totalprice += c.getComponentPrice();
-        }
-        lblTotalprice.setText("Total price: " + totalprice);*/
 
         for(Adjustment a : chosenAdjustments){
             adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
@@ -237,15 +201,6 @@ public class UserController implements Initializable {
         chosenAdjustments.remove(chosen);
         adjustmentTV.getItems().add(chosen);
         updatePrice();
-
-       /* int totalprice = 0;
-        for (Adjustment adj : chosenAdjustments){
-            totalprice += adj.getAdjustmentPrice();
-        }
-        for(Component c : chosenComponents){
-            totalprice += c.getComponentPrice();
-        }
-        lblTotalprice.setText("Total price: " + totalprice);*/
     }
 
     //Method that opens the My Profile-GUI.

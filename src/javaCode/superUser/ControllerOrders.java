@@ -516,7 +516,7 @@ public class ControllerOrders implements Initializable {
         try{
             int price = EditOrders.editOrderPrice(event.getOldValue());
             if(price <= 0) {
-                Dialogs.showErrorDialog("Invalid total price");
+                Dialogs.showErrorDialog("Invalid component price");
             }
             else {
                 event.getRowValue().setComponentPrice(price);

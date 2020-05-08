@@ -148,7 +148,7 @@ public class ControllerOrders implements Initializable {
                         lblMailOut.setText(i.getEmail());
                     }
                 }
-            } catch (FileNotFoundException | UserAlreadyExistException e) {
+            } catch (FileNotFoundException e) {
                 Dialogs.showErrorDialog(e.getMessage());
             }
 
@@ -228,7 +228,7 @@ public class ControllerOrders implements Initializable {
                             lblMailOut.setText(i.getEmail());
                         }
                     }
-                } catch (FileNotFoundException | UserAlreadyExistException f) {
+                } catch (FileNotFoundException f) {
                     f.printStackTrace();
                 }
 
@@ -274,7 +274,7 @@ public class ControllerOrders implements Initializable {
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        } catch (FileNotFoundException | UserAlreadyExistException f) {
+        } catch (FileNotFoundException f) {
             f.printStackTrace();
         }
 

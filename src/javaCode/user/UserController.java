@@ -6,6 +6,7 @@ import javaCode.superUser.ControllerOrdersAddComponent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ public class UserController implements Initializable {
     private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
     ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
+    private int totalprice;
 
     @FXML
     private TableView<Component> componentTV;
@@ -88,6 +90,7 @@ public class UserController implements Initializable {
             for (Adjustment a : chosenAdjustments){
                 adjustmentTV.getItems().remove(a);
             }
+            updatePrice();
         }
 
         else {
@@ -109,6 +112,16 @@ public class UserController implements Initializable {
     //Is called upon when car type and component type is selected.
     @FXML
     void setList(ActionEvent event) {
+        String chosen = chooseCarType.getSelectionModel().getSelectedItem();
+
+       /* int totalprice = 0;
+        for (Car car : Lists.getCars()){
+            if(chosen.contains(car.getCarType())){
+                totalprice += car.getPrice();
+            }
+        }
+        lblTotalprice.setText("Total price: " + totalprice);*/
+
         //List that is diplayed in the tableview for components
         ObservableList<Component> outList = FXCollections.observableArrayList();
 
@@ -116,7 +129,7 @@ public class UserController implements Initializable {
         String type = chooseCarType.getValue();
         String ID = "";
         for (Car car : lists.getCars()){
-            if (type.equals(car.getCarType())){
+            if (type.contains(car.getCarType())){
                 ID = car.getCarID();
             }
         }
@@ -135,6 +148,7 @@ public class UserController implements Initializable {
         //The outlist is displayed in the tableview
         componentTV.setItems(outList);
         componentTV.refresh();
+        updatePrice();
     }
 
     //Method for adding a component to the order.
@@ -155,14 +169,16 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(true); //Disabling the car type choice-box to prevent the user from choosing
             //components that belong to different car types.
 
-            int totalprice = 0;
+           /* int totalprice = 0;
             for (Adjustment adj : chosenAdjustments) {
                 totalprice += adj.getAdjustmentPrice();
             }
             for (Component c : chosenComponents) {
                 totalprice += c.getComponentPrice();
             }
-            lblTotalprice.setText("Total price: " + totalprice);
+
+            lblTotalprice.setText("Total price: " + totalprice);*/
+           updatePrice();
         }
         else{
             Dialogs.showErrorDialog("You have already added a component of this type. If you wish to select this" +
@@ -181,14 +197,16 @@ public class UserController implements Initializable {
             chooseCarType.setDisable(false);
         }
 
-        int totalprice = 0;
+        /*int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
             totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Total price: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);*/
+
+        updatePrice();
     }
 
     public void addAdjust(ActionEvent actionEvent) {
@@ -196,35 +214,38 @@ public class UserController implements Initializable {
         chosenAdjustments.add(chosen);
         chosenAdjustTV.setItems(chosenAdjustments);
 
-        int totalprice = 0;
+        /*int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
             totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Total price: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);*/
 
         for(Adjustment a : chosenAdjustments){
             adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
             //to prevent the user from selecting the same adjustment several times.
         }
+        updatePrice();
 
     }
 
     public void removeAdjust(ActionEvent actionEvent) {
         Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
+        int price = chosen.getAdjustmentPrice();
         chosenAdjustments.remove(chosen);
         adjustmentTV.getItems().add(chosen);
+        updatePrice();
 
-        int totalprice = 0;
+       /* int totalprice = 0;
         for (Adjustment adj : chosenAdjustments){
             totalprice += adj.getAdjustmentPrice();
         }
         for(Component c : chosenComponents){
             totalprice += c.getComponentPrice();
         }
-        lblTotalprice.setText("Total price: " + totalprice);
+        lblTotalprice.setText("Total price: " + totalprice);*/
     }
 
     //Method that opens the My Profile-GUI.
@@ -252,20 +273,14 @@ public class UserController implements Initializable {
         boolean rightInput = true;
         Date date = new Date();
 
-        int price = 0;
-        for (Component c : chosenComponents){
-            price += c.getComponentPrice();
-        }
-        for (Adjustment a : chosenAdjustments){
-            price += a.getAdjustmentPrice();
-        }
+        int price = totalprice;
 
         int persID = LoggedIn.getId();
 
         String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
-                if (chooseCarType.getValue().equals(car.getCarType())) {
+                if (chooseCarType.getValue().contains(car.getCarType())) {
                     carId = car.getCarID();
                 }
             }
@@ -322,13 +337,7 @@ public class UserController implements Initializable {
 
         Date date = new Date();
 
-        int price = 0;
-        for (Component c : chosenComponents){
-            price += c.getComponentPrice();
-        }
-        for (Adjustment a : chosenAdjustments){
-            price += a.getAdjustmentPrice();
-        }
+        int price = totalprice;
 
         int persID = LoggedIn.getId();
 
@@ -344,7 +353,7 @@ public class UserController implements Initializable {
         String carId = "";
         if(chooseCarType.getValue() != null) {
             for (Car car : Lists.getCars()) {
-                if (chooseCarType.getValue().equals(car.getCarType())) {
+                if (chooseCarType.getValue().contains(car.getCarType())) {
                     carId = car.getCarID();
                 }
             }
@@ -398,6 +407,24 @@ public class UserController implements Initializable {
                 }
             }
         }
+    }
+
+    public void updatePrice (){
+        totalprice = 0;
+        for (Component c : chosenComponents){
+            totalprice += c.getComponentPrice();
+        }
+        for (Adjustment a : chosenAdjustments){
+            totalprice += a.getAdjustmentPrice();
+        }
+
+        String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
+        for (Car c : Lists.getCars()){
+            if(chosenCar.contains(c.getCarType())){
+                totalprice += c.getPrice();
+            }
+        }
+        lblTotalprice.setText("Total price: " + totalprice);
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {

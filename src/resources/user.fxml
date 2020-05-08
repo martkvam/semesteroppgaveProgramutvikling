@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
     <children>
-        <TableView fx:id="componentTV" layoutX="23.0" layoutY="85.0" prefHeight="200.0" prefWidth="334.0">
+        <TableView fx:id="componentTV" layoutX="24.0" layoutY="99.0" prefHeight="200.0" prefWidth="334.0">
             <columns>
                 <TableColumn prefWidth="201.0" text="Description">
                     <cellValueFactory>
@@ -24,7 +24,7 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <TableView fx:id="chosenCompTV" layoutX="403.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="chosenCompTV" layoutX="403.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0">
             <columns>
                 <TableColumn prefWidth="123.0" text="Type">
                     <cellValueFactory>
@@ -38,12 +38,12 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="50.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
-        <Label layoutX="410.0" layoutY="64.0" prefHeight="17.0" prefWidth="153.0" text="Chosen components" />
-        <Button fx:id="addBtn" layoutX="266.0" layoutY="292.0" mnemonicParsing="false" onAction="#addComponent" prefHeight="27.0" prefWidth="95.0" text="Add" />
-        <Button fx:id="btnRemove" layoutX="541.0" layoutY="292.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
+        <ComboBox fx:id="chooseCarType" layoutX="26.0" layoutY="64.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
+        <Label layoutX="403.0" layoutY="78.0" prefHeight="17.0" prefWidth="153.0" text="Chosen components" />
+        <Button fx:id="addBtn" layoutX="266.0" layoutY="306.0" mnemonicParsing="false" onAction="#addComponent" prefHeight="27.0" prefWidth="95.0" text="Add" />
+        <Button fx:id="btnRemove" layoutX="541.0" layoutY="306.0" mnemonicParsing="false" onAction="#removeComponent" text="Remove" />
         <Button fx:id="btnOrder" layoutX="411.0" layoutY="624.0" mnemonicParsing="false" onAction="#order" prefHeight="27.0" prefWidth="68.0" text="Order" />
-      <ComboBox fx:id="chooseComponent" layoutX="192.0" layoutY="50.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
+      <ComboBox fx:id="chooseComponent" layoutX="192.0" layoutY="64.0" onAction="#setList" prefHeight="27.0" prefWidth="161.0" />
       <Label fx:id="lblTotalprice" layoutX="39.0" layoutY="629.0" prefHeight="17.0" prefWidth="135.0" text="Total price: " />
       <TableView fx:id="adjustmentTV" layoutX="27.0" layoutY="362.0" prefHeight="200.0" prefWidth="327.0">
         <columns>
@@ -81,5 +81,7 @@
       <Button fx:id="btnProfile" layoutX="397.0" layoutY="14.0" mnemonicParsing="false" onAction="#myProfile" prefHeight="27.0" prefWidth="119.0" text="My profile" />
       <Button fx:id="btnSave" layoutX="486.0" layoutY="624.0" mnemonicParsing="false" onAction="#saveChoices" prefHeight="27.0" prefWidth="103.0" text="Save choices" />
       <Button fx:id="btnLogout" layoutX="523.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="103.0" text="Log out" />
+      <Label layoutX="24.0" layoutY="14.0" prefHeight="17.0" prefWidth="327.0" text="Start your order by choosing a car type. Each car" />
+      <Label layoutX="22.0" layoutY="33.0" prefHeight="17.0" prefWidth="334.0" text="comes with default settings." />
     </children>
 </AnchorPane>

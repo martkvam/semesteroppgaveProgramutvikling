@@ -13,8 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Window;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -294,7 +292,7 @@ public class ProfileController implements Initializable {
 
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
-            Excel.writeExcel(ordersTV.getItems(), "Order");
+            Excel.writeExcel(ordersTV.getItems());
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

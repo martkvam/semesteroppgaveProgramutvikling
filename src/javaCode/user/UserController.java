@@ -208,10 +208,10 @@ public class UserController implements Initializable {
                     chosenAdjustments.add(chosen);
                     chosenAdjustTV.setItems(chosenAdjustments);
 
-                    for (Adjustment a : chosenAdjustments) {
+                   /* for (Adjustment a : chosenAdjustments) {
                         adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
                         //to prevent the user from selecting the same adjustment several times.
-                    }
+                    }*/
                     updatePrice();
                 }
                 else{
@@ -228,7 +228,7 @@ public class UserController implements Initializable {
         if(!chosenAdjustTV.getSelectionModel().isEmpty()) {
             Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
             chosenAdjustments.remove(chosen);
-            adjustmentTV.getItems().add(chosen);
+            //adjustmentTV.getItems().add(chosen);
             updatePrice();
         }
     }
@@ -246,7 +246,7 @@ public class UserController implements Initializable {
                     ButtonType.CANCEL, ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)){
-                adjustmentTV.getItems().addAll(chosenAdjustments);
+                //adjustmentTV.getItems().addAll(chosenAdjustments);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
                 OpenScene.newScene("My profile", root, 610, 650, actionEvent);
             }
@@ -303,7 +303,7 @@ public class UserController implements Initializable {
             try {
                 FileWriter.WriteFile(path, formattedOrders);
                 Dialogs.showSuccessDialog("Your order has been saved! You can view your ongoing orders on your profile");
-                adjustmentTV.getItems().addAll(chosenAdjustments);
+              //  adjustmentTV.getItems().addAll(chosenAdjustments);
                 chosenComponents.clear();
                 chosenAdjustments.clear();
                 chosenAdjustTV.refresh();
@@ -381,7 +381,7 @@ public class UserController implements Initializable {
                 try {
                     FileWriter.WriteFile(path, formattedOrders);
                     Dialogs.showSuccessDialog("Your order was succesful!");
-                    adjustmentTV.getItems().addAll(chosenAdjustments);
+                    //adjustmentTV.getItems().addAll(chosenAdjustments);
                     chosenComponents.clear();
                     chosenAdjustments.clear();
                     chosenAdjustTV.refresh();
@@ -420,52 +420,69 @@ public class UserController implements Initializable {
         OpenScene.newScene("Log in", root, 650, 650, actionEvent);
     }
 
-    public void setPackage(ActionEvent actionEvent){
-        Path path = Paths.get("src/dataBase/CarPackages.txt");
-        ReadPackages read = new ReadPackages();
-        String carID = "";
-        String packageID = "";
-        String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
-        String chosenPackage = choosePackage.getSelectionModel().getSelectedItem();
+    public void setPackage(ActionEvent actionEvent) {
+        if (!chooseCarType.getSelectionModel().isEmpty()) {
+            if(!choosePackage.getSelectionModel().isEmpty()) {
+                Path path = Paths.get("src/dataBase/CarPackages.txt");
+                ReadPackages read = new ReadPackages();
+                String carID = "";
+                String packageID = "";
+                String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
+                String chosenPackage = choosePackage.getSelectionModel().getSelectedItem();
 
-        switch (chosenPackage){
-            case "Basic+":
-                packageID += "1";
-                break;
-            case "Sport":
-                packageID += "2";
-                break;
-            case "Premium":
-                packageID += "3";
-                break;
-        }
-        switch (chosenCar){
-            case "Petrol":
-                carID += "1";
-                break;
-            case "Diesel":
-                carID += "2";
-                break;
-            case "Electric":
-                carID += "3";
-                break;
-            case "Hybrid":
-                carID += "4";
-                break;
-        }
-        try {
-            read.read(path, carID, packageID);
-            chosenAdjustments.setAll(Lists.getBasePackageAdjustments());
-            chosenComponents.setAll(Lists.getBasePackageComponents());
-            chosenCompTV.setItems(chosenComponents);
-            chosenAdjustTV.setItems(chosenAdjustments);
-            updatePrice();
-            chooseCarType.setDisable(true);
-            for (Adjustment a : chosenAdjustments){
+                switch (chosenPackage) {
+                    case "Basic+":
+                        packageID += "1";
+                        break;
+                    case "Sport":
+                        packageID += "2";
+                        break;
+                    case "Premium":
+                        packageID += "3";
+                        break;
+                }
+                switch (chosenCar) {
+                    case "Petrol":
+                        carID += "1";
+                        break;
+                    case "Diesel":
+                        carID += "2";
+                        break;
+                    case "Electric":
+                        carID += "3";
+                        break;
+                    case "Hybrid":
+                        carID += "4";
+                        break;
+                }
+                try {
+                    read.read(path, carID, packageID);
+                    chosenAdjustments.setAll(Lists.getBasePackageAdjustments());
+                    chosenComponents.setAll(Lists.getBasePackageComponents());
+                    chosenCompTV.setItems(chosenComponents);
+                    chosenAdjustTV.setItems(chosenAdjustments);
+                    updatePrice();
+                    chooseCarType.setDisable(true);
+            /*for (Adjustment a : chosenAdjustments){
                 adjustmentTV.getItems().remove(a);
+            }*/
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Dialogs.showErrorDialog("Please choose a package");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            Dialogs.showErrorDialog("Start by choosing a car type");
         }
+    }
+
+    public void removeAllComp(ActionEvent actionEvent) {
+        chosenCompTV.getItems().clear();
+        chooseCarType.setDisable(false);
+    }
+
+    public void removeAllAdjust(ActionEvent actionEvent) {
+        chosenAdjustTV.getItems().clear();
     }
 }

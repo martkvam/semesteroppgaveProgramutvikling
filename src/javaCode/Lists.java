@@ -142,16 +142,15 @@ public class Lists<E> implements Serializable {
         if(newValue == null || newValue.isEmpty()){
             return true;
         }
-
         String lowerCase = newValue.toLowerCase();
 
         if(String.valueOf(order.getOrderNr()).toLowerCase().contains(lowerCase)){
             return true;
-        } else if (Integer.toString(order.getPersonId()).toLowerCase().contains(lowerCase)){
+        } else if (Integer.toString(order.getPersonId()).toLowerCase().equals(lowerCase)){
             return true;
         } else if (order.getCarId().toLowerCase().contains(lowerCase)){
             return true;
-        } else if (Integer.toString(order.getTotalPrice()).toLowerCase().contains(lowerCase)) {
+        } else if (Integer.toString(order.getTotalPrice()).toLowerCase().equals(lowerCase)) {
             return true;
         } else if (order.getCarColor().toLowerCase().contains(lowerCase)){
             return true;
@@ -171,7 +170,7 @@ public class Lists<E> implements Serializable {
 
         }
         for(Adjustment i : order.getAdjustmentList()){
-            if(i.getAdjustmentID().toLowerCase().contains(lowerCase)){
+            if(i.getAdjustmentID().toLowerCase().equals(lowerCase)){
                 return true;
             }
             else if(i.getAdjustmentType().toLowerCase().contains(lowerCase)){

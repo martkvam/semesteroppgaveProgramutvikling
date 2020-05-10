@@ -86,7 +86,6 @@
                </font></Label>
             <Button layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnRemoveComponent" text="Remove component" />
             <Button layoutX="448.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnAddComponent" text="Add component to order" />
-            <Button layoutX="448.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnNewComponent" text="Edit/add new component" />
             <Button fx:id="btnConfirm" layoutX="20.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnConfirm" text="Confirm changes" />
             <Label layoutX="22.0" layoutY="77.0" prefHeight="26.0" prefWidth="73.0" text="Car type:">
                <font>

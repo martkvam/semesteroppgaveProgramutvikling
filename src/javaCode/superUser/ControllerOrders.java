@@ -55,9 +55,6 @@ public class ControllerOrders implements Initializable {
     private Button buttonBack;
 
     @FXML
-    private Button newOrder;
-
-    @FXML
     private Button deleteOrder;
 
     @FXML
@@ -67,16 +64,10 @@ public class ControllerOrders implements Initializable {
     private Button deleteComponent;
 
     @FXML
-    private Button newComponent;
-
-    @FXML
     private Button addAdjustment;
 
     @FXML
     private Button deleteAdjustrment;
-
-    @FXML
-    private Button newAdjustment;
 
     @FXML
     private TableView<Order> tableViewOrder;
@@ -161,6 +152,48 @@ public class ControllerOrders implements Initializable {
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
 
         }
+        else if(ControllerOrdersAddAdjustment.toBeChanged){
+            Order editedOrder = ControllerOrdersAddAdjustment.getNewAdjustments();
+
+            for(Order i : tableViewOrder.getItems()){
+                if(i.getOrderNr().equals(editedOrder.getOrderNr())){
+                    i.getAdjustmentList().clear();
+                    i.setAdjustmentList(editedOrder.getAdjustmentList());
+                }
+            }
+            tableViewOrder.setItems(Lists.getOrders());
+            tableViewOrder.getSelectionModel().select(selectedOrder);
+            int outPersonId = 0;
+            selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
+            outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
+
+            try {
+                for(User i : ReadUsers.getUserList()){
+                    if(i.getId() == outPersonId){
+                        lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                        lblOutPhone.setText((i.getPhone()));
+                        lblMailOut.setText(i.getEmail());
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                Dialogs.showErrorDialog(e.getMessage());
+            }
+
+            for(Order i : Lists.getOrders()){
+                tableViewComponents.setItems(i.getComponentList());
+            }
+            for(Order i : Lists.getOrders()){
+                tableViewAdjustments.setItems(i.getAdjustmentList());
+                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                    tableViewComponents.setItems(i.getComponentList());
+                    tableViewAdjustments.setItems(i.getAdjustmentList());
+                    outPersonId = i.getPersonId();
+                }
+            }
+
+            Date dateNow = new Date();
+            tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
+        }
         else{
             if(firstInlog == 0){
                 //Starts delay thread
@@ -175,15 +208,12 @@ public class ControllerOrders implements Initializable {
 
                 buttonBack.setDisable(true);
                 txtFilterOrders.setDisable(true);
-                newOrder.setDisable(true);
                 deleteOrder.setDisable(true);
 
                 deleteComponent.setDisable(true);
                 addComponent.setDisable(true);
-                newComponent.setDisable(true);
                 addAdjustment.setDisable(true);
                 deleteAdjustrment.setDisable(true);
-                newAdjustment.setDisable(true);
 
 
                 th.setDaemon(true);
@@ -205,8 +235,6 @@ public class ControllerOrders implements Initializable {
                 tableViewOrder.getSelectionModel().select(0);
                 tableViewOrder.getFocusModel().focus(0);
                 tableViewOrder.scrollTo(0);
-                //tableViewOrder.getSelectionModel().select(tableViewOrder.getItems().get(1));
-                //tableViewOrder.getFocusModel().focus(2);
                 System.out.println();
 
                 //tableViewOrder.getSelectionModel().selectFirst();
@@ -280,15 +308,12 @@ public class ControllerOrders implements Initializable {
 
         buttonBack.setDisable(false);
         txtFilterOrders.setDisable(false);
-        newOrder.setDisable(false);
         deleteOrder.setDisable(false);
 
         deleteComponent.setDisable(false);
         addComponent.setDisable(false);
-        newComponent.setDisable(false);
         addAdjustment.setDisable(false);
         deleteAdjustrment.setDisable(false);
-        newAdjustment.setDisable(false);
     }
 
     private void threadFailed(WorkerStateEvent event) {
@@ -306,7 +331,7 @@ public class ControllerOrders implements Initializable {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 710 ,500, event);
+                newScene("Superuser", root, 470 ,300, event);
     }
 
     @FXML
@@ -332,10 +357,6 @@ public class ControllerOrders implements Initializable {
 
         }
 
-
-    }
-    @FXML
-    void btnNewOrder(ActionEvent event) {
 
     }
     @FXML
@@ -369,26 +390,13 @@ public class ControllerOrders implements Initializable {
         }
     }
 
-    @FXML
-    void btnNewComponent(ActionEvent event) {
-        String selectedCartype ="";
-        for(Car i : Lists.getCars()){
-            if(i.getCarID().equals(tableViewOrder.getSelectionModel().getSelectedItem().getCarId())){
-                selectedCartype = i.getCarType();
-            }
-        }
-        addElements.openAddComponentsDialog(Lists.getCars(),Lists.getComponents(),selectedCartype,"", "", 0);
-
-    }
 
     @FXML
-    void btnAddAdjustment(ActionEvent event) {
+    void btnAddAdjustment(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrderAddAdjustment.fxml"));
+        OpenScene.newScene("Adjustments", root, 870, 460, event );
+    }
 
-    }
-    @FXML
-    void btnNewAdjustment(ActionEvent event) {
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment(),"", "", 0);
-    }
     @FXML
     void btnDeleteAdjustment(ActionEvent event) {
         try{

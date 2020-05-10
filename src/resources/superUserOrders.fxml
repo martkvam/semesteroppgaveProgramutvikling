@@ -140,7 +140,7 @@
               </columns>
             </TableView>
             <Button fx:id="buttonBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
-            <Button fx:id="deleteOrder" layoutX="937.0" layoutY="291.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="26.0" prefWidth="145.0" text="Delete order" />
+            <Button fx:id="deleteOrder" layoutX="786.0" layoutY="292.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="26.0" prefWidth="145.0" text="Delete order" />
             <GridPane layoutX="823.0" layoutY="58.0" prefHeight="118.0" prefWidth="252.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.800048828125" minWidth="10.0" prefWidth="69.4" />
@@ -179,7 +179,6 @@
             </Label>
             <Button fx:id="deleteComponent" layoutX="937.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnDeleteComponent" prefHeight="26.0" prefWidth="145.0" text="Delete component" />
             <Button fx:id="addComponent" layoutX="786.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnAddComponent" prefHeight="26.0" prefWidth="145.0" text="Add component" />
-            <Button fx:id="newComponent" layoutX="786.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnNewComponent" prefHeight="26.0" prefWidth="145.0" text="New components" />
             <Label layoutX="328.0" layoutY="20.0" text="Orders">
                <font>
                   <Font name="System Bold" size="26.0" />
@@ -196,10 +195,8 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="newOrder" layoutX="786.0" layoutY="291.0" mnemonicParsing="false" onAction="#btnNewOrder" prefHeight="26.0" prefWidth="145.0" text="Add new order" />
             <Button fx:id="addAdjustment" layoutX="786.0" layoutY="579.0" mnemonicParsing="false" onAction="#btnAddAdjustment" prefHeight="26.0" prefWidth="145.0" text="Add adjustment" />
             <Button fx:id="deleteAdjustrment" layoutX="937.0" layoutY="579.0" mnemonicParsing="false" onAction="#btnDeleteAdjustment" prefHeight="26.0" prefWidth="145.0" text="Delete adjustment" />
-            <Button fx:id="newAdjustment" layoutX="786.0" layoutY="616.0" mnemonicParsing="false" onAction="#btnNewAdjustment" prefHeight="26.0" prefWidth="145.0" text="New adjustment" />
             <Label layoutX="883.0" layoutY="343.0" text="Component">
                <font>
                   <Font name="System Bold" size="18.0" />

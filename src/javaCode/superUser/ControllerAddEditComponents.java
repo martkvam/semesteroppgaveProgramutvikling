@@ -171,7 +171,7 @@ public class ControllerAddEditComponents implements Initializable {
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         filehandler.saveAllFiles();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-        OpenScene.newScene("Superuser",  root, 600, 400, event);
+        OpenScene.newScene("Superuser", root, 470 ,300, event);
         TableView.getItems().clear();
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();

@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -96,6 +93,7 @@ public class Inlog implements Initializable {
                 throw new IllegalArgumentException("Username and password inncorrect");
             }
         }catch(Exception e){
+            setDisableKeyEvent(true);
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
@@ -106,10 +104,24 @@ public class Inlog implements Initializable {
         OpenScene.newScene("Register User",  root, 300, 500, event);
     }
 
+    public boolean isDisableKeyEvent() {
+        return disableKeyEvent;
+    }
+
+    public void setDisableKeyEvent(boolean disableKeyEvent) {
+        this.disableKeyEvent = disableKeyEvent;
+    }
+
+    private boolean disableKeyEvent;
+
     //Enables users to log in with pressing ENTER
     public void enterKeyPressed(KeyEvent kEvent) {
-        if(kEvent.getCode()== KeyCode.ENTER) {
-            btnLogIn.fire();
+        if(!isDisableKeyEvent()) {
+            if (kEvent.getCode() == KeyCode.ENTER) {
+                btnLogIn.fire();
+            }
+        }else {
+            setDisableKeyEvent(false);
         }
     }
 

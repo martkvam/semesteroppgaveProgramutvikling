@@ -6,11 +6,11 @@
 6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;false
 7;Truls;Berg;truls@berg.no;19991999;berg;false
 8;Vidle;Dalstø;vilde@daltso.no;97622121;heihei;false
-9;Omar;Jensen;lolol@lol.no;5678234920;jacco;false
-44;vill;lærr;vill@mail.se;11659724;moll;false
+9;124424;Jensen;lolol@lol.no;5678234920;jacco;false
+44;Villy;lærr;vill@mail.se;11659724;moll;false
 69;Geir;Hansen;rolfern@spenn.it;14141414;hahaha;false
 101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;false
 102;Pølsemannen;Grilstad;august_grilstad@hotmail.com;45252226;august123;false
-14;Ole;Olesen;ole@olesen.loe;123445566;olel;false
 15;Jorunn;Heggernes;joheg@gmail.com;885577342;heggernes;false
-10;Ole;olsen;olesen@mail.no;8573258104;ole;false
+17;Olly;Hei;olleol@mail.no;1222112;olly;false
+12;Trym;Stenberg;trymst@mail.no;55665566;trym;false

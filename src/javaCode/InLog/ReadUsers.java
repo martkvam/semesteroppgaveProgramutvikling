@@ -79,17 +79,19 @@ public class ReadUsers {
                         currentUser[6] = change;
                         break;
                 }
+                newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
+                        currentUser[3], currentUser[4], currentUser[5],
+                        Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
+
+            } else{
+                newRegister.append(line).append(System.lineSeparator());
             }
-            newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
-                    currentUser[3], currentUser[4], currentUser[5],
-                    Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
         }
         FileWriter myWriter = new FileWriter(myObj);
         myWriter.write(String.valueOf(newRegister));
         myReader.close();
         myWriter.close();
     }
-
     //Method for getting id of a user based on input info
     public static ArrayList<String> getUserId(String ... str) throws FileNotFoundException {
         File myObj = new File(Formatter.registerPath);
@@ -168,10 +170,11 @@ public class ReadUsers {
         return userList;
     }
 
-    //Method for checking if user of input values exists already in the register
-    public static void checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
+    public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
+
         if(Objects.equals(ReadUsers.getUserId(email), null) &&
         Objects.equals(ReadUsers.getUserId(phone), null)){
+            return true;
         } else{
             throw new UserAlreadyExistException("User already exists");
         }

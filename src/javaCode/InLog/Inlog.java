@@ -9,34 +9,42 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Inlog implements Initializable {
 
+    private static boolean showPasswordFieldActive;
     @FXML
     public TextField txtVisiblePassword;
-
+    Stage stage = new Stage();
     @FXML
     private PasswordField txtPassword;
-
     @FXML
     private TextField txtUserName;
-
     @FXML
     private CheckBox chkBoxPassword;
-
     @FXML
     private Button btnLogIn;
+    private boolean disableKeyEvent;
 
-    Stage stage = new Stage();
+    //Variable for passwordfields, if the text or the dot one i visible
+    private static boolean isShowPasswordFieldActive() {
+        return showPasswordFieldActive;
+    }
+
+    private static void setShowPasswordFieldActive(boolean showPasswordFieldActive) {
+        Inlog.showPasswordFieldActive = showPasswordFieldActive;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,16 +100,17 @@ public class Inlog implements Initializable {
             } else {
                 throw new IllegalArgumentException("Username and password inncorrect");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             setDisableKeyEvent(true);
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
 
-    @FXML //Open new scene for registering user
+    @FXML
+        //Open new scene for registering user
     void btnNewUserOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/newUser.fxml"));
-        OpenScene.newScene("Register User",  root, 300, 500, event);
+        OpenScene.newScene("Register User", root, 300, 500, event);
     }
 
     //Variable for disabling the keyEvent on ENTER when alert is present
@@ -113,15 +122,13 @@ public class Inlog implements Initializable {
         this.disableKeyEvent = disableKeyEvent;
     }
 
-    private boolean disableKeyEvent;
-
     //Enables users to log in with pressing ENTER
     public void enterKeyPressed(KeyEvent kEvent) {
-        if(!isDisableKeyEvent()) {
+        if (!isDisableKeyEvent()) {
             if (kEvent.getCode() == KeyCode.ENTER) {
                 btnLogIn.fire();
             }
-        }else {
+        } else {
             setDisableKeyEvent(false);
         }
     }
@@ -134,14 +141,14 @@ public class Inlog implements Initializable {
         txtPassword.setEditable(!checked);
         txtPassword.setDisable(checked);
 
-        if(checked){
+        if (checked) {
             txtVisiblePassword.setText(txtPassword.getText());
             txtVisiblePassword.toFront();
             txtVisiblePassword.setOpacity(1);
             txtPassword.toBack();
             txtPassword.setOpacity(0);
             setShowPasswordFieldActive(true);
-        } else{
+        } else {
             txtPassword.setText(txtVisiblePassword.getText());
             txtPassword.toFront();
             txtPassword.setOpacity(1);
@@ -150,16 +157,5 @@ public class Inlog implements Initializable {
             setShowPasswordFieldActive(false);
         }
     }
-
-    //Variable for passwordfields, if the text or the dot one i visible
-    private static boolean isShowPasswordFieldActive() {
-        return showPasswordFieldActive;
-    }
-
-    private static void setShowPasswordFieldActive(boolean showPasswordFieldActive) {
-        Inlog.showPasswordFieldActive = showPasswordFieldActive;
-    }
-
-    private static boolean showPasswordFieldActive;
 
 }

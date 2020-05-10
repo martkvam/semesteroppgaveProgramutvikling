@@ -96,8 +96,8 @@ public class ControllerEditProfile {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "LastName", newLastName);
             u.setLastName(newLastName);
         } catch (Exception e){
-            tvUserRegister.getSelectionModel().clearSelection();
-            Dialogs.showErrorDialog(e.getMessage());
+                tvUserRegister.getSelectionModel().clearSelection();
+                Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }

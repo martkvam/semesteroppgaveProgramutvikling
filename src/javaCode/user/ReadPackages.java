@@ -1,11 +1,13 @@
 package javaCode.user;
 
 
-import javaCode.Adjustment;
-import javaCode.Component;
+import javaCode.Dialogs;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
 import javaCode.Lists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,9 +25,13 @@ public class ReadPackages {
            String line;
            while((line = reader.readLine()) != null ){
                String [] split = line.split(";");
+               if(split.length != 4){
+                   Dialogs.showErrorDialog("There is an error in the file containing the base packages."
+                   + " All packages might not be loaded correctly.");
+               }
                if(split[0].equals(carID) && split[1].equals(packageId)){
                    Lists.getBasePackageAdjustments().addAll(parseAdjustmentList(split[3]));
-                   Lists.getBasePackageComponents().addAll(parseComponentList(split[2]));
+                   Lists.getBasePackageComponents().addAll(parseComponentList(split[2], split[0]));
                }
            }
         } catch (IOException e) {
@@ -34,13 +40,24 @@ public class ReadPackages {
     }
 
 
-    private ObservableList<Component> parseComponentList(String str) throws Exception{
+    private ObservableList<Component> parseComponentList(String componentList, String carID) throws Exception{
         ObservableList<Component> components = FXCollections.observableArrayList();
-        String[] split = str.split(",");
+        String[] split = componentList.split(",");
+
+        //Iterating through the list of components from the file and matching them with the components in the register.
+        //If they belong to the right car they are added to the base package, if not they are ignored and an error message
+        //is displayed to the user.
         for(String string : split){
             for(Component c : Lists.getComponents()){
                 if (c.getComponentID().equals(string)){
-                    components.add(c);
+                    if(c.getCarID().equals(carID)) {
+                        components.add(c);
+                    }
+                    else {
+                        Dialogs.showErrorDialog("There is an error in the file containing the packages, as a component" +
+                                " belonging to another car type was added to this package. That component has been removed," +
+                                " but as a result this package might not be complete.");
+                    }
                 }
             }
         }

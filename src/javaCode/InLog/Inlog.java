@@ -90,7 +90,7 @@ public class Inlog implements Initializable {
                 OpenScene.newScene("Superuser",  root, 470, 300, event);
             }else{
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("User", root, 700, 700, event);
+                OpenScene.newScene("User", root, 1200, 700, event);
             }
         }else{
             Dialogs.showErrorDialog("Username and password incorrect");

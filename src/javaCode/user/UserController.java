@@ -310,7 +310,7 @@ public class UserController implements Initializable {
                 adjustmentTV.refresh();
                 ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 1000, 700, actionEvent);
+                OpenScene.newScene("Order", root, 1200, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
@@ -388,7 +388,7 @@ public class UserController implements Initializable {
                     adjustmentTV.refresh();
                     ProfileController.toBeChanged = false;
                     Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                    OpenScene.newScene("Order", root, 1000, 700, actionEvent);
+                    OpenScene.newScene("Order", root, 1200, 700, actionEvent);
                 } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                     Dialogs.showErrorDialog("Something went wrong.");
                 }
@@ -448,10 +448,10 @@ public class UserController implements Initializable {
                     case "Diesel":
                         carID += "2";
                         break;
-                    case "Electric":
+                    case "Hybrid":
                         carID += "3";
                         break;
-                    case "Hybrid":
+                    case "Electric":
                         carID += "4";
                         break;
                 }
@@ -463,9 +463,6 @@ public class UserController implements Initializable {
                     chosenAdjustTV.setItems(chosenAdjustments);
                     updatePrice();
                     chooseCarType.setDisable(true);
-            /*for (Adjustment a : chosenAdjustments){
-                adjustmentTV.getItems().remove(a);
-            }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

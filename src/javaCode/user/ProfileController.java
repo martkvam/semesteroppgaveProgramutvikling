@@ -1,9 +1,13 @@
 
 package javaCode.user;
 
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -293,7 +297,7 @@ public class ProfileController implements Initializable {
 
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
-            Excel.writeExcel(ordersTV.getItems(), "Order");
+            javaCode.ReaderWriter.Order.fileWriterExcel.writeExcel(ordersTV.getItems());
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

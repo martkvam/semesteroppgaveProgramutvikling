@@ -103,12 +103,9 @@ public class FileHandler{
                     readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
                     readerUsers.read(selectedFileUsers.toPath());
                     //Dialogs.showSuccessDialog("The register got loaded");
-                } catch (IOException e) {
+                } catch (IOException | IllegalArgumentException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
-                } catch (IllegalArgumentException e){
-                    Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e){
                     Dialogs.showErrorDialog("There is an error in the file containig the finished orders." +
                             "The order-register might not be complete.");
                 }

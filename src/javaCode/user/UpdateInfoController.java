@@ -37,7 +37,7 @@ public class UpdateInfoController implements Initializable {
     @FXML
     void cancel(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-        OpenScene.newScene("My profile", root, 610, 650, event);
+        OpenScene.newScene("My profile", root, 610, 660, event);
     }
 
     @FXML //Method for changing personal info
@@ -78,7 +78,7 @@ public class UpdateInfoController implements Initializable {
 
         if(correctInfo){
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-            OpenScene.newScene("My profile", root, 610, 650, event);
+            OpenScene.newScene("My profile", root, 610, 660, event);
         }
     }
 

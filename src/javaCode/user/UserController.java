@@ -237,7 +237,7 @@ public class UserController implements Initializable {
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-            OpenScene.newScene("My profile", root, 550, 655, actionEvent);
+            OpenScene.newScene("My profile", root, 550, 660, actionEvent);
         }
         //If there is an ongoing order that has not been saved, the user will be informed of this.
         else {

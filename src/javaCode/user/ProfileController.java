@@ -243,7 +243,7 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 1000, 700, actionEvent);
+        OpenScene.newScene("Order", root, 1200, 700, actionEvent);
     }
 
     //Shows finished orders
@@ -262,9 +262,11 @@ public class ProfileController implements Initializable {
         btnDelete.setVisible(false);
         btnShowFinished.setVisible(false);
         btnShowOngoing.setVisible(true);
+        btnExportFinished.setVisible(true);
 
         lblHeader.setText("Finished orders (click on an order to see content)");
         updateTVfinished(event);
+
     }
 
     //Shows ongoing orders
@@ -283,6 +285,7 @@ public class ProfileController implements Initializable {
         btnChange.setVisible(true);
         btnShowFinished.setVisible(true);
         btnShowOngoing.setVisible(false);
+        btnExportFinished.setVisible(false);
 
         lblHeader.setText("Ongoing orders (click on an order to see content)");
         updateTVfinished(event);

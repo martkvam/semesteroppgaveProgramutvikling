@@ -104,6 +104,7 @@ public class Inlog implements Initializable {
         OpenScene.newScene("Register User",  root, 300, 500, event);
     }
 
+    //Variable for disabling the keyEvent on ENTER when alert is present
     public boolean isDisableKeyEvent() {
         return disableKeyEvent;
     }

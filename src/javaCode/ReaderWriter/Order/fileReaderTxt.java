@@ -1,21 +1,17 @@
 package javaCode.ReaderWriter.Order;
 
-import javaCode.Adjustment;
-import javaCode.Component;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
 import javaCode.Lists;
-import javaCode.Order;
+import javaCode.objects.Order;
 import javaCode.ReaderWriter.Reader;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

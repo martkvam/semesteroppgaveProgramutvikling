@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//Class for opening new scene e.g. when a button is clicked
 public class OpenScene {
     @FXML
     public static void newScene(String title, Parent root, int width, int height, ActionEvent event) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {

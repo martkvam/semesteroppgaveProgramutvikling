@@ -1,18 +1,12 @@
 package javaCode.ReaderWriter.Adjustment;
 
-import javaCode.Adjustment;
-import javaCode.Car;
-import javaCode.Component;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Writer;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class fileWriterJobj implements Writer {

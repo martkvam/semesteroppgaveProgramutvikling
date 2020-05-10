@@ -1,8 +1,7 @@
 package javaCode.ReaderWriter.Order;
 
-import javaCode.Component;
 import javaCode.Lists;
-import javaCode.Order;
+import javaCode.objects.Order;
 import javaCode.ReaderWriter.Reader;
 
 import java.io.IOException;

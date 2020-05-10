@@ -1,11 +1,14 @@
-package javaCode;
+package javaCode.objects;
 
+import javaCode.Lists;
+import javaCode.Validator;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

@@ -2,6 +2,10 @@ package javaCode.superUser;
 
 import javaCode.*;
 
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

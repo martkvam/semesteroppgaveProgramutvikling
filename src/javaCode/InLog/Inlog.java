@@ -39,18 +39,15 @@ public class Inlog implements Initializable {
     @FXML
     private Button btnLogIn;
 
-    @FXML
-    private Button btnNewUser;
     Stage stage = new Stage();
-    Lists lists = new Lists();
-    FileHandler handler = new FileHandler();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        handler.readAllFiles(stage);
-
+        FileHandler.readAllFiles(stage);
     }
 
+    //Checks and validates input values for logging in and handel exceptions
     @FXML
     void btnLogInOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 
@@ -65,16 +62,26 @@ public class Inlog implements Initializable {
             String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
             values = info.replaceAll("\\s+", "").split(",");
         }catch (Exception e){
-            Dialogs.showErrorDialog("User don't exist");
-            txtUserName.clear();
-            txtPassword.clear();
+            if(txtUserName.getText().isEmpty() || (isShowPasswordFieldActive() && txtVisiblePassword.getText().isEmpty())
+                    || (!isShowPasswordFieldActive() && txtPassword.getText().isEmpty())){
+                Dialogs.showErrorDialog("All fields have to be filled");
+            } else {
+                Dialogs.showErrorDialog("User don't exist");
+                txtUserName.clear();
+                txtPassword.clear();
+            }
         }
 
-        if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText())) &&
-                values[5].equals(txtPassword.getText())){
-            LoggedIn.setId(id);
-            correct = true;
-            superUsr = Boolean.parseBoolean(values[6]);
+        if((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))){
+            if(!isShowPasswordFieldActive() && values[5].equals(txtPassword.getText())){
+                LoggedIn.setId(id);
+                correct = true;
+                superUsr = Boolean.parseBoolean(values[6]);
+            } else if (isShowPasswordFieldActive() && values[5].equals(txtVisiblePassword.getText())){
+                LoggedIn.setId(id);
+                correct = true;
+                superUsr = Boolean.parseBoolean(values[6]);
+            }
         }
 
         if(correct){
@@ -83,7 +90,7 @@ public class Inlog implements Initializable {
                 OpenScene.newScene("Superuser",  root, 470, 300, event);
             }else{
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("User", root, 1200, 675, event);
+                OpenScene.newScene("User", root, 700, 700, event);
             }
         }else{
             Dialogs.showErrorDialog("Username and password incorrect");
@@ -96,12 +103,14 @@ public class Inlog implements Initializable {
         OpenScene.newScene("Register User",  root, 300, 500, event);
     }
 
+    //Enables users to log in with pressing ENTER
     public void enterKeyPressed(KeyEvent kEvent) {
         if(kEvent.getCode()== KeyCode.ENTER) {
             btnLogIn.fire();
         }
     }
 
+    //Makes it possible to visualize the password
     public void checkBoxShowPasswordClicked(ActionEvent actionEvent) {
         boolean checked = chkBoxPassword.isSelected();
         txtVisiblePassword.setEditable(checked);
@@ -115,12 +124,26 @@ public class Inlog implements Initializable {
             txtVisiblePassword.setOpacity(1);
             txtPassword.toBack();
             txtPassword.setOpacity(0);
+            setShowPasswordFieldActive(true);
         } else{
             txtPassword.setText(txtVisiblePassword.getText());
             txtPassword.toFront();
             txtPassword.setOpacity(1);
             txtVisiblePassword.toBack();
             txtVisiblePassword.setOpacity(0);
+            setShowPasswordFieldActive(false);
         }
     }
+
+    //Variable for passwordfields, if the text or the dot one i visible
+    private static boolean isShowPasswordFieldActive() {
+        return showPasswordFieldActive;
+    }
+
+    private static void setShowPasswordFieldActive(boolean showPasswordFieldActive) {
+        Inlog.showPasswordFieldActive = showPasswordFieldActive;
+    }
+
+    private static boolean showPasswordFieldActive;
+
 }

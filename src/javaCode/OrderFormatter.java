@@ -1,5 +1,7 @@
 package javaCode;
 
+import javaCode.objects.Order;
+
 import java.util.List;
 
 public class OrderFormatter {

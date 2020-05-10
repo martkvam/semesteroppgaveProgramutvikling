@@ -1,17 +1,12 @@
 package javaCode.user;
 
-import javaCode.Adjustment;
-import javaCode.Car;
-import javaCode.Component;
-import javaCode.Lists;
-import javafx.collections.FXCollections;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Methods {
-    private Lists lists = new Lists();
     //Method that makes a list to fill the "choose cartype"-choicebox
     public static ArrayList<String> typeList(ObservableList<Car> inList) {
         ArrayList<Car> aList = new ArrayList<>();
@@ -32,7 +27,7 @@ public class Methods {
 
         ArrayList<String> outList = new ArrayList<>();
         for(Car car : aList){
-            outList.add(car.getCarType());
+            outList.add(car.getCarType() + "   (" + car.getPrice() + " kr)");
         }
         return outList;
 
@@ -61,15 +56,5 @@ public class Methods {
             outList.add(component.getComponentType());
         }
         return outList;
-    }
-
-    public static ObservableList<Component> setBasicComponentList(String carID){
-        ObservableList<Component> list = FXCollections.observableArrayList();
-        for (Component c : Lists.getComponents()){
-            if (c.getCarID().equals(carID) ){
-                list.add(c);
-            }
-        }
-        return list;
     }
 }

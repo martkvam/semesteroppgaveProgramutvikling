@@ -1,9 +1,8 @@
 package javaCode.ReaderWriter.Car;
 
-import javaCode.Car;
+import javaCode.objects.Car;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Writer;
-import javafx.collections.ObservableList;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

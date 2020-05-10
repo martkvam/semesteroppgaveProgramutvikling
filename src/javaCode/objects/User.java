@@ -1,4 +1,4 @@
-package javaCode.InLog;
+package javaCode.objects;
 
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.Validator;
@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.io.FileNotFoundException;
 
+//Class for object user
 public class User {
     private SimpleIntegerProperty id;
     private SimpleStringProperty firstName;
@@ -17,6 +18,7 @@ public class User {
     private SimpleStringProperty password;
     private SimpleBooleanProperty superUser;
 
+    //Validating input when creating new object
     public User(int id, String firstName, String lastName, String email, String phone, String password, boolean superUser) throws FileNotFoundException, UserAlreadyExistException {
         if(!Validator.name(firstName)){
             throw new IllegalArgumentException("Invalid firstname");
@@ -60,10 +62,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email.set(email);
-    }
-
-    public void setPassword(String password) {
-        this.password.set(password);
     }
 
     public void setSuperUser(boolean superUser) {

@@ -1,11 +1,10 @@
 package javaCode.ReaderWriter.Car;
 
-import javaCode.Car;
-import javaCode.FileHandler;
+
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
+import javaCode.objects.Car;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -20,14 +19,15 @@ public class fileReaderJobj implements Reader{
         try (InputStream fin = Files.newInputStream(path);
              ObjectInputStream stream = new ObjectInputStream(fin))
         {
-            List<Car> listeObjekt = (List<Car>) stream.readObject();
+           List<Car> listeObjekt = (List<Car>) stream.readObject();
+
            for(Car i : listeObjekt){
                list.addCar(i);
            }
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); // debug information here
-            throw new IOException("Something is wrong with the implementation. See debug information");
+            throw new IOException("Something is wrong with the implementation. See debug information" );
         }
     }
 }

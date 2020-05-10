@@ -1,19 +1,17 @@
 package javaCode.ReaderWriter.Order;
 
-import javaCode.*;
-import javaCode.Exception.ReadOrdersException;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Component;
+import javaCode.Lists;
+import javaCode.objects.Order;
 import javaCode.ReaderWriter.Reader;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -38,11 +36,12 @@ public class fileReaderTxt implements Reader {
     }
 
 
-    private Order parseOrder (String line) throws Exception {
+    private Order parseOrder (String line) throws Exception{
         String[] split = line.split(";");
         if(split.length != 10) {
-            throw new ReadOrdersException("There is an error in the orders-file. The order register might not be complete");
+            throw new Exception("There is an error in the file containing the orders.");
         }
+
 
         String orderNr = split[0];
         int personId = parseNumber(split[1], "Person ID is incorrect");

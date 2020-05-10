@@ -1,6 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.*;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -213,6 +216,10 @@ public class ControllerAddEditComponents implements Initializable {
         //Directs user to dialog window to add a new car
         try{
             addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
+            for(Car i : Lists.getCars()){
+                System.out.println(i.getCarID());
+            }
+
         }catch (NumberFormatException e){
             Dialogs.showErrorDialog(e.getMessage());
         }

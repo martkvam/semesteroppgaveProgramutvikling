@@ -1,5 +1,8 @@
-package javaCode;
+package javaCode.objects;
 
+import javaCode.Dialogs;
+import javaCode.Lists;
+import javaCode.Validator;
 import javaCode.superUser.addElements;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

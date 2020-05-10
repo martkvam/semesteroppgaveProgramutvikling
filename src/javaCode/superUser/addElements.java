@@ -1,6 +1,9 @@
 package javaCode.superUser;
 
 import javaCode.*;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

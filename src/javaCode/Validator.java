@@ -1,17 +1,15 @@
 package javaCode;
 
-import javaCode.Dialogs;
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
-import javaCode.InLog.User;
-import javaCode.Lists;
+import javaCode.objects.User;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javaCode.superUser.addElements;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.IllegalFormatException;
-//If new user is incorrect, e.g. name is numbers the Exception will be thrown but the user still registers.
-//Need to stop the user from registering and "try again"
+
+//Class for validating all inputs
 public class Validator {
     addElements addelements= new addElements();
 

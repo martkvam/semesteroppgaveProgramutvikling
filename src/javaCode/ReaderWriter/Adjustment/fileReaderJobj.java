@@ -1,7 +1,6 @@
 package javaCode.ReaderWriter.Adjustment;
 
-import javaCode.Adjustment;
-import javaCode.Component;
+import javaCode.objects.Adjustment;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 

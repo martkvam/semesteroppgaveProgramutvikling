@@ -73,7 +73,7 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Label layoutX="265.0" layoutY="381.0" prefHeight="22.0" prefWidth="162.0" text="Available adjustments">
+      <Label layoutX="265.0" layoutY="381.0" prefHeight="22.0" prefWidth="238.0" text="Available adjustments">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
@@ -111,7 +111,7 @@
       <Button layoutX="13.0" layoutY="365.0" mnemonicParsing="false" onAction="#setPackage" prefHeight="27.0" prefWidth="170.0" text="Select package" />
       <Button layoutX="1087.0" layoutY="310.0" mnemonicParsing="false" onAction="#removeAllComp" prefHeight="27.0" prefWidth="103.0" text="Remove all" />
       <Button layoutX="1087.0" layoutY="550.0" mnemonicParsing="false" onAction="#removeAllAdjust" prefHeight="27.0" prefWidth="103.0" text="Remove all" />
-      <Label layoutX="13.0" layoutY="299.0" prefHeight="17.0" prefWidth="150.0" text="Select base package:">
+      <Label layoutX="13.0" layoutY="299.0" prefHeight="19.0" prefWidth="223.0" text="Select base package:">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
@@ -130,7 +130,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="13.0" prefHeight="46.0" prefWidth="235.0" text="Order a new car">
+      <Label layoutX="13.0" prefHeight="46.0" prefWidth="324.0" text="Order a new car">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>

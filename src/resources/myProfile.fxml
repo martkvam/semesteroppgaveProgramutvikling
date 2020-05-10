@@ -52,7 +52,7 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Label fx:id="lblHeader" layoutX="15.0" layoutY="96.0" prefHeight="26.0" prefWidth="143.0" text="Finished orders">
+      <Label fx:id="lblHeader" layoutX="15.0" layoutY="96.0" prefHeight="26.0" prefWidth="179.0" text="Finished orders">
          <font>
             <Font size="16.0" />
          </font></Label>

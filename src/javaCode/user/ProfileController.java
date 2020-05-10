@@ -33,6 +33,7 @@ public class ProfileController implements Initializable {
     //Using these to change an ongoing order
     public static Order changeOrder;
     public static boolean toBeChanged;
+    public static String changedOrderCarType;
 
     @FXML
     private Label lblName;
@@ -112,6 +113,7 @@ public class ProfileController implements Initializable {
             Order chosen = ordersTV.getSelectionModel().getSelectedItem();
             changeOrder = chosen;
             toBeChanged = true;
+            changedOrderCarType = chosen.getCarType();
             Lists.getOngoingOrders().remove(chosen);
 
             //Updating the ongoing orders-file.
@@ -123,7 +125,7 @@ public class ProfileController implements Initializable {
             }
 
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-            OpenScene.newScene("Order", root, 650, 700, event);
+            OpenScene.newScene("Order", root, 1200, 700, event);
         }
     }
 

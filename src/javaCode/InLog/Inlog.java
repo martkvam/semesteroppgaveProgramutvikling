@@ -52,26 +52,25 @@ public class Inlog implements Initializable {
         ConverterErrorHandler.BooleanStringConverter boolStrConv = new ConverterErrorHandler.BooleanStringConverter();
         boolean correct = false;
         boolean superUsr = false;
-        String id = "";
-        String[] values = new String[7];
-
+        String id;
+        String[] values;
         try {
-            id = ReadUsers.getUserId(txtUserName.getText()).get(0);
-            int length = ReadUsers.getInfo(id, "User").length();
-            String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
-            values = info.replaceAll("\\s+", "").split(",");
-        }catch (Exception e){
-            if(txtUserName.getText().isEmpty() || (isShowPasswordFieldActive() && txtVisiblePassword.getText().isEmpty())
-                    || (!isShowPasswordFieldActive() && txtPassword.getText().isEmpty())){
-                Dialogs.showErrorDialog("All fields have to be filled");
-            } else {
-                Dialogs.showErrorDialog("User don't exist");
-                txtUserName.clear();
-                txtPassword.clear();
+            try {
+                id = ReadUsers.getUserId(txtUserName.getText()).get(0);
+                int length = ReadUsers.getInfo(id, "User").length();
+                String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
+                values = info.replaceAll("\\s+", "").split(",");
+            } catch (Exception e) {
+                if (txtUserName.getText().isEmpty() || (isShowPasswordFieldActive() && txtVisiblePassword.getText().isEmpty())
+                        || (!isShowPasswordFieldActive() && txtPassword.getText().isEmpty())) {
+                    throw new NullPointerException("All fields have to be filled");
+                } else {
+                    txtUserName.clear();
+                    txtPassword.clear();
+                    throw new IllegalArgumentException("User dont exist");
+                }
             }
-        }
 
-        try {
             if ((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))) {
                 if (!isShowPasswordFieldActive() && values[5].equals(txtPassword.getText())) {
                     LoggedIn.setId(id);
@@ -80,22 +79,24 @@ public class Inlog implements Initializable {
                 } else if (isShowPasswordFieldActive() && values[5].equals(txtVisiblePassword.getText())) {
                     LoggedIn.setId(id);
                     correct = true;
-                    superUsr = boolStrConv.fromString(values[6]);//Boolean.parseBoolean(values[6]);
+                    superUsr = boolStrConv.fromString(values[6]);
                 }
             }
-        }catch (Exception e){
-            Dialogs.showErrorDialog("Error caused by: \n" + e.getMessage());
-        }
-        if(correct){
-            if(superUsr) {
-                Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-                OpenScene.newScene("Superuser",  root, 470, 300, event);
-            }else{
-                Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("User", root, 700, 700, event);
+
+
+            if (correct) {
+                if (superUsr) {
+                    Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
+                    OpenScene.newScene("Superuser", root, 470, 300, event);
+                } else {
+                    Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
+                    OpenScene.newScene("User", root, 700, 700, event);
+                }
+            } else {
+                throw new IllegalArgumentException("Username and password inncorrect");
             }
-        }else{
-            Dialogs.showErrorDialog("Username and password incorrect");
+        }catch(Exception e){
+            Dialogs.showErrorDialog(e.getMessage());
         }
     }
 

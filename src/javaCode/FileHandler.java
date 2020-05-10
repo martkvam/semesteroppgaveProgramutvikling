@@ -68,6 +68,7 @@ public class FileHandler{
         //File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
         File selectedFileOrdersTxt = new File("src/dataBase/FinishedOrders.txt");
         File selectedFileOngoingOrders = new File("src/dataBase/OngoingOrders.txt");
+        //File selectedFileUsers = new File("src/dataBase/Users.txt");
 
         Reader readerCar = null;
         Reader readerComponents = null;
@@ -75,6 +76,7 @@ public class FileHandler{
         //Reader readerOrders = null;
         Reader readerTxtOrders = null;
         Reader readerOngoingOrders = null;
+        //Reader readerUsers = null;
 
 
         readerCar = new fileReaderJobj();
@@ -83,6 +85,7 @@ public class FileHandler{
         //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
         readerTxtOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
         readerOngoingOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
+        //readerUsers = new javaCode.ReaderWriter.
 
 
         Lists.deleteCars();

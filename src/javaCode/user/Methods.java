@@ -27,7 +27,7 @@ public class Methods {
 
         ArrayList<String> outList = new ArrayList<>();
         for(Car car : aList){
-            outList.add(car.getCarType() + "   (" + car.getPrice() + " kr)");
+            outList.add(car.getCarType());
         }
         return outList;
 

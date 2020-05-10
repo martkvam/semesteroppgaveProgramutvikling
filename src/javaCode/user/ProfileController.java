@@ -1,10 +1,10 @@
 
 package javaCode.user;
 
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
-import javaCode.ReaderWriter.Order.fileWriterExcel;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -86,10 +88,6 @@ public class ProfileController implements Initializable {
         }
 
         ordersTV.setItems(orders);
-
-
-
-
 
         //Fills out the personal info section
         String ID = "" + LoggedIn.getId();
@@ -249,7 +247,7 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 600,450, actionEvent);
+        OpenScene.newScene("Order", root, 1200, 700, actionEvent);
     }
 
     //Shows finished orders
@@ -268,9 +266,11 @@ public class ProfileController implements Initializable {
         btnDelete.setVisible(false);
         btnShowFinished.setVisible(false);
         btnShowOngoing.setVisible(true);
+        btnExportFinished.setVisible(true);
 
         lblHeader.setText("Finished orders (click on an order to see content)");
         updateTVfinished(event);
+
     }
 
     //Shows ongoing orders
@@ -289,15 +289,15 @@ public class ProfileController implements Initializable {
         btnChange.setVisible(true);
         btnShowFinished.setVisible(true);
         btnShowOngoing.setVisible(false);
+        btnExportFinished.setVisible(false);
 
         lblHeader.setText("Ongoing orders (click on an order to see content)");
         updateTVfinished(event);
     }
 
-    //Method for button calling methods for exporting register to excel
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
-            fileWriterExcel.writeExcel(ordersTV.getItems());
+            javaCode.ReaderWriter.Order.fileWriterExcel.writeExcel(ordersTV.getItems());
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

@@ -64,6 +64,9 @@ public class UserController implements Initializable {
     @FXML
     private ComboBox<String> chooseCol;
 
+    @FXML
+    private ComboBox<String> choosePackage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +108,8 @@ public class UserController implements Initializable {
         chooseComponent.setPromptText("Component type: ");
         chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
         chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+        choosePackage.getItems().setAll("Basic+", "Sport", "Premium");
+        choosePackage.setPromptText("Choose a base package: ");
     }
 
 
@@ -186,16 +191,35 @@ public class UserController implements Initializable {
     }
 
     public void addAdjust(ActionEvent actionEvent) {
-        if(!adjustmentTV.getSelectionModel().isEmpty()) {
-            Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
-            chosenAdjustments.add(chosen);
-            chosenAdjustTV.setItems(chosenAdjustments);
+        if(chooseCarType.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please choose a car type before you add any adjustments");
+            alert.showAndWait();
+        }
+        else {
+            if (!adjustmentTV.getSelectionModel().isEmpty()) {
+                Adjustment chosen = adjustmentTV.getSelectionModel().getSelectedItem();
+                boolean found = false;
+                for (Adjustment a : chosenAdjustments) {
+                    if (a.getAdjustmentType().equals(chosen.getAdjustmentType())) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    chosenAdjustments.add(chosen);
+                    chosenAdjustTV.setItems(chosenAdjustments);
 
-            for (Adjustment a : chosenAdjustments) {
-                adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
-                //to prevent the user from selecting the same adjustment several times.
+                   /* for (Adjustment a : chosenAdjustments) {
+                        adjustmentTV.getItems().remove(a); //Removing the chosen adjustment from the adjustment-tableview
+                        //to prevent the user from selecting the same adjustment several times.
+                    }*/
+                    updatePrice();
+                }
+                else{
+                    Dialogs.showErrorDialog("You have already chosen an adjustment of the same type. " +
+                            "If you wish to select this adjustment you will first have to remove the previously " +
+                            "chosen " + chosen.getAdjustmentType());
+                }
             }
-            updatePrice();
         }
 
     }
@@ -204,7 +228,7 @@ public class UserController implements Initializable {
         if(!chosenAdjustTV.getSelectionModel().isEmpty()) {
             Adjustment chosen = chosenAdjustTV.getSelectionModel().getSelectedItem();
             chosenAdjustments.remove(chosen);
-            adjustmentTV.getItems().add(chosen);
+            //adjustmentTV.getItems().add(chosen);
             updatePrice();
         }
     }
@@ -213,7 +237,7 @@ public class UserController implements Initializable {
     public void myProfile(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if(chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
-            OpenScene.newScene("My profile", root, 610, 650, actionEvent);
+            OpenScene.newScene("My profile", root, 550, 660, actionEvent);
         }
         //If there is an ongoing order that has not been saved, the user will be informed of this.
         else {
@@ -222,7 +246,7 @@ public class UserController implements Initializable {
                     ButtonType.CANCEL, ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)){
-                adjustmentTV.getItems().addAll(chosenAdjustments);
+                //adjustmentTV.getItems().addAll(chosenAdjustments);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
                 OpenScene.newScene("My profile", root, 610, 650, actionEvent);
             }
@@ -279,14 +303,14 @@ public class UserController implements Initializable {
             try {
                 FileWriter.WriteFile(path, formattedOrders);
                 Dialogs.showSuccessDialog("Your order has been saved! You can view your ongoing orders on your profile");
-                adjustmentTV.getItems().addAll(chosenAdjustments);
+              //  adjustmentTV.getItems().addAll(chosenAdjustments);
                 chosenComponents.clear();
                 chosenAdjustments.clear();
                 chosenAdjustTV.refresh();
                 adjustmentTV.refresh();
                 ProfileController.toBeChanged = false;
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                OpenScene.newScene("Order", root, 1200, 700, actionEvent);
             } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 Dialogs.showErrorDialog("Something went wrong.");
             }
@@ -357,14 +381,14 @@ public class UserController implements Initializable {
                 try {
                     FileWriter.WriteFile(path, formattedOrders);
                     Dialogs.showSuccessDialog("Your order was succesful!");
-                    adjustmentTV.getItems().addAll(chosenAdjustments);
+                    //adjustmentTV.getItems().addAll(chosenAdjustments);
                     chosenComponents.clear();
                     chosenAdjustments.clear();
                     chosenAdjustTV.refresh();
                     adjustmentTV.refresh();
                     ProfileController.toBeChanged = false;
                     Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                    OpenScene.newScene("Order", root, 650, 700, actionEvent);
+                    OpenScene.newScene("Order", root, 1200, 700, actionEvent);
                 } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                     Dialogs.showErrorDialog("Something went wrong.");
                 }
@@ -394,5 +418,68 @@ public class UserController implements Initializable {
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
         OpenScene.newScene("Log in", root, 650, 650, actionEvent);
+    }
+
+    public void setPackage(ActionEvent actionEvent) {
+        if (!chooseCarType.getSelectionModel().isEmpty()) {
+            if(!choosePackage.getSelectionModel().isEmpty()) {
+                Path path = Paths.get("src/dataBase/CarPackages.txt");
+                ReadPackages read = new ReadPackages();
+                String carID = "";
+                String packageID = "";
+                String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
+                String chosenPackage = choosePackage.getSelectionModel().getSelectedItem();
+
+                switch (chosenPackage) {
+                    case "Basic+":
+                        packageID += "1";
+                        break;
+                    case "Sport":
+                        packageID += "2";
+                        break;
+                    case "Premium":
+                        packageID += "3";
+                        break;
+                }
+                switch (chosenCar) {
+                    case "Petrol":
+                        carID += "1";
+                        break;
+                    case "Diesel":
+                        carID += "2";
+                        break;
+                    case "Hybrid":
+                        carID += "3";
+                        break;
+                    case "Electric":
+                        carID += "4";
+                        break;
+                }
+                try {
+                    read.read(path, carID, packageID);
+                    chosenAdjustments.setAll(Lists.getBasePackageAdjustments());
+                    chosenComponents.setAll(Lists.getBasePackageComponents());
+                    chosenCompTV.setItems(chosenComponents);
+                    chosenAdjustTV.setItems(chosenAdjustments);
+                    updatePrice();
+                    chooseCarType.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Dialogs.showErrorDialog("Please choose a package");
+            }
+        } else {
+            Dialogs.showErrorDialog("Start by choosing a car type");
+        }
+    }
+
+    public void removeAllComp(ActionEvent actionEvent) {
+        chosenCompTV.getItems().clear();
+        chooseCarType.setDisable(false);
+    }
+
+    public void removeAllAdjust(ActionEvent actionEvent) {
+        chosenAdjustTV.getItems().clear();
     }
 }

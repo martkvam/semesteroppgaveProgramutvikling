@@ -102,7 +102,7 @@ public class ControllerEditProfile {
         tvUserRegister.refresh();
     }
 
-    //Initializes and validates the edited text in the "Lastname-field"
+    //Initializes and validates the edited text in the "Phone-field"
     public void phoneEdited(TableColumn.CellEditEvent<TableView<User>, String> cellEditEvent) {
         User u = tvUserRegister.getSelectionModel().getSelectedItem();
         String newPhone = cellEditEvent.getNewValue();
@@ -116,7 +116,7 @@ public class ControllerEditProfile {
         tvUserRegister.refresh();
     }
 
-    //Initializes and validates the edited text in the "Lastname-field"
+    //Initializes and validates the edited text in the "Email-field"
     public void emailEdited(TableColumn.CellEditEvent<TableView<User>, String> cellEditEvent) {
         User u = tvUserRegister.getSelectionModel().getSelectedItem();
         String newEmail = cellEditEvent.getNewValue();

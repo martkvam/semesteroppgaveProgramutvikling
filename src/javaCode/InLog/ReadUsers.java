@@ -66,10 +66,10 @@ public class ReadUsers {
                     case "LastName":
                         currentUser[2] = change;
                         break;
-                    case "Phone":
+                    case "Email":
                         currentUser[3] = change;
                         break;
-                    case "Email":
+                    case "Phone":
                         currentUser[4] = change;
                         break;
                     case "Password":

@@ -25,7 +25,7 @@
                     </font></Label>
                 <Button layoutX="203.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnEditOrders" onMouseEntered="#btnInfoOrders" onMouseExited="#btnRemoveInfoOrders" text="Orders" />
                 <Label fx:id="lblOut" layoutX="60.0" layoutY="147.0" prefHeight="91.0" prefWidth="372.0" wrapText="true" />
-                <Button layoutX="60.0" layoutY="238.0" mnemonicParsing="false" onAction="#btnGoBack" text="Logg out" />
+                <Button layoutX="60.0" layoutY="238.0" mnemonicParsing="false" onAction="#btnGoBack" text="Log out" />
             <Button layoutX="323.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnEditProfiles" onMouseEntered="#btnInfoProfile" onMouseExited="#btnRemoveInfoOrders" text="Profile" />
             </children>
         </AnchorPane>

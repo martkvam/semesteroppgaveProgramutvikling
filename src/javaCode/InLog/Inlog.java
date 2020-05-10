@@ -53,7 +53,7 @@ public class Inlog implements Initializable {
 
     //Checks and validates input values for logging in and handel exceptions
     @FXML
-    void btnLogInOnClick(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+    void btnLogInOnClick(ActionEvent event) {
         ConverterErrorHandler.BooleanStringConverter boolStrConv = new ConverterErrorHandler.BooleanStringConverter();
         boolean correct = false;
         boolean superUsr = false;
@@ -95,7 +95,7 @@ public class Inlog implements Initializable {
                     OpenScene.newScene("Superuser", root, 470, 300, event);
                 } else {
                     Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-                    OpenScene.newScene("User", root, 700, 700, event);
+                    OpenScene.newScene("User", root, 1200, 700, event);
                 }
             } else {
                 throw new IllegalArgumentException("Username and password inncorrect");

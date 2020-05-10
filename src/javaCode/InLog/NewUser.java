@@ -8,11 +8,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class NewUser {
 
@@ -37,8 +41,9 @@ public class NewUser {
     @FXML
     private Button btnRegisterUser;
 
+
     @FXML   //Button for validating new user input, registering new user or handle exception
-    void btnRegisterUserOnClick(ActionEvent actionevent) throws IOException {
+    void btnRegisterUserOnClick(ActionEvent actionevent) {
             try {
                 ReadUsers.checkIfUserExists(txtEmail.getText(), txtPhone.getText());
                 passwordMatches();
@@ -83,5 +88,10 @@ public class NewUser {
     public void btnBackOnClick(ActionEvent actionEvent) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
         OpenScene.newScene("Log in", root, 600, 450, actionEvent);
+    }
+
+    @FXML
+    public void initialize(){
+
     }
 }

@@ -8,22 +8,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="656.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.ProfileController">
+<AnchorPane prefHeight="655.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.ProfileController">
    <children>
-      <Label fx:id="lblName" layoutX="12.0" layoutY="22.0" prefHeight="17.0" prefWidth="133.0" text="Name:">
+      <Label fx:id="lblName" layoutX="16.0" layoutY="22.0" prefHeight="18.0" prefWidth="162.0" text="Name:">
          <font>
-            <Font size="11.0" />
+            <Font size="14.0" />
          </font></Label>
-      <Label fx:id="lblPhone" layoutX="155.0" layoutY="22.0" prefHeight="17.0" prefWidth="123.0" text="Phone:">
+      <Label fx:id="lblPhone" layoutX="189.0" layoutY="22.0" prefHeight="18.0" prefWidth="129.0" text="Phone:">
          <font>
-            <Font size="11.0" />
+            <Font size="14.0" />
          </font></Label>
-      <Label fx:id="lblEmail" layoutX="282.0" layoutY="22.0" prefHeight="17.0" prefWidth="218.0" text="Email:">
+      <Label fx:id="lblEmail" layoutX="332.0" layoutY="22.0" prefHeight="18.0" prefWidth="179.0" text="Email:">
          <font>
-            <Font size="11.0" />
+            <Font size="14.0" />
          </font></Label>
-      <Button layoutX="385.0" layoutY="55.0" mnemonicParsing="false" onAction="#updateInfo" prefHeight="27.0" prefWidth="96.0" text="Update info" />
-      <TableView fx:id="ordersTV" layoutX="17.0" layoutY="130.0" onMouseClicked="#updateTVfinished" prefHeight="237.0" prefWidth="520.0">
+      <Button layoutX="16.0" layoutY="48.0" mnemonicParsing="false" onAction="#updateInfo" prefHeight="27.0" prefWidth="96.0" text="Update info" />
+      <TableView fx:id="ordersTV" layoutX="15.0" layoutY="131.0" onMouseClicked="#updateTVfinished" prefHeight="237.0" prefWidth="520.0">
         <columns>
             <TableColumn prefWidth="153.0" text="Date">
                 <cellValueFactory>
@@ -52,7 +52,10 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Label fx:id="lblHeader" layoutX="20.0" layoutY="109.0" prefHeight="17.0" prefWidth="316.0" text="Finished orders (click on an order to see content)" />
+      <Label fx:id="lblHeader" layoutX="15.0" layoutY="96.0" prefHeight="26.0" prefWidth="143.0" text="Finished orders">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
       <Button fx:id="btnChange" layoutX="155.0" layoutY="606.0" mnemonicParsing="false" onAction="#changeOrder" prefHeight="27.0" prefWidth="96.0" text="Change order" visible="false">
          <font>
             <Font size="11.0" />
@@ -64,7 +67,7 @@
          </font>
       </Button>
       <Button fx:id="btnDelete" layoutX="369.0" layoutY="606.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="27.0" prefWidth="78.0" text="Delete" visible="false" />
-      <TableView fx:id="orderedComponentsTV" layoutX="16.0" layoutY="392.0" prefHeight="200.0" prefWidth="242.0">
+      <TableView fx:id="orderedComponentsTV" layoutX="16.0" layoutY="392.0" prefHeight="227.0" prefWidth="242.0">
         <columns>
             <TableColumn prefWidth="142.0" text="Type">
                 <cellValueFactory>
@@ -78,7 +81,7 @@
             </TableColumn>
         </columns>
       </TableView>
-      <TableView fx:id="orderedAdjustmentsTV" layoutX="282.0" layoutY="392.0" prefHeight="200.0" prefWidth="248.0">
+      <TableView fx:id="orderedAdjustmentsTV" layoutX="284.0" layoutY="392.0" prefHeight="227.0" prefWidth="248.0">
         <columns>
             <TableColumn prefWidth="155.0" text="Type">
                 <cellValueFactory>
@@ -92,15 +95,21 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Label layoutX="16.0" layoutY="375.0" prefHeight="17.0" prefWidth="209.0" text="Components in selected order" />
-      <Label layoutX="282.0" layoutY="375.0" prefHeight="17.0" prefWidth="190.0" text="Adjustments in selected order" />
-      <Button layoutX="27.0" layoutY="606.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Button fx:id="btnExportFinished" layoutX="550.0" layoutY="148.0" mnemonicParsing="false" onAction="#btnExportFinishedOnClick" text="Export to Excel" />
+      <Label layoutX="16.0" layoutY="369.0" prefHeight="26.0" prefWidth="242.0" text="Components in selected order">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label layoutX="286.0" layoutY="369.0" prefHeight="26.0" prefWidth="248.0" text="Adjustments in selected order">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Button layoutX="16.0" layoutY="620.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="btnExportFinished" layoutX="408.0" layoutY="96.0" mnemonicParsing="false" onAction="#btnExportFinishedOnClick" prefHeight="26.0" prefWidth="130.0" text="Export to Excel" />
       <Button fx:id="btnShowFinished" layoutX="381.0" layoutY="96.0" mnemonicParsing="false" onAction="#showFinsihed" prefHeight="27.0" prefWidth="143.0" text="Show finished orders" visible="false">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="btnShowOngoing" layoutX="378.0" layoutY="96.0" mnemonicParsing="false" onAction="#showOngoing" prefHeight="27.0" prefWidth="150.0" text="Show ongoing orders" />
+      <Button fx:id="btnShowOngoing" layoutX="218.0" layoutY="96.0" mnemonicParsing="false" onAction="#showOngoing" prefHeight="27.0" prefWidth="180.0" text="Show ongoing orders" />
    </children>
 </AnchorPane>

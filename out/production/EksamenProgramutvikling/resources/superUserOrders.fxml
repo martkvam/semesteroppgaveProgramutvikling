@@ -75,7 +75,7 @@
             </TableView>
             <TableView fx:id="tableViewComponents" editable="true" layoutX="14.0" layoutY="340.0" prefHeight="186.0" prefWidth="730.0">
               <columns>
-                <TableColumn fx:id="componentID" editable="false" onEditCommit="#componentIdEdited" prefWidth="98.3999605178833" text="Component id">
+                <TableColumn editable="false" prefWidth="98.3999605178833" text="Component id">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentID" />
                     </cellValueFactory>
@@ -83,7 +83,7 @@
                         <TextFieldTableCell fx:factory="forTableColumn" />
                     </cellFactory>
                 </TableColumn>
-                <TableColumn fx:id="componentType" editable="false" onEditCommit="#componentTypeEdited" prefWidth="155.2000274658203" text="Component type">
+                <TableColumn editable="false" prefWidth="155.2000274658203" text="Component type">
                     <cellValueFactory>
                         <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
@@ -91,7 +91,7 @@
                         <TextFieldTableCell fx:factory="forTableColumn" />
                     </cellFactory>
                 </TableColumn>
-                  <TableColumn fx:id="componentDescription" editable="false" onEditCommit="#componentDescriptionEdited" prefWidth="331.199951171875" text="Component description">
+                  <TableColumn editable="false" prefWidth="331.199951171875" text="Component description">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentDescription" />
                       </cellValueFactory>
@@ -108,7 +108,7 @@
             </TableView>
             <TableView fx:id="tableViewAdjustments" editable="true" layoutX="14.0" layoutY="538.0" prefHeight="159.0" prefWidth="730.0">
               <columns>
-                <TableColumn fx:id="adjustmentID" editable="false" prefWidth="96.80001544952393" text="Adjustment id">
+                <TableColumn editable="false" prefWidth="96.80001544952393" text="Adjustment id">
                     <cellValueFactory>
                         <PropertyValueFactory property="adjustmentID" />
                     </cellValueFactory>
@@ -116,7 +116,7 @@
                         <TextFieldTableCell fx:factory="forTableColumn" />
                     </cellFactory>
                 </TableColumn>
-                <TableColumn fx:id="adjustmentType" editable="false" minWidth="0.0" prefWidth="188.00001525878906" text="Adjustment name">
+                <TableColumn editable="false" minWidth="0.0" prefWidth="188.00001525878906" text="Adjustment name">
                     <cellValueFactory>
                         <PropertyValueFactory property="adjustmentType" />
                     </cellValueFactory>
@@ -124,7 +124,7 @@
                         <TextFieldTableCell fx:factory="forTableColumn" />
                     </cellFactory>
                 </TableColumn>
-                  <TableColumn fx:id="adjustmentDescription" editable="false" prefWidth="284.0" text="Adjustment description">
+                  <TableColumn editable="false" prefWidth="284.0" text="Adjustment description">
                       <cellValueFactory>
                           <PropertyValueFactory property="adjustmentDescription" />
                       </cellValueFactory>

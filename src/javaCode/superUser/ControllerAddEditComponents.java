@@ -26,13 +26,12 @@ public class ControllerAddEditComponents implements Initializable {
 
     //Sets up different classes
     Lists lists = new Lists();
-    addElements addElements = new addElements();
+    AddElements addElements = new AddElements();
     FileHandler filehandler = new FileHandler();
     private newThread delayThread;
 
     //Sets up int/String converter
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
-
 
     //Sets up private variables
     private String selectedElement = "Car";
@@ -167,6 +166,7 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.refresh();
     }
 
+    //Goes back to previous scene
     @FXML
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         filehandler.saveAllFiles();
@@ -177,6 +177,7 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.getItems().clear();
     }
 
+    //Sets tableview for adjustments and makes elements visible
     @FXML
     void btnEditAdjustments(ActionEvent event) {
         tableViewAdjustments.setItems(Lists.getAdjustment());
@@ -188,6 +189,7 @@ public class ControllerAddEditComponents implements Initializable {
         txtFilterInn.setText("");
     }
 
+    //Sets tableview for cars and makes elements visible
     @FXML
     void btnEditCars(ActionEvent event) {
         TableView.setItems(Lists.getCars());
@@ -199,6 +201,7 @@ public class ControllerAddEditComponents implements Initializable {
         selectedElement = "Car";
     }
 
+    //Sets tableview for components and makes elements visible
     @FXML
     void btnEditComponents(ActionEvent event) {
         tableViewComponents.setItems(Lists.getComponents());
@@ -211,19 +214,16 @@ public class ControllerAddEditComponents implements Initializable {
         txtFilterInn.setText("");
     }
 
+
     @FXML
     void btnNewCar(ActionEvent event) {
         //Directs user to dialog window to add a new car
         try{
             addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
-            for(Car i : Lists.getCars()){
-                System.out.println(i.getCarID());
-            }
 
         }catch (NumberFormatException e){
             Dialogs.showErrorDialog(e.getMessage());
         }
-
     }
 
     @FXML
@@ -277,7 +277,6 @@ public class ControllerAddEditComponents implements Initializable {
 
 
     //Edit car from tableview
-
     //Edit car type
     @FXML
     void txtCarTypeEdited(TableColumn.CellEditEvent<Car, String> event) {
@@ -314,8 +313,7 @@ public class ControllerAddEditComponents implements Initializable {
         TableView.refresh();
     }
 
-    //Edit component from tableview
-
+    //Edit components from tableview
     //Edit component id
     @FXML
     void componentIDEdited(TableColumn.CellEditEvent<Component, String> event) {
@@ -372,7 +370,6 @@ public class ControllerAddEditComponents implements Initializable {
     }
 
     //Edit adjustments from tableview
-
     //Adjustment id edited
     @FXML
     void adjustmentIdEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
@@ -414,12 +411,14 @@ public class ControllerAddEditComponents implements Initializable {
         tableViewAdjustments.refresh();
     }
 
-    //Updates filter for tableview by button click
+
+    //Updates and filters tableview by key event
     @FXML
     void txtFilterTyped(KeyEvent event) {
         if(selectedElement.equals("Components")){
             FilteredList<Component> filtered = new FilteredList<>(Lists.getComponents(), b -> true);
 
+            //Event listener on input field with lambda expression that sets a new filtered list by method call
             txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
                 filtered.setPredicate(component -> lists.filterComponentList(component, newValue));
 
@@ -432,6 +431,7 @@ public class ControllerAddEditComponents implements Initializable {
         else{
             FilteredList<Adjustment> filtered = new FilteredList<>(Lists.getAdjustment(), b -> true);
 
+            //Event listener on input field with lambda expression that sets a new filtered list by method call. The new filtered list is set in the tableview
             txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
                 filtered.setPredicate(adjustment -> lists.filterAdjustmentList(adjustment, newValue));
 

@@ -33,14 +33,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="poi-4.1.2" level="project" />
-    <orderEntry type="library" name="poi-ooxml-4.1.2" level="project" />
-    <orderEntry type="library" name="poi-ooxml-schemas-4.1.2" level="project" />
-    <orderEntry type="library" name="xmlbeans-3.1.0" level="project" />
-    <orderEntry type="library" name="commons-collections4-4.1" level="project" />
-    <orderEntry type="library" name="commons-compress-1.20" level="project" />
-    <orderEntry type="library" name="poi-excelant-4.1.2" level="project" />
-    <orderEntry type="library" name="dnsns" level="project" />
+    <orderEntry type="library" exported="" name="poi-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="poi-ooxml-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="poi-ooxml-schemas-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="xmlbeans-3.1.0" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections4-4.1" level="project" />
+    <orderEntry type="library" exported="" name="commons-compress-1.20" level="project" />
+    <orderEntry type="library" exported="" name="poi-excelant-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="dnsns" level="project" />
     <orderEntry type="library" name="library" level="project" />
     <orderEntry type="library" name="library" level="project" />
   </component>

@@ -3,7 +3,7 @@ package javaCode.objects;
 import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.Validator;
-import javaCode.superUser.addElements;
+import javaCode.superUser.AddElements;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -59,7 +59,7 @@ public class Component implements Serializable {
     public void setComponentID(String componentID) {
         if(!Validator.componentId(componentID)){
             if(Dialogs.showChooseDialog("The id is not valid? Add new component?")){
-                addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
+                AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
             }
         }
         else{

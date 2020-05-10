@@ -5,13 +5,13 @@ import javaCode.InLog.ReadUsers;
 import javaCode.objects.User;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
-import javaCode.superUser.addElements;
+import javaCode.superUser.AddElements;
 
 import java.io.FileNotFoundException;
 
 //Class for validating all inputs
 public class Validator {
-    addElements addelements= new addElements();
+    AddElements addelements= new AddElements();
 
     public static boolean name(String name){
         return name.matches("([a-zA-ZæøåÆØÅ]+['\\-,. ]?)+");
@@ -61,6 +61,7 @@ public class Validator {
 
 
     //Components
+    //If car id matches the input id it returns true
     public static boolean carIdComponents(String ID){
         for(int i = 0; i < Lists.getCars().size(); i++){
             if(Lists.getCars().get(i).getCarID().equals(ID)){
@@ -69,9 +70,10 @@ public class Validator {
         }
         return false;
     }
+
+    //If the component id matches already existing components id it returns false. Split input string with "-" to match both numbers
     public static boolean componentId(String ID){
         String[] splitInnId = ID.split("-");
-        int highestcomponentType = 0;
         int highestcomponentTypeId = 0;
 
         for(int i = 0; i < Lists.getComponents().size();i++){
@@ -104,6 +106,7 @@ public class Validator {
         }
         return true;
     }
+    //If input type equals existing component types return true. Else choose to add new type
     public static boolean componentType(String type){
         if(type.length()==0){
             throw new IllegalArgumentException("The components type is not defined");
@@ -115,7 +118,7 @@ public class Validator {
                 }
             }
             if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                boolean newComponent = addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+                boolean newComponent = AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
                 if(newComponent){
                     Dialogs.showSuccessDialog("A new component has been added");
                 }
@@ -123,11 +126,14 @@ public class Validator {
         }
         return false;
     }
+
     public static boolean componentPrice(int price){
         return price>0;
     }
 
+
     //Orders
+    //If order number is under 1 or equals a existing number, the method returns false
     public static boolean orderNr(String nr){
         if(Integer.parseInt(nr) <= 0){
             return false;
@@ -139,15 +145,8 @@ public class Validator {
         }
         return true;
     }
-    public static boolean orderPersonId(int id) throws FileNotFoundException, UserAlreadyExistException {
-        for(User i : ReadUsers.getUserList()){
-            if(i.getId() == id){
-                return true;
-            }
-        }
-        return false;
-    }
 
+    //Validates car id in orders
     public static boolean orderCarID(String carId){
         for(int i = 0; i < Lists.getCars().size(); i++){
             if(Lists.getCars().get(i).getCarID().equals(carId)){

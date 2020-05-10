@@ -80,15 +80,10 @@ public class UserController implements Initializable {
             chosenAdjustTV.setItems(chosenAdjustments);
 
             String type = ProfileController.changedOrderCarType;
-            /*if(!chosenComponents.isEmpty()) {
-                String ID = chosenComponents.get(0).getCarID();
-                for (Car c : Lists.getCars()) {
-                    if (c.getCarID().equals(ID)) {
-                        type = c.getCarType();
-                    }
-                }*/
             chooseCarType.getSelectionModel().select(type);
-            chooseCarType.setDisable(true);
+            if(!chosenComponents.isEmpty()) {
+                chooseCarType.setDisable(true);
+            }
             adjustmentTV.setItems(Lists.getAdjustment());
             updatePrice();
         } else {

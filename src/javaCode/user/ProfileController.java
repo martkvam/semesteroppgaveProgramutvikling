@@ -1,7 +1,6 @@
 
 package javaCode.user;
 
-import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
@@ -17,8 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Window;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -160,7 +157,7 @@ public class ProfileController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
             //If color is not chosen a choice dialog will pop up.
             String [] color = {"Red", "Black", "White", "Gray"};
-            ChoiceDialog<String> choice = new ChoiceDialog(color[1], color);
+            ChoiceDialog<String> choice = new ChoiceDialog<>(color[1], color);
             if(ordersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
                 choice.setTitle("Finish order");
                 choice.setContentText("Please choose a color for the car before you finish your order: ");

@@ -187,9 +187,10 @@ public class ProfileController implements Initializable {
 
                 chosen.setOrderStatus(true);
 
+                //Adding the order to the finished-orders list, and deleting it from the ongoing orders list + updating the
+                //tableview
                 Lists.getOrders().add(chosen);
                 Lists.getOngoingOrders().remove(chosen);
-
                 ordersTV.getItems().remove(chosen);
 
                 //Adding the order to the finsished orders-file.
@@ -233,6 +234,7 @@ public class ProfileController implements Initializable {
             orderedComponentsTV.refresh();
             orderedAdjustmentsTV.refresh();
         }
+
         //If there is no order selected, the tableviews for components and adjustments will be set to empty.
         if(ordersTV.getSelectionModel().isEmpty()){
             ObservableList<Component> components = FXCollections.observableArrayList();
@@ -294,6 +296,7 @@ public class ProfileController implements Initializable {
         updateTVfinished(event);
     }
 
+    //Method that exports the users orders to an excel file.
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
             javaCode.ReaderWriter.Order.fileWriterExcel.writeExcel(ordersTV.getItems());

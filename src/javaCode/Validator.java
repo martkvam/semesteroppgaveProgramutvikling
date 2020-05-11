@@ -18,7 +18,7 @@ public class Validator {
     }
 
     public static boolean phone(String phone) {
-        return phone.matches("(([(][+]{0,1})|([+]?))[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*");
+        return phone.matches("(([(][+]?)|([+]?))[0-9]{1,4}[)]?[-\\s\\./0-9]*");
     }
 
     public static boolean email(String email) {
@@ -35,11 +35,7 @@ public class Validator {
                     idCounter = Integer.parseInt(Lists.getCars().get(i).getCarID());
                 }
             }
-            if (idCounter >= Integer.parseInt(id)) {
-                return false;
-            } else {
-                return true;
-            }
+            return idCounter < Integer.parseInt(id);
         } else {
             return false;
         }
@@ -90,11 +86,7 @@ public class Validator {
                             }
                         }
                     }
-                    if (Integer.parseInt(splitInnId[1]) > highestcomponentTypeId) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return Integer.parseInt(splitInnId[1]) > highestcomponentTypeId;
                 }
             }
         }

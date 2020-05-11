@@ -96,8 +96,8 @@ public class UserController implements Initializable {
         //Setting options in the choiceboxes for car type and component type.
         chooseCarType.setPromptText("Car type: ");
         chooseComponent.setPromptText("Component type: ");
-        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
-        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+        chooseCarType.getItems().setAll(Methods.typeList(Lists.getCars()));
+        chooseComponent.getItems().setAll(Methods.componentList(Lists.getComponents()));
         choosePackage.getItems().setAll("Basic+", "Sport", "Premium");
         choosePackage.setPromptText("Choose a base package: ");
     }
@@ -115,7 +115,7 @@ public class UserController implements Initializable {
         //Gets the values from the choiceboxes
         String type = chooseCarType.getValue();
         String ID = "";
-        for (Car car : lists.getCars()) {
+        for (Car car : Lists.getCars()) {
             if (type.contains(car.getCarType())) {
                 ID = car.getCarID();
             }
@@ -125,9 +125,9 @@ public class UserController implements Initializable {
         //If an element in the list of components matches the value of both choiceboxes they are added
         //to the outlist.
         if (type != null && component != null) {
-            for (int i = 0; i < lists.getComponents().size(); i++) {
-                if (ID.equals(lists.getComponents().get(i).getCarID()) && component.equals(lists.getComponents().get(i).getComponentType())) {
-                    outList.add(lists.getComponents().get(i));
+            for (int i = 0; i < Lists.getComponents().size(); i++) {
+                if (ID.equals(Lists.getComponents().get(i).getCarID()) && component.equals(Lists.getComponents().get(i).getComponentType())) {
+                    outList.add(Lists.getComponents().get(i));
                 }
             }
         }

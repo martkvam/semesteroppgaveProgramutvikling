@@ -129,13 +129,10 @@ public class EditOrders {
                 deleteSelectedItems = Dialogs.showChooseDialog("Delete the selected orders?");
             }
             //Makes sure that the superuser wants to delete the selected node(s).
-            if (!deleteSelectedItems) {
-                return false;
-            }
+            return deleteSelectedItems;
         } else {
             throw new IOException("You have to choose minimum one car to delete");
         }
-        return true;
     }
 
     public static int recalculateTotalPrice(Order order) {

@@ -29,7 +29,6 @@ public class ControllerAddEditComponents implements Initializable {
     Lists lists = new Lists();
     addElements addElements = new addElements();
     FileHandler filehandler = new FileHandler();
-    private newThread delayThread;
 
     //Sets up int/String converter
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
@@ -86,7 +85,7 @@ public class ControllerAddEditComponents implements Initializable {
         txtFilterInn.setVisible(false);
 
         //Sets up delay thread
-        delayThread = new newThread();
+        newThread delayThread = new newThread();
         delayThread.setOnSucceeded(this::threadSucceded);
         delayThread.setOnFailed(this::threadFailed);
         Thread thread = new Thread(delayThread);
@@ -112,7 +111,7 @@ public class ControllerAddEditComponents implements Initializable {
     private void threadSucceded(WorkerStateEvent e) {
 
         //Reads inn all files
-        filehandler.readAllFiles(stage);
+        FileHandler.readAllFiles(stage);
 
         //Enables the elements in the window
         mainPane.setDisable(false);
@@ -151,11 +150,11 @@ public class ControllerAddEditComponents implements Initializable {
 
         if (chooseElementType.getValue() != null) {
             if (chooseElementType.getValue().equals("Car")) {
-                filehandler.openSelectedFile(stage, "Car");
+                FileHandler.openSelectedFile(stage, "Car");
             } else if (chooseElementType.getValue().equals("Component")) {
-                filehandler.openSelectedFile(stage, "Component");
+                FileHandler.openSelectedFile(stage, "Component");
             } else if (chooseElementType.getValue().equals("Adjustment")) {
-                filehandler.openSelectedFile(stage, "Adjustment");
+                FileHandler.openSelectedFile(stage, "Adjustment");
             }
         } else {
             Dialogs.showErrorDialog("You have to choose a element to read from file");
@@ -167,7 +166,7 @@ public class ControllerAddEditComponents implements Initializable {
 
     @FXML
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-        filehandler.saveAllFiles();
+        FileHandler.saveAllFiles();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser", root, 470, 300, event);
         TableView.getItems().clear();
@@ -227,13 +226,13 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewComponent(ActionEvent event) {
         //Directs user to dialog window to add a new component
-        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
+        javaCode.superUser.addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
     }
 
     @FXML
     void btnNewAdjustment(ActionEvent event) {
         //Directs user to dialog window to add a new adjustment
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment(), "", "", 0);
+        javaCode.superUser.addElements.openAddAdjustmentDialog(Lists.getAdjustment(), "", "", 0);
     }
 
     @FXML

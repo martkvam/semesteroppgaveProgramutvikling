@@ -68,8 +68,7 @@ public class fileReaderTxt implements Reader {
             orderStatus = false;
         } else throw new Exception("The order status is not correct");
 
-        Order order = new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
-        return order;
+        return new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
     }
 
     private int parseNumber(String str, String errorMessage) throws Exception {

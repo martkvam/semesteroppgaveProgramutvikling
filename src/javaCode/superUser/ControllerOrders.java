@@ -36,7 +36,6 @@ public class ControllerOrders implements Initializable {
     Lists list = new Lists();
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
     private ConverterErrorHandler.BooleanStringConverter booleanStringConverter = new ConverterErrorHandler.BooleanStringConverter();
-    private newThread delayThread;
 
     @FXML
     private Label lblOutName;
@@ -197,7 +196,7 @@ public class ControllerOrders implements Initializable {
         } else {
             if (firstInlog == 0) {
                 //Starts delay thread
-                delayThread = new newThread();
+                newThread delayThread = new newThread();
                 delayThread.setOnSucceeded(this::threadDone);
                 delayThread.setOnFailed(this::threadFailed);
                 Thread th = new Thread(delayThread);
@@ -224,7 +223,7 @@ public class ControllerOrders implements Initializable {
                 tableViewComponents.getItems().clear();
                 tableViewAdjustments.getItems().clear();
 
-                fileHandler.readAllFiles(stage);
+                FileHandler.readAllFiles(stage);
 
 
                 tableViewOrder.setItems(Lists.getOrders());
@@ -275,7 +274,7 @@ public class ControllerOrders implements Initializable {
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
 
-        fileHandler.readAllFiles(stage);
+        FileHandler.readAllFiles(stage);
 
 
         tableViewOrder.setItems(Lists.getOrders());

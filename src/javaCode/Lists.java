@@ -142,10 +142,7 @@ public class Lists<E> implements Serializable {
             return true;
         } else if (Integer.toString(component.getComponentPrice()).toLowerCase().contains(lowerCase)) {
             return true;
-        } else if (component.getCarID().toLowerCase().contains(lowerCase)) {
-            return true;
-        }
-        return false;
+        } else return component.getCarID().toLowerCase().contains(lowerCase);
     }
 
     public boolean filterAdjustmentList(Adjustment adjustment, String newValue) {
@@ -161,10 +158,7 @@ public class Lists<E> implements Serializable {
             return true;
         } else if (adjustment.getAdjustmentDescription().toLowerCase().contains(lowerCase)) {
             return true;
-        } else if (Integer.toString(adjustment.getAdjustmentPrice()).toLowerCase().contains(lowerCase)) {
-            return true;
-        }
-        return false;
+        } else return Integer.toString(adjustment.getAdjustmentPrice()).toLowerCase().contains(lowerCase);
     }
 
 

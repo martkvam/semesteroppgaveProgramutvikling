@@ -224,8 +224,7 @@ public class addElements {
                                 carID = carList.get(i).getCarID();
                             }
                         }
-                        Component newComponent = new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
-                        return newComponent;
+                        return new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
                     } catch (NumberFormatException e) {
                         Dialogs.showErrorDialog("The price has to be a number");
                         openAddComponentsDialog(carList, componentList, chooseCar.getSelectionModel().getSelectedItem(), chooseComponentType.getSelectionModel().getSelectedItem(), outComponentDescription, 1);
@@ -252,10 +251,7 @@ public class addElements {
         result.ifPresent(newComponentEntry -> {
             componentList.add(newComponentEntry);
         });
-        if (result.isPresent()) {
-            return true;
-        }
-        return false;
+        return result.isPresent();
     }
 
     public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList, Object adjustmentType, String description, int price) {
@@ -514,8 +510,7 @@ public class addElements {
 
                 try {
                     newCarPrice = Integer.parseInt(carPrice.getText());
-                    Car newCar = new Car(Integer.toString(lastCarIndex + 1), newCarType, newCarDescription, newCarPrice);
-                    return newCar;
+                    return new Car(Integer.toString(lastCarIndex + 1), newCarType, newCarDescription, newCarPrice);
                 } catch (NumberFormatException e) {
                     Dialogs.showErrorDialog("The price must be a number");
                     openAddCarDialog(carTypeList, newCarType, newCarDescription, newCarPrice);

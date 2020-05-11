@@ -166,21 +166,21 @@ public class FileHandler{
                     switch (fileExt) {
                         case ".txt" : reader = new fileReaderTxt(); break;
                         case ".jobj" : reader = new fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
                 else if(type =="Component"){
                     switch (fileExt) {
                         case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
                         case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
                 else if(type == "Adjustment"){
                     switch (fileExt) {
                         case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
                         case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
 
@@ -192,7 +192,7 @@ public class FileHandler{
                     }
                 }
                 else{
-                    Dialogs.showErrorDialog("Thisfile could not be opened");
+                    Dialogs.showErrorDialog("This file could not be opened");
                 }
             }
         }catch (Exception e){

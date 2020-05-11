@@ -2,6 +2,7 @@ package javaCode;
 
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
+import javaCode.objects.Adjustment;
 import javaCode.objects.User;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
@@ -48,15 +49,15 @@ public class Validator {
     }
 
     public static boolean carType(String type){
-        return type.matches(".{2,10}");
+        return type.matches(".{1,10}");
     }
 
     public static boolean carDescription(String description){
-        return description.matches(".{2,50}");
+        return description.matches(".{1,50}");
     }
 
     public static boolean carPrice(int price){
-        return price>0 && price<1_000_000;
+        return price>-1 && price<1_000_000;
     }
 
 
@@ -128,7 +129,24 @@ public class Validator {
     }
 
     public static boolean componentPrice(int price){
-        return price>0;
+        return price>=0;
+    }
+
+
+    //Adjustments
+    public static boolean adjustmentID(String id){
+        if(Integer.parseInt(id) < 0){
+            return false;
+        }
+        for(Adjustment i : Lists.getAdjustment()){
+            if(i.getAdjustmentID().equals(id)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean adjustmentPrice(int price){
+        return price>=0;
     }
 
 

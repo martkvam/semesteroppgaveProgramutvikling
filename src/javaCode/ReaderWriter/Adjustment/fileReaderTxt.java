@@ -1,7 +1,12 @@
 package javaCode.ReaderWriter.Adjustment;
 
+import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,37 +15,87 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class fileReaderTxt implements Reader {
+    private static ObservableList<Adjustment> saveList = FXCollections.observableArrayList();
+    private int lineNr = 0;
+    private int highestID = 0;
+    public String errorMessage = "Invalid formatting in: \n";
 
     @Override
     public void read(Path path) throws IOException {
-         /*   try (BufferedReader reader = Files.newBufferedReader(path)) {
-                String tekst;
-                while ((tekst = reader.readLine()) != null) {
-                    list.addAdjustment(parsePerson(tekst));
+        boolean invalidImplementation = false;
+        Lists lists = new Lists();
+        for(Adjustment i : Lists.getAdjustment()){
+            highestID = Integer.parseInt(i.getAdjustmentID());
+        }
+        try(BufferedReader reader = Files.newBufferedReader(path)){
+            String line;
+            while ((line = reader.readLine()) != null){
+                try{
+                    String [] split = line.split(";");
+                    if (line.length()!=0) {
+                        lineNr++;
+                        saveList.add(parseAdjustment(line));
+                    }
+                }catch(IllegalArgumentException e){
+                    invalidImplementation = true;
+
+                    errorMessage += "Line " + lineNr + "\n";
                 }
-            } catch (InvalidPersonFormatException e) {
-                throw new InvalidPersonFormatException(e.getMessage());
             }
-            return list;
+        } catch (IllegalArgumentException e) {
+            invalidImplementation = true;
         }
-        private Person parsePerson(String line) throws InvalidPersonFormatException {
-            // split line string into three using the separator ";"
-            String[] split = line.split(";");
-            if(split.length != 7) {
-                throw new InvalidPersonFormatException("må bruke ; for å dele de 7 datafeltene");
-            }
-            DataCollection collection = new DataCollection();
-            String name = split[0];
-            String dag = split[2];
-            String maaned = split[3];
-            String aar =split[4];
-            String epost = split[5];
-            String tlf = split[6];
-
-            Person person = collection.testInnput(name, dag, maaned, aar, epost, tlf);
-
-          */
-
+        if(invalidImplementation){
+            Dialogs.showErrorDialog("There is invalid formatting and data in the file. Invalid formatting will not be saved, but invalid data will be saved as 0 price");
+            System.out.println(errorMessage);
         }
+        for(Adjustment i : saveList){
+            lists.addAdjustment(i);
+        }
+
     }
+
+    private Adjustment parseAdjustment (String line) throws IllegalArgumentException{
+
+        String[] split = line.split(";");
+        if(split.length != 4) {
+            throw new IllegalArgumentException("There is an error in the file containing the orders.");
+        }
+
+        String adjustmentID = split[0];
+        String adjustmentType = split[1];
+        String adjustmentDescription = split[2];
+        try{
+            int adjustmentPrice = parseNumber(split[3], "Total price is not correct");
+            return new Adjustment(adjustmentID, adjustmentType, adjustmentDescription, adjustmentPrice);
+        }catch (IllegalArgumentException e){
+            try{
+
+                highestID +=1;
+                if(adjustmentType.length()==0){
+                    adjustmentType = "?";
+                }
+                if(adjustmentDescription.length()==0){
+                    adjustmentDescription = "?";
+                }
+                return new Adjustment(Integer.toString(highestID),adjustmentType,adjustmentDescription,0);
+
+            } catch (IllegalArgumentException f){
+
+            }
+        }
+        return null;
+    }
+    private int parseNumber(String str, String errorMessage) throws IllegalArgumentException{
+        int number;
+        try {
+            number = Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return number;
+    }
+
+}
+
 

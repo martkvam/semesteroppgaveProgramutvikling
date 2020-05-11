@@ -1,5 +1,6 @@
 package javaCode.objects;
 
+import javaCode.Validator;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -15,6 +16,13 @@ public class Adjustment implements Serializable {
     private transient  SimpleIntegerProperty adjustmentPrice;
 
     public Adjustment(String adjustmentID, String type, String description, int price) {
+        if(!Validator.adjustmentID(adjustmentID)){
+            throw new IllegalArgumentException("The adjustment id is not valid");
+        }
+        if(!Validator.adjustmentPrice(price)){
+            throw new IllegalArgumentException("The adjustment price is not valid");
+        }
+
         this.adjustmentID = new SimpleStringProperty(adjustmentID);
         this.adjustmentType = new SimpleStringProperty(type);
         this.adjustmentDescription = new SimpleStringProperty(description);

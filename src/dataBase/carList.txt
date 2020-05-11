@@ -1,0 +1,3 @@
+5;Kull;rått;2000
+6;JadaFette bra;900
+7;fewf;;8

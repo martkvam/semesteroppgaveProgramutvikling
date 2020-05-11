@@ -92,6 +92,5 @@ public class NewUser {
 
     @FXML
     public void initialize(){
-
     }
 }

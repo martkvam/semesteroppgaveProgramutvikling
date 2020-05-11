@@ -6,7 +6,7 @@
 6;Trym;Stenberg;stenberg.trym@gmail.com;98086042;oslomet;false
 7;Truls;Berg;truls@berg.no;19991999;berg;false
 8;Vidle;Dalstø;vilde@daltso.no;97622121;heihei;false
-9;124424;Jensen;lolol@lol.no;5678234920;jacco;false
+9;Arne;Jensen;lolol@lol.no;5678234920;jacco;false
 44;Villy;lærr;vill@mail.se;11659724;moll;false
 69;Geir;Hansen;rolfern@spenn.it;14141414;hahaha;false
 101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;false

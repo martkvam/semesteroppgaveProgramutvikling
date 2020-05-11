@@ -157,5 +157,4 @@ public class Inlog implements Initializable {
             setShowPasswordFieldActive(false);
         }
     }
-
 }

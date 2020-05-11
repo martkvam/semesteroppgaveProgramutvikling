@@ -7,6 +7,7 @@ import javaCode.objects.User;
 import javaCode.OpenScene;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,27 @@ public class ControllerEditProfile {
         superUser.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.BooleanStringConverter()));
         tvUserRegister.setItems(ReadUsers.getUserList());
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        newThread delayThread = new newThread();
+        delayThread.setOnSucceeded(this::threadDone);
+        delayThread.setOnFailed(this::threadFailed);
+        Thread th = new Thread(delayThread);
+        th.setDaemon(true);
+        tvUserRegister.setDisable(true);
+        txtSearch.setDisable(true);
+        btnClick.setDisable(true);
+        th.start();
+    }
+
+
+    private void threadFailed(WorkerStateEvent workerStateEvent) {
+        Exception e = (Exception) workerStateEvent.getSource().getException();
+        Dialogs.showErrorDialog(e.getMessage());
+    }
+
+    private void threadDone(WorkerStateEvent workerStateEvent) {
+        tvUserRegister.setDisable(false);
+        txtSearch.setDisable(false);
+        btnClick.setDisable(false);
     }
 
     //Method for searching in the tableview

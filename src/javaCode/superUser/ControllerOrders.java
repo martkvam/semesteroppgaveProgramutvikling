@@ -318,7 +318,7 @@ public class ControllerOrders implements Initializable {
 
     private void threadFailed(WorkerStateEvent event) {
         Exception e = (Exception) event.getSource().getException();
-        lblMailOut.setText("Avviket sier: " + e.getMessage());
+        lblMailOut.setText("Thread fail because of: " + e.getMessage());
     }
 
     @FXML

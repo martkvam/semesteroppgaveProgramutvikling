@@ -2,7 +2,6 @@ package javaCode.ReaderWriter.Car;
 
 import javaCode.Lists;
 import javaCode.ReaderWriter.Writer;
-import javaCode.objects.Car;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

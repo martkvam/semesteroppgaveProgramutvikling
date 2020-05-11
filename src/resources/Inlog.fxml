@@ -39,7 +39,7 @@
                   GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
         <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#btnLogInOnClick" text="Log in"
                 GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-        <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#btnNewUserOnClick" text="New User"
+        <Button mnemonicParsing="false" onAction="#btnNewUserOnClick" text="New User"
                 GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     </GridPane>
 </AnchorPane>

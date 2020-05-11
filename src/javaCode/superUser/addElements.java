@@ -197,14 +197,14 @@ public class addElements {
                         componentId += "-";
                         componentId += 1;
                     }
-                    for (int i = 0; i < componentList.size(); i++) {
-                        if (componentList.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
+                    for (Component component : componentList) {
+                        if (component.getComponentType().equals(chooseComponentType.getValue().toString())) {
                             int lastComponentIDchecked = 0;
-                            String line = componentList.get(i).getComponentID();
+                            String line = component.getComponentID();
                             String[] split = line.split("-");
                             if (Integer.parseInt(split[1]) >= highestComponentID) {
                                 highestComponentID = Integer.parseInt(split[1]);
-                                String line2 = componentList.get(i).getComponentID();
+                                String line2 = component.getComponentID();
                                 String[] split2 = line2.split("-");
                                 componentId = split2[0];
                                 componentId += "-";
@@ -219,9 +219,9 @@ public class addElements {
                         outComponentPrice = Integer.parseInt(componentPrice.getText());
                         String outCarType = chooseCar.getValue().toString();
                         String carID = "";
-                        for (int i = 0; i < carList.size(); i++) {
-                            if (outCarType.equals(carList.get(i).getCarType())) {
-                                carID = carList.get(i).getCarID();
+                        for (Car car : carList) {
+                            if (outCarType.equals(car.getCarType())) {
+                                carID = car.getCarID();
                             }
                         }
                         return new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
@@ -475,9 +475,7 @@ public class addElements {
         addDisableButton.setDisable(true);
 
         //The price field has to be filled before the new car can be added
-        carPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-            addDisableButton.setDisable(newValue.trim().isEmpty());
-        });
+        carPrice.textProperty().addListener((observable, oldValue, newValue) -> addDisableButton.setDisable(newValue.trim().isEmpty()));
 
         dialog.getDialogPane().setContent(grid);
 
@@ -485,9 +483,9 @@ public class addElements {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == addButton) {
                 int lastCarIndex = 0;
-                for (int i = 0; i < carTypeList.size(); i++) {
-                    if (Integer.parseInt(carTypeList.get(i).getCarID()) > lastCarIndex) {
-                        lastCarIndex = Integer.parseInt(carTypeList.get(i).getCarID());
+                for (Car car : carTypeList) {
+                    if (Integer.parseInt(car.getCarID()) > lastCarIndex) {
+                        lastCarIndex = Integer.parseInt(car.getCarID());
                     }
                 }
                 String newCarType = "";
@@ -525,8 +523,6 @@ public class addElements {
 
         //Handles the input values and sets new car id
 
-        result.ifPresent(newCarEntry -> {
-            carTypeList.add(newCarEntry);
-        });
+        result.ifPresent(carTypeList::add);
     }
 }

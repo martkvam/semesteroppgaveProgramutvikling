@@ -13,4 +13,4 @@
 102;Pølsemannen;Grilstad;august_grilstad@hotmail.com;45252226;august123;false
 15;Jorunn;Heggernes;joheg@gmail.com;885577342;heggernes;false
 17;Olly;Halla;olhall@mail.no;123135523;olly;false
-12;Trym;Steners;trymst@mail.no;3523242;trym;false
+12;Trym;Stenberg;trymst@mail.no;3523242;trym;false

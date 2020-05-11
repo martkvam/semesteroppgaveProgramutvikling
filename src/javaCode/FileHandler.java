@@ -154,39 +154,43 @@ public class FileHandler {
             if (selectedFile != null) {
                 String fileExt = getFileExt(selectedFile);
                 Reader reader = null;
-                if (type == "Car") {
-                    switch (fileExt) {
-                        case ".txt":
-                            reader = new fileReaderTxt();
-                            break;
-                        case ".jobj":
-                            reader = new fileReaderJobj();
-                            break;
-                        default:
-                            Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                    }
-                } else if (type == "Component") {
-                    switch (fileExt) {
-                        case ".txt":
-                            reader = new javaCode.ReaderWriter.Component.fileReaderTxt();
-                            break;
-                        case ".jobj":
-                            reader = new javaCode.ReaderWriter.Component.fileReaderJobj();
-                            break;
-                        default:
-                            Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                    }
-                } else if (type == "Adjustment") {
-                    switch (fileExt) {
-                        case ".txt":
-                            reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt();
-                            break;
-                        case ".jobj":
-                            reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-                            break;
-                        default:
-                            Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
-                    }
+                switch (type) {
+                    case "Car":
+                        switch (fileExt) {
+                            case ".txt":
+                                reader = new fileReaderTxt();
+                                break;
+                            case ".jobj":
+                                reader = new fileReaderJobj();
+                                break;
+                            default:
+                                Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        }
+                        break;
+                    case "Component":
+                        switch (fileExt) {
+                            case ".txt":
+                                reader = new javaCode.ReaderWriter.Component.fileReaderTxt();
+                                break;
+                            case ".jobj":
+                                reader = new javaCode.ReaderWriter.Component.fileReaderJobj();
+                                break;
+                            default:
+                                Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        }
+                        break;
+                    case "Adjustment":
+                        switch (fileExt) {
+                            case ".txt":
+                                reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt();
+                                break;
+                            case ".jobj":
+                                reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
+                                break;
+                            default:
+                                Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        }
+                        break;
                 }
 
                 if (reader != null) {

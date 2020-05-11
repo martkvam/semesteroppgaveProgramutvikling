@@ -15,7 +15,7 @@
                     <PropertyValueFactory property="componentDescription"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="componentPrice" prefWidth="138.39996337890625" text="Price">
+            <TableColumn prefWidth="138.39996337890625" text="Price">
                 <cellValueFactory>
                     <PropertyValueFactory property="componentPrice"/>
                 </cellValueFactory>
@@ -52,7 +52,7 @@
             prefHeight="27.0" prefWidth="95.0" text="Add"/>
     <Button fx:id="btnRemove" layoutX="997.0" layoutY="310.0" mnemonicParsing="false" onAction="#removeComponent"
             prefHeight="27.0" prefWidth="89.0" text="Remove"/>
-    <Button fx:id="btnOrder" layoutX="994.0" layoutY="630.0" mnemonicParsing="false" onAction="#order"
+    <Button layoutX="994.0" layoutY="630.0" mnemonicParsing="false" onAction="#order"
             prefHeight="27.0" prefWidth="68.0" text="Order"/>
     <ComboBox fx:id="chooseComponent" layoutX="13.0" layoutY="242.0" onAction="#setList" prefHeight="27.0"
               prefWidth="190.0"/>
@@ -111,11 +111,11 @@
     <Button fx:id="removeAdjust" layoutX="997.0" layoutY="550.0" mnemonicParsing="false" onAction="#removeAdjust"
             prefHeight="27.0" prefWidth="89.0" text="Remove"/>
     <ComboBox fx:id="chooseCol" layoutX="767.0" layoutY="630.0" prefHeight="27.0" prefWidth="126.0"/>
-    <Button fx:id="btnProfile" layoutX="957.0" layoutY="4.0" mnemonicParsing="false" onAction="#myProfile"
+    <Button layoutX="957.0" layoutY="4.0" mnemonicParsing="false" onAction="#myProfile"
             prefHeight="27.0" prefWidth="119.0" text="My profile"/>
-    <Button fx:id="btnSave" layoutX="1071.0" layoutY="630.0" mnemonicParsing="false" onAction="#saveChoices"
+    <Button layoutX="1071.0" layoutY="630.0" mnemonicParsing="false" onAction="#saveChoices"
             prefHeight="27.0" prefWidth="118.0" text="Save choices"/>
-    <Button fx:id="btnLogout" layoutX="1087.0" layoutY="4.0" mnemonicParsing="false" onAction="#logOut"
+    <Button layoutX="1087.0" layoutY="4.0" mnemonicParsing="false" onAction="#logOut"
             prefHeight="27.0" prefWidth="103.0" text="Log out"/>
     <Label alignment="TOP_CENTER" layoutX="13.0" layoutY="91.0" prefHeight="107.0" prefWidth="274.0"
            text="Start your order by choosing a car type. Each car comes with default settings, but you can modify your own car by adding components and adjustments, or choose one of the base packages from the list."

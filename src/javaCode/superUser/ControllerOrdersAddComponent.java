@@ -118,8 +118,6 @@ public class ControllerOrdersAddComponent implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
             OpenScene.
                     newScene("Edit orders", root, 700, 700, event);
-        } else {
-
         }
     }
 

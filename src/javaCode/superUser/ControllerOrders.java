@@ -141,7 +141,7 @@ public class ControllerOrders implements Initializable {
             }
             for (Order i : Lists.getOrders()) {
                 tableViewAdjustments.setItems(i.getAdjustmentList());
-                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
@@ -183,7 +183,7 @@ public class ControllerOrders implements Initializable {
             }
             for (Order i : Lists.getOrders()) {
                 tableViewAdjustments.setItems(i.getAdjustmentList());
-                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
@@ -337,7 +337,7 @@ public class ControllerOrders implements Initializable {
         try {
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
             for (Order i : Lists.getOrders()) {
-                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();

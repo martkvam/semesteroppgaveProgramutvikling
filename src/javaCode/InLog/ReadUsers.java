@@ -171,11 +171,10 @@ public class ReadUsers {
         return userList;
     }
 
-    public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
+    public static void checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
 
         if (Objects.equals(ReadUsers.getUserId(email), null) &&
                 Objects.equals(ReadUsers.getUserId(phone), null)) {
-            return true;
         } else {
             throw new UserAlreadyExistException("User already exists");
         }

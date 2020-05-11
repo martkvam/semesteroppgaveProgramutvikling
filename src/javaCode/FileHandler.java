@@ -20,42 +20,38 @@ public class FileHandler {
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
 
-        Writer writeCar = null;
-        Writer writeComponent = null;
-        Writer writeAdjustment = null;
+        Writer writeCar;
+        Writer writeComponent;
+        Writer writeAdjustment;
 
         writeCar = new fileWriterJobj();
         writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
         writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
 
 
-        if (writeCar != null) {
-            try {
-                selectedFileCar.delete();
-                selectedFileComponent.delete();
-                selectedFileAdjustments.delete();
-                writeCar.save(selectedFileCar.toPath());
-                writeComponent.save(selectedFileComponent.toPath());
-                writeAdjustment.save(selectedFileAdjustments.toPath());
-                Dialogs.showSuccessDialog("The register successfully got saved");
-            } catch (IOException e) {
-                Dialogs.showErrorDialog("The saving failed because of: " + e.getMessage());
-            }
+        try {
+            selectedFileCar.delete();
+            selectedFileComponent.delete();
+            selectedFileAdjustments.delete();
+            writeCar.save(selectedFileCar.toPath());
+            writeComponent.save(selectedFileComponent.toPath());
+            writeAdjustment.save(selectedFileAdjustments.toPath());
+            Dialogs.showSuccessDialog("The register successfully got saved");
+        } catch (IOException e) {
+            Dialogs.showErrorDialog("The saving failed because of: " + e.getMessage());
         }
     }
 
-    public static void saveSelectedFile(Stage stage) throws IOException {
+    public static void saveSelectedFile(Stage stage) {
         File selectedFile = new File("src/dataBase/FinishedOrders.txt");
 
-        if (selectedFile != null) {
-            try {
-                Writer writeOrder = new fileWriterTxt();
-                selectedFile.delete();
-                writeOrder.save(selectedFile.toPath());
-                Dialogs.showSuccessDialog("The register got saved");
-            } catch (IOException e) {
-                Dialogs.showErrorDialog("Saving to file did not work because of: " + e.getMessage());
-            }
+        try {
+            Writer writeOrder = new fileWriterTxt();
+            selectedFile.delete();
+            writeOrder.save(selectedFile.toPath());
+            Dialogs.showSuccessDialog("The register got saved");
+        } catch (IOException e) {
+            Dialogs.showErrorDialog("Saving to file did not work because of: " + e.getMessage());
         }
     }
 
@@ -69,13 +65,13 @@ public class FileHandler {
         File selectedFileOngoingOrders = new File("src/dataBase/OngoingOrders.txt");
         File selectedFileUsers = new File("src/dataBase/Users.txt");
 
-        Reader readerCar = null;
-        Reader readerComponents = null;
-        Reader readerAdjustments = null;
+        Reader readerCar;
+        Reader readerComponents;
+        Reader readerAdjustments;
         //Reader readerOrders = null;
-        Reader readerTxtOrders = null;
-        Reader readerOngoingOrders = null;
-        Reader readerUsers = null;
+        Reader readerTxtOrders;
+        Reader readerOngoingOrders;
+        Reader readerUsers;
 
 
         readerCar = new fileReaderJobj();
@@ -92,22 +88,20 @@ public class FileHandler {
         Lists.deleteAdjustments();
         Lists.deleteOrders();
         Lists.deleteOngoing();
-        if (readerCar != null && readerComponents != null && readerAdjustments != null && readerTxtOrders != null && readerOngoingOrders != null) {
-            try {
-                readerCar.read(selectedFileCar.toPath());
-                readerComponents.read(selectedFileComponent.toPath());
-                readerAdjustments.read(selectedFileAdjustments.toPath());
-                //readerOrders.read(selectedFileOrders.toPath());
-                readerTxtOrders.read(selectedFileOrdersTxt.toPath());
-                readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
-                readerUsers.read(selectedFileUsers.toPath());
-                //Dialogs.showSuccessDialog("The register got loaded");
-            } catch (IOException | IllegalArgumentException e) {
-                Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
-            } catch (Exception e) {
-                Dialogs.showErrorDialog("There is an error in the file containig the finished orders." +
-                        "The order-register might not be complete.");
-            }
+        try {
+            readerCar.read(selectedFileCar.toPath());
+            readerComponents.read(selectedFileComponent.toPath());
+            readerAdjustments.read(selectedFileAdjustments.toPath());
+            //readerOrders.read(selectedFileOrders.toPath());
+            readerTxtOrders.read(selectedFileOrdersTxt.toPath());
+            readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
+            readerUsers.read(selectedFileUsers.toPath());
+            //Dialogs.showSuccessDialog("The register got loaded");
+        } catch (IOException | IllegalArgumentException e) {
+            Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
+        } catch (Exception e) {
+            Dialogs.showErrorDialog("There is an error in the file containig the finished orders." +
+                    "The order-register might not be complete.");
         }
     }
 
@@ -137,18 +131,16 @@ public class FileHandler {
             }
 
             if (fileExt.equals(".txt")) {
-                if (writeOrder != null) {
-                    try {
-                        writeOrder.save(selectedFile.toPath());
-                        Dialogs.showSuccessDialog("Registeret ble lagret!");
-                    } catch (IOException e) {
-                        Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
-                    }
+                try {
+                    writeOrder.save(selectedFile.toPath());
+                    Dialogs.showSuccessDialog("Registeret ble lagret!");
+                } catch (IOException e) {
+                    Dialogs.showErrorDialog("Lagring til fil feilet. Grunn: " + e.getMessage());
                 }
             } else if (fileExt.equals(".jobj")) {
                 try {
                     writeCar.save(selectedFile.toPath());
-                } catch (IOException e) {
+                } catch (IOException ignored) {
 
                 }
             }

@@ -156,7 +156,7 @@ public class addElements {
                 } catch (NumberFormatException e) {
                     Dialogs.showErrorDialog(e.getMessage());
                     componentPrice.clear();
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException ignored) {
 
                 }
             }
@@ -165,7 +165,7 @@ public class addElements {
         dialog.getDialogPane().setContent(grid);
 
         // Request focus on the username field by default.
-        Platform.runLater(() -> chooseCar.requestFocus());
+        Platform.runLater(chooseCar::requestFocus);
 
         // Validates an converts the input from the textareas and comboboxes to a Component and returns a new component.
         dialog.setResultConverter(dialogButton -> {
@@ -174,16 +174,16 @@ public class addElements {
                 String componentId = "";
                 String outComponentType = "";
                 int highestComponentID = 1;
-                int outComponentPrice = 0;
+                int outComponentPrice;
                 String outComponentDescription = "";
                 //Loop to set new componentID
                 if (!chooseComponentType.getSelectionModel().isEmpty() && !chooseCar.getSelectionModel().isEmpty()) {
                     if (chooseComponentType.getValue().toString().equals("New component type")) {
                         //Loop to find highest ComponentTypeID(first number in componentID)
-                        String lastComponentID = "";
+                        String lastComponentID;
                         int lastComponentIDchecked = 0;
-                        for (int j = 0; j < componentList.size(); j++) {
-                            String line = componentList.get(j).getComponentID();
+                        for (Component component : componentList) {
+                            String line = component.getComponentID();
                             String[] split = line.split("-");
 
                             if (Integer.parseInt(split[0]) >= lastComponentIDchecked) {
@@ -248,9 +248,7 @@ public class addElements {
         Optional<Component> result = dialog.showAndWait();
 
         //Handles the input values and sets new car id
-        result.ifPresent(newComponentEntry -> {
-            componentList.add(newComponentEntry);
-        });
+        result.ifPresent(componentList::add);
         return result.isPresent();
     }
 
@@ -391,7 +389,7 @@ public class addElements {
                     for (int i = 0; i < adjustmentList.size(); i++) {
 
                         //Loop to find highest ComponentTypeID(first number in componentID)
-                        String lastAdjustmentId = "";
+                        String lastAdjustmentId;
                         int lastAdjustmentIdChecked = 0;
                         for (Adjustment adjustment : adjustmentList) {
                             if (lastAdjustmentIdChecked < Integer.parseInt(adjustment.getAdjustmentID())) {

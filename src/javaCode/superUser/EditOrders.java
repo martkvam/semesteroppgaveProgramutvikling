@@ -116,7 +116,7 @@ public class EditOrders {
     }
 
     public static boolean deleteOrder(ObservableList selectedOrders) throws IOException {
-        boolean deleteSelectedItems = false;
+        boolean deleteSelectedItems;
 
         //Makes sure that a table row has been selected
         if (selectedOrders.size() > 0) {

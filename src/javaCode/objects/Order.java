@@ -52,8 +52,8 @@ public class Order implements Serializable {
         this.carId = new SimpleStringProperty(carId);
         this.orderStarted = new SimpleObjectProperty<>(orderStarted);
         this.orderFinished = new SimpleObjectProperty<>(orderFinished);
-        this.componentList = new SimpleListProperty<Component>(componentList);
-        this.adjustmentList = new SimpleListProperty<Adjustment>(adjustmentList);
+        this.componentList = new SimpleListProperty<>(componentList);
+        this.adjustmentList = new SimpleListProperty<>(adjustmentList);
         this.totPrice = new SimpleIntegerProperty(totPrice);
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
@@ -179,14 +179,14 @@ public class Order implements Serializable {
 
     //Used for displaying car type in the tableview for orders
     public String getCarType() {
-        String carType = "";
+        StringBuilder carType = new StringBuilder();
         String carID = getCarId();
         for (Car c : Lists.getCars()) {
             if (c.getCarID().equals(carID)) {
-                carType += c.getCarType();
+                carType.append(c.getCarType());
             }
         }
-        return carType;
+        return carType.toString();
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {
@@ -228,27 +228,27 @@ public class Order implements Serializable {
     }
 
     public String formatComponents(ObservableList<Component> componentList) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         String DELIMITER = ",";
         for (int i = 0; i < componentList.size(); i++) {
-            out += componentList.get(i).getComponentID();
+            out.append(componentList.get(i).getComponentID());
             if (i < componentList.size() - 1) {
-                out += DELIMITER;
+                out.append(DELIMITER);
             }
         }
-        return out;
+        return out.toString();
     }
 
     public String formatAdjustments(ObservableList<Adjustment> adjustmentList) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         String DELIMITER = ",";
         for (int i = 0; i < adjustmentList.size(); i++) {
-            out += adjustmentList.get(i).getAdjustmentID();
+            out.append(adjustmentList.get(i).getAdjustmentID());
             if (i < adjustmentList.size() - 1) {
-                out += DELIMITER;
+                out.append(DELIMITER);
             }
         }
-        return out;
+        return out.toString();
     }
 
     @Override

@@ -17,77 +17,73 @@
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
     </rowConstraints>
-    <children>
-        <AnchorPane prefHeight="460.0" prefWidth="870.0">
-            <children>
-                <Label layoutX="307.0" layoutY="14.0" prefHeight="50.0" prefWidth="256.0" text="Add adjustments"
-                       textAlignment="CENTER">
-                    <font>
-                        <Font size="33.0"/>
-                    </font>
-                </Label>
-                <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back"/>
-                <TableView fx:id="tableViewChoosen" layoutX="14.0" layoutY="99.0" prefHeight="247.0" prefWidth="334.0">
-                    <columns>
-                        <TableColumn prefWidth="46.39999008178711" text="ID">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentID"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="199.2000274658203" text="Type">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentType"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="82.39996337890625" text="Price">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentPrice"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
-                <TableView fx:id="tableViewPossible" layoutX="398.0" layoutY="99.0" prefHeight="247.0"
-                           prefWidth="442.0">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="ID">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentID"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="101.60003662109375" text="Type">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentType"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="181.60003662109375" text="Description">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentDescription"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="82.39990234375" text="Price">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="adjustmentPrice"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
-                <Label layoutX="14.0" layoutY="74.0" text="Choosen adjustments">
-                    <font>
-                        <Font name="System Bold" size="19.0"/>
-                    </font>
-                </Label>
-                <Label layoutX="398.0" layoutY="74.0" text="All adjustments">
-                    <font>
-                        <Font name="System Bold" size="19.0"/>
-                    </font>
-                </Label>
-                <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnRemove"
-                        text="Remove element"/>
-                <Button fx:id="btnConfirm" layoutX="14.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnConfirm"
-                        text="Confirm changes"/>
-                <Button layoutX="398.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnAddAdjustment"
-                        text="Add adjustment to order"/>
-            </children>
-        </AnchorPane>
-    </children>
+    <AnchorPane prefHeight="460.0" prefWidth="870.0">
+        <Label layoutX="307.0" layoutY="14.0" prefHeight="50.0" prefWidth="256.0" text="Add adjustments"
+               textAlignment="CENTER">
+            <font>
+                <Font size="33.0"/>
+            </font>
+        </Label>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack" text="Go back"/>
+        <TableView fx:id="tableViewChoosen" layoutX="14.0" layoutY="99.0" prefHeight="247.0" prefWidth="334.0">
+            <columns>
+                <TableColumn prefWidth="46.39999008178711" text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentID"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="199.2000274658203" text="Type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentType"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="82.39996337890625" text="Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentPrice"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <TableView fx:id="tableViewPossible" layoutX="398.0" layoutY="99.0" prefHeight="247.0"
+                   prefWidth="442.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentID"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="101.60003662109375" text="Type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentType"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="181.60003662109375" text="Description">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentDescription"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="82.39990234375" text="Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="adjustmentPrice"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <Label layoutX="14.0" layoutY="74.0" text="Choosen adjustments">
+            <font>
+                <Font name="System Bold" size="19.0"/>
+            </font>
+        </Label>
+        <Label layoutX="398.0" layoutY="74.0" text="All adjustments">
+            <font>
+                <Font name="System Bold" size="19.0"/>
+            </font>
+        </Label>
+        <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnRemove"
+                text="Remove element"/>
+        <Button fx:id="btnConfirm" layoutX="14.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnConfirm"
+                text="Confirm changes"/>
+        <Button layoutX="398.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnAddAdjustment"
+                text="Add adjustment to order"/>
+    </AnchorPane>
 </GridPane>

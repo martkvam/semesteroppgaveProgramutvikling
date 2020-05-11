@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,7 @@ import java.util.Locale;
 public class fileReaderTxt implements Reader {
 
     @Override
-    public void read(Path path) throws IOException {
+    public void read(Path path) {
         Lists lists = new Lists();
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
@@ -56,8 +55,8 @@ public class fileReaderTxt implements Reader {
         Date orderFinished = df.parse(strOrderFinished);
 
 
-        ObservableList<Component> componentList = parseComponentList(split[5], "The component list is not correct");
-        ObservableList<Adjustment> adjustmentList = parseAdjustmentList(split[6], "The adjustment list is not correct");
+        ObservableList<Component> componentList = parseComponentList(split[5]);
+        ObservableList<Adjustment> adjustmentList = parseAdjustmentList(split[6]);
         int totPrice = parseNumber(split[7], "Total price is not correct");
         String carColor = split[8];
         boolean orderStatus;
@@ -81,7 +80,7 @@ public class fileReaderTxt implements Reader {
         return number;
     }
 
-    private ObservableList<Component> parseComponentList(String str, String errorMessage) throws Exception {
+    private ObservableList<Component> parseComponentList(String str) {
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = str.split(",");
         for (String string : split) {
@@ -94,7 +93,7 @@ public class fileReaderTxt implements Reader {
         return components;
     }
 
-    private ObservableList<Adjustment> parseAdjustmentList(String str, String errorMessage) throws Exception {
+    private ObservableList<Adjustment> parseAdjustmentList(String str) {
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
         for (String string : split) {

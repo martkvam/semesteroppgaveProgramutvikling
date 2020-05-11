@@ -7,56 +7,54 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="javaCode.InLog.NewUser">
-    <children>
-        <GridPane layoutX="1.0" prefHeight="400.0" prefWidth="300.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <TextField fx:id="txtFirstName" focusTraversable="false" onKeyReleased="#enterKeyPressed"
-                           promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <TextField fx:id="txtLastName" focusTraversable="false" onKeyReleased="#enterKeyPressed"
-                           promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtPhone" focusTraversable="false" onKeyReleased="#enterKeyPressed" promptText="Phone"
-                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <TextField fx:id="txtEmail" focusTraversable="false" onKeyReleased="#enterKeyPressed" promptText="Email"
-                           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                <PasswordField fx:id="txtPassword" focusTraversable="false" onKeyReleased="#enterKeyPressed"
-                               promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                <PasswordField fx:id="txtRepeatPassword" focusTraversable="false" onKeyReleased="#enterKeyPressed"
-                               promptText="Repeat password" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                <Button fx:id="btnRegisterUser" disable="true" focusTraversable="false" mnemonicParsing="false"
-                        onAction="#btnRegisterUserOnClick" text="Register" textAlignment="CENTER"
-                        GridPane.columnIndex="1" GridPane.rowIndex="7">
-                    <GridPane.margin>
-                        <Insets left="-10.0"/>
-                    </GridPane.margin>
-                </Button>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#btnBackOnClick" text="Go back"
-                        GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
-                    <GridPane.margin>
-                        <Insets right="-10.0"/>
-                    </GridPane.margin>
-                </Button>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register new user" textAlignment="CENTER"
-                      GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                    <font>
-                        <Font name="System Bold" size="25.0"/>
-                    </font>
-                </Text>
-            </children>
-        </GridPane>
-    </children>
+    <GridPane layoutX="1.0" prefHeight="400.0" prefWidth="300.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <children>
+            <TextField fx:id="txtFirstName" focusTraversable="false" onKeyReleased="#enterKeyPressed"
+                       promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtLastName" focusTraversable="false" onKeyReleased="#enterKeyPressed"
+                       promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="txtPhone" focusTraversable="false" onKeyReleased="#enterKeyPressed" promptText="Phone"
+                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <TextField fx:id="txtEmail" focusTraversable="false" onKeyReleased="#enterKeyPressed" promptText="Email"
+                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <PasswordField fx:id="txtPassword" focusTraversable="false" onKeyReleased="#enterKeyPressed"
+                           promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <PasswordField fx:id="txtRepeatPassword" focusTraversable="false" onKeyReleased="#enterKeyPressed"
+                           promptText="Repeat password" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <Button fx:id="btnRegisterUser" disable="true" focusTraversable="false" mnemonicParsing="false"
+                    onAction="#btnRegisterUserOnClick" text="Register" textAlignment="CENTER"
+                    GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <GridPane.margin>
+                    <Insets left="-10.0"/>
+                </GridPane.margin>
+            </Button>
+            <Button focusTraversable="false" mnemonicParsing="false" onAction="#btnBackOnClick" text="Go back"
+                    GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                <GridPane.margin>
+                    <Insets right="-10.0"/>
+                </GridPane.margin>
+            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register new user" textAlignment="CENTER"
+                  GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                <font>
+                    <Font name="System Bold" size="25.0"/>
+                </font>
+            </Text>
+        </children>
+    </GridPane>
 </AnchorPane>

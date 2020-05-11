@@ -2,13 +2,12 @@ package javaCode.ReaderWriter.Adjustment;
 
 import javaCode.ReaderWriter.Reader;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class fileReaderTxt implements Reader {
 
     @Override
-    public void read(Path path) throws IOException {
+    public void read(Path path) {
          /*   try (BufferedReader reader = Files.newBufferedReader(path)) {
                 String tekst;
                 while ((tekst = reader.readLine()) != null) {

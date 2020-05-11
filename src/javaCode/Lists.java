@@ -43,18 +43,10 @@ public class Lists<E> implements Serializable {
     }
 
     public static ObservableList<Car> getCars() {
-        ArrayList<Car> newCarList = new ArrayList<>();
-        for (Car i : carList) {
-            newCarList.add(i);
-        }
         return carList;
     }
 
     public static ObservableList<Component> getComponents() {
-        ArrayList<Component> newComponentList = new ArrayList<>();
-        for (Component i : componentList) {
-            newComponentList.add(i);
-        }
         return componentList;
     }
 

@@ -15,7 +15,7 @@ public class fileWriterJobj implements Writer {
     public void save(Path filePath) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(filePath.toString());
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(new ArrayList<Car>(Lists.getCars()));
+            oos.writeObject(new ArrayList<>(Lists.getCars()));
         }
     }
 }

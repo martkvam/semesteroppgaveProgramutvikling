@@ -133,13 +133,7 @@ public class ControllerAddEditComponents implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
             OpenScene.newScene("Superuser", root, 600, 400, null);
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (IllegalAccessException | IOException | InstantiationException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -149,12 +143,16 @@ public class ControllerAddEditComponents implements Initializable {
         //The user has to choose an element type before reading from file
 
         if (chooseElementType.getValue() != null) {
-            if (chooseElementType.getValue().equals("Car")) {
-                FileHandler.openSelectedFile(stage, "Car");
-            } else if (chooseElementType.getValue().equals("Component")) {
-                FileHandler.openSelectedFile(stage, "Component");
-            } else if (chooseElementType.getValue().equals("Adjustment")) {
-                FileHandler.openSelectedFile(stage, "Adjustment");
+            switch (chooseElementType.getValue()) {
+                case "Car":
+                    FileHandler.openSelectedFile(stage, "Car");
+                    break;
+                case "Component":
+                    FileHandler.openSelectedFile(stage, "Component");
+                    break;
+                case "Adjustment":
+                    FileHandler.openSelectedFile(stage, "Adjustment");
+                    break;
             }
         } else {
             Dialogs.showErrorDialog("You have to choose a element to read from file");

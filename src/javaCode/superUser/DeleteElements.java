@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class DeleteElements {
     public boolean deleteCars(ObservableList selectedElements) throws IOException {
-        boolean deleteSelectedItems = false;
+        boolean deleteSelectedItems;
 
         //Makes sure that a table row has been selected
         if (selectedElements.size() > 0) {
@@ -30,7 +30,7 @@ public class DeleteElements {
     }
 
     public boolean deleteComponents(ObservableList<Component> selectedElements) throws IOException {
-        boolean deleteSelectedItems = false;
+        boolean deleteSelectedItems;
 
         //Makes sure that a table row has been selected
         if (selectedElements.size() > 0) {
@@ -50,7 +50,7 @@ public class DeleteElements {
     }
 
     public boolean deleteAdjustments(ObservableList<Adjustment> selectedElements) throws IOException {
-        boolean deleteSelectedItems = false;
+        boolean deleteSelectedItems;
         //Makes sure that a table row has been selected
         if (selectedElements.size() > 0) {
             //If one row is selected

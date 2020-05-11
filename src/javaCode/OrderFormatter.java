@@ -14,7 +14,7 @@ public class OrderFormatter {
     }
 
     public static String formatOrders(List<Order> orderlist) {
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         for (Order o : orderlist) {
             str.append(formatOrder(o));
             str.append("\n");

@@ -1,7 +1,6 @@
 package javaCode.superUser;
 
 import javaCode.*;
-import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
@@ -121,7 +120,7 @@ public class ControllerOrders implements Initializable {
             }
             tableViewOrder.getSelectionModel().select(selectedOrder);
             tableViewOrder.setItems(Lists.getOrders());
-            int outPersonId = 0;
+            int outPersonId;
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
             outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
@@ -163,7 +162,7 @@ public class ControllerOrders implements Initializable {
             }
             tableViewOrder.setItems(Lists.getOrders());
             tableViewOrder.getSelectionModel().select(selectedOrder);
-            int outPersonId = 0;
+            int outPersonId;
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
             outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
@@ -228,7 +227,7 @@ public class ControllerOrders implements Initializable {
 
                 tableViewOrder.setItems(Lists.getOrders());
                 //Finds person in first order
-                int outPersonId = 0;
+                int outPersonId;
                 tableViewOrder.requestFocus();
                 tableViewOrder.getSelectionModel().select(0);
                 tableViewOrder.getFocusModel().focus(0);
@@ -279,7 +278,7 @@ public class ControllerOrders implements Initializable {
 
         tableViewOrder.setItems(Lists.getOrders());
         //Finds person in first order
-        int outPersonId = 0;
+        int outPersonId;
 
         tableViewOrder.getSelectionModel().select(tableViewOrder.getItems().get(0));
         selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
@@ -333,7 +332,7 @@ public class ControllerOrders implements Initializable {
     }
 
     @FXML
-    void onClickView(MouseEvent event) throws FileNotFoundException, UserAlreadyExistException {
+    void onClickView(MouseEvent event) throws FileNotFoundException {
         int outPersonId = 0;
         try {
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
@@ -351,7 +350,7 @@ public class ControllerOrders implements Initializable {
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
 
         }
 
@@ -412,7 +411,7 @@ public class ControllerOrders implements Initializable {
     void carIdEdited(TableColumn.CellEditEvent<Order, String> event) {
         try {
             event.getRowValue().setCarId(event.getNewValue());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
 
         }
         tableViewOrder.refresh();
@@ -457,11 +456,11 @@ public class ControllerOrders implements Initializable {
         try {
             if (newOrderStatus) {
                 if (Dialogs.showChooseDialog("Edit order status to finished?")) {
-                    o.setOrderStatus(newOrderStatus);
+                    o.setOrderStatus(true);
                 }
             } else {
                 if (Dialogs.showChooseDialog("Edit order status to not finished?")) {
-                    o.setOrderStatus(newOrderStatus);
+                    o.setOrderStatus(false);
                 }
             }
 

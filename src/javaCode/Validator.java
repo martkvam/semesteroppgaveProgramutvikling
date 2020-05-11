@@ -18,7 +18,7 @@ public class Validator {
     }
 
     public static boolean phone(String phone) {
-        return phone.matches("(([(][+]?)|([+]?))[0-9]{1,4}[)]?[-\\s\\./0-9]*");
+        return phone.matches("(([(][+]?)|([+]?))[0-9]{1,4}[)]?[-\\s./0-9]*");
     }
 
     public static boolean email(String email) {

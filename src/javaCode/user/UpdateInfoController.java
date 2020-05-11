@@ -53,8 +53,8 @@ public class UpdateInfoController implements Initializable {
         if(!phone.isEmpty()){
             try {
                 ReadUsers.changeInfo(ID, "Phone", phone);
-            } catch (IOException e) {
-                Dialogs.showErrorDialog("Phone number is invalid");
+            } catch (IOException | IllegalArgumentException e) {
+                Dialogs.showErrorDialog(e.getMessage());
                 correctInfo = false;
             }
         }
@@ -62,11 +62,12 @@ public class UpdateInfoController implements Initializable {
         if(!email.isEmpty()){
             try {
                 ReadUsers.changeInfo(ID, "Email", email);
-            } catch (IOException e) {
-                Dialogs.showErrorDialog("Email is invalid");
+            } catch (IOException | IllegalArgumentException e) {
+                Dialogs.showErrorDialog(e.getMessage());
                 correctInfo = false;
             }
         }
+
         if(!password.isEmpty()){
             try {
                 ReadUsers.changeInfo(ID, "Password", password);

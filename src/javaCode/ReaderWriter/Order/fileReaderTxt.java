@@ -92,6 +92,10 @@ public class fileReaderTxt implements Reader {
             for(Component c : Lists.getComponents()){
                 if (c.getComponentID().equals(string)){
                     components.add(c);
+                    if(c.getComponentID().equals("0")){
+                        c.setComponentType(c.getComponentType() + " (Denne komponenten er ikke lenger tilgjengelig");
+                        c.setComponentPrice(0);
+                    }
                 }
             }
         }
@@ -105,6 +109,10 @@ public class fileReaderTxt implements Reader {
             for(Adjustment a : Lists.getAdjustment()){
                 if (a.getAdjustmentID().equals(string)){
                     adjustments.add(a);
+                    if(a.getAdjustmentID().equals("0")){
+                        a.setAdjustmentType(a.getAdjustmentType() + (" Ikke lenger tilgjengelig"));
+                        a.setAdjustmentPrice(0);
+                    }
                 }
             }
         }

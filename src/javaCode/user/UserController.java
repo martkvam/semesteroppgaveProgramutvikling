@@ -23,9 +23,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
-    private Lists lists = new Lists();
     ObservableList<Component> chosenComponents = FXCollections.observableArrayList();
     ObservableList<Adjustment> chosenAdjustments = FXCollections.observableArrayList();
+    private Lists lists = new Lists();
     private int totalprice;
 
     @FXML
@@ -81,7 +81,7 @@ public class UserController implements Initializable {
 
             String type = ProfileController.changedOrderCarType;
             chooseCarType.getSelectionModel().select(type);
-            if(!chosenComponents.isEmpty()) {
+            if (!chosenComponents.isEmpty()) {
                 chooseCarType.setDisable(true);
             }
             adjustmentTV.setItems(Lists.getAdjustment());

@@ -22,7 +22,8 @@ public class Dialogs {
 
         alert.showAndWait();
     }
-    public static boolean showChooseDialog(String msg){
+
+    public static boolean showChooseDialog(String msg) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Are you sure?");
         alert.setHeaderText("Are you sure?");
@@ -33,8 +34,7 @@ public class Dialogs {
 
         if (result.get() == ButtonType.OK) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }

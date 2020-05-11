@@ -1,6 +1,5 @@
 package javaCode.ReaderWriter.Car;
 
-import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 
 import java.io.IOException;

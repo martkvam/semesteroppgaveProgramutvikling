@@ -9,10 +9,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Adjustment implements Serializable {
-    private transient  SimpleStringProperty adjustmentID;
-    private transient  SimpleStringProperty adjustmentType;
-    private transient  SimpleStringProperty adjustmentDescription;
-    private transient  SimpleIntegerProperty adjustmentPrice;
+    private transient SimpleStringProperty adjustmentID;
+    private transient SimpleStringProperty adjustmentType;
+    private transient SimpleStringProperty adjustmentDescription;
+    private transient SimpleIntegerProperty adjustmentPrice;
 
     public Adjustment(String adjustmentID, String type, String description, int price) {
         this.adjustmentID = new SimpleStringProperty(adjustmentID);
@@ -20,6 +20,7 @@ public class Adjustment implements Serializable {
         this.adjustmentDescription = new SimpleStringProperty(description);
         this.adjustmentPrice = new SimpleIntegerProperty(price);
     }
+
     public String getAdjustmentID() {
         return adjustmentID.getValue();
     }
@@ -27,6 +28,7 @@ public class Adjustment implements Serializable {
     public void setAdjustmentID(String adjustmentID) {
         this.adjustmentID.set(adjustmentID);
     }
+
     public String getAdjustmentType() {
         return adjustmentType.getValue();
     }
@@ -42,9 +44,11 @@ public class Adjustment implements Serializable {
     public void setAdjustmentDescription(String adjustmentDescription) {
         this.adjustmentDescription.set(adjustmentDescription);
     }
+
     public int getAdjustmentPrice() {
         return adjustmentPrice.getValue();
     }
+
     public void setAdjustmentPrice(int adjustmentPrice) {
         this.adjustmentPrice.set(adjustmentPrice);
     }

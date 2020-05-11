@@ -2,9 +2,6 @@ package javaCode.objects;
 
 import javaCode.Lists;
 import javaCode.Validator;
-import javaCode.objects.Adjustment;
-import javaCode.objects.Car;
-import javaCode.objects.Component;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +14,7 @@ import java.util.Date;
 
 
 public class Order implements Serializable {
-    private static final String DELIMITER = ";" ;
+    private static final String DELIMITER = ";";
     private transient SimpleStringProperty orderNr;
     private transient SimpleIntegerProperty personId;
     private transient SimpleStringProperty carId;
@@ -29,9 +26,9 @@ public class Order implements Serializable {
     private transient SimpleStringProperty carColor;
     private transient SimpleBooleanProperty orderStatus;
 
-    public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus){
+    public Order(String orderNr, int personId, String carId, Date orderStarted, Date orderFinished, ObservableList<Component> componentList, ObservableList<Adjustment> adjustmentList, int totPrice, String carColor, boolean orderStatus) {
 
-        if(!orderNr.isEmpty() && !Validator.orderNr(orderNr)){
+        if (!orderNr.isEmpty() && !Validator.orderNr(orderNr)) {
             throw new IllegalArgumentException("The order number is not valid");
         }
         /*if(!Validator.orderPersonId(personId)){
@@ -39,13 +36,13 @@ public class Order implements Serializable {
         }
 
          */
-        if(!Validator.orderCarID(carId)){
+        if (!Validator.orderCarID(carId)) {
             throw new IllegalArgumentException("The car id is not valid");
         }
-        if(!Validator.orderTotalPrice(totPrice)){
+        if (!Validator.orderTotalPrice(totPrice)) {
             throw new IllegalArgumentException("The total price is not valid");
         }
-        if(!Validator.orderCarColor(carColor)){
+        if (!Validator.orderCarColor(carColor)) {
             throw new IllegalArgumentException("The car color is not valid");
         }
 
@@ -62,17 +59,37 @@ public class Order implements Serializable {
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
 
+    public static void writeListProp(ObjectOutputStream s, SimpleListProperty lstProp) throws IOException {
+        if (lstProp == null || lstProp.getValue() == null) {
+            s.writeInt(0);
+            return;
+        }
+        s.writeInt(lstProp.size());
+        for (Object elt : lstProp.getValue()) {
+            s.writeObject(elt);
+        }
+    }
+
+    public static ListProperty readListProp(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        ListProperty lst = new SimpleListProperty(FXCollections.observableArrayList());
+        int loop = s.readInt();
+        for (int i = 0; i < loop; i++) {
+            lst.add(s.readObject());
+        }
+
+        return lst;
+    }
+
     public String getOrderNr() {
-            return orderNr.getValue();
+        return orderNr.getValue();
     }
 
     public void setOrderNr(String orderNr) {
-        if(!Validator.orderNr(orderNr)){
+        if (!Validator.orderNr(orderNr)) {
             throw new IllegalArgumentException("The order number is not valid");
         }
         this.orderNr.set(orderNr);
     }
-
 
     public int getPersonId() {
         return personId.getValue();
@@ -87,28 +104,24 @@ public class Order implements Serializable {
         this.personId.set(personId);
     }
 
-
     public String getCarId() {
         return carId.getValue();
     }
 
-
     public void setCarId(String carId) {
-        if(!Validator.orderCarID(carId)){
+        if (!Validator.orderCarID(carId)) {
             throw new IllegalArgumentException("The car id is not valid");
         }
         this.carId.set(carId);
     }
 
-
-    public Date getOrderStarted(){
+    public Date getOrderStarted() {
         return orderStarted.getValue();
     }
 
     public void setOrderStarted(Date orderStarted) {
         this.orderStarted.set(orderStarted);
     }
-
 
     public Date getOrderFinished() {
         return orderFinished.getValue();
@@ -118,7 +131,6 @@ public class Order implements Serializable {
         this.orderFinished.set(orderFinished);
     }
 
-
     public ObservableList<Component> getComponentList() {
         return componentList.getValue();
     }
@@ -126,7 +138,6 @@ public class Order implements Serializable {
     public void setComponentList(ObservableList<Component> componentList) {
         this.componentList.set(componentList);
     }
-
 
     public ObservableList<Adjustment> getAdjustmentList() {
         return adjustmentList.getValue();
@@ -136,30 +147,27 @@ public class Order implements Serializable {
         this.adjustmentList.set(adjustmentList);
     }
 
-
     public int getTotalPrice() {
         return totPrice.getValue();
     }
 
     public void setTotPrice(int totPrice) {
-        if(!Validator.orderTotalPrice(totPrice)){
+        if (!Validator.orderTotalPrice(totPrice)) {
             throw new IllegalArgumentException("The total price is not valid");
         }
         this.totPrice.set(totPrice);
     }
-
 
     public String getCarColor() {
         return carColor.getValue();
     }
 
     public void setCarColor(String carColor) {
-        if(!Validator.orderCarColor(carColor)){
+        if (!Validator.orderCarColor(carColor)) {
             throw new IllegalArgumentException("The car color is not valid");
         }
         this.carColor.set(carColor);
     }
-
 
     public boolean getOrderStatus() {
         return orderStatus.getValue();
@@ -170,11 +178,11 @@ public class Order implements Serializable {
     }
 
     //Used for displaying car type in the tableview for orders
-    public String getCarType(){
+    public String getCarType() {
         String carType = "";
         String carID = getCarId();
-        for (Car c : Lists.getCars()){
-            if(c.getCarID().equals(carID)){
+        for (Car c : Lists.getCars()) {
+            if (c.getCarID().equals(carID)) {
                 carType += c.getCarType();
             }
         }
@@ -188,8 +196,8 @@ public class Order implements Serializable {
         s.writeUTF(getCarId());
         s.writeObject(getOrderStarted());
         s.writeObject(getOrderFinished());
-        writeListProp(s,componentList);
-        writeListProp(s,adjustmentList);
+        writeListProp(s, componentList);
+        writeListProp(s, adjustmentList);
         s.writeInt(getTotalPrice());
         s.writeUTF(getCarColor());
         s.writeBoolean(getOrderStatus());
@@ -199,7 +207,7 @@ public class Order implements Serializable {
         String orderNr = s.readUTF();
         int personId = s.readInt();
         String carId = s.readUTF();
-        Date orderStarted =(Date) s.readObject();
+        Date orderStarted = (Date) s.readObject();
         Date orderFinished = (Date) s.readObject();
         ListProperty<Component> componentList = readListProp(s);
         ListProperty<Adjustment> adjustmentList = readListProp(s);
@@ -218,33 +226,13 @@ public class Order implements Serializable {
         this.carColor = new SimpleStringProperty(carColor);
         this.orderStatus = new SimpleBooleanProperty(orderStatus);
     }
-    public static void writeListProp(ObjectOutputStream s, SimpleListProperty lstProp) throws IOException {
-        if (lstProp == null || lstProp.getValue() == null) {
-            s.writeInt(0);
-            return;
-        }
-        s.writeInt(lstProp.size());
-        for (Object elt : lstProp.getValue()){
-            s.writeObject(elt);
-        }
-    }
-
-    public static ListProperty readListProp(ObjectInputStream s) throws IOException, ClassNotFoundException {
-        ListProperty lst=new SimpleListProperty(FXCollections.observableArrayList());
-        int loop=s.readInt();
-        for(int i = 0;i<loop;i++) {
-            lst.add(s.readObject());
-        }
-
-        return lst;
-    }
 
     public String formatComponents(ObservableList<Component> componentList) {
         String out = "";
         String DELIMITER = ",";
-        for (int i = 0; i < componentList.size(); i++){
+        for (int i = 0; i < componentList.size(); i++) {
             out += componentList.get(i).getComponentID();
-            if(i < componentList.size() - 1){
+            if (i < componentList.size() - 1) {
                 out += DELIMITER;
             }
         }
@@ -254,9 +242,9 @@ public class Order implements Serializable {
     public String formatAdjustments(ObservableList<Adjustment> adjustmentList) {
         String out = "";
         String DELIMITER = ",";
-        for (int i = 0; i < adjustmentList.size(); i++){
+        for (int i = 0; i < adjustmentList.size(); i++) {
             out += adjustmentList.get(i).getAdjustmentID();
-            if (i < adjustmentList.size() - 1){
+            if (i < adjustmentList.size() - 1) {
                 out += DELIMITER;
             }
         }

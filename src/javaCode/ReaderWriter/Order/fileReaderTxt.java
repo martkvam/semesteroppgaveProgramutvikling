@@ -1,11 +1,11 @@
 package javaCode.ReaderWriter.Order;
 
 import javaCode.Dialogs;
+import javaCode.Lists;
+import javaCode.ReaderWriter.Reader;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
-import javaCode.Lists;
 import javaCode.objects.Order;
-import javaCode.ReaderWriter.Reader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,14 +22,13 @@ public class fileReaderTxt implements Reader {
     @Override
     public void read(Path path) throws IOException {
         Lists lists = new Lists();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            while ((line = reader.readLine()) != null){
-                String [] split = line.split(";");
+            while ((line = reader.readLine()) != null) {
+                String[] split = line.split(";");
                 if (!split[0].isEmpty()) {
                     lists.addOrder(parseOrder(line));
-                }
-                else lists.addOngoingOrder(parseOrder(line));
+                } else lists.addOngoingOrder(parseOrder(line));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,9 +38,9 @@ public class fileReaderTxt implements Reader {
     }
 
 
-    private Order parseOrder (String line) throws Exception{
+    private Order parseOrder(String line) throws Exception {
         String[] split = line.split(";");
-        if(split.length != 10) {
+        if (split.length != 10) {
             throw new Exception("There is an error in the file containing the finished orders. The line: " + line +
                     " is not in the right format");
         }
@@ -63,19 +62,17 @@ public class fileReaderTxt implements Reader {
         String carColor = split[8];
         boolean orderStatus;
         String stringOrderStatus = split[9];
-        if(stringOrderStatus.equals("true") || stringOrderStatus.equals("True")){
+        if (stringOrderStatus.equals("true") || stringOrderStatus.equals("True")) {
             orderStatus = true;
-        }
-        else if (stringOrderStatus.equals("false") || stringOrderStatus.equals("False")){
+        } else if (stringOrderStatus.equals("false") || stringOrderStatus.equals("False")) {
             orderStatus = false;
-        }
-        else throw new Exception("The order status is not correct");
+        } else throw new Exception("The order status is not correct");
 
         Order order = new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
         return order;
     }
 
-    private int parseNumber(String str, String errorMessage) throws Exception{
+    private int parseNumber(String str, String errorMessage) throws Exception {
         int number;
         try {
             number = Integer.parseInt(str);
@@ -85,12 +82,12 @@ public class fileReaderTxt implements Reader {
         return number;
     }
 
-    private ObservableList<Component> parseComponentList(String str, String errorMessage) throws Exception{
+    private ObservableList<Component> parseComponentList(String str, String errorMessage) throws Exception {
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split){
-            for(Component c : Lists.getComponents()){
-                if (c.getComponentID().equals(string)){
+        for (String string : split) {
+            for (Component c : Lists.getComponents()) {
+                if (c.getComponentID().equals(string)) {
                     components.add(c);
                 }
             }
@@ -98,12 +95,12 @@ public class fileReaderTxt implements Reader {
         return components;
     }
 
-    private ObservableList<Adjustment> parseAdjustmentList(String str, String errorMessage) throws Exception{
+    private ObservableList<Adjustment> parseAdjustmentList(String str, String errorMessage) throws Exception {
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split){
-            for(Adjustment a : Lists.getAdjustment()){
-                if (a.getAdjustmentID().equals(string)){
+        for (String string : split) {
+            for (Adjustment a : Lists.getAdjustment()) {
+                if (a.getAdjustmentID().equals(string)) {
                     adjustments.add(a);
                 }
             }

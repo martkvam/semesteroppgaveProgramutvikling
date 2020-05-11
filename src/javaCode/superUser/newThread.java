@@ -12,7 +12,7 @@ public class newThread extends Task<Integer> {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
-           Dialogs.showErrorDialog("The thread failed because of: " + e.getMessage());
+            Dialogs.showErrorDialog("The thread failed because of: " + e.getMessage());
         }
 
         return 0;

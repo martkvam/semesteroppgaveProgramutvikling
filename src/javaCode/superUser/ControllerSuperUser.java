@@ -4,11 +4,11 @@ import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 
 //Scene where superuser choose between two operations.
@@ -32,7 +32,7 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserComponents.fxml"));
         OpenScene.
-                newScene("Edit/delete components", root, 800,702, event);
+                newScene("Edit/delete components", root, 800, 702, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete orders.
@@ -44,7 +44,7 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 1100 ,730, event);
+                newScene("Edit orders", root, 1100, 730, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete profiles.
@@ -58,7 +58,7 @@ public class ControllerSuperUser {
     @FXML
     void btnGoBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-        OpenScene.newScene("Log in", root, 600,450, event);
+        OpenScene.newScene("Log in", root, 600, 450, event);
     }
 
     //Info about components scene on hover

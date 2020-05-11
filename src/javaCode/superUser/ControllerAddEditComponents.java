@@ -17,6 +17,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -130,10 +131,10 @@ public class ControllerAddEditComponents implements Initializable {
     //Method that starts when thread is done and failed
     private void threadFailed(WorkerStateEvent e) {
         Dialogs.showErrorDialog("The loading did not succeed");
-        try{
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-            OpenScene.newScene("Superuser",  root, 600, 400, null);
-        }catch (IllegalAccessException ex) {
+            OpenScene.newScene("Superuser", root, 600, 400, null);
+        } catch (IllegalAccessException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -148,18 +149,15 @@ public class ControllerAddEditComponents implements Initializable {
     void btnAddFromFile(ActionEvent event) {
         //The user has to choose an element type before reading from file
 
-        if(chooseElementType.getValue() != null){
-            if(chooseElementType.getValue().equals("Car")) {
+        if (chooseElementType.getValue() != null) {
+            if (chooseElementType.getValue().equals("Car")) {
                 filehandler.openSelectedFile(stage, "Car");
-            }
-            else if(chooseElementType.getValue().equals("Component")) {
+            } else if (chooseElementType.getValue().equals("Component")) {
                 filehandler.openSelectedFile(stage, "Component");
-            }
-            else if(chooseElementType.getValue().equals("Adjustment")) {
+            } else if (chooseElementType.getValue().equals("Adjustment")) {
                 filehandler.openSelectedFile(stage, "Adjustment");
             }
-        }
-        else{
+        } else {
             Dialogs.showErrorDialog("You have to choose a element to read from file");
         }
         TableView.refresh();
@@ -171,7 +169,7 @@ public class ControllerAddEditComponents implements Initializable {
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         filehandler.saveAllFiles();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-        OpenScene.newScene("Superuser", root, 470 ,300, event);
+        OpenScene.newScene("Superuser", root, 470, 300, event);
         TableView.getItems().clear();
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
@@ -214,13 +212,13 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewCar(ActionEvent event) {
         //Directs user to dialog window to add a new car
-        try{
-            addElements.openAddCarDialog(Lists.getCars(),"", "", 0);
-            for(Car i : Lists.getCars()){
+        try {
+            addElements.openAddCarDialog(Lists.getCars(), "", "", 0);
+            for (Car i : Lists.getCars()) {
                 System.out.println(i.getCarID());
             }
 
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
@@ -229,24 +227,24 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewComponent(ActionEvent event) {
         //Directs user to dialog window to add a new component
-        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
     }
 
     @FXML
     void btnNewAdjustment(ActionEvent event) {
         //Directs user to dialog window to add a new adjustment
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment(),"", "", 0);
+        addElements.openAddAdjustmentDialog(Lists.getAdjustment(), "", "", 0);
     }
 
     @FXML
     void btnDeleteElement(ActionEvent event) {
         //Choose to delete or not
         DeleteElements delete = new DeleteElements();
-        try{
+        try {
             switch (selectedElement) {
                 case "Car":
                     //Checks if the superUser has selected a tableRow and wants to delete it
-                    if(delete.deleteCars(TableView.getSelectionModel().getSelectedItems())){
+                    if (delete.deleteCars(TableView.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
                         TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
                     }
@@ -254,20 +252,20 @@ public class ControllerAddEditComponents implements Initializable {
                     break;
                 case "Components":
                     //Checks if the superUser has selected a tableRow and wants to delete it
-                    if(delete.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())) {
+                    if (delete.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
                         tableViewComponents.getItems().removeAll(tableViewComponents.getSelectionModel().getSelectedItems());
                     }
 
                     break;
                 case "Adjustment":
-                    if(delete.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())) {
+                    if (delete.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
                         tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
                     }
                     break;
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
@@ -281,21 +279,22 @@ public class ControllerAddEditComponents implements Initializable {
     //Edit car type
     @FXML
     void txtCarTypeEdited(TableColumn.CellEditEvent<Car, String> event) {
-        try{
+        try {
             event.getRowValue().setCarType(event.getNewValue());
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         TableView.refresh();
     }
+
     //Edit car description
     @FXML
     void txtCarDescriptionEdited(TableColumn.CellEditEvent<Car, String> event) {
-        try{
+        try {
             event.getRowValue().setDescription(event.getNewValue());
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         TableView.refresh();
@@ -305,7 +304,7 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void txtCarPriceEdited(TableColumn.CellEditEvent<Car, Integer> event) {
         try {
-            if(intStrConverter.wasSuccessful())
+            if (intStrConverter.wasSuccessful())
                 event.getRowValue().setPrice(event.getNewValue());
         } catch (NumberFormatException e) {
             Dialogs.showErrorDialog(e.getMessage());
@@ -319,10 +318,9 @@ public class ControllerAddEditComponents implements Initializable {
     //Edit component id
     @FXML
     void componentIDEdited(TableColumn.CellEditEvent<Component, String> event) {
-        try{
+        try {
             event.getRowValue().setComponentID(event.getNewValue());
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewComponents.refresh();
@@ -331,9 +329,9 @@ public class ControllerAddEditComponents implements Initializable {
     //Edit component type
     @FXML
     void componentTypeEdited(TableColumn.CellEditEvent<Component, String> event) {
-        try{
+        try {
             event.getRowValue().setComponentType(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewComponents.refresh();
@@ -350,7 +348,7 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void componentPriceEdited(TableColumn.CellEditEvent<Component, Integer> event) {
         try {
-            if(intStrConverter.wasSuccessful())
+            if (intStrConverter.wasSuccessful())
                 event.getRowValue().setComponentPrice(event.getNewValue());
         } catch (NumberFormatException e) {
             Dialogs.showErrorDialog(e.getMessage());
@@ -361,10 +359,10 @@ public class ControllerAddEditComponents implements Initializable {
 
     //Edit car id
     @FXML
-    void carIDEdited(TableColumn.CellEditEvent<Component, String> event){
-        try{
+    void carIDEdited(TableColumn.CellEditEvent<Component, String> event) {
+        try {
             event.getRowValue().setCarID(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
@@ -376,23 +374,25 @@ public class ControllerAddEditComponents implements Initializable {
     //Adjustment id edited
     @FXML
     void adjustmentIdEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
-        try{
+        try {
             event.getRowValue().setAdjustmentID(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewAdjustments.refresh();
     }
+
     //Adjustment type edited
     @FXML
     void adjustmentTypeEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
-        try{
+        try {
             event.getRowValue().setAdjustmentType(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewAdjustments.refresh();
     }
+
     //Adjustment description editer
     @FXML
     void adjustmentDescriptionEdited(TableColumn.CellEditEvent<Adjustment, String> event) {
@@ -404,7 +404,7 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void adjustmentPriceEdited(TableColumn.CellEditEvent<Adjustment, Integer> event) {
         try {
-            if(intStrConverter.wasSuccessful()) {
+            if (intStrConverter.wasSuccessful()) {
                 event.getRowValue().setAdjustmentPrice(event.getNewValue());
             }
         } catch (NumberFormatException e) {
@@ -417,7 +417,7 @@ public class ControllerAddEditComponents implements Initializable {
     //Updates filter for tableview by button click
     @FXML
     void txtFilterTyped(KeyEvent event) {
-        if(selectedElement.equals("Components")){
+        if (selectedElement.equals("Components")) {
             FilteredList<Component> filtered = new FilteredList<>(Lists.getComponents(), b -> true);
 
             txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -428,8 +428,7 @@ public class ControllerAddEditComponents implements Initializable {
                 tableViewComponents.setItems(sorted);
             });
 
-        }
-        else{
+        } else {
             FilteredList<Adjustment> filtered = new FilteredList<>(Lists.getAdjustment(), b -> true);
 
             txtFilterInn.textProperty().addListener((observable, oldValue, newValue) -> {

@@ -58,7 +58,7 @@ public class ReadUsers {
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
             String[] currentUser = line.split(";");
-            if(currentUser[0].equals(id)) {
+            if (currentUser[0].equals(id)) {
                 switch (type) {
                     case "FirstName":
                         currentUser[1] = change;
@@ -83,7 +83,7 @@ public class ReadUsers {
                         currentUser[3], currentUser[4], currentUser[5],
                         Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
 
-            } else{
+            } else {
                 newRegister.append(line).append(System.lineSeparator());
             }
         }
@@ -92,8 +92,9 @@ public class ReadUsers {
         myReader.close();
         myWriter.close();
     }
+
     //Method for getting id of a user based on input info
-    public static ArrayList<String> getUserId(String ... str) throws FileNotFoundException {
+    public static ArrayList<String> getUserId(String... str) throws FileNotFoundException {
         File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
         ArrayList<String> userId = new ArrayList<>();
@@ -102,9 +103,9 @@ public class ReadUsers {
             String u = myReader.next();
             String[] strings = u.split(";");
 
-            for (String inStr: str){
-                for(String usrStr : strings){
-                    if (inStr.equals(usrStr)){
+            for (String inStr : str) {
+                for (String usrStr : strings) {
+                    if (inStr.equals(usrStr)) {
                         userId.add(strings[0]);
                     }
                 }
@@ -112,17 +113,17 @@ public class ReadUsers {
         }
         myReader.close();
 
-        if(userId.size()==0){
+        if (userId.size() == 0) {
             return null;
-        } else if (userId.size()==1){
+        } else if (userId.size() == 1) {
             return userId;
-        }else {
+        } else {
             return findId(userId);
         }
     }
 
     //Method returning a list of id's based in the input of getUserId
-    private static ArrayList<String> findId(ArrayList <String> foundUsers){
+    private static ArrayList<String> findId(ArrayList<String> foundUsers) {
         Map<String, Integer> idAndCount = new HashMap<>();
 
         for (int i = 0; i < foundUsers.size(); i++) {
@@ -140,11 +141,11 @@ public class ReadUsers {
         for (Map.Entry<String, Integer> entry : idAndCount.entrySet()) {
             String key = entry.getKey();
             Integer value = entry.getValue();
-            if(value > idCount){
-                idCount=value;
+            if (value > idCount) {
+                idCount = value;
                 foundIds.clear();
                 foundIds.add(key);
-            } else if (value == idCount){
+            } else if (value == idCount) {
                 foundIds.add(key);
             }
         }
@@ -163,8 +164,8 @@ public class ReadUsers {
             String[] user = line.split(";");
             try {
                 userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5], Boolean.parseBoolean(user[6])));
-            }catch (Exception e){
-                Dialogs.showErrorDialog("User number " + user[0] +" could not register due to:\n" + e.getMessage());
+            } catch (Exception e) {
+                Dialogs.showErrorDialog("User number " + user[0] + " could not register due to:\n" + e.getMessage());
             }
         }
         return userList;
@@ -172,10 +173,10 @@ public class ReadUsers {
 
     public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
 
-        if(Objects.equals(ReadUsers.getUserId(email), null) &&
-        Objects.equals(ReadUsers.getUserId(phone), null)){
+        if (Objects.equals(ReadUsers.getUserId(email), null) &&
+                Objects.equals(ReadUsers.getUserId(phone), null)) {
             return true;
-        } else{
+        } else {
             throw new UserAlreadyExistException("User already exists");
         }
     }

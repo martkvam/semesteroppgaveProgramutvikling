@@ -1,13 +1,9 @@
 package javaCode.ReaderWriter.Adjustment;
 
-import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class fileReaderTxt implements Reader {
 
@@ -41,6 +37,6 @@ public class fileReaderTxt implements Reader {
 
           */
 
-        }
     }
+}
 

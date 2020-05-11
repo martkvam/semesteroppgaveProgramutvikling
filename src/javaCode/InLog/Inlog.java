@@ -35,6 +35,7 @@ public class Inlog implements Initializable {
     private CheckBox chkBoxPassword;
     @FXML
     private Button btnLogIn;
+
     private boolean disableKeyEvent;
 
     //Variable for passwordfields, if the text or the dot one i visible
@@ -114,11 +115,11 @@ public class Inlog implements Initializable {
     }
 
     //Variable for disabling the keyEvent on ENTER when alert is present
-    public boolean isDisableKeyEvent() {
+    private boolean isDisableKeyEvent() {
         return disableKeyEvent;
     }
 
-    public void setDisableKeyEvent(boolean disableKeyEvent) {
+    private void setDisableKeyEvent(boolean disableKeyEvent) {
         this.disableKeyEvent = disableKeyEvent;
     }
 

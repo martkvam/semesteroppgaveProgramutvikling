@@ -20,13 +20,13 @@ public class Methods {
                     break;
                 }
             }
-            if (!found){
+            if (!found) {
                 aList.add(car);
             }
         }
 
         ArrayList<String> outList = new ArrayList<>();
-        for(Car car : aList){
+        for (Car car : aList) {
             outList.add(car.getCarType());
         }
         return outList;
@@ -34,7 +34,7 @@ public class Methods {
     }
 
     //Method that makes a list to fill the component-choicebox
-    public static ArrayList<String> componentList(ObservableList<Component> inList){
+    public static ArrayList<String> componentList(ObservableList<Component> inList) {
         ArrayList<Component> aList = new ArrayList<>();
         for (Component component : inList) {
             char ID = component.getComponentID().charAt(0);
@@ -46,13 +46,13 @@ public class Methods {
                     break;
                 }
             }
-            if (!found){
+            if (!found) {
                 aList.add(component);
             }
         }
 
         ArrayList<String> outList = new ArrayList<>();
-        for(Component component : aList){
+        for (Component component : aList) {
             outList.add(component.getComponentType());
         }
         return outList;

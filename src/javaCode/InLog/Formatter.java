@@ -38,13 +38,13 @@ public class Formatter {
             String u = myReader.nextLine();
             String[] strings = u.split(";");
 
-            if (Integer.parseInt(strings[0]) == newId ){
+            if (Integer.parseInt(strings[0]) == newId) {
                 newId++;
             }
         }
         myReader.close();
 
-        Files.write(Paths.get(Formatter.nextIdPath), String.valueOf(newId+1).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(Paths.get(Formatter.nextIdPath), String.valueOf(newId + 1).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
         return newId;
     }
 }

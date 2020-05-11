@@ -1,9 +1,11 @@
-
 package javaCode.user;
 
-import javaCode.*;
+import javaCode.Dialogs;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
+import javaCode.Lists;
+import javaCode.OpenScene;
+import javaCode.OrderFormatter;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
@@ -79,8 +81,8 @@ public class ProfileController implements Initializable {
 
         ObservableList<Order> orders = FXCollections.observableArrayList();
 
-        for (Order o : Lists.getOrders()){
-            if(o.getPersonId() == LoggedIn.getId()){
+        for (Order o : Lists.getOrders()) {
+            if (o.getPersonId() == LoggedIn.getId()) {
                 orders.add(o);
             }
         }
@@ -103,10 +105,11 @@ public class ProfileController implements Initializable {
         toBeChanged = false;
     }
 
-    @FXML  //Method for changing an ongoing order
+    @FXML
+        //Method for changing an ongoing order
     void changeOrder(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-       //This sets the static order object to the chosen order, which makes it possible to open it in the user-GUI.
-        if(!ordersTV.getSelectionModel().isEmpty()) {
+        //This sets the static order object to the chosen order, which makes it possible to open it in the user-GUI.
+        if (!ordersTV.getSelectionModel().isEmpty()) {
             Order chosen = ordersTV.getSelectionModel().getSelectedItem();
             changeOrder = chosen;
             toBeChanged = true;
@@ -128,7 +131,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     void deleteOrder(ActionEvent event) {
-        if(!ordersTV.getSelectionModel().isEmpty()) {
+        if (!ordersTV.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this ongoing order?"
                     , ButtonType.YES, ButtonType.CANCEL);
             alert.showAndWait();
@@ -151,14 +154,15 @@ public class ProfileController implements Initializable {
 
     }
 
-    @FXML //Method for finishing ongoing orders
+    @FXML
+        //Method for finishing ongoing orders
     void finishOrder(Event event) {
-        if(!ordersTV.getSelectionModel().isEmpty()) {
+        if (!ordersTV.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
             //If color is not chosen a choice dialog will pop up.
-            String [] color = {"Red", "Black", "White", "Gray"};
+            String[] color = {"Red", "Black", "White", "Gray"};
             ChoiceDialog<String> choice = new ChoiceDialog<>(color[1], color);
-            if(ordersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
+            if (ordersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")) {
                 choice.setTitle("Finish order");
                 choice.setContentText("Please choose a color for the car before you finish your order: ");
                 choice.showAndWait();
@@ -167,8 +171,8 @@ public class ProfileController implements Initializable {
             }
             //If the order is ready
             else {
-               alert.setContentText("Are you sure you want to finish this order?");
-               alert.showAndWait();
+                alert.setContentText("Are you sure you want to finish this order?");
+                alert.showAndWait();
             }
 
             if (alert.getResult() == ButtonType.YES || !choice.getResult().isEmpty()) {
@@ -218,7 +222,8 @@ public class ProfileController implements Initializable {
 
     }
 
-    @FXML //Opens the GUI for updating personal info.
+    @FXML
+        //Opens the GUI for updating personal info.
     void updateInfo(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/updatePersonalInfo.fxml"));
         OpenScene.newScene("Change info", root, 300, 400, event);
@@ -226,7 +231,7 @@ public class ProfileController implements Initializable {
 
     //Method for showing the components and adjustments in a selected order
     public void updateTVfinished(Event mouseEvent) {
-        if(!ordersTV.getSelectionModel().isEmpty()) {
+        if (!ordersTV.getSelectionModel().isEmpty()) {
             ObservableList<Component> componentList = ordersTV.getSelectionModel().getSelectedItem().getComponentList();
             ObservableList<Adjustment> adjustmentList = ordersTV.getSelectionModel().getSelectedItem().getAdjustmentList();
             orderedComponentsTV.setItems(componentList);
@@ -236,7 +241,7 @@ public class ProfileController implements Initializable {
         }
 
         //If there is no order selected, the tableviews for components and adjustments will be set to empty.
-        if(ordersTV.getSelectionModel().isEmpty()){
+        if (ordersTV.getSelectionModel().isEmpty()) {
             ObservableList<Component> components = FXCollections.observableArrayList();
             ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
             orderedComponentsTV.setItems(components);
@@ -255,8 +260,8 @@ public class ProfileController implements Initializable {
     public void showFinsihed(Event event) {
         ObservableList<Order> orders = FXCollections.observableArrayList();
 
-        for (Order o : Lists.getOrders()){
-            if(o.getPersonId() == LoggedIn.getId()){
+        for (Order o : Lists.getOrders()) {
+            if (o.getPersonId() == LoggedIn.getId()) {
                 orders.add(o);
             }
         }
@@ -278,8 +283,8 @@ public class ProfileController implements Initializable {
     public void showOngoing(Event event) {
         ObservableList<Order> ongoing = FXCollections.observableArrayList();
 
-        for (Order ongoingOrder : Lists.getOngoingOrders()){
-            if (ongoingOrder.getPersonId() == LoggedIn.getId()){
+        for (Order ongoingOrder : Lists.getOngoingOrders()) {
+            if (ongoingOrder.getPersonId() == LoggedIn.getId()) {
                 ongoing.add(ongoingOrder);
             }
         }
@@ -298,9 +303,9 @@ public class ProfileController implements Initializable {
 
     //Method that exports the users orders to an excel file.
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
-        if(ordersTV.getItems().size() != 0) {
+        if (ordersTV.getItems().size() != 0) {
             javaCode.ReaderWriter.Order.fileWriterExcel.writeExcel(ordersTV.getItems());
-        } else{
+        } else {
             Dialogs.showErrorDialog("List is empty");
         }
     }

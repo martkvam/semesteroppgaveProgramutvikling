@@ -40,7 +40,8 @@ public class UpdateInfoController implements Initializable {
         OpenScene.newScene("My profile", root, 610, 660, event);
     }
 
-    @FXML //Method for changing personal info
+    @FXML
+        //Method for changing personal info
     void changeInfo(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         String ID = "" + LoggedIn.getId();
 
@@ -50,7 +51,7 @@ public class UpdateInfoController implements Initializable {
 
         boolean correctInfo = true;
 
-        if(!phone.isEmpty()){
+        if (!phone.isEmpty()) {
             try {
                 ReadUsers.changeInfo(ID, "Phone", phone);
             } catch (IOException | IllegalArgumentException e) {
@@ -59,7 +60,7 @@ public class UpdateInfoController implements Initializable {
             }
         }
 
-        if(!email.isEmpty()){
+        if (!email.isEmpty()) {
             try {
                 ReadUsers.changeInfo(ID, "Email", email);
             } catch (IOException | IllegalArgumentException e) {
@@ -68,7 +69,7 @@ public class UpdateInfoController implements Initializable {
             }
         }
 
-        if(!password.isEmpty()){
+        if (!password.isEmpty()) {
             try {
                 ReadUsers.changeInfo(ID, "Password", password);
             } catch (IOException e) {
@@ -77,7 +78,7 @@ public class UpdateInfoController implements Initializable {
             }
         }
 
-        if(correctInfo){
+        if (correctInfo) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 610, 660, event);
         }

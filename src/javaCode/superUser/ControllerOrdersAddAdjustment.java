@@ -4,8 +4,6 @@ import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.OpenScene;
 import javaCode.objects.Adjustment;
-import javaCode.objects.Car;
-import javaCode.objects.Component;
 import javaCode.objects.Order;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,12 +20,11 @@ import java.util.ResourceBundle;
 
 public class ControllerOrdersAddAdjustment implements Initializable {
 
-    private Stage stage;
-    private static Order selectedOrder;
     public static boolean toBeChanged = false;
-    private boolean notConfirmed = false;
+    private static Order selectedOrder;
     DeleteElements deleteElements = new DeleteElements();
-
+    private Stage stage;
+    private boolean notConfirmed = false;
     @FXML
     private TableView<Adjustment> tableViewChoosen;
 
@@ -37,59 +34,61 @@ public class ControllerOrdersAddAdjustment implements Initializable {
     @FXML
     private Button btnConfirm;
 
+    public static Order getNewAdjustments() {
+        return selectedOrder;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnConfirm.setDisable(true);
         selectedOrder = ControllerOrders.getSelectedOrder();
 
-        for(Adjustment i : selectedOrder.getAdjustmentList()){
+        for (Adjustment i : selectedOrder.getAdjustmentList()) {
             tableViewChoosen.getItems().add(i);
         }
-        for(Adjustment i : Lists.getAdjustment()){
+        for (Adjustment i : Lists.getAdjustment()) {
             tableViewPossible.getItems().add(i);
         }
     }
 
-
     @FXML
     void btnAddAdjustment(ActionEvent event) {
         boolean alreadyChoosen = false;
-        if(tableViewPossible.getSelectionModel().getSelectedItem()!=null){
-            for(Adjustment i : tableViewChoosen.getItems()){
-                if(i.getAdjustmentType().equals(tableViewPossible.getSelectionModel().getSelectedItem().getAdjustmentType())){
+        if (tableViewPossible.getSelectionModel().getSelectedItem() != null) {
+            for (Adjustment i : tableViewChoosen.getItems()) {
+                if (i.getAdjustmentType().equals(tableViewPossible.getSelectionModel().getSelectedItem().getAdjustmentType())) {
                     Dialogs.showErrorDialog("You have already choosen a component of this type");
-                    alreadyChoosen= true;
+                    alreadyChoosen = true;
                 }
             }
-            if(!alreadyChoosen){
+            if (!alreadyChoosen) {
                 tableViewChoosen.getItems().addAll(tableViewPossible.getSelectionModel().getSelectedItems());
                 btnConfirm.setDisable(false);
                 btnConfirm.setStyle("-fx-background-color: #00ff00");
                 notConfirmed = true;
-                toBeChanged=true;
+                toBeChanged = true;
             }
         }
     }
 
     @FXML
     void btnBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        if(notConfirmed){
-            if(Dialogs.showChooseDialog("Are you sure you want to exit without saving changes")){
+        if (notConfirmed) {
+            if (Dialogs.showChooseDialog("Are you sure you want to exit without saving changes")) {
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
                 OpenScene.
-                        newScene("Edit orders", root, 1100 ,730, event);
+                        newScene("Edit orders", root, 1100, 730, event);
             }
-        }else{
+        } else {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
             OpenScene.
-                    newScene("Edit orders", root, 1100 ,730, event);
+                    newScene("Edit orders", root, 1100, 730, event);
         }
     }
 
     @FXML
     void btnConfirm(ActionEvent event) {
-        if(Dialogs.showChooseDialog("Confirm changes?")){
+        if (Dialogs.showChooseDialog("Confirm changes?")) {
             selectedOrder.setAdjustmentList(tableViewChoosen.getItems());
             notConfirmed = false;
             toBeChanged = true;
@@ -98,8 +97,8 @@ public class ControllerOrdersAddAdjustment implements Initializable {
 
     @FXML
     void btnRemove(ActionEvent event) {
-        try{
-            if(deleteElements.deleteAdjustments(tableViewChoosen.getSelectionModel().getSelectedItems())){
+        try {
+            if (deleteElements.deleteAdjustments(tableViewChoosen.getSelectionModel().getSelectedItems())) {
                 //Deletes tableRow(s)
                 tableViewChoosen.getItems().removeAll(tableViewChoosen.getSelectionModel().getSelectedItems());
                 btnConfirm.setDisable(false);
@@ -107,13 +106,9 @@ public class ControllerOrdersAddAdjustment implements Initializable {
                 notConfirmed = true;
                 toBeChanged = true;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
-    }
-
-    public static Order getNewAdjustments(){
-        return selectedOrder;
     }
 
 

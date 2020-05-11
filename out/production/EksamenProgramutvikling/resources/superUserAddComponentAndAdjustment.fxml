@@ -1,98 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerOrdersAddComponent">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <AnchorPane fx:id="Ap" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <Label layoutX="298.0" layoutY="15.0" prefHeight="50.0" prefWidth="278.0" text="Add components" textAlignment="CENTER">
-               <font>
-                  <Font size="33.0" />
-               </font>
-            </Label>
-            <Button layoutX="195.0" layoutY="78.0" mnemonicParsing="false" onAction="#btnChangeCar" text="Change car type" />
-            <TableView fx:id="tableViewPossibleElements" layoutX="448.0" layoutY="106.0" prefHeight="255.0" prefWidth="403.0">
-              <columns>
-                <TableColumn prefWidth="87.99996757507324" text="Component id">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="componentID" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="80.8000259399414" text="Type">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="componentType" />
-                    </cellValueFactory>
-                </TableColumn>
-                  <TableColumn prefWidth="150.4000244140625" text="Description">
-                      <cellValueFactory>
-                          <PropertyValueFactory property="componentDescription" />
-                      </cellValueFactory>
-                  </TableColumn>
-                  <TableColumn prefWidth="82.39996337890625" text="Price">
-                      <cellValueFactory>
-                          <PropertyValueFactory property="componentPrice" />
-                      </cellValueFactory>
-                  </TableColumn>
-              </columns>
-            </TableView>
-            <TableView fx:id="tableViewChosenElements" layoutX="22.0" layoutY="158.0" prefHeight="200.0" prefWidth="341.0">
-              <columns>
-                <TableColumn fx:id="componentID" prefWidth="108.0" text="Component id">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="componentID" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="componentType" prefWidth="127.99993896484375" text="Type">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="componentType" />
-                    </cellValueFactory>
-                </TableColumn>
-                  <TableColumn fx:id="componentPrice" prefWidth="105.60009765625" text="Price">
-                      <cellValueFactory>
-                          <PropertyValueFactory property="componentPrice" />
-                      </cellValueFactory>
-                  </TableColumn>
-              </columns>
-            </TableView>
-            <Label layoutX="28.0" layoutY="131.0" prefHeight="26.0" prefWidth="200.0" text="Choosen components">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Label fx:id="lblCarType" layoutX="97.0" layoutY="77.0" prefHeight="27.0" prefWidth="93.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="22.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnBack" text="Go back" />
-            <Label layoutX="455.0" layoutY="78.0" prefHeight="26.0" prefWidth="194.0" text="All components">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Button layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnRemoveComponent" text="Remove component" />
-            <Button layoutX="448.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnAddComponent" text="Add component to order" />
-            <Button fx:id="btnConfirm" layoutX="20.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnConfirm" text="Confirm changes" />
-            <Label layoutX="22.0" layoutY="77.0" prefHeight="26.0" prefWidth="73.0" text="Car type:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </children>
+<?import javafx.scene.text.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity"
+          prefHeight="460.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/11.0.1"
+          fx:controller="javaCode.superUser.ControllerOrdersAddComponent">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <AnchorPane fx:id="Ap" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <Label layoutX="298.0" layoutY="15.0" prefHeight="50.0" prefWidth="278.0" text="Add components"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font size="33.0"/>
+                    </font>
+                </Label>
+                <Button layoutX="195.0" layoutY="78.0" mnemonicParsing="false" onAction="#btnChangeCar"
+                        text="Change car type"/>
+                <TableView fx:id="tableViewPossibleElements" layoutX="448.0" layoutY="106.0" prefHeight="255.0"
+                           prefWidth="403.0">
+                    <columns>
+                        <TableColumn prefWidth="87.99996757507324" text="Component id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentID"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="80.8000259399414" text="Type">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentType"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.4000244140625" text="Description">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentDescription"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="82.39996337890625" text="Price">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentPrice"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <TableView fx:id="tableViewChosenElements" layoutX="22.0" layoutY="158.0" prefHeight="200.0"
+                           prefWidth="341.0">
+                    <columns>
+                        <TableColumn fx:id="componentID" prefWidth="108.0" text="Component id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentID"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="componentType" prefWidth="127.99993896484375" text="Type">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentType"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="componentPrice" prefWidth="105.60009765625" text="Price">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentPrice"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <Label layoutX="28.0" layoutY="131.0" prefHeight="26.0" prefWidth="200.0" text="Choosen components">
+                    <font>
+                        <Font name="System Bold" size="19.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="lblCarType" layoutX="97.0" layoutY="77.0" prefHeight="27.0" prefWidth="93.0">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                </Label>
+                <Button layoutX="22.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnBack" text="Go back"/>
+                <Label layoutX="455.0" layoutY="78.0" prefHeight="26.0" prefWidth="194.0" text="All components">
+                    <font>
+                        <Font name="System Bold" size="19.0"/>
+                    </font>
+                </Label>
+                <Button layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnRemoveComponent"
+                        text="Remove component"/>
+                <Button layoutX="448.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnAddComponent"
+                        text="Add component to order"/>
+                <Button fx:id="btnConfirm" layoutX="20.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnConfirm"
+                        text="Confirm changes"/>
+                <Label layoutX="22.0" layoutY="77.0" prefHeight="26.0" prefWidth="73.0" text="Car type:">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
 </GridPane>

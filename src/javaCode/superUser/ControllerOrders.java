@@ -1,12 +1,12 @@
 package javaCode.superUser;
+
 import javaCode.*;
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
-import javaCode.objects.User;
 import javaCode.objects.Adjustment;
-import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
+import javaCode.objects.User;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -24,19 +24,18 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 public class ControllerOrders implements Initializable {
     private static int firstInlog;
-    Stage stage = new Stage();
-    private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
-    private ConverterErrorHandler.BooleanStringConverter booleanStringConverter = new ConverterErrorHandler.BooleanStringConverter();
-
     private static Order selectedOrder;
+    Stage stage = new Stage();
     FileHandler fileHandler = new FileHandler();
     DeleteElements deleteElements = new DeleteElements();
     Lists list = new Lists();
-
+    private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
+    private ConverterErrorHandler.BooleanStringConverter booleanStringConverter = new ConverterErrorHandler.BooleanStringConverter();
     private newThread delayThread;
 
     @FXML
@@ -105,15 +104,18 @@ public class ControllerOrders implements Initializable {
     @FXML
     private TableColumn<TableView<Adjustment>, Integer> adjustmentPrice;
 
+    public static Order getSelectedOrder() {
+        return selectedOrder;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if(ControllerOrdersAddComponent.toBeChanged){
+        if (ControllerOrdersAddComponent.toBeChanged) {
             Order editedOrder = ControllerOrdersAddComponent.getNewComponents();
 
-            for(Order i : tableViewOrder.getItems()){
-                if(i.getOrderNr().equals(editedOrder.getOrderNr())){
+            for (Order i : tableViewOrder.getItems()) {
+                if (i.getOrderNr().equals(editedOrder.getOrderNr())) {
                     i.getComponentList().clear();
                     i.setComponentList(editedOrder.getComponentList());
                 }
@@ -125,9 +127,9 @@ public class ControllerOrders implements Initializable {
             outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
             try {
-                for(User i : ReadUsers.getUserList()){
-                    if(i.getId() == outPersonId){
-                        lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                for (User i : ReadUsers.getUserList()) {
+                    if (i.getId() == outPersonId) {
+                        lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                         lblOutPhone.setText((i.getPhone()));
                         lblMailOut.setText(i.getEmail());
                     }
@@ -136,27 +138,26 @@ public class ControllerOrders implements Initializable {
                 Dialogs.showErrorDialog(e.getMessage());
             }
 
-            for(Order i : Lists.getOrders()){
+            for (Order i : Lists.getOrders()) {
                 tableViewComponents.setItems(i.getComponentList());
             }
-            for(Order i : Lists.getOrders()){
+            for (Order i : Lists.getOrders()) {
                 tableViewAdjustments.setItems(i.getAdjustmentList());
-                    if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
-                        tableViewComponents.setItems(i.getComponentList());
-                        tableViewAdjustments.setItems(i.getAdjustmentList());
-                        outPersonId = i.getPersonId();
-                    }
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
+                    tableViewComponents.setItems(i.getComponentList());
+                    tableViewAdjustments.setItems(i.getAdjustmentList());
+                    outPersonId = i.getPersonId();
+                }
             }
 
             Date dateNow = new Date();
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
 
-        }
-        else if(ControllerOrdersAddAdjustment.toBeChanged){
+        } else if (ControllerOrdersAddAdjustment.toBeChanged) {
             Order editedOrder = ControllerOrdersAddAdjustment.getNewAdjustments();
 
-            for(Order i : tableViewOrder.getItems()){
-                if(i.getOrderNr().equals(editedOrder.getOrderNr())){
+            for (Order i : tableViewOrder.getItems()) {
+                if (i.getOrderNr().equals(editedOrder.getOrderNr())) {
                     i.getAdjustmentList().clear();
                     i.setAdjustmentList(editedOrder.getAdjustmentList());
                 }
@@ -168,9 +169,9 @@ public class ControllerOrders implements Initializable {
             outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
             try {
-                for(User i : ReadUsers.getUserList()){
-                    if(i.getId() == outPersonId){
-                        lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                for (User i : ReadUsers.getUserList()) {
+                    if (i.getId() == outPersonId) {
+                        lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                         lblOutPhone.setText((i.getPhone()));
                         lblMailOut.setText(i.getEmail());
                     }
@@ -179,12 +180,12 @@ public class ControllerOrders implements Initializable {
                 Dialogs.showErrorDialog(e.getMessage());
             }
 
-            for(Order i : Lists.getOrders()){
+            for (Order i : Lists.getOrders()) {
                 tableViewComponents.setItems(i.getComponentList());
             }
-            for(Order i : Lists.getOrders()){
+            for (Order i : Lists.getOrders()) {
                 tableViewAdjustments.setItems(i.getAdjustmentList());
-                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
@@ -193,9 +194,8 @@ public class ControllerOrders implements Initializable {
 
             Date dateNow = new Date();
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
-        }
-        else{
-            if(firstInlog == 0){
+        } else {
+            if (firstInlog == 0) {
                 //Starts delay thread
                 delayThread = new newThread();
                 delayThread.setOnSucceeded(this::threadDone);
@@ -219,8 +219,7 @@ public class ControllerOrders implements Initializable {
                 th.setDaemon(true);
                 th.start();
                 firstInlog = 1;
-            }
-            else{
+            } else {
                 tableViewOrder.getItems().clear();
                 tableViewComponents.getItems().clear();
                 tableViewAdjustments.getItems().clear();
@@ -242,9 +241,9 @@ public class ControllerOrders implements Initializable {
                 outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
                 try {
-                    for(User i : ReadUsers.getUserList()){
-                        if(i.getId() == outPersonId){
-                            lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+                    for (User i : ReadUsers.getUserList()) {
+                        if (i.getId() == outPersonId) {
+                            lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                             lblOutPhone.setText((i.getPhone()));
                             lblMailOut.setText(i.getEmail());
                         }
@@ -288,9 +287,9 @@ public class ControllerOrders implements Initializable {
         outPersonId = tableViewOrder.getSelectionModel().getSelectedItem().getPersonId();
 
         try {
-            for(User i : ReadUsers.getUserList()){
-                if(i.getId() == outPersonId){
-                    lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+            for (User i : ReadUsers.getUserList()) {
+                if (i.getId() == outPersonId) {
+                    lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                     lblOutPhone.setText((i.getPhone()));
                     lblMailOut.setText(i.getEmail());
                 }
@@ -331,42 +330,43 @@ public class ControllerOrders implements Initializable {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.
-                newScene("Superuser", root, 470 ,300, event);
+                newScene("Superuser", root, 470, 300, event);
     }
 
     @FXML
     void onClickView(MouseEvent event) throws FileNotFoundException, UserAlreadyExistException {
         int outPersonId = 0;
-        try{
+        try {
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
-            for(Order i : Lists.getOrders()){
-                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+            for (Order i : Lists.getOrders()) {
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
                 }
             }
-            for(User i : ReadUsers.getUserList()){
-                if(i.getId() == outPersonId){
-                    lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+            for (User i : ReadUsers.getUserList()) {
+                if (i.getId() == outPersonId) {
+                    lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                     lblOutPhone.setText((i.getPhone()));
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
 
 
     }
+
     @FXML
     void deleteOrder(ActionEvent event) {
-        try{
-            if(EditOrders.deleteOrder(tableViewOrder.getSelectionModel().getSelectedItems())){
+        try {
+            if (EditOrders.deleteOrder(tableViewOrder.getSelectionModel().getSelectedItems())) {
                 //Deletes tableRow(s)
                 tableViewOrder.getItems().removeAll(tableViewOrder.getSelectionModel().getSelectedItems());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
@@ -374,37 +374,36 @@ public class ControllerOrders implements Initializable {
     @FXML
     void btnAddComponent(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserAddComponentAndAdjustment.fxml"));
-        OpenScene.newScene("Components", root, 870, 460, event );
+        OpenScene.newScene("Components", root, 870, 460, event);
 
-       }
+    }
 
     @FXML
     void btnDeleteComponent(ActionEvent event) {
-        try{
-            if(deleteElements.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())){
+        try {
+            if (deleteElements.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())) {
                 //Deletes tableRow(s)
                 tableViewComponents.getItems().removeAll(tableViewComponents.getSelectionModel().getSelectedItems());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
 
-
     @FXML
     void btnAddAdjustment(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrderAddAdjustment.fxml"));
-        OpenScene.newScene("Adjustments", root, 870, 460, event );
+        OpenScene.newScene("Adjustments", root, 870, 460, event);
     }
 
     @FXML
     void btnDeleteAdjustment(ActionEvent event) {
-        try{
-            if(deleteElements.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())){
+        try {
+            if (deleteElements.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())) {
                 //Deletes tableRow(s)
                 tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewAdjustments.refresh();
@@ -412,14 +411,15 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void carIdEdited(TableColumn.CellEditEvent<Order, String> event) {
-        try{
+        try {
             event.getRowValue().setCarId(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
 
         }
         tableViewOrder.refresh();
 
     }
+
     @FXML
     void orderEndedEdited(TableColumn.CellEditEvent<Order, String> event) {
 
@@ -427,16 +427,14 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void totPriceEdited(TableColumn.CellEditEvent<Order, Integer> event) {
-        try{
+        try {
             int price = EditOrders.editOrderPrice(event.getOldValue());
-            if(price <= 0) {
+            if (price <= 0) {
                 Dialogs.showErrorDialog("Invalid total price");
-            }
-
-            else {
+            } else {
                 event.getRowValue().setTotPrice(price);
             }
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
@@ -445,9 +443,9 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void carColorEdited(TableColumn.CellEditEvent<Order, String> event) {
-        try{
+        try {
             event.getRowValue().setCarColor(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewOrder.refresh();
@@ -458,33 +456,30 @@ public class ControllerOrders implements Initializable {
         Order o = tableViewOrder.getSelectionModel().getSelectedItem();
         boolean newOrderStatus = !tableViewBooleanCellEditEvent.getOldValue();
         try {
-            if(newOrderStatus){
-                if(Dialogs.showChooseDialog("Edit order status to finished?")){
+            if (newOrderStatus) {
+                if (Dialogs.showChooseDialog("Edit order status to finished?")) {
                     o.setOrderStatus(newOrderStatus);
                 }
-            }
-            else{
-                if(Dialogs.showChooseDialog("Edit order status to not finished?")){
+            } else {
+                if (Dialogs.showChooseDialog("Edit order status to not finished?")) {
                     o.setOrderStatus(newOrderStatus);
                 }
             }
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
             tableViewOrder.getSelectionModel().clearSelection();
         }
         tableViewOrder.refresh();
     }
 
-
     @FXML
     void componentIdEdited(TableColumn.CellEditEvent<Component, String> event) {
-        try{
+        try {
             event.getRowValue().setComponentID(event.getNewValue());
             Date dateNow = new Date();
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewComponents.refresh();
@@ -492,11 +487,11 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void componentTypeEdited(TableColumn.CellEditEvent<Component, String> event) {
-        try{
+        try {
             event.getRowValue().setComponentType(event.getNewValue());
             Date dateNow = new Date();
             tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
         tableViewComponents.refresh();
@@ -504,9 +499,9 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void componentDescriptionEdited(TableColumn.CellEditEvent<Component, String> event) {
-        try{
+        try {
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
     }
@@ -514,44 +509,38 @@ public class ControllerOrders implements Initializable {
     @FXML
     void componentPriceEdited(TableColumn.CellEditEvent<Component, Integer> event) {
 
-        try{
+        try {
             int price = EditOrders.editOrderPrice(event.getOldValue());
-            if(price <= 0) {
+            if (price <= 0) {
                 Dialogs.showErrorDialog("Invalid component price");
-            }
-            else {
+            } else {
                 event.getRowValue().setComponentPrice(price);
                 tableViewOrder.getSelectionModel().getSelectedItem().setTotPrice(EditOrders.recalculateTotalPrice(tableViewOrder.getSelectionModel().getSelectedItem()));
 
                 Date dateNow = new Date();
                 tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
             }
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
         tableViewComponents.refresh();
         tableViewOrder.refresh();
     }
-    public static Order getSelectedOrder(){
-        return selectedOrder;
-    }
 
     @FXML
     void adjustmentPriceEdited(TableColumn.CellEditEvent<Adjustment, Integer> event) {
-        try{
+        try {
             int price = EditOrders.editOrderPrice(event.getOldValue());
-            if(price <= 0) {
+            if (price <= 0) {
                 Dialogs.showErrorDialog("Invalid total price");
-            }
-
-            else {
+            } else {
                 event.getRowValue().setAdjustmentPrice(price);
                 Date dateNow = new Date();
                 tableViewOrder.getSelectionModel().getSelectedItem().setOrderFinished(dateNow);
                 tableViewOrder.getSelectionModel().getSelectedItem().setTotPrice(EditOrders.recalculateTotalPrice(tableViewOrder.getSelectionModel().getSelectedItem()));
             }
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Dialogs.showErrorDialog(e.getMessage());
         }
 
@@ -561,17 +550,17 @@ public class ControllerOrders implements Initializable {
 
     @FXML
     void txtFilterTyped(KeyEvent event) {
-            FilteredList<Order> filtered = new FilteredList<>(Lists.getOrders(), b -> true);
+        FilteredList<Order> filtered = new FilteredList<>(Lists.getOrders(), b -> true);
 
-            txtFilterOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+        txtFilterOrders.textProperty().addListener((observable, oldValue, newValue) -> {
 
-                filtered.setPredicate(order -> list.filterOrderList(order, newValue));
+            filtered.setPredicate(order -> list.filterOrderList(order, newValue));
 
-                SortedList<Order> sorted = new SortedList<>(filtered);
-                sorted.comparatorProperty().bind(tableViewOrder.comparatorProperty());
-                tableViewOrder.setItems(sorted);
-            });
-        }
+            SortedList<Order> sorted = new SortedList<>(filtered);
+            sorted.comparatorProperty().bind(tableViewOrder.comparatorProperty());
+            tableViewOrder.setItems(sorted);
+        });
+    }
 
 
 }

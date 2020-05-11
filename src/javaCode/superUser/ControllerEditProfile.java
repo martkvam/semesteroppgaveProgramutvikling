@@ -3,8 +3,8 @@ package javaCode.superUser;
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.InLog.ReadUsers;
-import javaCode.objects.User;
 import javaCode.OpenScene;
+import javaCode.objects.User;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -67,33 +67,33 @@ public class ControllerEditProfile {
 
     //Method for searching in the tableview
     public void searchFilter(KeyEvent keyEvent) throws FileNotFoundException {
-            FilteredList<User> filtered = new FilteredList<>(ReadUsers.getUserList(), b -> true);
+        FilteredList<User> filtered = new FilteredList<>(ReadUsers.getUserList(), b -> true);
 
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filtered.setPredicate(user -> {
-                    if(newValue == null || newValue.isEmpty()){
-                        return true;
-                    }
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtered.setPredicate(user -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
-                    String lowerCase = newValue.toLowerCase();
+                String lowerCase = newValue.toLowerCase();
 
-                    if(String.valueOf(user.getId()).toLowerCase().equals(lowerCase)){
-                        return true;
-                    } else if (user.getFirstName().toLowerCase().contains(lowerCase)){
-                        return true;
-                    } else if (user.getLastName().toLowerCase().contains(lowerCase)){
-                        return true;
-                    } else if (user.getPhone().toLowerCase().contains(lowerCase)) {
-                        return true;
-                    } else if (user.getEmail().toLowerCase().contains(lowerCase)){
-                        return true;
-                    }else return user.getPassword().toLowerCase().contains(lowerCase);
-                });
-
-                SortedList<User> sorted = new SortedList<>(filtered);
-                sorted.comparatorProperty().bind(tvUserRegister.comparatorProperty());
-                tvUserRegister.setItems(sorted);
+                if (String.valueOf(user.getId()).toLowerCase().equals(lowerCase)) {
+                    return true;
+                } else if (user.getFirstName().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getLastName().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getPhone().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getEmail().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else return user.getPassword().toLowerCase().contains(lowerCase);
             });
+
+            SortedList<User> sorted = new SortedList<>(filtered);
+            sorted.comparatorProperty().bind(tvUserRegister.comparatorProperty());
+            tvUserRegister.setItems(sorted);
+        });
     }
 
     //Initializes and validates the edited text in the "Firstname-field"
@@ -103,7 +103,7 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "FirstName", newFirstName);
             u.setFirstName(newFirstName);
-        } catch (Exception e){
+        } catch (Exception e) {
             Dialogs.showErrorDialog(e.getMessage());
             tvUserRegister.getSelectionModel().clearSelection();
         }
@@ -117,9 +117,9 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "LastName", newLastName);
             u.setLastName(newLastName);
-        } catch (Exception e){
-                tvUserRegister.getSelectionModel().clearSelection();
-                Dialogs.showErrorDialog(e.getMessage());
+        } catch (Exception e) {
+            tvUserRegister.getSelectionModel().clearSelection();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         tvUserRegister.refresh();
     }
@@ -131,7 +131,7 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Phone", newPhone);
             u.setPhone(newPhone);
-        } catch (Exception e){
+        } catch (Exception e) {
             tvUserRegister.getSelectionModel().clearSelection();
             Dialogs.showErrorDialog(e.getMessage());
         }
@@ -145,7 +145,7 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "Email", newEmail);
             u.setEmail(newEmail);
-        } catch (Exception e){
+        } catch (Exception e) {
             tvUserRegister.getSelectionModel().clearSelection();
             Dialogs.showErrorDialog(e.getMessage());
         }
@@ -159,7 +159,7 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "SuperUser", String.valueOf(newSuperUser));
             u.setSuperUser(newSuperUser);
-        } catch (Exception e){
+        } catch (Exception e) {
             tvUserRegister.getSelectionModel().clearSelection();
             Dialogs.showErrorDialog(e.getMessage());
         }
@@ -169,7 +169,7 @@ public class ControllerEditProfile {
     //Opens super user scene when "go back" button is clicked
     public void btnGoBackOnClick(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-        OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
+        OpenScene.newScene("Superuser", root, 470, 300, actionEvent);
     }
 }
 

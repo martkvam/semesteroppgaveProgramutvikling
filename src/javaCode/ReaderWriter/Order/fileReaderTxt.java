@@ -1,5 +1,6 @@
 package javaCode.ReaderWriter.Order;
 
+import javaCode.Dialogs;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
 import javaCode.Lists;
@@ -32,6 +33,8 @@ public class fileReaderTxt implements Reader {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog("There is an error in the file containing the finished orders." +
+                    " Therefore, all users might not be able to see all their finished orders.");
         }
     }
 
@@ -39,9 +42,9 @@ public class fileReaderTxt implements Reader {
     private Order parseOrder (String line) throws Exception{
         String[] split = line.split(";");
         if(split.length != 10) {
-            throw new Exception("There is an error in the file containing the orders.");
+            throw new Exception("There is an error in the file containing the finished orders. The line: " + line +
+                    " is not in the right format");
         }
-
 
         String orderNr = split[0];
         int personId = parseNumber(split[1], "Person ID is incorrect");

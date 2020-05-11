@@ -16,8 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ReadPackages {
-    public void read(Path path, String carID, String packageId) throws Exception {
-        Lists lists = new Lists();
+    public void read(Path path, String carID, String packageId){
+        //Lists lists = new Lists();
         Lists.deleteBasePackageAdjustments();
         Lists.deleteBasePackageComponents();
         try {
@@ -28,13 +28,15 @@ public class ReadPackages {
                if(split.length != 4){
                    Dialogs.showErrorDialog("There is an error in the file containing the base packages."
                    + " All packages might not be loaded correctly.");
+                   System.err.println("There is an error in the file containing the base packages. The line: " + line
+                   + " is not in the right format");
                }
                if(split[0].equals(carID) && split[1].equals(packageId)){
                    Lists.getBasePackageAdjustments().addAll(parseAdjustmentList(split[3]));
                    Lists.getBasePackageComponents().addAll(parseComponentList(split[2], split[0]));
                }
            }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -57,6 +59,8 @@ public class ReadPackages {
                         Dialogs.showErrorDialog("There is an error in the file containing the packages, as a component" +
                                 " belonging to another car type was added to this package. That component has been removed," +
                                 " but as a result this package might not be complete.");
+                        System.err.println("There is an error in this base package. The component list: " + componentList +
+                                "contains component from different car types.");
                     }
                 }
             }

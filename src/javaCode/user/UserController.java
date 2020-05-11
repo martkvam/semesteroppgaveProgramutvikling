@@ -398,7 +398,7 @@ public class UserController implements Initializable {
 
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-        OpenScene.newScene("Log in", root, 650, 650, actionEvent);
+        OpenScene.newScene("Log in", root, 600, 450, actionEvent);
     }
 
     public void setPackage(ActionEvent actionEvent) {

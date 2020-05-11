@@ -75,6 +75,12 @@ public class NewUser {
         } else{
             btnRegisterUser.setDisable(true);
         }
+        txtFirstName.focusTraversableProperty().setValue(true);
+        txtLastName.focusTraversableProperty().setValue(true);
+        txtPhone.focusTraversableProperty().setValue(true);
+        txtEmail.focusTraversableProperty().setValue(true);
+        txtPassword.focusTraversableProperty().setValue(true);
+        txtRepeatPassword.focusTraversableProperty().setValue(true);
     }
 
     @FXML //Checking if the passwords in the two password fields match
@@ -88,10 +94,5 @@ public class NewUser {
     public void btnBackOnClick(ActionEvent actionEvent) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
         OpenScene.newScene("Log in", root, 600, 450, actionEvent);
-    }
-
-    @FXML
-    public void initialize(){
-
     }
 }

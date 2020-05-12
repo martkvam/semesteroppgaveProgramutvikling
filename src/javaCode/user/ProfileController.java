@@ -188,6 +188,8 @@ public class ProfileController implements Initializable {
 
                 chosen.setOrderStatus(true);
 
+                //If the components, adjustments or car type in the ongoing order has been deleted before the user
+                //has finished the order, they will be unable to finish the order.
                 boolean correctComponents = true;
                 for (Component c : chosen.getComponentList()) {
                     if (c.getComponentDescription().equals("No longer available")) {
@@ -295,6 +297,7 @@ public class ProfileController implements Initializable {
         }
         ordersTV.setItems(orders);
 
+        //Sets visibility for buttons in the GUI
         btnChange.setVisible(false);
         btnFinish.setVisible(false);
         btnDelete.setVisible(false);

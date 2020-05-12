@@ -22,7 +22,7 @@ public class fileReaderTxt implements Reader {
 
     @Override
     public void read(Path path) throws IOException {
-        highestID = 0;
+
         boolean invalidImplementation = false;
         Lists lists = new Lists();
 
@@ -32,6 +32,7 @@ public class fileReaderTxt implements Reader {
                 try{
                     String [] split = line.split(";");
                     if (line.length()!=0) {
+                        highestID = 0;
                         lineNr++;
                         lists.addComponent(parseComponent(line));
                     }
@@ -59,7 +60,7 @@ public class fileReaderTxt implements Reader {
 
         String carID = split[0];
         String componentID = split[1];
-        String componentType = "";
+        String componentType = split[2];
         String [] splitID = componentID.split("-");
 
         String componentDescription = split[3];

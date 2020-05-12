@@ -2,10 +2,7 @@ package javaCode;
 
 import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
-import javaCode.objects.Adjustment;
-import javaCode.objects.User;
-import javaCode.objects.Component;
-import javaCode.objects.Order;
+import javaCode.objects.*;
 import javaCode.superUser.AddElements;
 
 import java.io.FileNotFoundException;
@@ -64,8 +61,8 @@ public class Validator {
     //Components
     //If car id matches the input id it returns true
     public static boolean carIdComponents(String ID){
-        for(int i = 0; i < Lists.getCars().size(); i++){
-            if(Lists.getCars().get(i).getCarID().equals(ID)){
+        for(Car i: Lists.getCars()){
+            if(i.getCarID().equals(ID)){
                 return true;
             }
         }
@@ -76,36 +73,37 @@ public class Validator {
     public static boolean componentId(String ID){
         String[] splitInnId = ID.split("-");
         int highestcomponentTypeId = 0;
+        boolean isValidComponentType = false;
 
-        for(int i = 0; i < Lists.getComponents().size();i++){
-            String [] splitExistingId = Lists.getComponents().get(i).getComponentID().split("-");
-            String componentId = Lists.getComponents().get(i).getComponentID();
+        for(Component c : Lists.getComponents()){
+            String [] splitExistingId = c.getComponentID().split("-");
+            String componentId = c.getComponentID();
             if(componentId.equals(ID)){
                 return false;
             }
             else if(Integer.parseInt(splitInnId[0])<0){
                 return false;
             }
-            else{
-                if(splitInnId[0].equals(splitExistingId[0])){
-                    //Finds highest componentId after "-" in component id-number
-                    for(int j = 0; j <Lists.getComponents().size();j++){
-                        if(splitInnId[0].equals(Lists.getComponents().get(j).getComponentID().charAt(0))){
-                            if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
-                                highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
-                            }
+            else if(splitInnId[0].equals(splitExistingId[0])){
+                isValidComponentType = true;
+                //Finds highest componentId after "-" in component id-number
+                for(int j = 0; j <Lists.getComponents().size();j++){
+                    if(splitInnId[0].equals(Lists.getComponents().get(j).getComponentID().charAt(0))){
+                        if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
+                            highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
                         }
                     }
-                    if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
+                }
+                if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
         }
-        return true;
+
+        return false;
     }
     //If input type equals existing component types return true. Else choose to add new type
     public static boolean componentType(String type){

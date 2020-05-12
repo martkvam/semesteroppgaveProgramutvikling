@@ -1,2 +1,1 @@
-;2;2;Thu May 07 09:52:28 CEST 2020;Thu May 07 09:52:28 CEST 2020;2-1;2,1;11000;White;false
-;4;1;Tue May 12 14:48:36 CEST 2020;Tue May 12 14:48:36 CEST 2020;1-5;5;187000;Not chosen;false
+;2;2;Thu May 07 09:52:28 CEST 2020;Thu May 07 09:52:28 CEST 2020;;2,1;11000;White;false

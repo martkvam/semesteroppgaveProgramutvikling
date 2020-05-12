@@ -108,7 +108,7 @@ public class fileReaderTxt implements Reader {
                 for (Component c : Lists.getDeletedComponents()) {
                     if (c.getComponentID().equals(string)) {
                         deleted = true;
-                        c.setComponentType("This component is no longer available");
+                        c.setComponentDescription("No longer available");
                         if (c.getCarID().equals(carID)) {
                             components.add(c);
                         }

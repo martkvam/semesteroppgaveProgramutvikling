@@ -221,7 +221,14 @@ public class UserController implements Initializable {
         if (chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 550, 660, actionEvent);
-        }
+            for (Component c : Lists.getDeletedComponents()){
+                System.out.print(c.getComponentID() + " ");
+            }
+            for (Component c : Lists.getComponents()){
+                System.out.println(c.getComponentID());
+                }
+            }
+
         //If there is an ongoing order that has not been saved, the user will be informed of this.
         else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not saved your choices, and if you continue your progress will be lost." +

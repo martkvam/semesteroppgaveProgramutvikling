@@ -99,6 +99,17 @@ public class Lists<E> implements Serializable {
     }
     public static void deleteOngoing(){ ongoingOrderList.clear();}
 
+    public static void deleteDeletedComponentList() {
+        deletedComponentList.clear();
+    }
+
+    public static void deleteDeletedAdjustmentList(){
+        deletedAdjustmentList.clear();
+    }
+    public static void deleteDeletedCarlist(){
+        deletedCarList.clear();
+    }
+
     public static ObservableList<Car> getCars(){
         ArrayList<Car> newCarList =new ArrayList<>();
         for(Car i : carList){

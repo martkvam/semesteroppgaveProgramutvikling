@@ -402,10 +402,20 @@ public class UserController implements Initializable {
     }
 
     public void setPackage(ActionEvent actionEvent) {
+        boolean setPackage = true;
         if (chooseCarType.getSelectionModel().isEmpty()) {
             Dialogs.showErrorDialog("Start by choosing a car type");
         }
-        if (!choosePackage.getSelectionModel().isEmpty() && !chooseCarType.getSelectionModel().isEmpty()) {
+        if(!chosenAdjustTV.getItems().isEmpty() || !chosenCompTV.getItems().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will set your chosen components and" +
+                    " adjustments to a predetermined package, and the progress you have made with your order might be lost." +
+                    " Are you sure you want to continue?", ButtonType.CANCEL, ButtonType.YES);
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.CANCEL)){
+                setPackage = false;
+            }
+        }
+        if (!choosePackage.getSelectionModel().isEmpty() && !chooseCarType.getSelectionModel().isEmpty() && setPackage) {
             Path path = Paths.get("src/dataBase/CarPackages.txt");
             ReadPackages read = new ReadPackages();
             String carID = "";
@@ -450,8 +460,6 @@ public class UserController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            Dialogs.showErrorDialog("Please choose a package");
         }
     }
 

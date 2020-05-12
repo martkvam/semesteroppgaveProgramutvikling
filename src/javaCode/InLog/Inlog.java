@@ -4,6 +4,7 @@ import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.FileHandler;
 import javaCode.OpenScene;
+import javaCode.objects.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.NotActiveException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -55,16 +57,19 @@ public class Inlog implements Initializable {
     @FXML
     void btnLogInOnClick(ActionEvent event) {
         ConverterErrorHandler.BooleanStringConverter boolStrConv = new ConverterErrorHandler.BooleanStringConverter();
+        ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
         boolean correct = false;
-        boolean superUsr = false;
         String id;
         String[] values;
+        User u;
         try {
             try {
                 id = ReadUsers.getUserId(txtUserName.getText()).get(0);
                 int length = ReadUsers.getInfo(id, "User").length();
                 String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
                 values = info.replaceAll("\\s+", "").split(",");
+                u = new User(intStrConv.fromString(values[0]), values[1], values[2], values[3], values[4], values[5],
+                        boolStrConv.fromString(values[6]), boolStrConv.fromString(values[7]));
             } catch (Exception e) {
                 if (txtUserName.getText().isEmpty() || (isShowPasswordFieldActive() && txtVisiblePassword.getText().isEmpty())
                         || (!isShowPasswordFieldActive() && txtPassword.getText().isEmpty())) {
@@ -76,21 +81,22 @@ public class Inlog implements Initializable {
                 }
             }
 
-            if ((values[3].equals(txtUserName.getText()) || values[4].equals(txtUserName.getText()))) {
-                if (!isShowPasswordFieldActive() && values[5].equals(txtPassword.getText())) {
+            if (!u.getActive()) {
+                throw new NotActiveException("User is not active");
+            }
+
+            if ((u.getEmail().equals(txtUserName.getText()) || u.getPhone().equals(txtUserName.getText()))) {
+                if (!isShowPasswordFieldActive() && u.getPassword().equals(txtPassword.getText())) {
                     LoggedIn.setId(id);
                     correct = true;
-                    superUsr = Boolean.parseBoolean(values[6]);
-                } else if (isShowPasswordFieldActive() && values[5].equals(txtVisiblePassword.getText())) {
+                } else if (isShowPasswordFieldActive() && u.getPassword().equals(txtVisiblePassword.getText())) {
                     LoggedIn.setId(id);
                     correct = true;
-                    superUsr = boolStrConv.fromString(values[6]);
                 }
             }
 
-
             if (correct) {
-                if (superUsr) {
+                if (u.getSuperUser()) {
                     Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
                     OpenScene.newScene("Superuser", root, 470, 300, event);
                 } else {

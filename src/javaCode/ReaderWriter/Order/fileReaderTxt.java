@@ -41,7 +41,8 @@ public class fileReaderTxt implements Reader {
 
     private Order parseOrder (String line) throws Exception{
         String[] split = line.split(";");
-        if(split.length != 10) {
+        //Checking to see that the line is in the right format
+        if(!line.isEmpty() && split.length != 10) {
             throw new Exception("There is an error in the file containing the finished orders. The line: " + line +
                     " is not in the right format");
         }
@@ -57,16 +58,16 @@ public class fileReaderTxt implements Reader {
         Date orderFinished = df.parse(strOrderFinished);
 
 
-        ObservableList<Component> componentList = parseComponentList(split[5], "The component list is not correct");
+        ObservableList<Component> componentList = parseComponentList(split[5], carId,  "The component list is not correct");
         ObservableList<Adjustment> adjustmentList = parseAdjustmentList(split[6], "The adjustment list is not correct");
         int totPrice = parseNumber(split[7], "Total price is not correct");
         String carColor = split[8];
         boolean orderStatus;
         String stringOrderStatus = split[9];
-        if(stringOrderStatus.equals("true") || stringOrderStatus.equals("True")){
+        if(stringOrderStatus.toLowerCase().equals("true")){
             orderStatus = true;
         }
-        else if (stringOrderStatus.equals("false") || stringOrderStatus.equals("False")){
+        else if (stringOrderStatus.toLowerCase().equals("false")){
             orderStatus = false;
         }
         else throw new Exception("The order status is not correct");
@@ -85,14 +86,38 @@ public class fileReaderTxt implements Reader {
         return number;
     }
 
-    private ObservableList<Component> parseComponentList(String str, String errorMessage) throws Exception{
+    private ObservableList<Component> parseComponentList(String str, String carID, String errorMessage) throws Exception{
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = str.split(",");
         for(String string : split){
+            boolean componentExists = false;
+            boolean deleted = false;
             for(Component c : Lists.getComponents()){
                 if (c.getComponentID().equals(string)){
-                    components.add(c);
+                    componentExists = true;
+                    if (c.getCarID().equals(carID)) {
+                        components.add(c);
+                    } else {
+                        System.err.println("There is an error in the list containing the orders. " +
+                                "The component list : " + str + "contains a component belonging to a different" +
+                                " car type. ComponentID: " + c.getComponentID());
+                    }
                 }
+            }
+            if (!componentExists) {
+                for (Component c : Lists.getDeletedComponents()) {
+                    if (c.getComponentID().equals(string)) {
+                        deleted = true;
+                        c.setComponentDescription("No longer available");
+                        if (c.getCarID().equals(carID)) {
+                            components.add(c);
+                        }
+                    }
+                }
+            }
+            if(!componentExists && !deleted){
+                System.err.println("There is an error in the list containing the orders. The component list: " +
+                        str + " contains a componentID that does not exist. Component id: " + string);
             }
         }
         return components;

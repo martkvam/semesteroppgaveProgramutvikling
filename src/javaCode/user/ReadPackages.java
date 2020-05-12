@@ -50,8 +50,10 @@ public class ReadPackages {
         //If they belong to the right car they are added to the base package, if not they are ignored and an error message
         //is displayed to the user.
         for(String string : split){
+            boolean componentExists = false;
             for(Component c : Lists.getComponents()){
                 if (c.getComponentID().equals(string)){
+                    componentExists = true;
                     if(c.getCarID().equals(carID)) {
                         components.add(c);
                     }
@@ -64,6 +66,12 @@ public class ReadPackages {
                     }
                 }
             }
+            //If the file is in the right format, but a component-Id in the file is not found in the register, an error
+            //message is displayed in the terminal.
+            if (!componentExists){
+                System.err.println("There is an error in the file containing the packages. The component list: " + componentList
+                + " is contains a componentID that does not exist: " + string);
+            }
         }
         return components;
     }
@@ -72,10 +80,18 @@ public class ReadPackages {
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
         for(String string : split){
+            boolean adjustmentExists = false;
             for(Adjustment a : Lists.getAdjustment()){
                 if (a.getAdjustmentID().equals(string)){
+                    adjustmentExists = true;
                     adjustments.add(a);
                 }
+            }
+            //If the file is in the right format, but an adjustmentID in the file is not found in the
+            //adjustment register, an error message is displayed in the terminal.
+            if (!adjustmentExists){
+                System.err.println("There is an error in the file containing the packages. The adjustmenlist: " +
+                        str + " contains an adjustmentID that does not exist: " + string);
             }
         }
         return adjustments;

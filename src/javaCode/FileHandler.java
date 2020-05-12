@@ -116,6 +116,9 @@ public class FileHandler{
         Lists.deleteAdjustments();
         Lists.deleteOrders();
         Lists.deleteOngoing();
+        Lists.deleteDeletedComponentList();
+        Lists.deleteDeletedAdjustmentList();
+        Lists.deleteDeletedCarlist();
             if(readerCar != null && readerComponents != null && readerAdjustments !=null && readerTxtOrders != null && readerOngoingOrders != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());

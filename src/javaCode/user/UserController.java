@@ -96,8 +96,8 @@ public class UserController implements Initializable {
         //Setting options in the choiceboxes for car type and component type.
         chooseCarType.setPromptText("Car type: ");
         chooseComponent.setPromptText("Component type: ");
-        chooseCarType.getItems().setAll(Methods.typeList(lists.getCars()));
-        chooseComponent.getItems().setAll(Methods.componentList(lists.getComponents()));
+        chooseCarType.getItems().setAll(Methods.typeList(Lists.getCars()));
+        chooseComponent.getItems().setAll(Methods.componentList(Lists.getComponents()));
         choosePackage.getItems().setAll("Basic+", "Sport", "Premium");
         choosePackage.setPromptText("Choose a base package: ");
     }
@@ -115,7 +115,7 @@ public class UserController implements Initializable {
         //Gets the values from the choiceboxes
         String type = chooseCarType.getValue();
         String ID = "";
-        for (Car car : lists.getCars()) {
+        for (Car car : Lists.getCars()) {
             if (type.contains(car.getCarType())) {
                 ID = car.getCarID();
             }
@@ -125,9 +125,9 @@ public class UserController implements Initializable {
         //If an element in the list of components matches the value of both choiceboxes they are added
         //to the outlist.
         if (type != null && component != null) {
-            for (int i = 0; i < lists.getComponents().size(); i++) {
-                if (ID.equals(lists.getComponents().get(i).getCarID()) && component.equals(lists.getComponents().get(i).getComponentType())) {
-                    outList.add(lists.getComponents().get(i));
+            for (int i = 0; i < Lists.getComponents().size(); i++) {
+                if (ID.equals(Lists.getComponents().get(i).getCarID()) && component.equals(Lists.getComponents().get(i).getComponentType())) {
+                    outList.add(Lists.getComponents().get(i));
                 }
             }
         }
@@ -221,7 +221,14 @@ public class UserController implements Initializable {
         if (chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 550, 660, actionEvent);
-        }
+            for (Component c : Lists.getDeletedComponents()){
+                System.out.print(c.getComponentID() + " ");
+            }
+            for (Component c : Lists.getComponents()){
+                System.out.println(c.getComponentID());
+                }
+            }
+
         //If there is an ongoing order that has not been saved, the user will be informed of this.
         else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You have not saved your choices, and if you continue your progress will be lost." +
@@ -397,15 +404,27 @@ public class UserController implements Initializable {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-        OpenScene.newScene("Log in", root, 600, 450, actionEvent);
+        if (Dialogs.showChooseDialog("Are you sure you want to log out?")) {
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+            OpenScene.newScene("Log in", root, 600, 450, actionEvent);
+        }
     }
 
     public void setPackage(ActionEvent actionEvent) {
+        boolean setPackage = true;
         if (chooseCarType.getSelectionModel().isEmpty()) {
             Dialogs.showErrorDialog("Start by choosing a car type");
         }
-        if (!choosePackage.getSelectionModel().isEmpty() && !chooseCarType.getSelectionModel().isEmpty()) {
+        if(!chosenAdjustTV.getItems().isEmpty() || !chosenCompTV.getItems().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will set your chosen components and" +
+                    " adjustments to a predetermined package, and the progress you have made with your order might be lost." +
+                    " Are you sure you want to continue?", ButtonType.CANCEL, ButtonType.YES);
+            alert.showAndWait();
+            if (alert.getResult().equals(ButtonType.CANCEL)){
+                setPackage = false;
+            }
+        }
+        if (!choosePackage.getSelectionModel().isEmpty() && !chooseCarType.getSelectionModel().isEmpty() && setPackage) {
             Path path = Paths.get("src/dataBase/CarPackages.txt");
             ReadPackages read = new ReadPackages();
             String carID = "";
@@ -450,8 +469,6 @@ public class UserController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            Dialogs.showErrorDialog("Please choose a package");
         }
     }
 

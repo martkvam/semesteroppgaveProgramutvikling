@@ -20,7 +20,7 @@ public class Component implements Serializable {
     private transient SimpleIntegerProperty componentPrice;
 
     public Component(String carID, String componentID, String componentType, String componentDescription, int componentPrice) {
-        /* if(!Validator.carIdComponents(carID)){
+        if(!Validator.carIdComponents(carID)){
             throw new IllegalArgumentException("The car-id is not valid");
         }
 
@@ -34,7 +34,7 @@ public class Component implements Serializable {
             throw new IllegalArgumentException("The component price is not valid");
         }
         
-         */
+
         this.carID = new SimpleStringProperty(carID);
         this.componentID = new SimpleStringProperty(componentID);
         this.componentType = new SimpleStringProperty(componentType);
@@ -59,15 +59,7 @@ public class Component implements Serializable {
 
 
     public void setComponentID(String componentID) {
-        /*if(!Validator.componentId(componentID)){
-            if(Dialogs.showChooseDialog("The id is not valid? Add new component?")){
-                AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
-            }
-        }
-        else{*/
-            this.componentID.set(componentID);
-       //}
-
+        this.componentID.set(componentID);
     }
 
 
@@ -76,14 +68,14 @@ public class Component implements Serializable {
     }
 
     public void setComponentType(String type){
-        //if(Validator.componentType(type)){
+        if(Validator.componentType(type)) {
             this.componentType.set(type);
-        /*}
+        }
         else{
             throw new IllegalArgumentException("The component type is invalid. ");
         }
 
-         */
+
     }
 
     public String getComponentDescription() {

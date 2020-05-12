@@ -1,107 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.control.cell.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="javaCode.superUser.ControllerEditProfile">
-    <GridPane prefHeight="445.0" prefWidth="600.0">
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.superUser.ControllerEditProfile">
+    <GridPane prefHeight="445.0" prefWidth="700.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="9.0" prefWidth="9.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="166.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="247.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="170.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="4.0" prefWidth="7.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="9.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="170.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="247.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="170.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="4.0" prefWidth="10.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Profiles" textAlignment="CENTER"
-              GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Profiles" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
             <font>
-                <Font name="System Bold" size="25.0"/>
+                <Font name="System Bold" size="25.0" />
             </font>
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
         </Text>
-        <Button fx:id="btnClick" mnemonicParsing="false" onAction="#btnGoBackOnClick" prefHeight="27.0"
-                prefWidth="100.0" text="Go back" GridPane.columnIndex="3" GridPane.halignment="RIGHT"
-                GridPane.valignment="TOP">
+        <Button fx:id="btnClick" mnemonicParsing="false" onAction="#btnGoBackOnClick" prefHeight="27.0" prefWidth="100.0" text="Go back" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets right="-5.0" top="20.0" />
+         </GridPane.margin></Button>
+        <TextField fx:id="txtSearch" alignment="CENTER" onKeyTyped="#searchFilter" prefHeight="27.0" prefWidth="111.0" promptText="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <GridPane.margin>
-                <Insets right="10.0" top="20.0"/>
-            </GridPane.margin>
-        </Button>
-        <TextField fx:id="txtSearch" alignment="CENTER" onKeyTyped="#searchFilter" prefHeight="27.0" prefWidth="111.0"
-                   promptText="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-            <GridPane.margin>
-                <Insets left="25.0" right="25.0" top="20.0"/>
+                <Insets right="25.0" />
             </GridPane.margin>
         </TextField>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Choose user from tableview to edit. Click on the value you want to edit and press enter after editing. If you want to delete a user, select user and click &quot;delete&quot; button."
-              textAlignment="CENTER" wrappingWidth="238.0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-              GridPane.valignment="CENTER">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose user from tableview to edit. Click on the value you want to edit and press enter after editing. If you want to delete a user, select user and click &quot;delete&quot; button." textAlignment="CENTER" wrappingWidth="238.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <GridPane.margin>
-                <Insets left="10.0"/>
+                <Insets left="10.0" right="10.0" />
             </GridPane.margin>
         </Text>
-        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#btnDeleteOnClick" prefHeight="27.0"
-                prefWidth="115.0" text="Delete" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
     </GridPane>
-    <TableView fx:id="tvUserRegister" editable="true" layoutX="11.0" layoutY="112.0" prefHeight="300.0"
-               prefWidth="583.0">
-        <columns>
-            <TableColumn fx:id="id" editable="false" prefWidth="50.0" text="User ID">
-                <cellValueFactory>
-                    <PropertyValueFactory property="id"/>
-                </cellValueFactory>
-                <cellFactory>
-                    <TextFieldTableCell fx:factory="forTableColumn"/>
-                </cellFactory>
-            </TableColumn>
-            <TableColumn onEditCommit="#firstNameEdited" prefWidth="90.0" text="Firstname">
-                <cellValueFactory>
-                    <PropertyValueFactory property="firstName"/>
-                </cellValueFactory>
-                <cellFactory>
-                    <TextFieldTableCell fx:factory="forTableColumn"/>
-                </cellFactory>
-            </TableColumn>
-            <TableColumn onEditCommit="#lastNameEdited" prefWidth="90.0" text="Lastname">
-                <cellValueFactory>
-                    <PropertyValueFactory property="lastName"/>
-              </cellValueFactory>
-              <cellFactory>
-                  <TextFieldTableCell fx:factory="forTableColumn"/>
-              </cellFactory>
-          </TableColumn>
-          <TableColumn onEditCommit="#phoneEdited" prefWidth="101.0" text="Phone">
+    <TableView fx:id="tvUserRegister" editable="true" layoutX="11.0" layoutY="112.0" prefHeight="300.0" prefWidth="679.0">
+      <columns>
+          <TableColumn fx:id="id" onEditStart="#idEdited" prefWidth="50.0" text="User ID">
               <cellValueFactory>
-                  <PropertyValueFactory property="phone"/>
+                  <PropertyValueFactory property="id" />
               </cellValueFactory>
               <cellFactory>
-                  <TextFieldTableCell fx:factory="forTableColumn"/>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-          <TableColumn onEditCommit="#emailEdited" prefWidth="164.0" text="Email">
+          <TableColumn onEditCommit="#firstNameEdited" prefWidth="98.27230834960938" text="Firstname">
               <cellValueFactory>
-                  <PropertyValueFactory property="email"/>
+                  <PropertyValueFactory property="firstName" />
               </cellValueFactory>
               <cellFactory>
-                  <TextFieldTableCell fx:factory="forTableColumn"/>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
-          <TableColumn fx:id="superUser" onEditStart="#superUserEdited" prefWidth="66.0" text="SuperUser">
+          <TableColumn onEditCommit="#lastNameEdited" prefWidth="95.72764587402344" text="Lastname">
               <cellValueFactory>
-                  <PropertyValueFactory property="superUser"/>
+                  <PropertyValueFactory property="lastName" />
               </cellValueFactory>
               <cellFactory>
-                  <TextFieldTableCell fx:factory="forTableColumn"/>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
               </cellFactory>
           </TableColumn>
+          <TableColumn onEditCommit="#phoneEdited" prefWidth="99.71278381347656" text="Phone">
+              <cellValueFactory>
+                  <PropertyValueFactory property="phone" />
+              </cellValueFactory>
+              <cellFactory>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
+              </cellFactory>
+          </TableColumn>
+          <TableColumn onEditCommit="#emailEdited" prefWidth="175.091552734375" text="Email">
+              <cellValueFactory>
+                  <PropertyValueFactory property="email" />
+              </cellValueFactory>
+              <cellFactory>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
+              </cellFactory>
+          </TableColumn>
+          <TableColumn fx:id="superUser" onEditStart="#superUserEdited" prefWidth="71.5616455078125" text="SuperUser">
+              <cellValueFactory>
+                  <PropertyValueFactory property="superUser" />
+              </cellValueFactory>
+              <cellFactory>
+                  <TextFieldTableCell fx:factory="forTableColumn" />
+              </cellFactory>
+          </TableColumn>
+         <TableColumn fx:id="active" onEditStart="#activeEdited" prefWidth="65.54693603515625" text="Active">
+             <cellValueFactory>
+                 <PropertyValueFactory property="active" />
+             </cellValueFactory>
+             <cellFactory>
+                 <TextFieldTableCell fx:factory="forTableColumn" />
+             </cellFactory>
+         </TableColumn>
       </columns>
     </TableView>
 </AnchorPane>

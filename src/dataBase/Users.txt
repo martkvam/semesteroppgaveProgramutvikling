@@ -12,4 +12,4 @@
 101;Myrt;Grebnets;myrt.grebnets@liamg.moc;24068089;temolso;false;true
 102;Pølsemannen;Grilstad;august_grilstad@hotmail.com;45252226;august123;false;true
 15;Jorunn;Heggernes;joheg@gmail.com;885577342;heggernes;false;true
-19;Steve;Jobs;steve@apple.com;55443322;iphone;false;true
+19;Steve;Jobs;steve@apple.com;55443322;iphone;false;false

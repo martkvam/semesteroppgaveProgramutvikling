@@ -108,14 +108,6 @@ public class Validator {
                     return true;
                 }
             }
-            /*if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                boolean newComponent = AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
-                if(newComponent){
-                    Dialogs.showSuccessDialog("A new component has been added");
-                }
-            }
-
-             */
         }
         return false;
     }
@@ -151,7 +143,7 @@ public class Validator {
 
 
     //Orders
-    //If order number is under 1 or equals a existing number, the method returns false
+    //If order number is under 0 or equals a existing number, the method returns false
     public static boolean orderNr(String nr){
         if(Integer.parseInt(nr) <= 0){
             return false;

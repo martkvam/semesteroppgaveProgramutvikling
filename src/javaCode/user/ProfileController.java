@@ -116,7 +116,7 @@ public class ProfileController implements Initializable {
             //Updating the ongoing orders-file.
             try {
                 String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
+                javaCode.ReaderWriter.Order.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -142,7 +142,7 @@ public class ProfileController implements Initializable {
                 //Updating the ongoing orders-file.
                 try {
                     String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                    javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
+                    javaCode.ReaderWriter.Order.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -208,7 +208,7 @@ public class ProfileController implements Initializable {
                 //Removing the order from the ongoing orders-file.
                 try {
                     String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                    javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
+                    javaCode.ReaderWriter.Order.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

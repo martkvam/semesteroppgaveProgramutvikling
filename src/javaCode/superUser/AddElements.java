@@ -174,7 +174,7 @@ public class AddElements {
             //Sets special grid for input of new component type
             if(chooseComponentType.getSelectionModel().getSelectedItem().toString().equals("New component type")){
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -182,12 +182,12 @@ public class AddElements {
                 grid.add(newComponentType, 1, 2);
                 grid.add(new Label("Component description"), 0, 3);
                 grid.add(componentDescription, 1, 3);
-                grid.add(new Label("Car Price"), 0, 4);
+                grid.add(new Label("Component Price"), 0, 4);
                 grid.add(componentPrice, 1, 4);
                 newComponentType.setVisible(true);
             }
             else{
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -198,7 +198,7 @@ public class AddElements {
                 grid.add(componentPrice, 1, 3);
             }
         }else{
-            grid.add(new Label("Choose car type for your new component"), 0, 0);
+            grid.add(new Label("Choose component type for your new component"), 0, 0);
             grid.add(chooseCar, 1, 0);
             grid.add(new Label("Choose component type"), 0, 1);
             grid.add(chooseComponentType, 1, 1);
@@ -215,7 +215,7 @@ public class AddElements {
 
             if(newValue.toString().equals("New component type")){
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -223,13 +223,13 @@ public class AddElements {
                 grid.add(newComponentType, 1, 2);
                 grid.add(new Label("Component description"), 0, 3);
                 grid.add(componentDescription, 1, 3);
-                grid.add(new Label("Car Price"), 0, 4);
+                grid.add(new Label("Component price"), 0, 4);
                 grid.add(componentPrice, 1, 4);
                 newComponentType.setVisible(true);
             }
             else{
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);

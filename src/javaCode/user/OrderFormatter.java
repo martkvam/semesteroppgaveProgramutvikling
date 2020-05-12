@@ -1,4 +1,4 @@
-package javaCode;
+package javaCode.user;
 
 import javaCode.objects.Order;
 

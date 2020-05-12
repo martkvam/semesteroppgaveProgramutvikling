@@ -249,6 +249,9 @@ public class ControllerAddEditComponents implements Initializable {
                     if(delete.deleteCars(TableView.getSelectionModel().getSelectedItems())){
                         //Deletes tableRow(s)
                         TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
+                        for(Car c : TableView.getSelectionModel().getSelectedItems()){
+                            lists.addDeletedCar(c);
+                        }
                     }
 
                     break;
@@ -257,6 +260,9 @@ public class ControllerAddEditComponents implements Initializable {
                     if(delete.deleteComponents(tableViewComponents.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
                         tableViewComponents.getItems().removeAll(tableViewComponents.getSelectionModel().getSelectedItems());
+                        for(Component c : tableViewComponents.getSelectionModel().getSelectedItems()){
+                            lists.addDeletedComponent(c);
+                        }
                     }
 
                     break;
@@ -264,6 +270,9 @@ public class ControllerAddEditComponents implements Initializable {
                     if(delete.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
                         tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
+                        for(Adjustment a : tableViewAdjustments.getSelectionModel().getSelectedItems()){
+                            lists.addDeletedAdjustment(a);
+                        }
                     }
                     break;
             }

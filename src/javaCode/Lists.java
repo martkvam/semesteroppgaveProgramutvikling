@@ -13,8 +13,11 @@ import java.util.ArrayList;
 public class Lists<E> implements Serializable {
 
     private static transient ObservableList<Car> carList = FXCollections.observableArrayList();
+    private static transient ObservableList<Car> deletedCarList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
+    private static ObservableList<Component> deletedComponentList = FXCollections.observableArrayList();
     private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
+    private static ObservableList<Adjustment> deletedAdjustmentList = FXCollections.observableArrayList();
     private static ObservableList<Order> orderList = FXCollections.observableArrayList();
     private static ObservableList<Order> ongoingOrderList = FXCollections.observableArrayList();
     private static ObservableList<Component> basePackageComponents = FXCollections.observableArrayList();
@@ -32,6 +35,12 @@ public class Lists<E> implements Serializable {
             carList.add(car);
         }
     }
+    public void addDeletedCar (Car car){
+        if(car!=null){
+            deletedCarList.add(car);
+        }
+    }
+
     public static void deleteCars(){
         carList.clear();
     }
@@ -49,6 +58,11 @@ public class Lists<E> implements Serializable {
             }
         }
     }
+    public void addDeletedComponent(Component component){
+        if(component!=null){
+            deletedComponentList.add(component);
+        }
+    }
     public static void deleteComponents(){
         componentList.clear();
     }
@@ -61,6 +75,12 @@ public class Lists<E> implements Serializable {
                 }
             }
             adjustmentList.add(adj);
+        }
+    }
+    public void addDeletedAdjustment (Adjustment adjustment){
+
+        if(adjustment!=null){
+            deletedAdjustmentList.add(adjustment);
         }
     }
     public static void deleteAdjustments(){
@@ -86,6 +106,10 @@ public class Lists<E> implements Serializable {
         }
         return carList;
     }
+    public static ObservableList<Car> getDeletedCars(){
+        return deletedCarList;
+    }
+
     public static ObservableList<Component> getComponents(){
         ArrayList<Component> newComponentList =new ArrayList<>();
         for(Component i : componentList){
@@ -93,8 +117,15 @@ public class Lists<E> implements Serializable {
         }
         return componentList;
     }
+
+    public static ObservableList<Component> getDeletedComponents(){
+        return deletedComponentList;
+    }
     public static ObservableList<Adjustment> getAdjustment(){
         return adjustmentList;
+    }
+    public static ObservableList<Adjustment> getDeletedAdjustment(){
+        return deletedAdjustmentList;
     }
     public static ObservableList<Order> getOrders(){
         return orderList;

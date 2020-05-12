@@ -14,3 +14,4 @@
 15;Jorunn;Heggernes;joheg@gmail.com;885577342;heggernes;false;true
 19;Steve;Jobs;steve@apple.com;55443322;iphone;false;false
 103;Ola;Normann;ola@norge.no;11133345;norge;false;true
+104;Kari;Normann;kari@norge.no;44665544;kari;false;true

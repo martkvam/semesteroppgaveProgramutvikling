@@ -79,10 +79,11 @@ public class ReadUsers {
                         currentUser[6] = change;
                         break;
                 }
-                newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
-                        currentUser[3], currentUser[4], currentUser[5],
-                        Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
-
+                if (!type.equals("Delete")) {
+                    newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
+                            currentUser[3], currentUser[4], currentUser[5],
+                            Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
+                }
             } else{
                 newRegister.append(line).append(System.lineSeparator());
             }
@@ -170,12 +171,10 @@ public class ReadUsers {
         return userList;
     }
 
-    public static boolean checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
+    public static void checkIfUserExists(String email, String phone) throws FileNotFoundException, UserAlreadyExistException {
 
-        if(Objects.equals(ReadUsers.getUserId(email), null) &&
-        Objects.equals(ReadUsers.getUserId(phone), null)){
-            return true;
-        } else{
+        if (!(Objects.equals(ReadUsers.getUserId(email), null) &&
+                Objects.equals(ReadUsers.getUserId(phone), null))) {
             throw new UserAlreadyExistException("User already exists");
         }
     }

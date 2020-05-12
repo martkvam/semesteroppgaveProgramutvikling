@@ -52,6 +52,9 @@ public class ControllerOrders implements Initializable {
     private Label lblMailOut;
 
     @FXML
+    private Label lblActiveUser;
+
+    @FXML
     private TextField txtFilterOrders;
 
     @FXML
@@ -176,6 +179,10 @@ public class ControllerOrders implements Initializable {
                         lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
                         lblOutPhone.setText((i.getPhone()));
                         lblMailOut.setText(i.getEmail());
+                        if(!new ConverterErrorHandler.BooleanStringConverter().fromString(ReadUsers.getInfo(Integer.toString(i.getId()),"Active"))){
+                            lblActiveUser.setText("This user is not active anymore");
+                        }
+
                     }
                 }
             } catch (FileNotFoundException e) {
@@ -249,6 +256,9 @@ public class ControllerOrders implements Initializable {
                             lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
                             lblOutPhone.setText((i.getPhone()));
                             lblMailOut.setText(i.getEmail());
+                            if(!new ConverterErrorHandler.BooleanStringConverter().fromString(ReadUsers.getInfo(Integer.toString(i.getId()),"Active"))){
+                                lblActiveUser.setText("This user is not active anymore");
+                            }
                         }
                     }
                 } catch (FileNotFoundException f) {
@@ -295,6 +305,9 @@ public class ControllerOrders implements Initializable {
                     lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
                     lblOutPhone.setText((i.getPhone()));
                     lblMailOut.setText(i.getEmail());
+                    if(!new ConverterErrorHandler.BooleanStringConverter().fromString(ReadUsers.getInfo(Integer.toString(i.getId()),"Active"))){
+                        lblActiveUser.setText("This user is not active anymore");
+                    }
                 }
             }
         } catch (FileNotFoundException f) {
@@ -345,7 +358,6 @@ public class ControllerOrders implements Initializable {
         int outPersonId = 0;
         try{
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
-            System.out.println(selectedOrder.getComponentList().get(0).getComponentID());
             //Matching selected order with order list. Prints the components and adjustments in order
             for(Order i : Lists.getOrders()){
                 if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
@@ -360,6 +372,12 @@ public class ControllerOrders implements Initializable {
                     lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
                     lblOutPhone.setText((i.getPhone()));
                     lblMailOut.setText(i.getEmail());
+                    if(!new ConverterErrorHandler.BooleanStringConverter().fromString(ReadUsers.getInfo(Integer.toString(i.getId()),"Active"))){
+                        lblActiveUser.setText("This user is not active anymore");
+                    }
+                    else{
+                        lblActiveUser.setText("");
+                    }
                 }
             }
         }catch (NullPointerException e){

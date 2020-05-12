@@ -66,6 +66,8 @@ public class ReadPackages {
                     }
                 }
             }
+            //If the file is in the right format, but a component-Id in the file is not found in the register, an error
+            //message is displayed in the terminal.
             if (!componentExists){
                 System.err.println("There is an error in the file containing the packages. The component list: " + componentList
                 + " is contains a componentID that does not exist: " + string);
@@ -85,6 +87,8 @@ public class ReadPackages {
                     adjustments.add(a);
                 }
             }
+            //If the file is in the right format, but an adjustmentID in the file is not found in the
+            //adjustment register, an error message is displayed in the terminal.
             if (!adjustmentExists){
                 System.err.println("There is an error in the file containing the packages. The adjustmenlist: " +
                         str + " contains an adjustmentID that does not exist: " + string);

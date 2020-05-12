@@ -166,8 +166,13 @@ public class Validator {
 
     //Validates car id in orders
     public static boolean orderCarID(String carId){
-        for(int i = 0; i < Lists.getCars().size(); i++){
-            if(Lists.getCars().get(i).getCarID().equals(carId)){
+        for (Car c : Lists.getCars()){
+            if (c.getCarID().equals(carId)){
+                return true;
+            }
+        }
+        for (Car c: Lists.getDeletedCars()){
+            if (c.getCarID().equals(carId)){
                 return true;
             }
         }

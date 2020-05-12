@@ -2,6 +2,7 @@ package javaCode.ReaderWriter.Order;
 
 import javaCode.Dialogs;
 import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.Lists;
 import javaCode.objects.Order;
@@ -50,6 +51,28 @@ public class fileReaderTxt implements Reader {
         String orderNr = split[0];
         int personId = parseNumber(split[1], "Person ID is incorrect");
         String carId = split[2];
+        boolean carExists = false;
+        boolean carIsDeleted = false;
+        boolean wrongCarID = false;
+        for(Car c : Lists.getCars()){
+            if (c.getCarID().equals(carId)){
+                carExists = true;
+            }
+        }
+        if (!carExists){
+            for(Car c : Lists.getDeletedCars()){
+                if(c.getCarID().equals(carId)){
+                    carIsDeleted = true;
+                    c.setDescription("No longer available");
+                }
+            }
+        }
+
+        if(!carExists && !carIsDeleted){
+            System.err.println("There is an error in the files containing the order : " + line +". The carID" +
+                    "is not correct");
+            wrongCarID = true;
+        }
 
         String strOrderStarted = split[3];
         String strOrderFinished = split[4];
@@ -72,8 +95,11 @@ public class fileReaderTxt implements Reader {
         }
         else throw new Exception("The order status is not correct");
 
-        Order order = new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
-        return order;
+        if (!wrongCarID) {
+            Order order = new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
+            return order;
+        }
+        else return null;
     }
 
     private int parseNumber(String str, String errorMessage) throws Exception{

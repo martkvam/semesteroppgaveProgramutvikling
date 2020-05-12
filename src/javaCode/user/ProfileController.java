@@ -5,6 +5,7 @@ import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
 import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
 import javafx.collections.FXCollections;
@@ -199,6 +200,15 @@ public class ProfileController implements Initializable {
                         correctAdjustments = false;
                     }
                 }
+                boolean correctCarID = false;
+                for (Car c : Lists.getCars()){
+                    if(c.getCarID().equals(chosen.getCarId())){
+                        correctCarID = true;
+                    }
+                }
+                if(!correctCarID){
+                    Dialogs.showErrorDialog("This car type is no longer available");
+                }
 
                 //Adding the order to the finished-orders list, and deleting it from the ongoing orders list + updating the
                 //tableview
@@ -210,7 +220,7 @@ public class ProfileController implements Initializable {
                     Dialogs.showErrorDialog("This order contains one or more adjustments that no longer are " +
                             "available. Please remove these adjustments before you finish your order.");
                 }
-                if(correctComponents && correctAdjustments) {
+                if(correctComponents && correctAdjustments && correctCarID) {
                     Lists.getOrders().add(chosen);
                     Lists.getOngoingOrders().remove(chosen);
                     ordersTV.getItems().remove(chosen);

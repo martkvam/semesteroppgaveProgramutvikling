@@ -300,9 +300,18 @@ public class UserController implements Initializable {
             Dialogs.showErrorDialog("This order contains one or more adjustments that no longer are available. "
             + "Please remove these adjustments before you save");
         }
+        boolean correctCarID = false;
+        for (Car c : Lists.getCars()){
+            if(c.getCarID().equals(carId)){
+                correctCarID = true;
+            }
+        }
+        if(!correctCarID){
+            Dialogs.showErrorDialog("This car type is no longer available");
+        }
 
         //Creates a new order-object, and adds it to the list of ongoing orders.
-        if (rightInput && correctComponents && correctAdjustments) {
+        if (rightInput && correctComponents && correctAdjustments && correctCarID) {
             Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
             Path path = Paths.get("src/dataBase/OngoingOrders.txt");
@@ -398,9 +407,19 @@ public class UserController implements Initializable {
                     + "Please remove these adjustments before you order");
         }
 
+        boolean correctCarID = false;
+        for (Car c : Lists.getCars()){
+            if(c.getCarID().equals(carId)){
+                correctCarID = true;
+            }
+        }
+        if(!correctCarID){
+            Dialogs.showErrorDialog("This car type is no longer available");
+        }
+
 
         //If the input is correct, the order will be added to the list of finished orders and to the txt-file.
-        if (rightInput && correctComponents && correctAdjustments) {
+        if (rightInput && correctComponents && correctAdjustments && correctCarID) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?", ButtonType.OK, ButtonType.CANCEL);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)) {

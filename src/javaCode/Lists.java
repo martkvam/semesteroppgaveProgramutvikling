@@ -88,11 +88,15 @@ public class Lists<E> implements Serializable {
     }
 
     public void addOrder(Order order){
-        orderList.add(order);
+        if (order != null) {
+            orderList.add(order);
+        }
     }
 
     public void addOngoingOrder (Order order){
-        ongoingOrderList.add(order);
+        if (order != null) {
+            ongoingOrderList.add(order);
+        }
     }
     public static void deleteOrders(){
         orderList.clear();

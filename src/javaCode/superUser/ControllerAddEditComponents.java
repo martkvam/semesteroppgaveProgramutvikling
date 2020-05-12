@@ -248,10 +248,10 @@ public class ControllerAddEditComponents implements Initializable {
                     //Checks if the superUser has selected a tableRow and wants to delete it
                     if(delete.deleteCars(TableView.getSelectionModel().getSelectedItems())){
                         //Deletes tableRow(s)
-                        TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
                         for(Car c : TableView.getSelectionModel().getSelectedItems()){
                             lists.addDeletedCar(c);
                         }
+                        TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
                     }
 
                     break;

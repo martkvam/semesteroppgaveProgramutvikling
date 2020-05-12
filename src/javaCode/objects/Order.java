@@ -178,6 +178,11 @@ public class Order implements Serializable {
                 carType += c.getCarType();
             }
         }
+        for (Car c : Lists.getDeletedCars()){
+            if (c.getCarID().equals(carID)){
+                carType += c.getCarType();
+            }
+        }
         return carType;
     }
 

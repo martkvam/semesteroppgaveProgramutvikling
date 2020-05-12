@@ -8,15 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class NewUser {
 
@@ -49,7 +45,7 @@ public class NewUser {
                 passwordMatches();
                 User newUser = new User(Formatter.assignID(), txtFirstName.getText(),
                         txtLastName.getText(), txtEmail.getText(), txtPhone.getText(),
-                         txtPassword.getText(), false);
+                        txtPassword.getText(), false, true);
                 Formatter.addToFile(newUser);
                 Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
                 OpenScene.newScene("Log in", root, 600, 450, actionevent);

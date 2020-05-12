@@ -1,11 +1,10 @@
 package javaCode;
 
-import javaCode.Exception.UserAlreadyExistException;
-import javaCode.InLog.ReadUsers;
-import javaCode.objects.*;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
+import javaCode.objects.Component;
+import javaCode.objects.Order;
 import javaCode.superUser.AddElements;
-
-import java.io.FileNotFoundException;
 
 //Class for validating all inputs
 public class Validator {
@@ -16,7 +15,7 @@ public class Validator {
     }
 
     public static boolean phone(String phone){
-        return phone.matches("(([(][+]{0,1})|([+]?))[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*");
+        return phone.matches("(([(][+]?)|([+]?))[0-9]{1,4}[)]?[-\\s\\./0-9]{5,15}");
     }
 
     public static boolean email(String email){
@@ -33,12 +32,7 @@ public class Validator {
                     idCounter=Integer.parseInt(Lists.getCars().get(i).getCarID());
                 }
             }
-            if(idCounter >= Integer.parseInt(id)){
-                return false;
-            }
-            else {
-                return true;
-            }
+            return idCounter < Integer.parseInt(id);
         }
         else{
             return false;
@@ -93,12 +87,7 @@ public class Validator {
                             }
                         }
                     }
-                    if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
+                    return Integer.parseInt(splitInnId[1]) > highestcomponentTypeId;
                 }
             }
 

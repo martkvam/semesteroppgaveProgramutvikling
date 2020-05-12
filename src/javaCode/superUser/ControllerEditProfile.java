@@ -3,8 +3,8 @@ package javaCode.superUser;
 import javaCode.ConverterErrorHandler;
 import javaCode.Dialogs;
 import javaCode.InLog.ReadUsers;
-import javaCode.objects.User;
 import javaCode.OpenScene;
+import javaCode.objects.User;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -31,6 +31,9 @@ public class ControllerEditProfile {
     private TableColumn<TableView<User>, Boolean> superUser;
 
     @FXML
+    private Button btnDelete;
+
+    @FXML
     private Button btnClick;
 
     @FXML
@@ -48,6 +51,7 @@ public class ControllerEditProfile {
         Thread th = new Thread(delayThread);
         th.setDaemon(true);
         tvUserRegister.setDisable(true);
+        btnDelete.setDisable(true);
         txtSearch.setDisable(true);
         btnClick.setDisable(true);
         th.start();
@@ -61,6 +65,7 @@ public class ControllerEditProfile {
 
     private void threadDone(WorkerStateEvent workerStateEvent) {
         tvUserRegister.setDisable(false);
+        btnDelete.setDisable(false);
         txtSearch.setDisable(false);
         btnClick.setDisable(false);
     }
@@ -169,7 +174,19 @@ public class ControllerEditProfile {
     //Opens super user scene when "go back" button is clicked
     public void btnGoBackOnClick(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-        OpenScene.newScene("Superuser",  root, 470, 300, actionEvent);
+        OpenScene.newScene("Superuser", root, 470, 300, actionEvent);
+    }
+
+    public void btnDeleteOnClick(ActionEvent actionEvent) {
+        User u = tvUserRegister.getSelectionModel().getSelectedItem();
+        if (Dialogs.showChooseDialog("Are you sure you want to delete user nr: " + u.getId() + "?")) {
+            try {
+                ReadUsers.changeInfo(String.valueOf(u.getId()), "Delete", null);
+                tvUserRegister.getItems().remove(u);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

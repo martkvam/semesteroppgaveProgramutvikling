@@ -45,7 +45,7 @@
             </GridPane.margin>
         </TextField>
         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Choose user from tableview to edit. Click on the value you want to edit and press enter after editing. To make a superuser, change the value to &quot;true&quot;, if you want to deactivate a user, change the value to false."
+              text="Choose user from tableview to edit. Click on the value you want to edit and press enter after editing. To make a superuser, change the value to &quot;true&quot;, if you want to deactivate a user, change the value to &quot;false&quot;"
               textAlignment="CENTER" wrappingWidth="248.0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
               GridPane.valignment="CENTER">
             <GridPane.margin>

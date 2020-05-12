@@ -1,5 +1,6 @@
 package javaCode.superUser;
 
+import javaCode.Dialogs;
 import javaCode.OpenScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,8 +58,10 @@ public class ControllerSuperUser {
     //Logging out superUser
     @FXML
     void btnGoBack(ActionEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
-        OpenScene.newScene("Log in", root, 600,450, event);
+        if (Dialogs.showChooseDialog("Are you sure you want to log out?")) {
+            Parent root = FXMLLoader.load(getClass().getResource("../../resources/Inlog.fxml"));
+            OpenScene.newScene("Log in", root, 600, 450, event);
+        }
     }
 
     //Info about components scene on hover

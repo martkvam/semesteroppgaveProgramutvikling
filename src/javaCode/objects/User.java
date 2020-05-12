@@ -1,12 +1,9 @@
 package javaCode.objects;
 
-import javaCode.Exception.UserAlreadyExistException;
 import javaCode.Validator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import java.io.FileNotFoundException;
 
 //Class for object user
 public class User {
@@ -17,19 +14,20 @@ public class User {
     private SimpleStringProperty email;
     private SimpleStringProperty password;
     private SimpleBooleanProperty superUser;
+    private SimpleBooleanProperty active;
 
     //Validating input when creating new object
-    public User(int id, String firstName, String lastName, String email, String phone, String password, boolean superUser) throws FileNotFoundException, UserAlreadyExistException {
-        if(!Validator.name(firstName)){
+    public User(int id, String firstName, String lastName, String email, String phone, String password, boolean superUser, boolean active) {
+        if (!Validator.name(firstName)) {
             throw new IllegalArgumentException("Invalid firstname");
         }
-        if(!Validator.name(lastName)){
+        if (!Validator.name(lastName)) {
             throw new IllegalArgumentException("Invalid lastname");
         }
-        if(!Validator.phone(phone)){
+        if (!Validator.phone(phone)) {
             throw new IllegalArgumentException("Invalid phone number");
         }
-        if(!Validator.email(email)){
+        if (!Validator.email(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
         if(id <= 0){
@@ -42,6 +40,7 @@ public class User {
         this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
         this.superUser = new SimpleBooleanProperty(superUser);
+        this.active = new SimpleBooleanProperty(active);
     }
 
     public void setId(int id) {
@@ -66,6 +65,10 @@ public class User {
 
     public void setSuperUser(boolean superUser) {
         this.superUser.set(superUser);
+    }
+
+    public Boolean getActive() {
+        return active.getValue();
     }
 
     public int getId() {
@@ -96,10 +99,14 @@ public class User {
         return superUser.getValue();
     }
 
+    public void setActive(boolean active) {
+        this.active.set(active);
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         String DELIMITER = ";";
-        return String.format("%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s"+DELIMITER+"%s",
-                id.getValue(), firstName.getValue(), lastName.getValue(), email.getValue(), phone.getValue(), password.getValue(), superUser.getValue());
+        return String.format("%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s",
+                id.getValue(), firstName.getValue(), lastName.getValue(), email.getValue(), phone.getValue(), password.getValue(), superUser.getValue(), active.getValue());
     }
 }

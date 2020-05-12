@@ -38,6 +38,8 @@ public class ReadUsers {
                             return strings[5];
                         case "SuperUser":
                             return strings[6];
+                        case "Active":
+                            return strings[7];
                         case "User":
                             return Arrays.toString(strings);
                     }
@@ -54,6 +56,7 @@ public class ReadUsers {
         Scanner myReader = new Scanner(myObj);
         StringBuilder newRegister = new StringBuilder();
         ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
+        ConverterErrorHandler.BooleanStringConverter bolStrConv = new ConverterErrorHandler.BooleanStringConverter();
 
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
@@ -78,11 +81,14 @@ public class ReadUsers {
                     case "SuperUser":
                         currentUser[6] = change;
                         break;
+                    case "Active":
+                        currentUser[7] = change;
+                        break;
                 }
                 if (!type.equals("Delete")) {
                     newRegister.append(new User(intStrConv.fromString(currentUser[0]), currentUser[1], currentUser[2],
                             currentUser[3], currentUser[4], currentUser[5],
-                            Boolean.parseBoolean(currentUser[6])).toString()).append(System.lineSeparator());
+                            bolStrConv.fromString(currentUser[6]), bolStrConv.fromString(currentUser[7])).toString()).append(System.lineSeparator());
                 }
             } else{
                 newRegister.append(line).append(System.lineSeparator());
@@ -158,12 +164,14 @@ public class ReadUsers {
         File myObj = new File(Formatter.registerPath);
         Scanner myReader = new Scanner(myObj);
         ConverterErrorHandler.IntegerStringConverter intStrConv = new ConverterErrorHandler.IntegerStringConverter();
+        ConverterErrorHandler.BooleanStringConverter bolStrConv = new ConverterErrorHandler.BooleanStringConverter();
 
         for (; myReader.hasNext(); ) {
             String line = myReader.next();
             String[] user = line.split(";");
             try {
-                userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5], Boolean.parseBoolean(user[6])));
+                userList.add(new User(intStrConv.fromString(user[0]), user[1], user[2], user[3], user[4], user[5],
+                        bolStrConv.fromString(user[6]), bolStrConv.fromString(user[7])));
             }catch (Exception e){
                 Dialogs.showErrorDialog("User number " + user[0] +" could not register due to:\n" + e.getMessage());
             }

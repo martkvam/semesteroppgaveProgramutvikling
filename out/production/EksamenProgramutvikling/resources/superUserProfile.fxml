@@ -63,16 +63,16 @@
                 </cellFactory>
             </TableColumn>
             <TableColumn onEditCommit="#firstNameEdited" prefWidth="90.0" text="Firstname">
-              <cellValueFactory>
-                  <PropertyValueFactory property="firstName"/>
-              </cellValueFactory>
-              <cellFactory>
-                  <TextFieldTableCell fx:factory="forTableColumn"/>
-              </cellFactory>
-          </TableColumn>
-          <TableColumn onEditCommit="#lastNameEdited" prefWidth="90.0" text="Lastname">
-              <cellValueFactory>
-                  <PropertyValueFactory property="lastName"/>
+                <cellValueFactory>
+                    <PropertyValueFactory property="firstName"/>
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn"/>
+                </cellFactory>
+            </TableColumn>
+            <TableColumn onEditCommit="#lastNameEdited" prefWidth="90.0" text="Lastname">
+                <cellValueFactory>
+                    <PropertyValueFactory property="lastName"/>
               </cellValueFactory>
               <cellFactory>
                   <TextFieldTableCell fx:factory="forTableColumn"/>

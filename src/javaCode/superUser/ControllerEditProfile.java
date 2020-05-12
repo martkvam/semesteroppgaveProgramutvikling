@@ -57,7 +57,7 @@ public class ControllerEditProfile {
         th.start();
     }
 
-
+    //Methods for the thread
     private void threadFailed(WorkerStateEvent workerStateEvent) {
         Exception e = (Exception) workerStateEvent.getSource().getException();
         Dialogs.showErrorDialog(e.getMessage());
@@ -174,6 +174,7 @@ public class ControllerEditProfile {
         tvUserRegister.refresh();
     }
 
+    //Change the active value to the opposite of the original when clicked
     public void activeEdited(TableColumn.CellEditEvent<TableView<User>, Boolean> tableViewBooleanCellEditEvent) {
         User u = tvUserRegister.getSelectionModel().getSelectedItem();
         boolean newActive = !tableViewBooleanCellEditEvent.getOldValue();

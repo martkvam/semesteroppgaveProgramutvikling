@@ -1,12 +1,11 @@
 package javaCode.superUser;
+
 import javaCode.*;
-import javaCode.Exception.UserAlreadyExistException;
 import javaCode.InLog.ReadUsers;
-import javaCode.objects.User;
 import javaCode.objects.Adjustment;
-import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
+import javaCode.objects.User;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -24,7 +23,8 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 public class ControllerOrders implements Initializable {
 
@@ -227,7 +227,7 @@ public class ControllerOrders implements Initializable {
                 tableViewComponents.getItems().clear();
                 tableViewAdjustments.getItems().clear();
 
-                fileHandler.readAllFiles(stage);
+                FileHandler.readAllFiles(stage);
 
 
                 tableViewOrder.setItems(Lists.getOrders());
@@ -278,7 +278,7 @@ public class ControllerOrders implements Initializable {
         tableViewComponents.getItems().clear();
         tableViewAdjustments.getItems().clear();
 
-        fileHandler.readAllFiles(stage);
+        FileHandler.readAllFiles(stage);
 
 
         tableViewOrder.setItems(Lists.getOrders());
@@ -345,7 +345,6 @@ public class ControllerOrders implements Initializable {
         int outPersonId = 0;
         try{
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
-            System.out.println(selectedOrder.getComponentList().get(0).getComponentID());
             //Matching selected order with order list. Prints the components and adjustments in order
             for(Order i : Lists.getOrders()){
                 if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){

@@ -1,6 +1,6 @@
 package javaCode.superUser;
 
-import javaCode.*;
+import javaCode.Dialogs;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Car;
 import javaCode.objects.Component;
@@ -11,110 +11,14 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AddElements {
 
-    //Code for a new dialog to add new cars.
-    public void openAddCarDialog(ObservableList<Car> carTypeList, String type, String description, int price) {
-
-        //Sets up a new dialog
-        Dialog<Car> dialog = new Dialog<>();
-        dialog.setTitle("New car dialog");
-        dialog.setHeaderText("Add new car");
-
-        // Set the button types.
-        ButtonType addButton = new ButtonType("Add car", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
-
-        // Create the input labels and fields in a grid
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField carType = new TextField();
-        carType.setPromptText("New car type");
-        TextArea carDescription = new TextArea();
-        carDescription.setPromptText("New car description");
-        TextField carPrice = new TextField();
-        carPrice.setPromptText("New car price");
-        if (type.length() != 0 || description.length() != 0 || price != 0) {
-            carType.setText(type);
-            carDescription.setText(description);
-        }
-
-        grid.add(new Label("Car type"), 0, 0);
-        grid.add(carType, 1, 0);
-        grid.add(new Label("Car description"), 0, 1);
-        grid.add(carDescription, 1, 1);
-        grid.add(new Label("Car Price"), 0, 2);
-        grid.add(carPrice, 1, 2);
-
-        // Enable/Disable add button depending on whether the input fields are filled.
-        Node addDisableButton = dialog.getDialogPane().lookupButton(addButton);
-        addDisableButton.setDisable(true);
-
-        //The price field has to be filled before the new car can be added
-        carPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-            addDisableButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-
-        //Validates all input when add button is pushed. Returns new car and adds to list
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == addButton) {
-                int lastCarIndex = 0;
-                for (int i = 0; i < carTypeList.size(); i++) {
-                    if (Integer.parseInt(carTypeList.get(i).getCarID()) > lastCarIndex) {
-                        lastCarIndex = Integer.parseInt(carTypeList.get(i).getCarID());
-                    }
-                }
-                String newCarType = "";
-                String newCarDescription = "";
-                int newCarPrice = 0;
-                //Must give the car type a name
-                if (carType.getText().length() != 0) {
-                    newCarType = carType.getText();
-                } else {
-                    Dialogs.showErrorDialog("You must give the car type a name");
-                }
-
-                if (carDescription.getText().length() != 0) {
-                    newCarDescription = carDescription.getText();
-                } else {
-                    Dialogs.showErrorDialog("You must give the car a description");
-                }
-
-                try {
-                    newCarPrice = Integer.parseInt(carPrice.getText());
-                    Car newCar = new Car(Integer.toString(lastCarIndex + 1), newCarType, newCarDescription, newCarPrice);
-                    return newCar;
-                } catch (NumberFormatException e) {
-                    Dialogs.showErrorDialog("The price must be a number");
-                    openAddCarDialog(carTypeList, newCarType, newCarDescription, newCarPrice);
-                } catch (IllegalArgumentException e) {
-                    openAddCarDialog(carTypeList, newCarType, newCarDescription, newCarPrice);
-                }
-            }
-            return null;
-        });
-
-        //Starts dialog window, and waits for return.
-
-        Optional<Car> result = dialog.showAndWait();
-
-        //Handles the input values and sets new car id
-
-        result.ifPresent(newCarEntry -> {
-            carTypeList.add(newCarEntry);
-        });
-    }
-
     //Code for a new dialog to add new components.
-    public static boolean openAddComponentsDialog(ObservableList<Car> carList, ObservableList<Component> componentList, Object selectedCarType, Object componentType, String description, int price){
+    public static void openAddComponentsDialog(ObservableList<Car> carList, ObservableList<Component> componentList, Object selectedCarType, Object componentType, String description, int price) {
         Dialog<Component> dialog = new Dialog<>();
         dialog.setTitle("New Component dialog");
         dialog.setHeaderText("Add new Component");
@@ -174,7 +78,7 @@ public class AddElements {
             //Sets special grid for input of new component type
             if(chooseComponentType.getSelectionModel().getSelectedItem().toString().equals("New component type")){
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -182,12 +86,12 @@ public class AddElements {
                 grid.add(newComponentType, 1, 2);
                 grid.add(new Label("Component description"), 0, 3);
                 grid.add(componentDescription, 1, 3);
-                grid.add(new Label("Car Price"), 0, 4);
+                grid.add(new Label("Component price"), 0, 4);
                 grid.add(componentPrice, 1, 4);
                 newComponentType.setVisible(true);
             }
             else{
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -198,7 +102,7 @@ public class AddElements {
                 grid.add(componentPrice, 1, 3);
             }
         }else{
-            grid.add(new Label("Choose car type for your new component"), 0, 0);
+            grid.add(new Label("Choose component type for your new component"), 0, 0);
             grid.add(chooseCar, 1, 0);
             grid.add(new Label("Choose component type"), 0, 1);
             grid.add(chooseComponentType, 1, 1);
@@ -215,7 +119,7 @@ public class AddElements {
 
             if(newValue.toString().equals("New component type")){
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -223,13 +127,13 @@ public class AddElements {
                 grid.add(newComponentType, 1, 2);
                 grid.add(new Label("Component description"), 0, 3);
                 grid.add(componentDescription, 1, 3);
-                grid.add(new Label("Car Price"), 0, 4);
+                grid.add(new Label("Component price"), 0, 4);
                 grid.add(componentPrice, 1, 4);
                 newComponentType.setVisible(true);
             }
             else{
                 grid.getChildren().clear();
-                grid.add(new Label("Choose car type for your new component"), 0, 0);
+                grid.add(new Label("Choose component type for your new component"), 0, 0);
                 grid.add(chooseCar, 1, 0);
                 grid.add(new Label("Choose component type"), 0, 1);
                 grid.add(chooseComponentType, 1, 1);
@@ -248,13 +152,13 @@ public class AddElements {
         componentPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             addDisableButton.setDisable(true);
             if(newValue.length()!=0){
-                try{
+                try {
                     int testComponentPrice = Integer.parseInt(newValue);
                     addDisableButton.setDisable(newValue.trim().isEmpty());
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     Dialogs.showErrorDialog(e.getMessage());
                     componentPrice.clear();
-                }catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException ignored) {
 
                 }
             }
@@ -263,7 +167,7 @@ public class AddElements {
         dialog.getDialogPane().setContent(grid);
 
         // Request focus on the username field by default.
-        Platform.runLater(() -> chooseCar.requestFocus());
+        Platform.runLater(chooseCar::requestFocus);
 
         // Validates an converts the input from the textareas and comboboxes to a Component and returns a new component.
         dialog.setResultConverter(dialogButton -> {
@@ -280,8 +184,8 @@ public class AddElements {
                         //Loop to find highest ComponentTypeID(first number in componentID)
                         String lastComponentID = "";
                         int lastComponentIDchecked = 0;
-                        for (int j = 0; j < componentList.size(); j++) {
-                            String line = componentList.get(j).getComponentID();
+                        for (Component component : componentList) {
+                            String line = component.getComponentID();
                             String[] split = line.split("-");
 
                             if (Integer.parseInt(split[0]) >= lastComponentIDchecked) {
@@ -296,18 +200,18 @@ public class AddElements {
                         componentId += 1;
                     }
                     //Loop to set new componentID
-                    for (int i = 0; i < componentList.size(); i++) {
-                         if (componentList.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
+                    for (Component component : componentList) {
+                        if (component.getComponentType().equals(chooseComponentType.getValue().toString())) {
                             int lastComponentIDchecked = 0;
-                            String line = componentList.get(i).getComponentID();
+                            String line = component.getComponentID();
                             String[] split = line.split("-");
                             if (Integer.parseInt(split[1]) >= highestComponentID) {
                                 highestComponentID = Integer.parseInt(split[1]);
-                                String line2 = componentList.get(i).getComponentID();
+                                String line2 = component.getComponentID();
                                 String[] split2 = line2.split("-");
                                 componentId = split2[0];
                                 componentId += "-";
-                                componentId += Integer.toString(highestComponentID+1);
+                                componentId += Integer.toString(highestComponentID + 1);
                             }
                             outComponentType = chooseComponentType.getValue().toString();
                         }
@@ -318,13 +222,12 @@ public class AddElements {
                         outComponentPrice = Integer.parseInt(componentPrice.getText());
                         String outCarType = chooseCar.getValue().toString();
                         String carID = "";
-                        for (int i = 0; i < carList.size(); i++) {
-                            if (outCarType.equals(carList.get(i).getCarType())) {
-                                carID = carList.get(i).getCarID();
+                        for (Car car : carList) {
+                            if (outCarType.equals(car.getCarType())) {
+                                carID = car.getCarID();
                             }
                         }
-                        Component newComponent = new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
-                        return newComponent;
+                        return new Component(carID, componentId, outComponentType, outComponentDescription, outComponentPrice);
                     } catch (NumberFormatException e) {
                         Dialogs.showErrorDialog("The price has to be a number");
                         openAddComponentsDialog(carList, componentList, chooseCar.getSelectionModel().getSelectedItem(), chooseComponentType.getSelectionModel().getSelectedItem(),outComponentDescription, 1);
@@ -351,16 +254,102 @@ public class AddElements {
         Optional<Component> result = dialog.showAndWait();
 
         //Handles the input values and sets new car id
-        result.ifPresent(newComponentEntry -> {
-            componentList.add(newComponentEntry);
-        });
-        if(result.isPresent()){
-            return true;
-        }
-        return false;
+        result.ifPresent(componentList::add);
     }
 
-    public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList, Object adjustmentType, String description, int price){
+    //Code for a new dialog to add new cars.
+    public void openAddCarDialog(ObservableList<Car> carTypeList, String type, String description, int price) {
+
+        //Sets up a new dialog
+        Dialog<Car> dialog = new Dialog<>();
+        dialog.setTitle("New car dialog");
+        dialog.setHeaderText("Add new car");
+
+        // Set the button types.
+        ButtonType addButton = new ButtonType("Add car", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
+
+        // Create the input labels and fields in a grid
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField carType = new TextField();
+        carType.setPromptText("New car type");
+        TextArea carDescription = new TextArea();
+        carDescription.setPromptText("New car description");
+        TextField carPrice = new TextField();
+        carPrice.setPromptText("New car price");
+        if (type.length() != 0 || description.length() != 0 || price != 0) {
+            carType.setText(type);
+            carDescription.setText(description);
+        }
+
+        grid.add(new Label("Car type"), 0, 0);
+        grid.add(carType, 1, 0);
+        grid.add(new Label("Car description"), 0, 1);
+        grid.add(carDescription, 1, 1);
+        grid.add(new Label("Car price"), 0, 2);
+        grid.add(carPrice, 1, 2);
+
+        // Enable/Disable add button depending on whether the input fields are filled.
+        Node addDisableButton = dialog.getDialogPane().lookupButton(addButton);
+        addDisableButton.setDisable(true);
+
+        //The price field has to be filled before the new car can be added
+        carPrice.textProperty().addListener((observable, oldValue, newValue) -> addDisableButton.setDisable(newValue.trim().isEmpty()));
+
+        dialog.getDialogPane().setContent(grid);
+
+        //Validates all input when add button is pushed. Returns new car and adds to list
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == addButton) {
+                int lastCarIndex = 0;
+                for (Car car : carTypeList) {
+                    if (Integer.parseInt(car.getCarID()) > lastCarIndex) {
+                        lastCarIndex = Integer.parseInt(car.getCarID());
+                    }
+                }
+                String newCarType = "";
+                String newCarDescription = "";
+                int newCarPrice = 0;
+                //Must give the car type a name
+                if (carType.getText().length() != 0) {
+                    newCarType = carType.getText();
+                } else {
+                    Dialogs.showErrorDialog("You must give the car type a name");
+                }
+
+                if (carDescription.getText().length() != 0) {
+                    newCarDescription = carDescription.getText();
+                } else {
+                    Dialogs.showErrorDialog("You must give the car a description");
+                }
+
+                try {
+                    newCarPrice = Integer.parseInt(carPrice.getText());
+                    return new Car(Integer.toString(lastCarIndex + 1), newCarType, newCarDescription, newCarPrice);
+                } catch (NumberFormatException e) {
+                    Dialogs.showErrorDialog("The price must be a number");
+                    openAddCarDialog(carTypeList, newCarType, newCarDescription, newCarPrice);
+                } catch (IllegalArgumentException e) {
+                    openAddCarDialog(carTypeList, newCarType, newCarDescription, newCarPrice);
+                }
+            }
+            return null;
+        });
+
+        //Starts dialog window, and waits for return.
+
+        Optional<Car> result = dialog.showAndWait();
+
+        //Handles the input values and sets new car id
+
+        result.ifPresent(carTypeList::add);
+    }
+
+    public static void openAddAdjustmentDialog(ObservableList<Adjustment> adjustmentList, Object adjustmentType, String description, int price) {
         Dialog<Adjustment> dialog = new Dialog<>();
         dialog.setTitle("New adjustment dialog");
         dialog.setHeaderText("Add new adjustment");

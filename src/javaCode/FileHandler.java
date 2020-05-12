@@ -63,17 +63,17 @@ public class FileHandler{
         }
     }
 
-    public static void saveSelectedFile(Stage stage) throws IOException {
+    public static void saveSelectedFile(Stage stage) {
         File selectedFile = new File("src/dataBase/FinishedOrders.txt");
 
         if (selectedFile != null) {
-           try{
+            try {
                 Writer writeOrder = new fileWriterTxt();
                 selectedFile.delete();
                 writeOrder.save(selectedFile.toPath());
                 Dialogs.showSuccessDialog("The register got saved");
-                } catch (IOException e) {
-                    Dialogs.showErrorDialog("Saving to file did not work because of: " + e.getMessage());
+            } catch (IOException e) {
+                Dialogs.showErrorDialog("Saving to file did not work because of: " + e.getMessage());
                 }
             }
     }
@@ -175,9 +175,9 @@ public class FileHandler{
                 }
             }
             else if(fileExt.equals(".jobj")){
-                try{
+                try {
                     writeCar.save(selectedFile.toPath());
-                }catch(IOException e){
+                } catch (IOException ignored) {
 
                 }
             }
@@ -190,25 +190,38 @@ public class FileHandler{
             if (selectedFile != null) {
                 String fileExt = getFileExt(selectedFile);
                 Reader reader = null;
-                if(type == "Car"){
+                if (type.equals("Car")) {
                     switch (fileExt) {
-                        case ".txt" : reader = new fileReaderTxt(); break;
-                        case ".jobj" : reader = new fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
+                        case ".txt":
+                            reader = new fileReaderTxt();
+                            break;
+                        case ".jobj":
+                            reader = new fileReaderJobj();
+                            break;
+                        default:
+                            Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
-                }
-                else if(type =="Component"){
+                } else if (type.equals("Component")) {
                     switch (fileExt) {
-                        case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
-                        case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
+                        case ".txt":
+                            reader = new javaCode.ReaderWriter.Component.fileReaderTxt();
+                            break;
+                        case ".jobj":
+                            reader = new javaCode.ReaderWriter.Component.fileReaderJobj();
+                            break;
+                        default:
+                            Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
-                }
-                else if(type == "Adjustment"){
+                } else if (type.equals("Adjustment")) {
                     switch (fileExt) {
-                        case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
-                        case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
+                        case ".txt":
+                            reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt();
+                            break;
+                        case ".jobj":
+                            reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
+                            break;
+                        default:
+                            Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
 

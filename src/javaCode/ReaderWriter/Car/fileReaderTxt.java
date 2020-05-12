@@ -3,21 +3,14 @@ package javaCode.ReaderWriter.Car;
 import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
-import javaCode.objects.Adjustment;
 import javaCode.objects.Car;
-import javaCode.objects.Component;
-import javaCode.objects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class fileReaderTxt implements Reader {
     private static ObservableList<Car> saveList = FXCollections.observableArrayList();
@@ -64,36 +57,36 @@ public class fileReaderTxt implements Reader {
         String carType = split[1];
         String carDescription = split[2];
         try{
-            int carPrice = parseNumber(split[3], "Total price is not correct");
-            Car car = new Car(carId, carType, carDescription, carPrice);
-            return car;
+            int carPrice = parseNumber(split[3]);
+            return new Car(carId, carType, carDescription, carPrice);
         }catch (IllegalArgumentException e){
             try{
                 int highestId = 0;
                 for(Car i : Lists.getCars()){
                     highestId = Integer.parseInt(i.getCarID());
                 }
-                highestId +=lineNr;
-                if(carType.length()==0){
+                highestId += lineNr;
+                if (carType.length() == 0) {
                     carType = "?";
                 }
-                if(carDescription.length()==0){
+                if (carDescription.length() == 0) {
                     carDescription = "?";
                 }
-                return new Car(Integer.toString(highestId),carType,carDescription,0);
+                return new Car(Integer.toString(highestId), carType, carDescription, 0);
 
-            } catch (IllegalArgumentException f){
+            } catch (IllegalArgumentException ignored) {
 
             }
         }
         return null;
     }
-    private int parseNumber(String str, String errorMessage) throws IllegalArgumentException{
+
+    private int parseNumber(String str) throws IllegalArgumentException {
         int number;
         try {
             number = Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException("Total price is not correct");
         }
         return number;
     }

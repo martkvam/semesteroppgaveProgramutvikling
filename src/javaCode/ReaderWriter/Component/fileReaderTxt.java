@@ -3,8 +3,6 @@ package javaCode.ReaderWriter.Component;
 import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
-import javaCode.Validator;
-import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,7 +64,7 @@ public class fileReaderTxt implements Reader {
         String componentDescription = split[3];
 
         try{
-            int componentPrice = parseNumber(split[4], "Total price is not correct");
+            int componentPrice = parseNumber(split[4]);
             return new Component(carID,componentID, componentType, componentDescription, componentPrice);
         }catch (IllegalArgumentException e){
             try{
@@ -89,20 +87,21 @@ public class fileReaderTxt implements Reader {
                 if(!isValid){
                     throw new IllegalArgumentException("The componentID is invalid");
                 }
-                return new Component("1",componentID, componentType, componentDescription, 0);
+                return new Component("1", componentID, componentType, componentDescription, 0);
 
-            }catch (IllegalArgumentException f){
+            } catch (IllegalArgumentException f) {
                 throw new IllegalArgumentException(f.getMessage());
             }
         }
 
     }
-    private int parseNumber(String str, String errorMessage) throws IllegalArgumentException{
+
+    private int parseNumber(String str) throws IllegalArgumentException {
         int number;
         try {
             number = Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException("Total price is not correct");
         }
         return number;
     }

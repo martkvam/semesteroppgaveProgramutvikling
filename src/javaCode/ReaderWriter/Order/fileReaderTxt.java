@@ -1,17 +1,16 @@
 package javaCode.ReaderWriter.Order;
 
 import javaCode.Dialogs;
+import javaCode.Lists;
+import javaCode.ReaderWriter.Reader;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Car;
 import javaCode.objects.Component;
-import javaCode.Lists;
 import javaCode.objects.Order;
-import javaCode.ReaderWriter.Reader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -21,16 +20,15 @@ import java.util.Locale;
 public class fileReaderTxt implements Reader {
 
     @Override
-    public void read(Path path) throws IOException {
+    public void read(Path path) {
         Lists lists = new Lists();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            while ((line = reader.readLine()) != null){
-                String [] split = line.split(";");
+            while ((line = reader.readLine()) != null) {
+                String[] split = line.split(";");
                 if (!split[0].isEmpty()) {
                     lists.addOrder(parseOrder(line));
-                }
-                else lists.addOngoingOrder(parseOrder(line));
+                } else lists.addOngoingOrder(parseOrder(line));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,23 +79,21 @@ public class fileReaderTxt implements Reader {
         Date orderFinished = df.parse(strOrderFinished);
 
 
-        ObservableList<Component> componentList = parseComponentList(split[5], carId,  "The component list is not correct");
-        ObservableList<Adjustment> adjustmentList = parseAdjustmentList(split[6], "The adjustment list is not correct");
+        ObservableList<Component> componentList = parseComponentList(split[5], carId);
+        ObservableList<Adjustment> adjustmentList = parseAdjustmentList(split[6]);
         int totPrice = parseNumber(split[7], "Total price is not correct");
         String carColor = split[8];
         boolean orderStatus;
         String stringOrderStatus = split[9];
-        if(stringOrderStatus.toLowerCase().equals("true")){
+        if (stringOrderStatus.toLowerCase().equals("true")) {
             orderStatus = true;
-        }
-        else if (stringOrderStatus.toLowerCase().equals("false")){
+        } else if (stringOrderStatus.toLowerCase().equals("false")) {
             orderStatus = false;
         }
         else throw new Exception("The order status is not correct");
 
         if (!wrongCarID) {
-            Order order = new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
-            return order;
+            return new Order(orderNr, personId, carId, orderStarted, orderFinished, componentList, adjustmentList, totPrice, carColor, orderStatus);
         }
         else return null;
     }
@@ -112,11 +108,11 @@ public class fileReaderTxt implements Reader {
         return number;
     }
 
-    private ObservableList<Component> parseComponentList(String str, String carID, String errorMessage) throws Exception{
+    private ObservableList<Component> parseComponentList(String str, String carID) {
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = str.split(",");
         //Iterating through all componentIDs from the file
-        for(String string : split) {
+        for (String string : split) {
             if (!string.isEmpty()) {
                 boolean componentExists = false;
                 boolean deleted = false;
@@ -159,10 +155,10 @@ public class fileReaderTxt implements Reader {
         return components;
     }
 
-    private ObservableList<Adjustment> parseAdjustmentList(String str, String errorMessage) throws Exception{
+    private ObservableList<Adjustment> parseAdjustmentList(String str) {
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split) {
+        for (String string : split) {
             if (!string.isEmpty()) {
                 boolean exists = false;
                 boolean deleted = false;

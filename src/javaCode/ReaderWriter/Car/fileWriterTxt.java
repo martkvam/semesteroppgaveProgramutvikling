@@ -3,7 +3,6 @@ package javaCode.ReaderWriter.Car;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Writer;
 import javaCode.objects.Car;
-import javaCode.objects.Order;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +22,7 @@ public class fileWriterTxt implements Writer {
     }
 
     public static String formatCars (List<Car> carList){
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         for (Car o : carList){
             str.append(formatCar(o));
             str.append("\n");

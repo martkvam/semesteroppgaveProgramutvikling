@@ -19,9 +19,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 
@@ -31,7 +31,6 @@ public class ControllerAddEditComponents implements Initializable {
     Lists lists = new Lists();
     AddElements addElements = new AddElements();
     FileHandler filehandler = new FileHandler();
-    private newThread delayThread;
 
     //Sets up int/String converter
     private ConverterErrorHandler.IntegerStringConverter intStrConverter = new ConverterErrorHandler.IntegerStringConverter();
@@ -87,7 +86,7 @@ public class ControllerAddEditComponents implements Initializable {
         txtFilterInn.setVisible(false);
 
         //Sets up delay thread
-        delayThread = new newThread();
+        newThread delayThread = new newThread();
         delayThread.setOnSucceeded(this::threadSucceded);
         delayThread.setOnFailed(this::threadFailed);
         Thread thread = new Thread(delayThread);
@@ -113,7 +112,7 @@ public class ControllerAddEditComponents implements Initializable {
     private void threadSucceded(WorkerStateEvent e) {
 
         //Reads inn all files
-        filehandler.readAllFiles(stage);
+        FileHandler.readAllFiles(stage);
 
         //Enables the elements in the window
         mainPane.setDisable(false);
@@ -130,18 +129,13 @@ public class ControllerAddEditComponents implements Initializable {
     }
 
     //Method that starts when thread is done and failed
+    @SuppressWarnings("ConstantConditions")
     private void threadFailed(WorkerStateEvent e) {
         Dialogs.showErrorDialog("The loading did not succeed");
-        try{
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
-            OpenScene.newScene("Superuser",  root, 600, 400, null);
-        }catch (IllegalAccessException ex) {
-            ex.printStackTrace();
+            OpenScene.newScene("Superuser", root, 600, 400, null);
         } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -150,15 +144,17 @@ public class ControllerAddEditComponents implements Initializable {
     void btnAddFromFile(ActionEvent event) {
         //The user has to choose an element type before reading from file
 
-        if(chooseElementType.getValue() != null){
-            if(chooseElementType.getValue().equals("Car")) {
-                filehandler.openSelectedFile(stage, "Car");
-            }
-            else if(chooseElementType.getValue().equals("Component")) {
-                filehandler.openSelectedFile(stage, "Component");
-            }
-            else if(chooseElementType.getValue().equals("Adjustment")) {
-                filehandler.openSelectedFile(stage, "Adjustment");
+        if(chooseElementType.getValue() != null) {
+            switch (chooseElementType.getValue()) {
+                case "Car":
+                    FileHandler.openSelectedFile(stage, "Car");
+                    break;
+                case "Component":
+                    FileHandler.openSelectedFile(stage, "Component");
+                    break;
+                case "Adjustment":
+                    FileHandler.openSelectedFile(stage, "Adjustment");
+                    break;
             }
         }
         else{
@@ -172,7 +168,7 @@ public class ControllerAddEditComponents implements Initializable {
     //Goes back to previous scene
     @FXML
     void btnBack(ActionEvent event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-        filehandler.saveAllFiles();
+        FileHandler.saveAllFiles();
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUser.fxml"));
         OpenScene.newScene("Superuser", root, 470 ,300, event);
         TableView.getItems().clear();
@@ -232,13 +228,13 @@ public class ControllerAddEditComponents implements Initializable {
     @FXML
     void btnNewComponent(ActionEvent event) {
         //Directs user to dialog window to add a new component
-        addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+        AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(), "", "", "", 0);
     }
 
     @FXML
     void btnNewAdjustment(ActionEvent event) {
         //Directs user to dialog window to add a new adjustment
-        addElements.openAddAdjustmentDialog(Lists.getAdjustment(),"", "", 0);
+        AddElements.openAddAdjustmentDialog(Lists.getAdjustment(), "", "", 0);
     }
 
     @FXML

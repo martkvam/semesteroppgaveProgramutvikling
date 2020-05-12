@@ -2,16 +2,13 @@ package javaCode.user;
 
 
 import javaCode.Dialogs;
+import javaCode.Lists;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
-import javaCode.Lists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -42,17 +39,17 @@ public class ReadPackages {
     }
 
 
-    private ObservableList<Component> parseComponentList(String componentList, String carID) throws Exception{
+    private ObservableList<Component> parseComponentList(String componentList, String carID) {
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = componentList.split(",");
 
         //Iterating through the list of components from the file and matching them with the components in the register.
         //If they belong to the right car they are added to the base package, if not they are ignored and an error message
         //is displayed to the user.
-        for(String string : split){
+        for (String string : split) {
             boolean componentExists = false;
-            for(Component c : Lists.getComponents()){
-                if (c.getComponentID().equals(string)){
+            for (Component c : Lists.getComponents()) {
+                if (c.getComponentID().equals(string)) {
                     componentExists = true;
                     if(c.getCarID().equals(carID)) {
                         components.add(c);
@@ -76,13 +73,13 @@ public class ReadPackages {
         return components;
     }
 
-    private ObservableList<Adjustment> parseAdjustmentList(String str) throws Exception{
+    private ObservableList<Adjustment> parseAdjustmentList(String str) {
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split){
+        for (String string : split) {
             boolean adjustmentExists = false;
-            for(Adjustment a : Lists.getAdjustment()){
-                if (a.getAdjustmentID().equals(string)){
+            for (Adjustment a : Lists.getAdjustment()) {
+                if (a.getAdjustmentID().equals(string)) {
                     adjustmentExists = true;
                     adjustments.add(a);
                 }

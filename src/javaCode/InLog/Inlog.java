@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.NotActiveException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Inlog implements Initializable {
@@ -64,9 +65,9 @@ public class Inlog implements Initializable {
         User u;
         try {
             try {
-                id = ReadUsers.getUserId(txtUserName.getText()).get(0);
-                int length = ReadUsers.getInfo(id, "User").length();
-                String info = ReadUsers.getInfo(id, "User").substring(1, length - 1);
+                id = Objects.requireNonNull(ReadUsers.getUserId(txtUserName.getText())).get(0);
+                int length = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).length();
+                String info = Objects.requireNonNull(ReadUsers.getInfo(id, "User")).substring(1, length - 1);
                 values = info.replaceAll("\\s+", "").split(",");
                 u = new User(intStrConv.fromString(values[0]), values[1], values[2], values[3], values[4], values[5],
                         boolStrConv.fromString(values[6]), boolStrConv.fromString(values[7]));

@@ -4,6 +4,8 @@ import javaCode.*;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Car;
 import javaCode.objects.Component;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
@@ -19,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 
@@ -248,9 +251,17 @@ public class ControllerAddEditComponents implements Initializable {
                     //Checks if the superUser has selected a tableRow and wants to delete it
                     if(delete.deleteCars(TableView.getSelectionModel().getSelectedItems())){
                         //Deletes tableRow(s)
+                        ObservableList<Component> listToRemove = FXCollections.observableArrayList();
                         for(Car c : TableView.getSelectionModel().getSelectedItems()){
+                            for (Component comp : Lists.getComponents()){
+                                if (comp.getCarID().equals(c.getCarID())){
+                                    lists.addDeletedComponent(comp);
+                                    listToRemove.add(comp);
+                                }
+                            }
                             lists.addDeletedCar(c);
                         }
+                        Lists.getComponents().removeAll(listToRemove);
                         TableView.getItems().removeAll(TableView.getSelectionModel().getSelectedItems());
                     }
 

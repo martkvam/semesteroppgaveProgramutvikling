@@ -143,11 +143,11 @@ public class ControllerOrders implements Initializable {
             }
             //Sets selected order and tableviews
             for(Order i : Lists.getOrders()){
-                    if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
-                        tableViewComponents.setItems(i.getComponentList());
-                        tableViewAdjustments.setItems(i.getAdjustmentList());
-                        outPersonId = i.getPersonId();
-                    }
+                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                    tableViewComponents.setItems(selectedOrder.getComponentList());
+                    tableViewAdjustments.setItems(selectedOrder.getAdjustmentList());
+                    outPersonId = i.getPersonId();
+                }
             }
             //Sets new finished date
             Date dateNow = new Date();
@@ -345,6 +345,7 @@ public class ControllerOrders implements Initializable {
         int outPersonId = 0;
         try{
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
+            System.out.println(selectedOrder.getComponentList().get(0).getComponentID());
             //Matching selected order with order list. Prints the components and adjustments in order
             for(Order i : Lists.getOrders()){
                 if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){

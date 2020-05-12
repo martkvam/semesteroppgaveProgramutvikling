@@ -91,6 +91,7 @@ public class fileReaderTxt implements Reader {
         String[] split = str.split(",");
         for(String string : split){
             boolean componentExists = false;
+            boolean deleted = false;
             for(Component c : Lists.getComponents()){
                 if (c.getComponentID().equals(string)){
                     componentExists = true;
@@ -103,7 +104,18 @@ public class fileReaderTxt implements Reader {
                     }
                 }
             }
-            if (!componentExists){
+            if (!componentExists) {
+                for (Component c : Lists.getDeletedComponents()) {
+                    if (c.getComponentID().equals(string)) {
+                        deleted = true;
+                        c.setComponentType("This component is no longer available");
+                        if (c.getCarID().equals(carID)) {
+                            components.add(c);
+                        }
+                    }
+                }
+            }
+            if(!componentExists && !deleted){
                 System.err.println("There is an error in the list containing the orders. The component list: " +
                         str + " contains a componentID that does not exist. Component id: " + string);
             }

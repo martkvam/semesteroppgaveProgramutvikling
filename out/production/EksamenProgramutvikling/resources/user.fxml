@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaCode.user.UserController">
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="672.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.221"
+            fx:controller="javaCode.user.UserController">
     <children>
         <TableView fx:id="componentTV" layoutX="314.0" layoutY="114.0" prefHeight="247.0" prefWidth="412.0">
             <columns>
                 <TableColumn prefWidth="268.80003356933594" text="Description">
                     <cellValueFactory>
-                        <PropertyValueFactory property="componentDescription" />
+                        <PropertyValueFactory property="componentDescription"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="componentPrice" prefWidth="138.39996337890625" text="Price">

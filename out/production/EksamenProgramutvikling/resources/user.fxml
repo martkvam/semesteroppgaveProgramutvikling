@@ -44,7 +44,7 @@
               prefWidth="170.0"/>
     <Label layoutX="767.0" layoutY="80.0" prefHeight="19.0" prefWidth="179.0" text="Chosen components">
         <font>
-        <Font size="15.0"/>
+            <Font size="15.0"/>
         </font>
     </Label>
     <Button fx:id="addBtn" layoutX="631.0" layoutY="365.0" mnemonicParsing="false" onAction="#addComponent"
@@ -58,51 +58,51 @@
     <Label fx:id="lblTotalprice" layoutX="767.0" layoutY="602.0" prefHeight="17.0" prefWidth="196.0"
            text="Total price: "/>
     <TableView fx:id="adjustmentTV" layoutX="265.0" layoutY="402.0" prefHeight="236.0" prefWidth="462.0">
-      <columns>
-          <TableColumn prefWidth="168.0" text="Type">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentType"/>
-              </cellValueFactory>
-          </TableColumn>
-          <TableColumn prefWidth="193.0" text="Description">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentDescription"/>
-              </cellValueFactory>
-          </TableColumn>
-          <TableColumn minWidth="0.0" prefWidth="97.0" text="Price">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentPrice"/>
-              </cellValueFactory>
-          </TableColumn>
-      </columns>
+        <columns>
+            <TableColumn prefWidth="168.0" text="Type">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentType"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="193.0" text="Description">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentDescription"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn minWidth="0.0" prefWidth="97.0" text="Price">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentPrice"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
     </TableView>
     <Label layoutX="265.0" layoutY="381.0" prefHeight="22.0" prefWidth="238.0" text="Available adjustments">
         <font>
-          <Font name="System Bold" size="15.0"/>
+            <Font name="System Bold" size="15.0"/>
         </font>
     </Label>
     <TableView fx:id="chosenAdjustTV" layoutX="767.0" layoutY="351.0" prefHeight="199.0" prefWidth="423.0">
-      <columns>
-          <TableColumn prefWidth="125.0" text="Type">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentType"/>
-              </cellValueFactory>
-          </TableColumn>
-          <TableColumn prefWidth="196.0" text="Description">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentDescription"/>
-              </cellValueFactory>
-          </TableColumn>
-          <TableColumn prefWidth="86.0" text="Price">
-              <cellValueFactory>
-                  <PropertyValueFactory property="adjustmentPrice"/>
-              </cellValueFactory>
-          </TableColumn>
-      </columns>
+        <columns>
+            <TableColumn prefWidth="125.0" text="Type">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentType"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="196.0" text="Description">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentDescription"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="86.0" text="Price">
+                <cellValueFactory>
+                    <PropertyValueFactory property="adjustmentPrice"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
     </TableView>
     <Label layoutX="767.0" layoutY="332.0" prefHeight="19.0" prefWidth="172.0" text="Chosen adjustments">
         <font>
-          <Font size="15.0"/>
+            <Font size="15.0"/>
         </font>
     </Label>
     <Button fx:id="addAdjust" layoutX="631.0" layoutY="639.0" mnemonicParsing="false" onAction="#addAdjust"
@@ -128,32 +128,32 @@
             prefWidth="103.0" text="Remove all"/>
     <Label layoutX="13.0" layoutY="299.0" prefHeight="19.0" prefWidth="223.0" text="Select base package:">
         <font>
-          <Font name="System Bold" size="15.0"/>
+            <Font name="System Bold" size="15.0"/>
         </font>
     </Label>
     <Label layoutX="315.0" layoutY="89.0" text="Avaliable components">
         <font>
-          <Font name="System Bold" size="15.0"/>
+            <Font name="System Bold" size="15.0"/>
         </font>
     </Label>
     <Label layoutX="767.0" layoutY="46.0" text="My order">
         <font>
-          <Font name="System Bold" size="22.0"/>
+            <Font name="System Bold" size="22.0"/>
         </font>
     </Label>
     <Label layoutX="14.0" layoutY="46.0" text="Information and functions">
         <font>
-          <Font name="System Bold" size="22.0"/>
+            <Font name="System Bold" size="22.0"/>
         </font>
     </Label>
     <Label layoutX="13.0" prefHeight="46.0" prefWidth="324.0" text="Order a new car">
         <font>
-          <Font name="System Bold" size="30.0"/>
+            <Font name="System Bold" size="30.0"/>
         </font>
     </Label>
     <Label layoutX="14.0" layoutY="36.0" prefHeight="1.0" prefWidth="1178.0" style="-fx-background-color: #000000;">
         <font>
-          <Font size="1.0"/>
+            <Font size="1.0"/>
         </font>
     </Label>
     <Label layoutX="742.0" layoutY="37.0" prefHeight="634.0" prefWidth="2.0" style="-fx-background-color: #000000;"/>

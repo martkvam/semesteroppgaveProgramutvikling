@@ -19,6 +19,9 @@ public class Adjustment implements Serializable {
         if(!Validator.adjustmentID(adjustmentID)){
             throw new IllegalArgumentException("The adjustment id is not valid");
         }
+        if(!Validator.adjustmentType(type)){
+            throw new IllegalArgumentException("The adjustment type is not valid");
+        }
         if(!Validator.adjustmentPrice(price)){
             throw new IllegalArgumentException("The adjustment price is not valid");
         }
@@ -33,6 +36,10 @@ public class Adjustment implements Serializable {
     }
 
     public void setAdjustmentID(String adjustmentID) {
+
+        if(!Validator.adjustmentID(adjustmentID)){
+            throw new IllegalArgumentException("The adjustment id is not valid");
+        }
         this.adjustmentID.set(adjustmentID);
     }
     public String getAdjustmentType() {
@@ -40,6 +47,10 @@ public class Adjustment implements Serializable {
     }
 
     public void setAdjustmentType(String adjustmentType) {
+
+        if(!Validator.adjustmentType(adjustmentType)){
+            throw new IllegalArgumentException("The adjustment type is not valid");
+        }
         this.adjustmentType.set(adjustmentType);
     }
 
@@ -54,6 +65,10 @@ public class Adjustment implements Serializable {
         return adjustmentPrice.getValue();
     }
     public void setAdjustmentPrice(int adjustmentPrice) {
+
+        if(!Validator.adjustmentPrice(adjustmentPrice)){
+            throw new NumberFormatException("The adjustment price is not valid");
+        }
         this.adjustmentPrice.set(adjustmentPrice);
     }
 

@@ -71,39 +71,42 @@ public class Validator {
 
     //If the component id matches already existing components id it returns false. Split input string with "-" to match both numbers
     public static boolean componentId(String ID){
-        String[] splitInnId = ID.split("-");
-        int highestcomponentTypeId = 0;
-        boolean isValidComponentType = false;
+        try{
+            String[] splitInnId = ID.split("-");
+            int highestcomponentTypeId = 0;
 
-        for(Component c : Lists.getComponents()){
-            String [] splitExistingId = c.getComponentID().split("-");
-            String componentId = c.getComponentID();
-            if(componentId.equals(ID)){
-                return false;
-            }
-            else if(Integer.parseInt(splitInnId[0])<0){
-                return false;
-            }
-            else if(splitInnId[0].equals(splitExistingId[0])){
-                isValidComponentType = true;
-                //Finds highest componentId after "-" in component id-number
-                for(int j = 0; j <Lists.getComponents().size();j++){
-                    if(splitInnId[0].equals(Lists.getComponents().get(j).getComponentID().charAt(0))){
-                        if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
-                            highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
-                        }
-                    }
-                }
-                if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
-                    return true;
-                }
-                else {
+            for(Component c : Lists.getComponents()){
+                String [] splitExistingId = c.getComponentID().split("-");
+                String componentId = c.getComponentID();
+                if(componentId.equals(ID)){
                     return false;
                 }
+                else if(Integer.parseInt(splitInnId[0])<0){
+                    return false;
+                }
+                else if(splitInnId[0].equals(splitExistingId[0])){
+                    //Finds highest componentId after "-" in component id-number
+                    for(Component i : Lists.getComponents()){
+                        if(splitInnId[0].equals(Character.toString(i.getComponentID().charAt(0)))){
+                            if(highestcomponentTypeId <= Integer.parseInt(Character.toString(i.getComponentID().charAt(2)))){
+                                highestcomponentTypeId = Integer.parseInt(Character.toString(i.getComponentID().charAt(2)));
+                            }
+                        }
+                    }
+                    if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
             }
+
+            return false;
+        }catch (Exception e){
+            return false;
         }
 
-        return false;
     }
     //If input type equals existing component types return true. Else choose to add new type
     public static boolean componentType(String type){
@@ -116,12 +119,14 @@ public class Validator {
                     return true;
                 }
             }
-            if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
+            /*if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
                 boolean newComponent = AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
                 if(newComponent){
                     Dialogs.showSuccessDialog("A new component has been added");
                 }
             }
+
+             */
         }
         return false;
     }
@@ -142,6 +147,14 @@ public class Validator {
             }
         }
         return true;
+    }
+    public static boolean adjustmentType(String type){
+        for(Adjustment a : Lists.getAdjustment()){
+            if(a.getAdjustmentType().equals(type)){
+                return true;
+            }
+        }
+        return false;
     }
     public static boolean adjustmentPrice(int price){
         return price>=0;

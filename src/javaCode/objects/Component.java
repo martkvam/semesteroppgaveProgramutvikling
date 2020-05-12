@@ -27,7 +27,7 @@ public class Component implements Serializable {
         if(!Validator.componentId(componentID)){
             throw new IllegalArgumentException("The component-id is not valid");
         }
-        if(componentType.length() == 0){
+        if(!Validator.componentType(componentType)){
             throw new IllegalArgumentException("The components have to have a component type");
         }
         if(!Validator.componentPrice(componentPrice)){
@@ -76,6 +76,9 @@ public class Component implements Serializable {
     public void setComponentType(String type){
         if(Validator.componentType(type)){
             this.componentType.set(type);
+        }
+        else{
+            throw new IllegalArgumentException("The component type is invalid. ");
         }
     }
 

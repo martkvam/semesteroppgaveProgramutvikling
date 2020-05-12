@@ -25,7 +25,10 @@ public class fileReaderTxt implements Reader {
         boolean invalidImplementation = false;
         Lists lists = new Lists();
         for(Adjustment i : Lists.getAdjustment()){
-            highestID = Integer.parseInt(i.getAdjustmentID());
+            if(Integer.parseInt(i.getAdjustmentID())>highestID){
+                highestID = Integer.parseInt(i.getAdjustmentID());
+            }
+
         }
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -34,12 +37,12 @@ public class fileReaderTxt implements Reader {
                     String [] split = line.split(";");
                     if (line.length()!=0) {
                         lineNr++;
-                        saveList.add(parseAdjustment(line));
+                        lists.addAdjustment(parseAdjustment(line));
                     }
                 }catch(IllegalArgumentException e){
                     invalidImplementation = true;
 
-                    errorMessage += "Line " + lineNr + "\n";
+                    errorMessage += "Line " + lineNr + " : " +e.getMessage() +"\n";
                 }
             }
         } catch (IllegalArgumentException e) {
@@ -49,17 +52,13 @@ public class fileReaderTxt implements Reader {
             Dialogs.showErrorDialog("There is invalid formatting and data in the file. Invalid formatting will not be saved, but invalid data will be saved as 0 price");
             System.out.println(errorMessage);
         }
-        for(Adjustment i : saveList){
-            lists.addAdjustment(i);
-        }
-
     }
 
     private Adjustment parseAdjustment (String line) throws IllegalArgumentException{
 
         String[] split = line.split(";");
         if(split.length != 4) {
-            throw new IllegalArgumentException("There is an error in the file containing the orders.");
+            throw new IllegalArgumentException("There is an error in the line formatting.");
         }
 
         String adjustmentID = split[0];
@@ -81,10 +80,9 @@ public class fileReaderTxt implements Reader {
                 return new Adjustment(Integer.toString(highestID),adjustmentType,adjustmentDescription,0);
 
             } catch (IllegalArgumentException f){
-
+                throw new IllegalArgumentException(f.getMessage());
             }
         }
-        return null;
     }
     private int parseNumber(String str, String errorMessage) throws IllegalArgumentException{
         int number;

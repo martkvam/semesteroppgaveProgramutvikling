@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class addElements {
+public class AddElements {
 
     //Code for a new dialog to add new cars.
     public void openAddCarDialog(ObservableList<Car> carTypeList, String type, String description, int price) {
@@ -274,7 +274,7 @@ public class addElements {
                 int highestComponentID = 1;
                 int outComponentPrice = 0;
                 String outComponentDescription="";
-                //Loop to set new componentID
+
                 if(!chooseComponentType.getSelectionModel().isEmpty() && !chooseCar.getSelectionModel().isEmpty()){
                     if (chooseComponentType.getValue().toString().equals("New component type")) {
                         //Loop to find highest ComponentTypeID(first number in componentID)
@@ -294,7 +294,9 @@ public class addElements {
                         componentId = lastComponentID;
                         componentId += "-";
                         componentId += 1;
-                    }for (int i = 0; i < componentList.size(); i++) {
+                    }
+                    //Loop to set new componentID
+                    for (int i = 0; i < componentList.size(); i++) {
                          if (componentList.get(i).getComponentType().equals(chooseComponentType.getValue().toString())) {
                             int lastComponentIDchecked = 0;
                             String line = componentList.get(i).getComponentID();
@@ -310,7 +312,7 @@ public class addElements {
                             outComponentType = chooseComponentType.getValue().toString();
                         }
                     }
-
+                    //Validates input from text fields and returns new component. If a exception is found this method is called again
                     try {
                         outComponentDescription = componentDescription.getText();
                         outComponentPrice = Integer.parseInt(componentPrice.getText());

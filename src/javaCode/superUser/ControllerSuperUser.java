@@ -44,7 +44,7 @@ public class ControllerSuperUser {
         // Swap screen
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/superUserOrders.fxml"));
         OpenScene.
-                newScene("Edit orders", root, 1100 ,730, event);
+                newScene("Edit orders", root, 1100 ,700, event);
     }
 
     //Navigates to scene where superuser are able to edit/delete profiles.

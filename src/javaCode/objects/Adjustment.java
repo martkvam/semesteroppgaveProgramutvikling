@@ -1,5 +1,6 @@
 package javaCode.objects;
 
+import javaCode.Validator;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -15,6 +16,16 @@ public class Adjustment implements Serializable {
     private transient  SimpleIntegerProperty adjustmentPrice;
 
     public Adjustment(String adjustmentID, String type, String description, int price) {
+        if(!Validator.adjustmentID(adjustmentID)){
+            throw new IllegalArgumentException("The adjustment id is not valid");
+        }
+        if(!Validator.adjustmentType(type)){
+            throw new IllegalArgumentException("The adjustment type is not valid");
+        }
+        if(!Validator.adjustmentPrice(price)){
+            throw new IllegalArgumentException("The adjustment price is not valid");
+        }
+
         this.adjustmentID = new SimpleStringProperty(adjustmentID);
         this.adjustmentType = new SimpleStringProperty(type);
         this.adjustmentDescription = new SimpleStringProperty(description);
@@ -25,6 +36,10 @@ public class Adjustment implements Serializable {
     }
 
     public void setAdjustmentID(String adjustmentID) {
+
+        if(!Validator.adjustmentID(adjustmentID)){
+            throw new IllegalArgumentException("The adjustment id is not valid");
+        }
         this.adjustmentID.set(adjustmentID);
     }
     public String getAdjustmentType() {
@@ -32,6 +47,10 @@ public class Adjustment implements Serializable {
     }
 
     public void setAdjustmentType(String adjustmentType) {
+
+        if(!Validator.adjustmentType(adjustmentType)){
+            throw new IllegalArgumentException("The adjustment type is not valid");
+        }
         this.adjustmentType.set(adjustmentType);
     }
 
@@ -46,6 +65,10 @@ public class Adjustment implements Serializable {
         return adjustmentPrice.getValue();
     }
     public void setAdjustmentPrice(int adjustmentPrice) {
+
+        if(!Validator.adjustmentPrice(adjustmentPrice)){
+            throw new NumberFormatException("The adjustment price is not valid");
+        }
         this.adjustmentPrice.set(adjustmentPrice);
     }
 

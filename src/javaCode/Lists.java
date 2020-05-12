@@ -13,8 +13,11 @@ import java.util.ArrayList;
 public class Lists<E> implements Serializable {
 
     private static transient ObservableList<Car> carList = FXCollections.observableArrayList();
+    private static transient ObservableList<Car> deletedCarList = FXCollections.observableArrayList();
     private static ObservableList<Component> componentList = FXCollections.observableArrayList();
+    private static ObservableList<Component> deletedComponentList = FXCollections.observableArrayList();
     private static ObservableList<Adjustment> adjustmentList = FXCollections.observableArrayList();
+    private static ObservableList<Adjustment> deletedAdjustmentList = FXCollections.observableArrayList();
     private static ObservableList<Order> orderList = FXCollections.observableArrayList();
     private static ObservableList<Order> ongoingOrderList = FXCollections.observableArrayList();
     private static ObservableList<Component> basePackageComponents = FXCollections.observableArrayList();
@@ -23,26 +26,41 @@ public class Lists<E> implements Serializable {
     //Metoder for å legge til objekter i listene
 
     public void addCar (Car car){
-        for(Car i : carList){
-            if(i.getCarID().equals(car.getCarID())){
-                Dialogs.showErrorDialog("This car already exists");
+        if(car!=null){
+            for(Car i : carList){
+                if(i.getCarID().equals(car.getCarID())){
+                    Dialogs.showErrorDialog("This car already exists");
+                }
             }
+            carList.add(car);
         }
-        carList.add(car);
     }
+    public void addDeletedCar (Car car){
+        if(car!=null){
+            deletedCarList.add(car);
+        }
+    }
+
     public static void deleteCars(){
         carList.clear();
     }
 
     public void addComponent(Component component){
-        boolean found = false;
-        for(Component c : componentList){
-            if(c.getComponentID().equals(component.getComponentID())){
-                found = true;
+        if(component!=null){
+            boolean found = false;
+            for(Component c : componentList){
+                if(c.getComponentID().equals(component.getComponentID())){
+                    found = true;
+                }
+            }
+            if(!found) {
+                componentList.add(component);
             }
         }
-        if(!found) {
-            componentList.add(component);
+    }
+    public void addDeletedComponent(Component component){
+        if(component!=null){
+            deletedComponentList.add(component);
         }
     }
     public static void deleteComponents(){
@@ -50,14 +68,19 @@ public class Lists<E> implements Serializable {
     }
 
     public void addAdjustment (Adjustment adj){
-        boolean found = false;
-        for(Adjustment a : adjustmentList) {
-            if(a.getAdjustmentID().equals(adj.getAdjustmentID())){
-                found = true;
+        if(adj!=null){
+            for(Adjustment i : adjustmentList){
+                if(i.getAdjustmentID().equals(adj.getAdjustmentID())){
+                    Dialogs.showErrorDialog("This Adjustment already exists");
+                }
             }
-        }
-        if(!found) {
             adjustmentList.add(adj);
+        }
+    }
+    public void addDeletedAdjustment (Adjustment adjustment){
+
+        if(adjustment!=null){
+            deletedAdjustmentList.add(adjustment);
         }
     }
     public static void deleteAdjustments(){
@@ -83,6 +106,10 @@ public class Lists<E> implements Serializable {
         }
         return carList;
     }
+    public static ObservableList<Car> getDeletedCars(){
+        return deletedCarList;
+    }
+
     public static ObservableList<Component> getComponents(){
         ArrayList<Component> newComponentList =new ArrayList<>();
         for(Component i : componentList){
@@ -90,8 +117,15 @@ public class Lists<E> implements Serializable {
         }
         return componentList;
     }
+
+    public static ObservableList<Component> getDeletedComponents(){
+        return deletedComponentList;
+    }
     public static ObservableList<Adjustment> getAdjustment(){
         return adjustmentList;
+    }
+    public static ObservableList<Adjustment> getDeletedAdjustment(){
+        return deletedAdjustmentList;
     }
     public static ObservableList<Order> getOrders(){
         return orderList;

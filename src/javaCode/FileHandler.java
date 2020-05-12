@@ -1,8 +1,10 @@
 package javaCode;
 
-import javaCode.ReaderWriter.Car.fileReaderJobj;
-import javaCode.ReaderWriter.Car.fileReaderTxt;
-import javaCode.ReaderWriter.Car.fileWriterJobj;
+import javaCode.ReaderWriter.Adjustment.fileReaderDeletedAdjustments;
+import javaCode.ReaderWriter.Adjustment.fileWriteDeletedAdjustments;
+import javaCode.ReaderWriter.Car.*;
+import javaCode.ReaderWriter.Component.fileReaderDeletedComponents;
+import javaCode.ReaderWriter.Component.fileWriterDeletedComponents;
 import javaCode.ReaderWriter.Order.fileWriterTxt;
 import javaCode.ReaderWriter.Reader;
 import javaCode.ReaderWriter.Writer;
@@ -19,26 +21,41 @@ public class FileHandler{
 
     public static void saveAllFiles(){
         File selectedFileCar = new File("src/dataBase/SuperUser/Cars.jobj");
+        File selectedFileDeletedCar = new File("src/dataBase/SuperUser/deletedCars.jobj");
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
+        File selectedFileDeletedComponent = new File("src/dataBase/SuperUser/DeletedComponents.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
+        File selectedFileDeletedAdjustments = new File("src/dataBase/SuperUser/DeletedAdjustments.jobj");
 
         Writer writeCar = null;
+        Writer writeDeletedCar = null;
         Writer writeComponent = null;
+        Writer writeDeletedComponent = null;
         Writer writeAdjustment = null;
+        Writer writeDeletedAdjustment = null;
 
         writeCar = new fileWriterJobj();
+        writeDeletedCar = new fileWriterDeletedCars();
         writeComponent = new javaCode.ReaderWriter.Component.fileWriterJobj();
+        writeDeletedComponent = new fileWriterDeletedComponents();
         writeAdjustment = new javaCode.ReaderWriter.Adjustment.fileWriterJobj();
+        writeDeletedAdjustment = new fileWriteDeletedAdjustments();
 
 
         if(writeCar != null) {
             try {
                 selectedFileCar.delete();
+                selectedFileDeletedCar.delete();
                 selectedFileComponent.delete();
+                selectedFileDeletedComponent.delete();
                 selectedFileAdjustments.delete();
+                selectedFileDeletedAdjustments.delete();
                 writeCar.save(selectedFileCar.toPath());
+                writeDeletedCar.save(selectedFileDeletedCar.toPath());
                 writeComponent.save(selectedFileComponent.toPath());
+                writeDeletedComponent.save(selectedFileDeletedComponent.toPath());
                 writeAdjustment.save(selectedFileAdjustments.toPath());
+                writeDeletedAdjustment.save(selectedFileDeletedAdjustments.toPath());
                 Dialogs.showSuccessDialog("The register successfully got saved");
             } catch (IOException e) {
                 Dialogs.showErrorDialog("The saving failed because of: " + e.getMessage());
@@ -63,26 +80,32 @@ public class FileHandler{
     public static void readAllFiles(Stage stage) {
 
         File selectedFileCar = new File("src/dataBase/SuperUser/Cars.jobj");
+        File selectedFileDeleteCar = new File("src/dataBase/SuperUser/deletedCars.jobj");
         File selectedFileComponent = new File("src/dataBase/SuperUser/Components.jobj");
+        File selectedFileDeletedComponent = new File("src/dataBase/SuperUser/DeletedComponents.jobj");
         File selectedFileAdjustments = new File("src/dataBase/SuperUser/Adjustments.jobj");
-        //File selectedFileOrders = new File("src/dataBase/SuperUser/Orders.jobj");
+        File selectedFileDeletedAdjustments = new File("src/dataBase/SuperUser/DeletedAdjustments.jobj");
         File selectedFileOrdersTxt = new File("src/dataBase/FinishedOrders.txt");
         File selectedFileOngoingOrders = new File("src/dataBase/OngoingOrders.txt");
         File selectedFileUsers = new File("src/dataBase/Users.txt");
 
         Reader readerCar = null;
+        Reader readerDeletedCars = null;
         Reader readerComponents = null;
+        Reader readerDeletedComponents = null;
         Reader readerAdjustments=null;
-        //Reader readerOrders = null;
+        Reader readerDeletedAdjustments = null;
         Reader readerTxtOrders = null;
         Reader readerOngoingOrders = null;
         Reader readerUsers = null;
 
 
         readerCar = new fileReaderJobj();
+        readerDeletedCars = new fileReaderDeletedCars();
         readerComponents=new javaCode.ReaderWriter.Component.fileReaderJobj();
+        readerDeletedComponents = new fileReaderDeletedComponents();
         readerAdjustments = new javaCode.ReaderWriter.Adjustment.fileReaderJobj();
-        //readerOrders = new javaCode.ReaderWriter.Order.fileReaderJobj();
+        readerDeletedAdjustments = new fileReaderDeletedAdjustments();
         readerTxtOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
         readerOngoingOrders = new javaCode.ReaderWriter.Order.fileReaderTxt();
         readerUsers = new javaCode.ReaderWriter.User.fileReaderTxt();
@@ -96,13 +119,14 @@ public class FileHandler{
             if(readerCar != null && readerComponents != null && readerAdjustments !=null && readerTxtOrders != null && readerOngoingOrders != null) {
                 try {
                     readerCar.read(selectedFileCar.toPath());
+                    readerDeletedCars.read(selectedFileDeleteCar.toPath());
                     readerComponents.read(selectedFileComponent.toPath());
+                    readerDeletedComponents.read(selectedFileDeletedComponent.toPath());
                     readerAdjustments.read(selectedFileAdjustments.toPath());
-                    //readerOrders.read(selectedFileOrders.toPath());
+                    readerDeletedAdjustments.read(selectedFileDeletedAdjustments.toPath());
                     readerTxtOrders.read(selectedFileOrdersTxt.toPath());
                     readerOngoingOrders.read(selectedFileOngoingOrders.toPath());
                     readerUsers.read(selectedFileUsers.toPath());
-                    //Dialogs.showSuccessDialog("The register got loaded");
                 } catch (IOException | IllegalArgumentException e) {
                     Dialogs.showErrorDialog("Opening the file failed because of: " + e.getMessage());
                 } catch (Exception e){
@@ -167,21 +191,21 @@ public class FileHandler{
                     switch (fileExt) {
                         case ".txt" : reader = new fileReaderTxt(); break;
                         case ".jobj" : reader = new fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
                 else if(type =="Component"){
                     switch (fileExt) {
                         case ".txt" : reader = new javaCode.ReaderWriter.Component.fileReaderTxt(); break;
                         case ".jobj" : reader = new javaCode.ReaderWriter.Component.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
                 else if(type == "Adjustment"){
                     switch (fileExt) {
                         case ".txt" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderTxt(); break;
                         case ".jobj" : reader = new javaCode.ReaderWriter.Adjustment.fileReaderJobj(); break;
-                        default : Dialogs.showErrorDialog("Du kan bare åpne txt eller jobj filer.");
+                        default : Dialogs.showErrorDialog("You can only open txt or jobj files");
                     }
                 }
 
@@ -193,7 +217,7 @@ public class FileHandler{
                     }
                 }
                 else{
-                    Dialogs.showErrorDialog("Thisfile could not be opened");
+                    Dialogs.showErrorDialog("This file could not be opened");
                 }
             }
         }catch (Exception e){

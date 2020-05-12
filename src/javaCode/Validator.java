@@ -1,24 +1,21 @@
 package javaCode;
 
-import javaCode.Exception.UserAlreadyExistException;
-import javaCode.InLog.ReadUsers;
-import javaCode.objects.User;
+import javaCode.objects.Adjustment;
+import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
-import javaCode.superUser.addElements;
-
-import java.io.FileNotFoundException;
+import javaCode.superUser.AddElements;
 
 //Class for validating all inputs
 public class Validator {
-    addElements addelements= new addElements();
+    AddElements addelements= new AddElements();
 
     public static boolean name(String name){
         return name.matches("([a-zA-ZæøåÆØÅ]+['\\-,. ]?)+");
     }
 
     public static boolean phone(String phone){
-        return phone.matches("(([(][+]{0,1})|([+]?))[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*");
+        return phone.matches("(([(][+]?)|([+]?))[0-9]{1,4}[)]?[-\\s\\./0-9]{5,15}");
     }
 
     public static boolean email(String email){
@@ -35,12 +32,7 @@ public class Validator {
                     idCounter=Integer.parseInt(Lists.getCars().get(i).getCarID());
                 }
             }
-            if(idCounter >= Integer.parseInt(id)){
-                return false;
-            }
-            else {
-                return true;
-            }
+            return idCounter < Integer.parseInt(id);
         }
         else{
             return false;
@@ -48,62 +40,64 @@ public class Validator {
     }
 
     public static boolean carType(String type){
-        return type.matches(".{2,10}");
+        return type.matches(".{1,10}");
     }
 
     public static boolean carDescription(String description){
-        return description.matches(".{2,50}");
+        return description.matches(".{1,50}");
     }
 
     public static boolean carPrice(int price){
-        return price>0 && price<1_000_000;
+        return price>-1 && price<1_000_000;
     }
 
 
     //Components
+    //If car id matches the input id it returns true
     public static boolean carIdComponents(String ID){
-        for(int i = 0; i < Lists.getCars().size(); i++){
-            if(Lists.getCars().get(i).getCarID().equals(ID)){
+        for(Car i: Lists.getCars()){
+            if(i.getCarID().equals(ID)){
                 return true;
             }
         }
         return false;
     }
-    public static boolean componentId(String ID){
-        String[] splitInnId = ID.split("-");
-        int highestcomponentType = 0;
-        int highestcomponentTypeId = 0;
 
-        for(int i = 0; i < Lists.getComponents().size();i++){
-            String [] splitExistingId = Lists.getComponents().get(i).getComponentID().split("-");
-            String componentId = Lists.getComponents().get(i).getComponentID();
-            if(componentId.equals(ID)){
-                return false;
-            }
-            else if(Integer.parseInt(splitInnId[0])<0){
-                return false;
-            }
-            else{
-                if(splitInnId[0].equals(splitExistingId[0])){
+    //If the component id matches already existing components id it returns false. Split input string with "-" to match both numbers
+    public static boolean componentId(String ID){
+        try{
+            String[] splitInnId = ID.split("-");
+            int highestcomponentTypeId = 0;
+
+            for(Component c : Lists.getComponents()){
+                String [] splitExistingId = c.getComponentID().split("-");
+                String componentId = c.getComponentID();
+                if(componentId.equals(ID)){
+                    return false;
+                }
+                else if(Integer.parseInt(splitInnId[0])<0){
+                    return false;
+                }
+                else if(splitInnId[0].equals(splitExistingId[0])){
                     //Finds highest componentId after "-" in component id-number
-                    for(int j = 0; j <Lists.getComponents().size();j++){
-                        if(splitInnId[0].equals(Lists.getComponents().get(j).getComponentID().charAt(0))){
-                            if(highestcomponentTypeId <= Integer.parseInt(splitExistingId[1])){
-                                highestcomponentTypeId = Integer.parseInt(splitExistingId[1]);
+                    for(Component i : Lists.getComponents()){
+                        if(splitInnId[0].equals(Character.toString(i.getComponentID().charAt(0)))){
+                            if(highestcomponentTypeId <= Integer.parseInt(Character.toString(i.getComponentID().charAt(2)))){
+                                highestcomponentTypeId = Integer.parseInt(Character.toString(i.getComponentID().charAt(2)));
                             }
                         }
                     }
-                    if(Integer.parseInt(splitInnId[1]) > highestcomponentTypeId){
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
+                    return Integer.parseInt(splitInnId[1]) > highestcomponentTypeId;
                 }
             }
+
+            return false;
+        }catch (Exception e){
+            return false;
         }
-        return true;
+
     }
+    //If input type equals existing component types return true. Else choose to add new type
     public static boolean componentType(String type){
         if(type.length()==0){
             throw new IllegalArgumentException("The components type is not defined");
@@ -114,20 +108,50 @@ public class Validator {
                     return true;
                 }
             }
-            if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                boolean newComponent = addElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
+            /*if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
+                boolean newComponent = AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
                 if(newComponent){
                     Dialogs.showSuccessDialog("A new component has been added");
                 }
             }
+
+             */
         }
         return false;
     }
+
     public static boolean componentPrice(int price){
-        return price>0;
+        return price>=0;
     }
 
+
+    //Adjustments
+    public static boolean adjustmentID(String id){
+        if(Integer.parseInt(id) < 0){
+            return false;
+        }
+        for(Adjustment i : Lists.getAdjustment()){
+            if(i.getAdjustmentID().equals(id)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean adjustmentType(String type){
+        for(Adjustment a : Lists.getAdjustment()){
+            if(a.getAdjustmentType().equals(type)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean adjustmentPrice(int price){
+        return price>=0;
+    }
+
+
     //Orders
+    //If order number is under 1 or equals a existing number, the method returns false
     public static boolean orderNr(String nr){
         if(Integer.parseInt(nr) <= 0){
             return false;
@@ -139,15 +163,8 @@ public class Validator {
         }
         return true;
     }
-    public static boolean orderPersonId(int id) throws FileNotFoundException, UserAlreadyExistException {
-        for(User i : ReadUsers.getUserList()){
-            if(i.getId() == id){
-                return true;
-            }
-        }
-        return false;
-    }
 
+    //Validates car id in orders
     public static boolean orderCarID(String carId){
         for(int i = 0; i < Lists.getCars().size(); i++){
             if(Lists.getCars().get(i).getCarID().equals(carId)){

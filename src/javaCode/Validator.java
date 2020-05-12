@@ -108,14 +108,6 @@ public class Validator {
                     return true;
                 }
             }
-            /*if(Dialogs.showChooseDialog("This component type is not defined. Do you want to add a new component?")){
-                boolean newComponent = AddElements.openAddComponentsDialog(Lists.getCars(), Lists.getComponents(),"", "", "", 0);
-                if(newComponent){
-                    Dialogs.showSuccessDialog("A new component has been added");
-                }
-            }
-
-             */
         }
         return false;
     }

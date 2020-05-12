@@ -188,6 +188,8 @@ public class ProfileController implements Initializable {
 
                 chosen.setOrderStatus(true);
 
+                //If the components, adjustments or car type in the ongoing order has been deleted before the user
+                //has finished the order, they will be unable to finish the order.
                 boolean correctComponents = true;
                 for (Component c : chosen.getComponentList()) {
                     if (c.getComponentDescription().equals("No longer available")) {
@@ -295,6 +297,7 @@ public class ProfileController implements Initializable {
         }
         ordersTV.setItems(orders);
 
+        //Sets visibility for buttons in the GUI
         btnChange.setVisible(false);
         btnFinish.setVisible(false);
         btnDelete.setVisible(false);
@@ -302,7 +305,7 @@ public class ProfileController implements Initializable {
         btnShowOngoing.setVisible(true);
         btnExportFinished.setVisible(true);
 
-        lblHeader.setText("Finished orders (click on an order to see content)");
+        lblHeader.setText("Finished orders");
         updateTVfinished(event);
 
     }
@@ -325,7 +328,7 @@ public class ProfileController implements Initializable {
         btnShowOngoing.setVisible(false);
         btnExportFinished.setVisible(false);
 
-        lblHeader.setText("Ongoing orders (click on an order to see content)");
+        lblHeader.setText("Ongoing orders");
         updateTVfinished(event);
     }
 

@@ -1,7 +1,9 @@
 package javaCode.superUser;
 
-import javaCode.*;
+import javaCode.Dialogs;
 import javaCode.InLog.LoggedIn;
+import javaCode.Lists;
+import javaCode.OpenScene;
 import javaCode.objects.Car;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
@@ -9,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -127,9 +128,6 @@ public class ControllerOrdersAddComponent implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
             OpenScene.
                     newScene("Edit orders", root, 700 ,700, event);
-        }
-        else{
-
         }
     }
 

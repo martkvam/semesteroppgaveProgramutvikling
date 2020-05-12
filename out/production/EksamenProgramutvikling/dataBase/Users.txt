@@ -1,5 +1,5 @@
-1;Bill;Gates;bill@microsoft.com ;11223344;dollars;true;true
+1;Bill;Gates;bill@microsoft.com;11223344;Dollars;true;true
 2;Jeff;Bezos;jeff@amazone.com;99887766;alexa;true;true
-3;Elon;Musk;elon@tesla.com;22446688;spacex;false;true
+3;Elon;Musk;elon@tesla.com;22446688;spaceX;false;true
 4;Mark;Zuckerberg;mark@facebook.com;11335588;california;false;true
 5;Steve;Jobs;steve@icloud.com;77885599;iphone;false;false

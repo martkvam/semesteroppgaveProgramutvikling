@@ -34,7 +34,6 @@ public class ControllerOrders implements Initializable {
     DeleteElements deleteElements = new DeleteElements();
     Lists list = new Lists();
 
-    private newThread delayThread;
     private static Order selectedOrder;
     private static int firstInlog;
 
@@ -143,7 +142,7 @@ public class ControllerOrders implements Initializable {
             }
             //Sets selected order and tableviews
             for(Order i : Lists.getOrders()){
-                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(selectedOrder.getComponentList());
                     tableViewAdjustments.setItems(selectedOrder.getAdjustmentList());
                     outPersonId = i.getPersonId();
@@ -184,7 +183,7 @@ public class ControllerOrders implements Initializable {
 
             //Sets selected order and tableviews
             for(Order i : Lists.getOrders()){
-                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
@@ -198,7 +197,7 @@ public class ControllerOrders implements Initializable {
         else{
             if(firstInlog == 0){
                 //First inlog. Starts delay thread
-                delayThread = new newThread();
+                newThread delayThread = new newThread();
                 delayThread.setOnSucceeded(this::threadDone);
                 delayThread.setOnFailed(this::threadFailed);
                 Thread th = new Thread(delayThread);
@@ -347,21 +346,21 @@ public class ControllerOrders implements Initializable {
             selectedOrder = tableViewOrder.getSelectionModel().getSelectedItem();
             //Matching selected order with order list. Prints the components and adjustments in order
             for(Order i : Lists.getOrders()){
-                if(tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr() == i.getOrderNr()){
+                if (tableViewOrder.getSelectionModel().getSelectedItem().getOrderNr().equals(i.getOrderNr())) {
                     tableViewComponents.setItems(i.getComponentList());
                     tableViewAdjustments.setItems(i.getAdjustmentList());
                     outPersonId = i.getPersonId();
                     break;
                 }
             }
-            for(User i : ReadUsers.getUserList()){
-                if(i.getId() == outPersonId){
-                    lblOutName.setText(i.getFirstName() + " "+ i.getLastName());
+            for (User i : ReadUsers.getUserList()) {
+                if (i.getId() == outPersonId) {
+                    lblOutName.setText(i.getFirstName() + " " + i.getLastName());
                     lblOutPhone.setText((i.getPhone()));
                     lblMailOut.setText(i.getEmail());
                 }
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException ignored) {
 
         }
     }
@@ -423,17 +422,12 @@ public class ControllerOrders implements Initializable {
     //Edit car id
     @FXML
     void carIdEdited(TableColumn.CellEditEvent<Order, String> event) {
-        try{
+        try {
             event.getRowValue().setCarId(event.getNewValue());
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException ignored) {
 
         }
         tableViewOrder.refresh();
-
-    }
-    //Edit orded ended
-    @FXML
-    void orderEndedEdited(TableColumn.CellEditEvent<Order, String> event) {
 
     }
 
@@ -475,12 +469,12 @@ public class ControllerOrders implements Initializable {
             //Sets new order status
             if(newOrderStatus){
                 if(Dialogs.showChooseDialog("Edit order status to finished?")){
-                    o.setOrderStatus(newOrderStatus);
+                    o.setOrderStatus(true);
                 }
             }
             else{
                 if(Dialogs.showChooseDialog("Edit order status to not finished?")){
-                    o.setOrderStatus(newOrderStatus);
+                    o.setOrderStatus(false);
                 }
             }
 

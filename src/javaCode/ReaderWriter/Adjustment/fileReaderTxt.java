@@ -4,7 +4,6 @@ import javaCode.Dialogs;
 import javaCode.Lists;
 import javaCode.ReaderWriter.Reader;
 import javaCode.objects.Adjustment;
-import javaCode.objects.Car;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class fileReaderTxt implements Reader {
     private static ObservableList<Adjustment> saveList = FXCollections.observableArrayList();
@@ -65,7 +63,7 @@ public class fileReaderTxt implements Reader {
         String adjustmentType = split[1];
         String adjustmentDescription = split[2];
         try{
-            int adjustmentPrice = parseNumber(split[3], "Total price is not correct");
+            int adjustmentPrice = parseNumber(split[3]);
             return new Adjustment(adjustmentID, adjustmentType, adjustmentDescription, adjustmentPrice);
         }catch (IllegalArgumentException e){
             try{
@@ -74,22 +72,23 @@ public class fileReaderTxt implements Reader {
                 if(adjustmentType.length()==0){
                     adjustmentType = "?";
                 }
-                if(adjustmentDescription.length()==0){
+                if (adjustmentDescription.length() == 0) {
                     adjustmentDescription = "?";
                 }
-                return new Adjustment(Integer.toString(highestID),adjustmentType,adjustmentDescription,0);
+                return new Adjustment(Integer.toString(highestID), adjustmentType, adjustmentDescription, 0);
 
-            } catch (IllegalArgumentException f){
+            } catch (IllegalArgumentException f) {
                 throw new IllegalArgumentException(f.getMessage());
             }
         }
     }
-    private int parseNumber(String str, String errorMessage) throws IllegalArgumentException{
+
+    private int parseNumber(String str) throws IllegalArgumentException {
         int number;
         try {
             number = Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException("Total price is not correct");
         }
         return number;
     }

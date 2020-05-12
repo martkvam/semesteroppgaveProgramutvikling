@@ -187,32 +187,55 @@ public class ProfileController implements Initializable {
 
                 chosen.setOrderStatus(true);
 
+                boolean correctComponents = true;
+                for (Component c : chosen.getComponentList()) {
+                    if (c.getComponentDescription().equals("No longer available")) {
+                        correctComponents = false;
+                    }
+                }
+                boolean correctAdjustments = true;
+                for (Adjustment a : chosen.getAdjustmentList()){
+                    if (a.getAdjustmentDescription().equals("No longer available")){
+                        correctAdjustments = false;
+                    }
+                }
+
                 //Adding the order to the finished-orders list, and deleting it from the ongoing orders list + updating the
                 //tableview
-                Lists.getOrders().add(chosen);
-                Lists.getOngoingOrders().remove(chosen);
-                ordersTV.getItems().remove(chosen);
-
-                //Adding the order to the finsished orders-file.
-                try {
-                    String formattedOrder = OrderFormatter.formatOrder(chosen);
-                    BufferedWriter update;
-                    update = new BufferedWriter(new FileWriter("src/dataBase/FinishedOrders.txt", true));
-                    update.append(formattedOrder);
-                    update.newLine();
-                    update.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (!correctComponents) {
+                    Dialogs.showErrorDialog("This order contains one or more components that no longer are " +
+                            "available. Please remove these components before you finish your order.");
                 }
-
-                //Removing the order from the ongoing orders-file.
-                try {
-                    String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
-                    javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (!correctAdjustments){
+                    Dialogs.showErrorDialog("This order contains one or more adjustments that no longer are " +
+                            "available. Please remove these adjustments before you finish your order.");
                 }
-                updateTVfinished(event);
+                if(correctComponents && correctAdjustments) {
+                    Lists.getOrders().add(chosen);
+                    Lists.getOngoingOrders().remove(chosen);
+                    ordersTV.getItems().remove(chosen);
+
+                    //Adding the order to the finsished orders-file.
+                    try {
+                        String formattedOrder = OrderFormatter.formatOrder(chosen);
+                        BufferedWriter update;
+                        update = new BufferedWriter(new FileWriter("src/dataBase/FinishedOrders.txt", true));
+                        update.append(formattedOrder);
+                        update.newLine();
+                        update.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Removing the order from the ongoing orders-file.
+                    try {
+                        String formattedOngoingOrders = OrderFormatter.formatOrders(Lists.getOngoingOrders());
+                        javaCode.FileWriter.WriteFile(Paths.get("src/dataBase/OngoingOrders.txt"), formattedOngoingOrders);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    updateTVfinished(event);
+                }
             }
         }
 

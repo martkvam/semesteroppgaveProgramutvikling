@@ -269,10 +269,10 @@ public class ControllerAddEditComponents implements Initializable {
                 case "Adjustment":
                     if(delete.deleteAdjustments(tableViewAdjustments.getSelectionModel().getSelectedItems())) {
                         //Deletes tableRow(s)
-                        tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
                         for(Adjustment a : tableViewAdjustments.getSelectionModel().getSelectedItems()){
                             lists.addDeletedAdjustment(a);
                         }
+                        tableViewAdjustments.getItems().removeAll(tableViewAdjustments.getSelectionModel().getSelectedItems());
                     }
                     break;
             }

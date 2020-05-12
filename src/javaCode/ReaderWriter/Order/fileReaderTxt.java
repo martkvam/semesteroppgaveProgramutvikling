@@ -89,35 +89,45 @@ public class fileReaderTxt implements Reader {
     private ObservableList<Component> parseComponentList(String str, String carID, String errorMessage) throws Exception{
         ObservableList<Component> components = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split){
-            boolean componentExists = false;
-            boolean deleted = false;
-            for(Component c : Lists.getComponents()){
-                if (c.getComponentID().equals(string)){
-                    componentExists = true;
-                    if (c.getCarID().equals(carID)) {
-                        components.add(c);
-                    } else {
-                        System.err.println("There is an error in the list containing the orders. " +
-                                "The component list : " + str + "contains a component belonging to a different" +
-                                " car type. ComponentID: " + c.getComponentID());
-                    }
-                }
-            }
-            if (!componentExists) {
-                for (Component c : Lists.getDeletedComponents()) {
+        //Iterating through all componentIDs from the file
+        for(String string : split) {
+            if (!string.isEmpty()) {
+                boolean componentExists = false;
+                boolean deleted = false;
+                //Trying to match the componentIDs from the file with the list of existing components.
+                for (Component c : Lists.getComponents()) {
                     if (c.getComponentID().equals(string)) {
-                        deleted = true;
-                        c.setComponentDescription("No longer available");
+                        componentExists = true;
+                        //If a componentID is found in the list of existing components, this validates that the component
+                        //belongs to the car type in the order.
                         if (c.getCarID().equals(carID)) {
                             components.add(c);
+                        } else {
+                            System.err.println("There is an error in the list containing the orders. " +
+                                    "The component list : " + str + "contains a component belonging to a different" +
+                                    " car type. ComponentID: " + c.getComponentID());
                         }
                     }
                 }
-            }
-            if(!componentExists && !deleted){
-                System.err.println("There is an error in the list containing the orders. The component list: " +
-                        str + " contains a componentID that does not exist. Component id: " + string);
+                //If the componentID from the file does not match with a componentID in the existing components list,
+                //we check if the componentID matches a componentID in the deleted component list. If they match, the
+                //componentDescription is set to no longer available.
+                if (!componentExists) {
+                    for (Component c : Lists.getDeletedComponents()) {
+                        if (c.getComponentID().equals(string)) {
+                            deleted = true;
+                            c.setComponentDescription("No longer available");
+                            if (c.getCarID().equals(carID)) {
+                                components.add(c);
+                            }
+                        }
+                    }
+                }
+                //If the componentID is not found in either list, the ID must be wrong.
+                if (!componentExists && !deleted) {
+                    System.err.println("There is an error in the list containing the orders. The component list: " +
+                            str + " contains a componentID that does not exist. Component id: " + string);
+                }
             }
         }
         return components;
@@ -126,10 +136,28 @@ public class fileReaderTxt implements Reader {
     private ObservableList<Adjustment> parseAdjustmentList(String str, String errorMessage) throws Exception{
         ObservableList<Adjustment> adjustments = FXCollections.observableArrayList();
         String[] split = str.split(",");
-        for(String string : split){
-            for(Adjustment a : Lists.getAdjustment()){
-                if (a.getAdjustmentID().equals(string)){
-                    adjustments.add(a);
+        for(String string : split) {
+            if (!string.isEmpty()) {
+                boolean exists = false;
+                boolean deleted = false;
+                for (Adjustment a : Lists.getAdjustment()) {
+                    if (a.getAdjustmentID().equals(string)) {
+                        exists = true;
+                        adjustments.add(a);
+                    }
+                }
+                if (!exists) {
+                    for (Adjustment a : Lists.getDeletedAdjustment()) {
+                        if (a.getAdjustmentID().equals(string)) {
+                            deleted = true;
+                            a.setAdjustmentDescription("No longer available");
+                            adjustments.add(a);
+                        }
+                    }
+                }
+                if (!exists && !deleted) {
+                    System.err.println("There is an error in the list containing the orders. The adjustment list: "
+                            + str + " contains an adjustmentID that does not exist. AdjustmentID " + string);
                 }
             }
         }

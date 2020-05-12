@@ -107,35 +107,36 @@ public class UserController implements Initializable {
     //Is called upon when car type and component type is selected.
     @FXML
     void setList(ActionEvent event) {
-        String chosen = chooseCarType.getSelectionModel().getSelectedItem();
+        if(chooseCarType.getValue() != null) {
 
-        //List that is diplayed in the tableview for components
-        ObservableList<Component> outList = FXCollections.observableArrayList();
+            //List that is diplayed in the tableview for components
+            ObservableList<Component> outList = FXCollections.observableArrayList();
 
-        //Gets the values from the choiceboxes
-        String type = chooseCarType.getValue();
-        String ID = "";
-        for (Car car : lists.getCars()) {
-            if (type.contains(car.getCarType())) {
-                ID = car.getCarID();
-            }
-        }
-        String component = chooseComponent.getValue();
-
-        //If an element in the list of components matches the value of both choiceboxes they are added
-        //to the outlist.
-        if (type != null && component != null) {
-            for (int i = 0; i < lists.getComponents().size(); i++) {
-                if (ID.equals(lists.getComponents().get(i).getCarID()) && component.equals(lists.getComponents().get(i).getComponentType())) {
-                    outList.add(lists.getComponents().get(i));
+            //Gets the values from the choiceboxes
+            String type = chooseCarType.getValue();
+            String ID = "";
+            for (Car car : lists.getCars()) {
+                if (type.contains(car.getCarType())) {
+                    ID = car.getCarID();
                 }
             }
-        }
+            String component = chooseComponent.getValue();
 
-        //The outlist is displayed in the tableview
-        componentTV.setItems(outList);
-        componentTV.refresh();
-        updatePrice();
+            //If an element in the list of components matches the value of both choiceboxes they are added
+            //to the outlist.
+            if (type != null && component != null) {
+                for (int i = 0; i < lists.getComponents().size(); i++) {
+                    if (ID.equals(lists.getComponents().get(i).getCarID()) && component.equals(lists.getComponents().get(i).getComponentType())) {
+                        outList.add(lists.getComponents().get(i));
+                    }
+                }
+            }
+
+            //The outlist is displayed in the tableview
+            componentTV.setItems(outList);
+            componentTV.refresh();
+            updatePrice();
+        }
     }
 
     //Method for adding a component to the order.
@@ -221,13 +222,10 @@ public class UserController implements Initializable {
         if (chosenComponents.isEmpty() && chosenAdjustments.isEmpty()) {
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/myProfile.fxml"));
             OpenScene.newScene("My profile", root, 550, 660, actionEvent);
-            for (Component c : Lists.getDeletedComponents()){
-                System.out.print(c.getComponentID() + " ");
+            for (Adjustment a : Lists.getDeletedAdjustment()){
+                System.out.println(a.getAdjustmentID());
             }
-            for (Component c : Lists.getComponents()){
-                System.out.println(c.getComponentID());
-                }
-            }
+        }
 
         //If there is an ongoing order that has not been saved, the user will be informed of this.
         else {
@@ -281,9 +279,30 @@ public class UserController implements Initializable {
         } else {
             color += "Not chosen";
         }
+        boolean correctComponents = true;
+        for (Component c : orderedComponents){
+            if (c.getComponentDescription().equals("No longer available")){
+                correctComponents = false;
+            }
+        }
+        if(!correctComponents){
+            Dialogs.showErrorDialog("This order contains one or more components that no longer are available. " +
+                    "Please remove these components before you save.");
+        }
+
+        boolean correctAdjustments = true;
+        for (Adjustment a : orderedAdjustments){
+            if (a.getAdjustmentDescription().equals("No longer available")){
+                correctAdjustments = false;
+            }
+        }
+        if (!correctAdjustments){
+            Dialogs.showErrorDialog("This order contains one or more adjustments that no longer are available. "
+            + "Please remove these adjustments before you save");
+        }
 
         //Creates a new order-object, and adds it to the list of ongoing orders.
-        if (rightInput) {
+        if (rightInput && correctComponents && correctAdjustments) {
             Order order = new Order("", persID, carId, date, date, orderedComponents, orderedAdjustments, price, color, false);
             lists.addOngoingOrder(order);
             Path path = Paths.get("src/dataBase/OngoingOrders.txt");
@@ -357,8 +376,31 @@ public class UserController implements Initializable {
             rightInput = false;
         }
 
+        boolean correctComponents = true;
+        for (Component c : orderedComponents){
+            if (c.getComponentDescription().equals("No longer available")){
+                correctComponents = false;
+            }
+        }
+        if (!correctComponents){
+            Dialogs.showErrorDialog("This order contains one or more components that no longer are available. " +
+                    "Please remove these components before you order");
+        }
+
+        boolean correctAdjustments = true;
+        for (Adjustment a : orderedAdjustments){
+            if (a.getAdjustmentDescription().equals("No longer available")){
+                correctAdjustments = false;
+            }
+        }
+        if (!correctAdjustments){
+            Dialogs.showErrorDialog("This order contains one or more adjustments that no longer are available. "
+                    + "Please remove these adjustments before you order");
+        }
+
+
         //If the input is correct, the order will be added to the list of finished orders and to the txt-file.
-        if (rightInput) {
+        if (rightInput && correctComponents && correctAdjustments) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to finish this order?", ButtonType.OK, ButtonType.CANCEL);
             alert.showAndWait();
             if (alert.getResult().equals(ButtonType.OK)) {
@@ -395,9 +437,11 @@ public class UserController implements Initializable {
         }
 
         String chosenCar = chooseCarType.getSelectionModel().getSelectedItem();
-        for (Car c : Lists.getCars()) {
-            if (chosenCar.contains(c.getCarType())) {
-                totalprice += c.getPrice();
+        if (chosenCar != null) {
+            for (Car c : Lists.getCars()) {
+                if (chosenCar.contains(c.getCarType())) {
+                    totalprice += c.getPrice();
+                }
             }
         }
         lblTotalprice.setText("Total price: " + totalprice + " kr");

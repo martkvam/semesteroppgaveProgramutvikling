@@ -31,7 +31,7 @@ public class ControllerEditProfile {
     private TableColumn<TableView<User>, Boolean> superUser;
 
     @FXML
-    private Button btnDelete;
+    private TableColumn<TableView<User>, Boolean> active;
 
     @FXML
     private Button btnClick;
@@ -43,6 +43,7 @@ public class ControllerEditProfile {
     public void initialize() throws FileNotFoundException {
         id.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.IntegerStringConverter()));
         superUser.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.BooleanStringConverter()));
+        active.setCellFactory(TextFieldTableCell.forTableColumn(new ConverterErrorHandler.BooleanStringConverter()));
         tvUserRegister.setItems(ReadUsers.getUserList());
         tvUserRegister.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         newThread delayThread = new newThread();
@@ -51,7 +52,6 @@ public class ControllerEditProfile {
         Thread th = new Thread(delayThread);
         th.setDaemon(true);
         tvUserRegister.setDisable(true);
-        btnDelete.setDisable(true);
         txtSearch.setDisable(true);
         btnClick.setDisable(true);
         th.start();
@@ -65,7 +65,6 @@ public class ControllerEditProfile {
 
     private void threadDone(WorkerStateEvent workerStateEvent) {
         tvUserRegister.setDisable(false);
-        btnDelete.setDisable(false);
         txtSearch.setDisable(false);
         btnClick.setDisable(false);
     }
@@ -90,15 +89,19 @@ public class ControllerEditProfile {
                         return true;
                     } else if (user.getPhone().toLowerCase().contains(lowerCase)) {
                         return true;
-                    } else if (user.getEmail().toLowerCase().contains(lowerCase)){
-                        return true;
-                    }else return user.getPassword().toLowerCase().contains(lowerCase);
+                    } else return user.getEmail().toLowerCase().contains(lowerCase);
                 });
 
                 SortedList<User> sorted = new SortedList<>(filtered);
                 sorted.comparatorProperty().bind(tvUserRegister.comparatorProperty());
                 tvUserRegister.setItems(sorted);
             });
+    }
+
+    public void idEdited(TableColumn.CellEditEvent<TableView<User>, Integer> tableViewIntegerCellEditEvent) {
+        tvUserRegister.getSelectionModel().clearSelection();
+        Dialogs.showErrorDialog("Id cant be changed");
+        tvUserRegister.refresh();
     }
 
     //Initializes and validates the edited text in the "Firstname-field"
@@ -108,7 +111,7 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "FirstName", newFirstName);
             u.setFirstName(newFirstName);
-        } catch (Exception e){
+        } catch (Exception e) {
             Dialogs.showErrorDialog(e.getMessage());
             tvUserRegister.getSelectionModel().clearSelection();
         }
@@ -164,9 +167,32 @@ public class ControllerEditProfile {
         try {
             ReadUsers.changeInfo(String.valueOf(u.getId()), "SuperUser", String.valueOf(newSuperUser));
             u.setSuperUser(newSuperUser);
-        } catch (Exception e){
+        } catch (Exception e) {
             tvUserRegister.getSelectionModel().clearSelection();
             Dialogs.showErrorDialog(e.getMessage());
+        }
+        tvUserRegister.refresh();
+    }
+
+    public void activeEdited(TableColumn.CellEditEvent<TableView<User>, Boolean> tableViewBooleanCellEditEvent) {
+        User u = tvUserRegister.getSelectionModel().getSelectedItem();
+        boolean newActive = !tableViewBooleanCellEditEvent.getOldValue();
+        String action;
+        if (newActive) {
+            action = "activate";
+        } else {
+            action = "deactivate";
+        }
+        if (Dialogs.showChooseDialog("Are you sure you want to " + action + " user number " + u.getId() + "?")) {
+            try {
+                ReadUsers.changeInfo(String.valueOf(u.getId()), "Active", String.valueOf(newActive));
+                u.setActive(newActive);
+            } catch (IOException e) {
+                tvUserRegister.getSelectionModel().clearSelection();
+                Dialogs.showErrorDialog(e.getMessage());
+            }
+        } else {
+            tvUserRegister.getSelectionModel().clearSelection();
         }
         tvUserRegister.refresh();
     }
@@ -177,16 +203,6 @@ public class ControllerEditProfile {
         OpenScene.newScene("Superuser", root, 470, 300, actionEvent);
     }
 
-    public void btnDeleteOnClick(ActionEvent actionEvent) {
-        User u = tvUserRegister.getSelectionModel().getSelectedItem();
-        if (Dialogs.showChooseDialog("Are you sure you want to delete user nr: " + u.getId() + "?")) {
-            try {
-                ReadUsers.changeInfo(String.valueOf(u.getId()), "Delete", null);
-                tvUserRegister.getItems().remove(u);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 }
 

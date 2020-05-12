@@ -302,7 +302,7 @@ public class ProfileController implements Initializable {
         btnShowOngoing.setVisible(true);
         btnExportFinished.setVisible(true);
 
-        lblHeader.setText("Finished orders (click on an order to see content)");
+        lblHeader.setText("Finished orders");
         updateTVfinished(event);
 
     }
@@ -325,7 +325,7 @@ public class ProfileController implements Initializable {
         btnShowOngoing.setVisible(false);
         btnExportFinished.setVisible(false);
 
-        lblHeader.setText("Ongoing orders (click on an order to see content)");
+        lblHeader.setText("Ongoing orders");
         updateTVfinished(event);
     }
 

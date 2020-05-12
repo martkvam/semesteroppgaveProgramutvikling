@@ -4,7 +4,6 @@ package javaCode.user;
 import javaCode.*;
 import javaCode.InLog.LoggedIn;
 import javaCode.InLog.ReadUsers;
-import javaCode.ReaderWriter.Order.fileWriterExcel;
 import javaCode.objects.Adjustment;
 import javaCode.objects.Component;
 import javaCode.objects.Order;
@@ -31,6 +30,7 @@ public class ProfileController implements Initializable {
     //Using these to change an ongoing order
     public static Order changeOrder;
     public static boolean toBeChanged;
+    public static String changedOrderCarType;
 
     @FXML
     private Label lblName;
@@ -87,10 +87,6 @@ public class ProfileController implements Initializable {
 
         ordersTV.setItems(orders);
 
-
-
-
-
         //Fills out the personal info section
         String ID = "" + LoggedIn.getId();
         try {
@@ -114,6 +110,7 @@ public class ProfileController implements Initializable {
             Order chosen = ordersTV.getSelectionModel().getSelectedItem();
             changeOrder = chosen;
             toBeChanged = true;
+            changedOrderCarType = chosen.getCarType();
             Lists.getOngoingOrders().remove(chosen);
 
             //Updating the ongoing orders-file.
@@ -125,7 +122,7 @@ public class ProfileController implements Initializable {
             }
 
             Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-            OpenScene.newScene("Order", root, 650, 700, event);
+            OpenScene.newScene("Order", root, 1200, 700, event);
         }
     }
 
@@ -160,7 +157,7 @@ public class ProfileController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
             //If color is not chosen a choice dialog will pop up.
             String [] color = {"Red", "Black", "White", "Gray"};
-            ChoiceDialog<String> choice = new ChoiceDialog(color[1], color);
+            ChoiceDialog<String> choice = new ChoiceDialog<>(color[1], color);
             if(ordersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
                 choice.setTitle("Finish order");
                 choice.setContentText("Please choose a color for the car before you finish your order: ");
@@ -190,9 +187,10 @@ public class ProfileController implements Initializable {
 
                 chosen.setOrderStatus(true);
 
+                //Adding the order to the finished-orders list, and deleting it from the ongoing orders list + updating the
+                //tableview
                 Lists.getOrders().add(chosen);
                 Lists.getOngoingOrders().remove(chosen);
-
                 ordersTV.getItems().remove(chosen);
 
                 //Adding the order to the finsished orders-file.
@@ -236,6 +234,7 @@ public class ProfileController implements Initializable {
             orderedComponentsTV.refresh();
             orderedAdjustmentsTV.refresh();
         }
+
         //If there is no order selected, the tableviews for components and adjustments will be set to empty.
         if(ordersTV.getSelectionModel().isEmpty()){
             ObservableList<Component> components = FXCollections.observableArrayList();
@@ -249,7 +248,7 @@ public class ProfileController implements Initializable {
 
     public void back(ActionEvent actionEvent) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/user.fxml"));
-        OpenScene.newScene("Order", root, 600,450, actionEvent);
+        OpenScene.newScene("Order", root, 1200, 700, actionEvent);
     }
 
     //Shows finished orders
@@ -268,9 +267,11 @@ public class ProfileController implements Initializable {
         btnDelete.setVisible(false);
         btnShowFinished.setVisible(false);
         btnShowOngoing.setVisible(true);
+        btnExportFinished.setVisible(true);
 
         lblHeader.setText("Finished orders (click on an order to see content)");
         updateTVfinished(event);
+
     }
 
     //Shows ongoing orders
@@ -289,15 +290,16 @@ public class ProfileController implements Initializable {
         btnChange.setVisible(true);
         btnShowFinished.setVisible(true);
         btnShowOngoing.setVisible(false);
+        btnExportFinished.setVisible(false);
 
         lblHeader.setText("Ongoing orders (click on an order to see content)");
         updateTVfinished(event);
     }
 
-    //Method for button calling methods for exporting register to excel
+    //Method that exports the users orders to an excel file.
     public void btnExportFinishedOnClick(ActionEvent actionEvent) throws IOException {
         if(ordersTV.getItems().size() != 0) {
-            fileWriterExcel.writeExcel(ordersTV.getItems());
+            javaCode.ReaderWriter.Order.fileWriterExcel.writeExcel(ordersTV.getItems());
         } else{
             Dialogs.showErrorDialog("List is empty");
         }

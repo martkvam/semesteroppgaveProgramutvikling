@@ -31,11 +31,7 @@ public class Order implements Serializable {
         if(!orderNr.isEmpty() && !Validator.orderNr(orderNr)){
             throw new IllegalArgumentException("The order number is not valid");
         }
-        /*if(!Validator.orderPersonId(personId)){
-            throw new IllegalArgumentException("The person number is not valid");
-        }
 
-         */
         if(!Validator.orderCarID(carId)){
             throw new IllegalArgumentException("The car id is not valid");
         }
@@ -76,11 +72,6 @@ public class Order implements Serializable {
     }
 
     public void setPersonId(int personId) {
-        /*if(!Validator.orderPersonId(personId)){
-            throw new IllegalArgumentException("The person number is not valid");
-        }
-
-         */
         this.personId.set(personId);
     }
 
@@ -151,7 +142,7 @@ public class Order implements Serializable {
     }
 
     public void setCarColor(String carColor) {
-        if (Validator.orderCarColor(carColor)) {
+        if (!Validator.orderCarColor(carColor)) {
             throw new IllegalArgumentException("The car color is not valid");
         }
         this.carColor.set(carColor);

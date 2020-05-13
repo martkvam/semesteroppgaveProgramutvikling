@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
@@ -159,21 +160,30 @@ public class ProfileController implements Initializable {
             //If color is not chosen a choice dialog will pop up.
             String [] color = {"Red", "Black", "White", "Gray"};
             ChoiceDialog<String> choice = new ChoiceDialog<>(color[1], color);
+            String chosenColor = "";
+            boolean ready = false;
             if(ordersTV.getSelectionModel().getSelectedItem().getCarColor().equals("Not chosen")){
                 choice.setTitle("Finish order");
                 choice.setContentText("Please choose a color for the car before you finish your order: ");
-                choice.showAndWait();
-                String chosenColor = choice.getSelectedItem();
-                ordersTV.getSelectionModel().getSelectedItem().setCarColor(chosenColor);
+                Optional<String> result = choice.showAndWait();
+                //If a color is chosen
+                if(result.isPresent()){
+                    chosenColor = choice.getSelectedItem();
+                    ready = true;
+                }
             }
-            //If the order is ready
+            //If the order is complete
             else {
                alert.setContentText("Are you sure you want to finish this order?");
                alert.showAndWait();
+               if (alert.getResult().equals(ButtonType.YES)){
+                   ready = true;
+               }
             }
 
-            if (alert.getResult() == ButtonType.YES || !choice.getResult().isEmpty()) {
+            if (ready) {
                 Order chosen = ordersTV.getSelectionModel().getSelectedItem();
+                chosen.setCarColor(chosenColor);
 
                 //Finding the largest existing orderNr, and setting the new orderNr to largest + 1.
                 int largest = 0;
